@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\monocept_c# learning\\CapStoneProject\\Insurance-final-project\\Insurance-final-project\\Insurance-final-project.csproj": {}
+    "C:\\Users\\Harshvardhan Gupta\\Insurance-Project\\Insurance-final-project\\Insurance-final-project.csproj": {}
   },
   "projects": {
-    "D:\\monocept_c# learning\\CapStoneProject\\Insurance-final-project\\Insurance-final-project\\Insurance-final-project.csproj": {
+    "C:\\Users\\Harshvardhan Gupta\\Insurance-Project\\Insurance-final-project\\Insurance-final-project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\monocept_c# learning\\CapStoneProject\\Insurance-final-project\\Insurance-final-project\\Insurance-final-project.csproj",
+        "projectUniqueName": "C:\\Users\\Harshvardhan Gupta\\Insurance-Project\\Insurance-final-project\\Insurance-final-project.csproj",
         "projectName": "Insurance-final-project",
-        "projectPath": "D:\\monocept_c# learning\\CapStoneProject\\Insurance-final-project\\Insurance-final-project\\Insurance-final-project.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\monocept_c# learning\\CapStoneProject\\Insurance-final-project\\Insurance-final-project\\obj\\",
+        "projectPath": "C:\\Users\\Harshvardhan Gupta\\Insurance-Project\\Insurance-final-project\\Insurance-final-project.csproj",
+        "packagesPath": "C:\\Users\\Harshvardhan Gupta\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Harshvardhan Gupta\\Insurance-Project\\Insurance-final-project\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Harshvardhan Gupta\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -46,10 +50,6 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "AutoMapper": {
-              "target": "Package",
-              "version": "[13.0.1, )"
-            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -90,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
