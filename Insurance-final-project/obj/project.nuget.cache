@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "NBF0majtYjg=",
+  "dgSpecHash": "av80/NbJmTA=",
   "success": true,
   "projectFilePath": "C:\\Users\\Harshvardhan Gupta\\Insurance-Project\\Insurance-final-project\\Insurance-final-project.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Harshvardhan Gupta\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Harshvardhan Gupta\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Harshvardhan Gupta\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
     "C:\\Users\\Harshvardhan Gupta\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
@@ -90,5 +91,12 @@
     "C:\\Users\\Harshvardhan Gupta\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\Harshvardhan Gupta\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Harshvardhan Gupta\\Insurance-Project\\Insurance-final-project\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
