@@ -12,6 +12,7 @@ namespace Insurance_final_project.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public int MobileNo { get; set; }
+        public int Salary { get; set; }
         public User User { get; set; } // Nav
         [ForeignKey("User")]
         public Guid UserId { get; set; }
