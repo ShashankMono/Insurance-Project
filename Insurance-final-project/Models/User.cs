@@ -6,7 +6,7 @@ namespace Insurance_final_project.Models
     {
         [Key]
 
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         [Required,StringLength(25)]
         public string UserName { get; set; }
         [Required,StringLength(60)]
