@@ -1,1 +1,39 @@
 .vs/
+# Build directories
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio for Mac
+.vscode/
+
+# Rider
+.idea/
+
+# User-specific VS Code settings
+.vscode/
+
+# ASP.NET Scaffolding
+Scaffolding/
+
+# Configuration files with sensitive data (Replace with a template)
+appsettings.json
+appsettings.Development.json
+secrets.json
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Windows system files
+Thumbs.db
+Desktop.ini
+
+# OS-specific files
+.DS_Store  # macOS
+.vsconfig   # Visual Studio configuration file
