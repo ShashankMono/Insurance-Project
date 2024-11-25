@@ -2,10 +2,11 @@
 {
     using Insurance_final_project.Models;
     using System.ComponentModel.DataAnnotations;
-    using System.Reflection.Metadata;
+    using Document = Models.Document;
 
     public class CustomerDto
     {
+        public Guid CustomerId { get; set; }
 
         [Required(ErrorMessage = "First Name is required.")]
         [StringLength(100, ErrorMessage = "First Name cannot be longer than 100 characters.")]

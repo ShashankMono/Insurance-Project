@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Insurance_final_project.Models;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace Insurance_final_project.Models
+namespace Insurance_final_project.Dto
 {
-    public class Document
+    public class DocumentDto
     {
-        [Key]
         public Guid DocumentId { get; set; }
 
         [Required(ErrorMessage = "Document Type is required.")]
@@ -16,11 +16,11 @@ namespace Insurance_final_project.Models
         [StringLength(200, ErrorMessage = "Document Name cannot be longer than 200 characters.")]
         public string DocumentName { get; set; }
 
-        [Required(ErrorMessage = "Document File is required.")]
+        [Required(ErrorMessage = "Document File is required.(Document not uploaded)")]
         public string DocumentFile { get; set; }  // You can use a string for file paths or URIs
 
         //Check verification of the document which will be changed by employee
-        public bool IsVerified    { get; set; }
+        public bool IsVerified { get; set; } = false;
 
         // Foreign Key to Customer (many-to-one relationship)
         [ForeignKey("Customer")]

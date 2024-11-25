@@ -5,6 +5,7 @@
 
     public class AgentDto
     {
+        public Guid AgentId { get; set; }
 
         [Required(ErrorMessage = "First name is required.")]
         [StringLength(50, ErrorMessage = "First name cannot exceed 50 characters.")]
