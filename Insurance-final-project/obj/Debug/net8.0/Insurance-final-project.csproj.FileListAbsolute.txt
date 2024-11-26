@@ -1,0 +1,8 @@
+C:\Users\Harshvardhan Gupta\Insurance-Project\Insurance-final-project\obj\Debug\net8.0\Insurance-final-project.csproj.AssemblyReference.cache
+C:\Users\Harshvardhan Gupta\Insurance-Project\Insurance-final-project\obj\Debug\net8.0\Insurance-final-project.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Harshvardhan Gupta\Insurance-Project\Insurance-final-project\obj\Debug\net8.0\Insurance-final-project.AssemblyInfoInputs.cache
+C:\Users\Harshvardhan Gupta\Insurance-Project\Insurance-final-project\obj\Debug\net8.0\Insurance-final-project.AssemblyInfo.cs
+C:\Users\Harshvardhan Gupta\Insurance-Project\Insurance-final-project\obj\Debug\net8.0\Insurance-final-project.csproj.CoreCompileInputs.cache
+C:\Users\Harshvardhan Gupta\Insurance-Project\Insurance-final-project\obj\Debug\net8.0\Insurance-final-project.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Harshvardhan Gupta\Insurance-Project\Insurance-final-project\obj\Debug\net8.0\Insurance-final-project.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Harshvardhan Gupta\Insurance-Project\Insurance-final-project\obj\Debug\net8.0\Insurance-final-project.sourcelink.json
