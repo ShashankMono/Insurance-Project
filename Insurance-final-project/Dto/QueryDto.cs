@@ -5,7 +5,6 @@ namespace Insurance_final_project.Dto
 {
     public class Query
     {
-        public Guid QueryId { get; set; }
 
         [Required(ErrorMessage = "Question is required.")]
         [StringLength(500, ErrorMessage = "Question cannot exceed 500 characters.")]

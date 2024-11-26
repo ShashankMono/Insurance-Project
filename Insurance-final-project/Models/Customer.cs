@@ -26,10 +26,10 @@ namespace Insurance_final_project.Models
         public string Nominee { get; set; }
         public string NomineeRelation { get; set; }
 
-        // Relationships with Agent and Policy Account
-        [ForeignKey("Agent")]
-        public Guid AgentId { get; set; }
-        public Agent? Agent { get; set; }  // Navigation property
+        // Relationships with Agent and Policy Account Many to many realtionship with customer
+        //[ForeignKey("Agent")]
+        //public Guid AgentId { get; set; }
+        public ICollection<Agent>? Agent { get; set; }  // Navigation property
 
         // Relationship with Policy Account (Many-to-Many)
         public ICollection<PolicyAccount>? PolicyAccounts { get; set; }

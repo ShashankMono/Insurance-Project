@@ -8,5 +8,7 @@ namespace Insurance_final_project.Models
         public Guid StateId { get; set; }
 
         public string StateName { get; set; }
+
+        public ICollection<Customer>? Customer { get; set; } 
     }
 }

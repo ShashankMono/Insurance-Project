@@ -8,19 +8,14 @@ namespace Insurance_final_project.Models
         [Key]
         public Guid DocumentId { get; set; }
 
-        [Required(ErrorMessage = "Document Type is required.")]
-        [StringLength(100, ErrorMessage = "Document Type cannot be longer than 100 characters.")]
         public string DocumentType { get; set; }
 
-        [Required(ErrorMessage = "Document Name is required.")]
-        [StringLength(200, ErrorMessage = "Document Name cannot be longer than 200 characters.")]
         public string DocumentName { get; set; }
 
-        [Required(ErrorMessage = "Document File is required.")]
-        public string DocumentFile { get; set; }  // You can use a string for file paths or URIs
+        public string DocumentFileURL { get; set; }  // You can use a string for file paths or URIs
 
         //Check verification of the document which will be changed by employee
-        public bool IsVerified    { get; set; }
+        public bool IsVerified    { get; set; } 
 
         // Foreign Key to Customer (many-to-one relationship)
         [ForeignKey("Customer")]
