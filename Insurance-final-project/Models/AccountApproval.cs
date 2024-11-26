@@ -10,5 +10,6 @@ namespace Insurance_final_project.Models
 
         [ForeignKey("Customer")]
         public Guid CustomerId { get; set; }
+        public Customer Customer { get; set; }
     }
 }

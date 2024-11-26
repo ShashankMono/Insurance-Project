@@ -1,40 +1,42 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Insurance_final_project.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Insurance_final_project.DTOs
 {
     public class PolicyDTO
     {
         [Required]
-        [StringLength(50, ErrorMessage = "Name cannot exceed 50 characters.")]
+        [StringLength(100, ErrorMessage = "Policy name cannot exceed 100 characters.")]
         public string Name { get; set; }
 
-        [Required]
-        [StringLength(500, ErrorMessage = "Description cannot exceed 500 characters.")]
-        public string PolicyDescription { get; set; }
+        [StringLength(1000, ErrorMessage = "Policy description cannot exceed 1000 characters.")]
+        public string Description { get; set; }
 
         [Required]
         public Guid PolicyTypeId { get; set; }
 
-        [Required]
-        [Range(18, 100, ErrorMessage = "Minimum age must be between 18 and 100.")]
+        [Range(0, 150, ErrorMessage = "Minimum age criteria must be between 0 and 150.")]
         public int MinimumAgeCriteria { get; set; }
 
-        [Required]
-        [Range(18, 100, ErrorMessage = "Maximum age must be between 18 and 100.")]
+        [Range(0, 150, ErrorMessage = "Maximum age criteria must be between 0 and 150.")]
         public int MaximumAgeCriteria { get; set; }
 
-        [Required]
-        [Range(1, double.MaxValue, ErrorMessage = "Investment amount must be greater than zero.")]
-        public double MinimumInvestmentAmount { get; set; }
+        [Range(0.01, double.MaxValue, ErrorMessage = "Minimum investment amount must be greater than zero.")]
+        public decimal MinimumInvestmentAmount { get; set; }
 
-        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Minimum policy term must be at least 1 year.")]
         public int MinimumPolicyTerm { get; set; }
+
+        [Range(1, int.MaxValue, ErrorMessage = "Maximum policy term must be at least 1 year.")]
         public int MaximumPolicyTerm { get; set; }
 
-        [Required]
-        public double MaximumInvestmentAmount { get; set; }
+        [Range(0.01, double.MaxValue, ErrorMessage = "Maximum investment amount must be greater than zero.")]
+        public decimal MaximumInvestmentAmount { get; set; }
 
-        public double ProfitPercentage { get; set; }
-        public double CommissionPercentage { get; set; }
+        [Range(0.01, 100, ErrorMessage = "Profit percentage must be between 0.01 and 100.")]
+        public decimal ProfitPercentage { get; set; }
+
+        [Range(0.01, 100, ErrorMessage = "Commission percentage must be between 0.01 and 100.")]
+        public decimal CommissionPercentage { get; set; }
     }
 }

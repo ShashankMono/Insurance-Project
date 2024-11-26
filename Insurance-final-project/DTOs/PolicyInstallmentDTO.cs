@@ -1,9 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Insurance_final_project.Models;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace Insurance_final_project.DTOs
 {
     public class PolicyInstallmentDTO
     {
+        public PolicyAccount PolicyAccount { get; set; }
         [Required]
         public Guid PolicyAccountId { get; set; }
 
@@ -17,7 +20,7 @@ namespace Insurance_final_project.DTOs
         [Required]
         [Range(1, double.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
         public double Amount { get; set; }
-
+        public Transaction Transaction { get; set; }
         [Required]
         public Guid TransactionId { get; set; }
     }

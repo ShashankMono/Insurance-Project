@@ -5,11 +5,11 @@ namespace Insurance_final_project.DTOs
     public class TransactionDTO
     {
         [Required]
-        [StringLength(50, ErrorMessage = "Type cannot exceed 50 characters.")]
-        public string Type { get; set; }
+        [StringLength(50, ErrorMessage = "Transaction type cannot exceed 50 characters.")]
+        public string Type { get; set; } // Installment Payment or Withdrawal
 
         [Required]
-        [Range(1, double.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Transaction amount must be greater than zero.")]
         public decimal Amount { get; set; }
 
         [Required]
@@ -17,5 +17,7 @@ namespace Insurance_final_project.DTOs
 
         [Required]
         public Guid PolicyAccountId { get; set; }
+
+        public DateTime DateTime { get; set; }
     }
 }
