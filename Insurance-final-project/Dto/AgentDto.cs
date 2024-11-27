@@ -8,11 +8,11 @@
 
         [Required(ErrorMessage = "First name is required.")]
         [StringLength(50, ErrorMessage = "First name cannot exceed 50 characters.")]
-        public string AgentFirstName { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Last name is required.")]
         [StringLength(50, ErrorMessage = "Last name cannot exceed 50 characters.")]
-        public string AgentLastName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Qualification is required.")]
         [StringLength(100, ErrorMessage = "Qualification cannot exceed 100 characters.")]
@@ -37,7 +37,7 @@
 
         [Required(ErrorMessage = "Status is required.")]
         [StringLength(20, ErrorMessage = "Status cannot exceed 20 characters.")]
-        public string Status { get; set; } = "Active"; // Status of the agent
+        public bool IsActive { get; set; } = true; // Status of the agent
     }
 
 }

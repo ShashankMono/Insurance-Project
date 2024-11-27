@@ -27,14 +27,12 @@ namespace Insurance_final_project.Models
         public string NomineeRelation { get; set; }
 
         // Relationships with Agent and Policy Account Many to many realtionship with customer
-        //[ForeignKey("Agent")]
-        //public Guid AgentId { get; set; }
         public ICollection<Agent>? Agent { get; set; }  // Navigation property
 
-        // Relationship with Policy Account (Many-to-Many)
+        // Relationship with Policy Account (one-to-Many)
         public ICollection<PolicyAccount>? PolicyAccounts { get; set; }
 
-        // Relationship with Documents (Many-to-Many)
+        // Relationship with Documents (one-to-Many)
         public ICollection<Document>? Documents { get; set; }
 
         // Foreign key to User (one-to-one)

@@ -6,18 +6,18 @@ namespace Insurance_final_project.Dto
     {
         [Required(ErrorMessage = "First name is required.")]
         [StringLength(50, ErrorMessage = "First name cannot exceed 50 characters.")]
-        public string EmployeeFirstName { get; set; } // Employee's first name
+        public string FirstName { get; set; } // Employee's first name
 
         [Required(ErrorMessage = "Last name is required.")]
         [StringLength(50, ErrorMessage = "Last name cannot exceed 50 characters.")]
-        public string EmployeeLastName { get; set; } // Employee's last name
+        public string LastName { get; set; } // Employee's last name
 
         [Required(ErrorMessage = "Mobile number is required.")]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Mobile number must be 10 digits.")]
         public string MobileNo { get; set; } // Employee's mobile number
 
         [StringLength(250, ErrorMessage = "Address cannot exceed 250 characters.")]
-        public string EmpAddress { get; set; } // Employee's address
+        public string Address { get; set; } // Employee's address
 
         [Required(ErrorMessage = "Email ID is required.")]
         [EmailAddress(ErrorMessage = "Invalid email format.")]
@@ -25,7 +25,7 @@ namespace Insurance_final_project.Dto
 
         [Required(ErrorMessage = "Salary is required.")]
         [Range(0, double.MaxValue, ErrorMessage = "Salary must be a positive number.")]
-        public decimal Salary { get; set; } // Employee's salary
+        public double Salary { get; set; } // Employee's salary
 
         [Required]
         public bool IsActive { get; set; } = true; // Default Active status

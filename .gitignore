@@ -9,31 +9,49 @@ obj/
 *.userosscache
 *.sln.docstates
 
-# Visual Studio for Mac
-.vscode/
-
-# Rider
+# Rider IDE
 .idea/
 
-# User-specific VS Code settings
+# Visual Studio Code workspace settings
 .vscode/
-
-# ASP.NET Scaffolding
-Scaffolding/
-
-# Configuration files with sensitive data (Replace with a template)
-appsettings.json
-appsettings.Development.json
-secrets.json
 
 # Logs and temporary files
 *.log
 *.tmp
 
-# Windows system files
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+
+# DotNet CLI working directory
+artifacts/
+
+# Dependency cache (node_modules for JS interop)
+**/node_modules/
+
+# Sensitive configuration files
+appsettings.json
+appsettings.Development.json
+secrets.json
+
+# OS generated files
+.DS_Store
 Thumbs.db
 Desktop.ini
 
-# OS-specific files
-.DS_Store  # macOS
-.vsconfig   # Visual Studio configuration file
+# Visual Studio configuration file
+.vsconfig
+
+# Temporary files
+*.bak
+*.swp
+
+# JetBrains Rider
+.idea/
+
+# Global JetBrains files
+*.iml
+*.ipr
+*.iws
+out/

@@ -12,10 +12,10 @@ namespace Insurance_final_project.Models
 
         public string DocumentName { get; set; }
 
-        public string DocumentFileURL { get; set; }  // You can use a string for file paths or URIs
+        public string DocumentFileURL { get; set; } 
 
         //Check verification of the document which will be changed by employee
-        public bool IsVerified    { get; set; } 
+        public bool IsVerified { get; set; } = false;
 
         // Foreign Key to Customer (many-to-one relationship)
         [ForeignKey("Customer")]
