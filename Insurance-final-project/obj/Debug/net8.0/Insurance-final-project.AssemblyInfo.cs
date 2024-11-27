@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Insurance-final-project")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3eeec34cbebd89b02fe9eefc00508430a427ab84")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bab144ae71cc91cb79ec3f49ab2bc36c6f2831d6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Insurance-final-project")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Insurance-final-project")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

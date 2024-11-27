@@ -38,3 +38,20 @@ secrets.json
 # OS generated files
 .DS_Store
 Thumbs.db
+Desktop.ini
+
+# Visual Studio configuration file
+.vsconfig
+
+# Temporary files
+*.bak
+*.swp
+
+# JetBrains Rider
+.idea/
+
+# Global JetBrains files
+*.iml
+*.ipr
+*.iws
+out/
