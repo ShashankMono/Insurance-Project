@@ -1,7 +1,7 @@
 ﻿using Insurance_final_project.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace Insurance_final_project.DTOs
+namespace Insurance_final_project.Dto
 {
     public class PolicyDTO
     {
