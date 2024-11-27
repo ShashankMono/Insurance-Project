@@ -2,7 +2,7 @@
 
 namespace Insurance_final_project.Dto
 {
-    public class TransactionDTO
+    public class TransactionDto
     {
         [Required]
         [StringLength(50, ErrorMessage = "Transaction type cannot exceed 50 characters.")]

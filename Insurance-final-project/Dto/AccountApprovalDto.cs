@@ -2,7 +2,7 @@
 
 namespace Insurance_final_project.Dto
 {
-    public class AccountApprovalDTO
+    public class AccountApprovalDto
     {
         [Required]
         public Guid CustomerId { get; set; }

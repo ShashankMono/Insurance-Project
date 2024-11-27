@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Insurance_final_project.Dto
 {
-    public class PolicyInstallmentDTO
+    public class PolicyInstallmentDto
     {
         public PolicyAccount PolicyAccount { get; set; }
         [Required]

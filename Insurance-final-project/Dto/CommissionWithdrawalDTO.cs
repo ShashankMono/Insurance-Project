@@ -2,7 +2,7 @@
 
 namespace Insurance_final_project.Dto
 {
-    public class CommissionWithdrawalDTO
+    public class CommissionWithdrawalDto
     {
         [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Commission amount must be greater than zero.")]

@@ -2,7 +2,7 @@
 
 namespace Insurance_final_project.Dto
 {
-    public class PolicyTypeDTO
+    public class PolicyTypeDto
     {
         [Required]
         [StringLength(50, ErrorMessage = "Type cannot exceed 50 characters.")]

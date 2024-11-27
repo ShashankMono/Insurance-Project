@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata;
 
-namespace Insurance_final_project.DTOs
+namespace Insurance_final_project.Dto
 {
-    public class ClaimDTO
+    public class ClaimDto
     {
         [Required]
         public Guid PolicyAccountId { get; set; }
