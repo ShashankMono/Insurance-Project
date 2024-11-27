@@ -13,7 +13,7 @@ namespace Insurance_final_project.DTOs
 
         [Required]
         [Range(1, double.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
-        public decimal AmountToBeClaimed { get; set; }
+        public double AmountToBeClaimed { get; set; }
         [Required]
         [StringLength(500)]
         public string Description { get; set; }

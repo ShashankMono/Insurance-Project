@@ -22,7 +22,7 @@ namespace Insurance_final_project.DTOs
         public int MaximumAgeCriteria { get; set; }
 
         [Range(0.01, double.MaxValue, ErrorMessage = "Minimum investment amount must be greater than zero.")]
-        public decimal MinimumInvestmentAmount { get; set; }
+        public double MinimumInvestmentAmount { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "Minimum policy term must be at least 1 year.")]
         public int MinimumPolicyTerm { get; set; }
@@ -31,12 +31,12 @@ namespace Insurance_final_project.DTOs
         public int MaximumPolicyTerm { get; set; }
 
         [Range(0.01, double.MaxValue, ErrorMessage = "Maximum investment amount must be greater than zero.")]
-        public decimal MaximumInvestmentAmount { get; set; }
+        public double MaximumInvestmentAmount { get; set; }
 
         [Range(0.01, 100, ErrorMessage = "Profit percentage must be between 0.01 and 100.")]
-        public decimal ProfitPercentage { get; set; }
+        public double ProfitPercentage { get; set; }
 
         [Range(0.01, 100, ErrorMessage = "Commission percentage must be between 0.01 and 100.")]
-        public decimal CommissionPercentage { get; set; }
+        public double CommissionPercentage { get; set; }
     }
 }

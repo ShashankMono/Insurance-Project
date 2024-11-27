@@ -8,16 +8,17 @@ namespace Insurance_final_project.Models
         [Key]
         public Guid Id { get; set; }
         public string Type { get; set; } // Installment Payment or Withdrawal
-        public decimal Amount { get; set; }
+        public double Amount { get; set; }
 
-        [ForeignKey("User")]
-        public Guid UserId { get; set; }
-        public User User { get; set; }
+        [ForeignKey("Customer")]
+        public Guid CustomerId { get; set; }
+        public Customer Customer { get; set; }
 
         [ForeignKey("PolicyAccount")]
         public Guid PolicyAccountId { get; set; }
         public PolicyAccount PolicyAccount { get; set; }
 
         public DateTime DateTime { get; set; }
+        public string ReferenceNumber { get; set; }
     }
 }

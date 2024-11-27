@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace Insurance_final_project.Models
 {
@@ -17,12 +18,12 @@ namespace Insurance_final_project.Models
 
         public int MinimumAgeCriteria { get; set; }
         public int MaximumAgeCriteria { get; set; }
-        public decimal MinimumInvestmentAmount { get; set; }
+        public double MinimumInvestmentAmount { get; set; }
         public int MinimumPolicyTerm { get; set; }
         public int MaximumPolicyTerm { get; set; }
-        public decimal MaximumInvestmentAmount { get; set; }
-        public decimal ProfitPercentage { get; set; }
-        public decimal CommissionPercentage { get; set; }
+        public double MaximumInvestmentAmount { get; set; }
+        public double ProfitPercentage { get; set; }
+        public double CommissionPercentage { get; set; }
 
         public ICollection<PolicyAccount> PolicyAccounts { get; set; }
     }

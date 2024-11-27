@@ -10,14 +10,17 @@ namespace Insurance_final_project.DTOs
 
         [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Transaction amount must be greater than zero.")]
-        public decimal Amount { get; set; }
+        public double Amount { get; set; }
 
         [Required]
-        public Guid UserId { get; set; }
+        public Guid CustomerId { get; set; }
 
         [Required]
         public Guid PolicyAccountId { get; set; }
 
         public DateTime DateTime { get; set; }
+        public string ReferenceNumber { get; set; }
+
+
     }
 }

@@ -18,7 +18,7 @@ namespace Insurance_final_project.Models
         public Guid? DocumentId { get; set; }
         public Document Document { get; set; }
 
-        public decimal AmountToBeClaimed { get; set; }
+        public double AmountToBeClaimed { get; set; }
         public string ClaimDescription { get; set; }
         public bool ApprovedStatus { get; set; } // Approval status of the claim
         public DateTime DateAndTime { get; set; }

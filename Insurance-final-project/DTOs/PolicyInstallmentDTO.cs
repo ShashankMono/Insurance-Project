@@ -9,9 +9,10 @@ namespace Insurance_final_project.DTOs
         public PolicyAccount PolicyAccount { get; set; }
         [Required]
         public Guid PolicyAccountId { get; set; }
-
         [Required]
-        public DateTime InstallmentDate { get; set; }
+        public DateTime InstallmentPaidDate { get; set; }
+        [Required]
+        public DateTime InstallmentDueDate { get; set; }
 
         [Required]
         [StringLength(20, ErrorMessage = "Status cannot exceed 20 characters.")]
@@ -20,8 +21,6 @@ namespace Insurance_final_project.DTOs
         [Required]
         [Range(1, double.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
         public double Amount { get; set; }
-        public Transaction Transaction { get; set; }
-        [Required]
-        public Guid TransactionId { get; set; }
+        
     }
 }

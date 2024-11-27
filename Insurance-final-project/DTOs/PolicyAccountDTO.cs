@@ -12,10 +12,10 @@ namespace Insurance_final_project.DTOs
 
         [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Coverage amount must be greater than zero.")]
-        public decimal CoverageAmount { get; set; }
+        public double CoverageAmount { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "Total amount paid must be non-negative.")]
-        public decimal TotalAmountPaid { get; set; }
+        public double TotalAmountPaid { get; set; }
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -32,6 +32,6 @@ namespace Insurance_final_project.DTOs
         public string Status { get; set; } // Open or Closed
 
         [Range(0, double.MaxValue, ErrorMessage = "Agent commission must be non-negative.")]
-        public decimal AgentCommission { get; set; }
+        public double AgentCommission { get; set; }
     }
 }
