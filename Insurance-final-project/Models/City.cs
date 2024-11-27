@@ -9,6 +9,6 @@ namespace Insurance_final_project.Models
 
         public string CityName { get; set; }
 
-        public ICollection<Customer> Customers { get; set; }
+        public ICollection<Customer>? Customers { get; set; }
     }
 }

@@ -25,6 +25,6 @@ namespace Insurance_final_project.Models
         public double ProfitPercentage { get; set; }
         public double CommissionPercentage { get; set; }
 
-        public ICollection<PolicyAccount> PolicyAccounts { get; set; }
+        public ICollection<PolicyAccount>? PolicyAccounts { get; set; }
     }
 }

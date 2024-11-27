@@ -13,7 +13,7 @@ namespace Insurance_final_project.Models
         public PolicyAccount PolicyAccount { get; set; }
         public DateTime InstallmentPaidDate { get; set; }
         public DateTime InstallmentDueDate { get; set; }
-        public string Status { get; set; } // E.g., Paid or Pending
+        public bool IsPaid { get; set; } = false; // Paid or Pending
         public double Amount { get; set; }
 
         

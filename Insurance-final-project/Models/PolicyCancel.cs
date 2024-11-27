@@ -6,16 +6,16 @@ namespace Insurance_final_project.Models
     public class PolicyCancel
     {
         [Key]
-        public int PolicyCancelId { get; set; } // Primary Key
+        public Guid PolicyCancelId { get; set; } // Primary Key
 
         public double Amount { get; set; }
 
-        public bool Approved { get; set; }
+        public bool IsApproved { get; set; } = false;
 
         public DateTime DateAndTime { get; set; } // Date and Time of cancellation
 
         [ForeignKey("PolicyAccount")]
-        public int PolicyAccountId { get; set; } // Foreign Key
+        public Guid PolicyAccountId { get; set; } // Foreign Key
 
         public virtual PolicyAccount PolicyAccount { get; set; }
     }

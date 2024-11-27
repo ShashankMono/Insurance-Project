@@ -8,6 +8,6 @@ namespace Insurance_final_project.Models
         public Guid Id { get; set; }
         public string Type { get; set; }
 
-        public ICollection<Policy> Policies { get; set; }
+        public ICollection<Policy>? Policies { get; set; }
     }
 }

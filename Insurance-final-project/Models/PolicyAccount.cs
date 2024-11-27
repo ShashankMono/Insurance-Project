@@ -23,10 +23,16 @@ namespace Insurance_final_project.Models
         public string InstallmentType { get; set; } // Monthly, Quarterly, etc.
 
         [ForeignKey("Agent")]
-        public Guid AgentId { get; set; }
-        public Agent Agent { get; set; }
+        public Guid? AgentId { get; set; }
+        public Agent? Agent { get; set; }
+
+        //one-to-many relationship with installement table
+        public ICollection<PolicyInstallment>? policyInstallments { get; set; }
+
+        //one-to-many realtionship with transaction table
+        public ICollection<Transaction>? transactions { get; set; }
 
         public string Status { get; set; } // Open/Closed
-        public double AgentCommission { get; set; } // Calculated based on installment payments and commission percentage
+        public double? AgentCommission { get; set; } // Calculated based on installment payments and commission percentage
     }
 }

@@ -38,10 +38,16 @@ namespace Insurance_final_project.Models
         // Foreign key to User (one-to-one)
         [ForeignKey("User")]
         public Guid UserId { get; set; }
-        public User? User { get; set; }
+        public User User { get; set; }
 
         // Queries (one-to-many)
-        public ICollection<Query> Queries { get; set; }
+        public ICollection<Query>? Queries { get; set; }
+
+        //Approval of cutomer account, admin will approve
+        public bool IsApproved { get; set; } = false;
+
+        //one-to-many realtionship with transaction table
+        public ICollection<Transaction>? transactions { get; set; }
     }
 
 }
