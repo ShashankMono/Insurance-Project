@@ -1,1 +1,40 @@
 .vs/
+# Build directories
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider IDE
+.idea/
+
+# Visual Studio Code workspace settings
+.vscode/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+
+# DotNet CLI working directory
+artifacts/
+
+# Dependency cache (node_modules for JS interop)
+**/node_modules/
+
+# Sensitive configuration files
+appsettings.json
+appsettings.Development.json
+secrets.json
+
+# OS generated files
+.DS_Store
+Thumbs.db
