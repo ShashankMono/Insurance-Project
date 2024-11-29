@@ -14,7 +14,7 @@ namespace Insurance_final_project.Models
         public string Address { get; set; } 
         public string EmailId { get; set; } 
         public double Salary { get; set; } 
-        public bool IsActive { get; set; } = true;
+        //public bool IsActive { get; set; } = true;
 
         // Foreign Key to User
         [ForeignKey("User")]

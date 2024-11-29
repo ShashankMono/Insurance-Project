@@ -22,7 +22,7 @@ namespace Insurance_final_project.Models
         public int MinimumPolicyTerm { get; set; }
         public int MaximumPolicyTerm { get; set; }
         public double MaximumInvestmentAmount { get; set; }
-        public double ProfitPercentage { get; set; }
+        public double? ProfitPercentage { get; set; }
         public double CommissionPercentage { get; set; }
 
         public ICollection<PolicyAccount>? PolicyAccounts { get; set; }

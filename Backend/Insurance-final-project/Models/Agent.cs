@@ -23,7 +23,7 @@ namespace Insurance_final_project.Models
 
         public double CommissionEarned { get; set; } // Total commission earned so far
         public double TotalCommission { get; set; } // Overall commission expected
-        public bool IsActive { get; set; } = true; // Status of the agent
+        //public bool IsActive { get; set; } = true; // Status of the agent
 
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Insurance_final_project.Migrations
 {
     [DbContext(typeof(InsuranceContext))]
-    [Migration("20241127134019_v1")]
+    [Migration("20241129103958_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -44,7 +44,8 @@ namespace Insurance_final_project.Migrations
                 {
                     b.Property<Guid>("AdminId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -61,14 +62,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("admins");
+                    b.ToTable("Admins");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.Agent", b =>
                 {
                     b.Property<Guid>("AgentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<double>("CommissionEarned")
                         .HasColumnType("float");
@@ -80,9 +82,6 @@ namespace Insurance_final_project.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -106,14 +105,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("agents");
+                    b.ToTable("Agents");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.City", b =>
                 {
                     b.Property<Guid>("CityId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<string>("CityName")
                         .IsRequired()
@@ -121,14 +121,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasKey("CityId");
 
-                    b.ToTable("citys");
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.Claim", b =>
                 {
                     b.Property<Guid>("ClaimId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<DateTime?>("AcknowledgementDate")
                         .HasColumnType("datetime2");
@@ -158,14 +159,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasIndex("PolicyAccountId");
 
-                    b.ToTable("claim");
+                    b.ToTable("Claim");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.CommissionWithdrawal", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<Guid>("AgentId")
                         .HasColumnType("uniqueidentifier");
@@ -186,14 +188,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasIndex("AgentId");
 
-                    b.ToTable("commissionsRequest");
+                    b.ToTable("CommissionsRequests");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.Customer", b =>
                 {
                     b.Property<Guid>("CustomerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<Guid>("CityId")
                         .HasColumnType("uniqueidentifier");
@@ -239,14 +242,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("customers");
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.Document", b =>
                 {
                     b.Property<Guid>("DocumentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
@@ -270,14 +274,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("documents");
+                    b.ToTable("Documents");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.Employee", b =>
                 {
                     b.Property<Guid>("EmployeeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -290,9 +295,6 @@ namespace Insurance_final_project.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -312,14 +314,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("employees");
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.Policy", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<double>("CommissionPercentage")
                         .HasColumnType("float");
@@ -353,21 +356,22 @@ namespace Insurance_final_project.Migrations
                     b.Property<Guid>("PolicyTypeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("ProfitPercentage")
+                    b.Property<double?>("ProfitPercentage")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PolicyTypeId");
 
-                    b.ToTable("policies");
+                    b.ToTable("Policies");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.PolicyAccount", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<double?>("AgentCommission")
                         .HasColumnType("float");
@@ -409,14 +413,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasIndex("PolicyId");
 
-                    b.ToTable("policyAccounts");
+                    b.ToTable("PolicyAccounts");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.PolicyCancel", b =>
                 {
                     b.Property<Guid>("PolicyCancelId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
@@ -434,14 +439,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasIndex("PolicyAccountId");
 
-                    b.ToTable("policyCancel");
+                    b.ToTable("PolicyCancel");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.PolicyInstallment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
@@ -462,14 +468,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasIndex("PolicyAccountId");
 
-                    b.ToTable("policyInstallments");
+                    b.ToTable("PolicyInstallments");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.PolicyType", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -477,14 +484,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("policyTypes");
+                    b.ToTable("PolicyTypes");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.Query", b =>
                 {
                     b.Property<Guid>("QueryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
@@ -501,14 +509,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("query");
+                    b.ToTable("Query");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.Role", b =>
                 {
                     b.Property<Guid>("RoleId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<string>("RoleName")
                         .IsRequired()
@@ -516,14 +525,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("role");
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.State", b =>
                 {
                     b.Property<Guid>("StateId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<string>("StateName")
                         .IsRequired()
@@ -531,14 +541,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasKey("StateId");
 
-                    b.ToTable("states");
+                    b.ToTable("States");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.Transaction", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
@@ -566,14 +577,15 @@ namespace Insurance_final_project.Migrations
 
                     b.HasIndex("PolicyAccountId");
 
-                    b.ToTable("transaction");
+                    b.ToTable("Transaction");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.User", b =>
                 {
                     b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -593,7 +605,7 @@ namespace Insurance_final_project.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("AgentCustomer", b =>

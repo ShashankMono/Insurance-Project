@@ -12,58 +12,58 @@ namespace Insurance_final_project.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "citys",
+                name: "Cities",
                 columns: table => new
                 {
-                    CityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     CityName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_citys", x => x.CityId);
+                    table.PrimaryKey("PK_Cities", x => x.CityId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "policyTypes",
+                name: "PolicyTypes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_policyTypes", x => x.Id);
+                    table.PrimaryKey("PK_PolicyTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "role",
+                name: "Role",
                 columns: table => new
                 {
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     RoleName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_role", x => x.RoleId);
+                    table.PrimaryKey("PK_Role", x => x.RoleId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "states",
+                name: "States",
                 columns: table => new
                 {
-                    StateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     StateName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_states", x => x.StateId);
+                    table.PrimaryKey("PK_States", x => x.StateId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "policies",
+                name: "Policies",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PolicyTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -73,25 +73,25 @@ namespace Insurance_final_project.Migrations
                     MinimumPolicyTerm = table.Column<int>(type: "int", nullable: false),
                     MaximumPolicyTerm = table.Column<int>(type: "int", nullable: false),
                     MaximumInvestmentAmount = table.Column<double>(type: "float", nullable: false),
-                    ProfitPercentage = table.Column<double>(type: "float", nullable: false),
+                    ProfitPercentage = table.Column<double>(type: "float", nullable: true),
                     CommissionPercentage = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_policies", x => x.Id);
+                    table.PrimaryKey("PK_Policies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_policies_policyTypes_PolicyTypeId",
+                        name: "FK_Policies_PolicyTypes_PolicyTypeId",
                         column: x => x.PolicyTypeId,
-                        principalTable: "policyTypes",
+                        principalTable: "PolicyTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "users",
+                name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -99,40 +99,40 @@ namespace Insurance_final_project.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_users", x => x.UserId);
+                    table.PrimaryKey("PK_Users", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_users_role_RoleId",
+                        name: "FK_Users_Role_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "role",
+                        principalTable: "Role",
                         principalColumn: "RoleId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "admins",
+                name: "Admins",
                 columns: table => new
                 {
-                    AdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_admins", x => x.AdminId);
+                    table.PrimaryKey("PK_Admins", x => x.AdminId);
                     table.ForeignKey(
-                        name: "FK_admins_users_UserId",
+                        name: "FK_Admins_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "users",
+                        principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "agents",
+                name: "Agents",
                 columns: table => new
                 {
-                    AgentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AgentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Qualification = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -140,25 +140,24 @@ namespace Insurance_final_project.Migrations
                     MobileNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CommissionEarned = table.Column<double>(type: "float", nullable: false),
-                    TotalCommission = table.Column<double>(type: "float", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    TotalCommission = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_agents", x => x.AgentId);
+                    table.PrimaryKey("PK_Agents", x => x.AgentId);
                     table.ForeignKey(
-                        name: "FK_agents_users_UserId",
+                        name: "FK_Agents_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "users",
+                        principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "customers",
+                name: "Customers",
                 columns: table => new
                 {
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmailId = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -172,57 +171,56 @@ namespace Insurance_final_project.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_customers", x => x.CustomerId);
+                    table.PrimaryKey("PK_Customers", x => x.CustomerId);
                     table.ForeignKey(
-                        name: "FK_customers_citys_CityId",
+                        name: "FK_Customers_Cities_CityId",
                         column: x => x.CityId,
-                        principalTable: "citys",
+                        principalTable: "Cities",
                         principalColumn: "CityId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_customers_states_StateId",
+                        name: "FK_Customers_States_StateId",
                         column: x => x.StateId,
-                        principalTable: "states",
+                        principalTable: "States",
                         principalColumn: "StateId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_customers_users_UserId",
+                        name: "FK_Customers_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "users",
+                        principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "employees",
+                name: "Employees",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MobileNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmailId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Salary = table.Column<double>(type: "float", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_employees", x => x.EmployeeId);
+                    table.PrimaryKey("PK_Employees", x => x.EmployeeId);
                     table.ForeignKey(
-                        name: "FK_employees_users_UserId",
+                        name: "FK_Employees_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "users",
+                        principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "commissionsRequest",
+                name: "CommissionsRequests",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     Amount = table.Column<double>(type: "float", nullable: false),
                     ApprovedStatus = table.Column<bool>(type: "bit", nullable: false),
                     AgentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -231,13 +229,13 @@ namespace Insurance_final_project.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_commissionsRequest", x => x.Id);
+                    table.PrimaryKey("PK_CommissionsRequests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_commissionsRequest_agents_AgentId",
+                        name: "FK_CommissionsRequests_Agents_AgentId",
                         column: x => x.AgentId,
-                        principalTable: "agents",
+                        principalTable: "Agents",
                         principalColumn: "AgentId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -251,24 +249,24 @@ namespace Insurance_final_project.Migrations
                 {
                     table.PrimaryKey("PK_AgentCustomer", x => new { x.AgentId, x.CustomersCustomerId });
                     table.ForeignKey(
-                        name: "FK_AgentCustomer_agents_AgentId",
+                        name: "FK_AgentCustomer_Agents_AgentId",
                         column: x => x.AgentId,
-                        principalTable: "agents",
+                        principalTable: "Agents",
                         principalColumn: "AgentId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AgentCustomer_customers_CustomersCustomerId",
+                        name: "FK_AgentCustomer_Customers_CustomersCustomerId",
                         column: x => x.CustomersCustomerId,
-                        principalTable: "customers",
+                        principalTable: "Customers",
                         principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "documents",
+                name: "Documents",
                 columns: table => new
                 {
-                    DocumentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DocumentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     DocumentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DocumentName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DocumentFileURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -277,20 +275,20 @@ namespace Insurance_final_project.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_documents", x => x.DocumentId);
+                    table.PrimaryKey("PK_Documents", x => x.DocumentId);
                     table.ForeignKey(
-                        name: "FK_documents_customers_CustomerId",
+                        name: "FK_Documents_Customers_CustomerId",
                         column: x => x.CustomerId,
-                        principalTable: "customers",
+                        principalTable: "Customers",
                         principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "policyAccounts",
+                name: "PolicyAccounts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     PolicyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CoverageAmount = table.Column<double>(type: "float", nullable: false),
@@ -304,51 +302,51 @@ namespace Insurance_final_project.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_policyAccounts", x => x.Id);
+                    table.PrimaryKey("PK_PolicyAccounts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_policyAccounts_agents_AgentId",
+                        name: "FK_PolicyAccounts_Agents_AgentId",
                         column: x => x.AgentId,
-                        principalTable: "agents",
+                        principalTable: "Agents",
                         principalColumn: "AgentId");
                     table.ForeignKey(
-                        name: "FK_policyAccounts_customers_CustomerId",
+                        name: "FK_PolicyAccounts_Customers_CustomerId",
                         column: x => x.CustomerId,
-                        principalTable: "customers",
+                        principalTable: "Customers",
                         principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_policyAccounts_policies_PolicyId",
+                        name: "FK_PolicyAccounts_Policies_PolicyId",
                         column: x => x.PolicyId,
-                        principalTable: "policies",
+                        principalTable: "Policies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "query",
+                name: "Query",
                 columns: table => new
                 {
-                    QueryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QueryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     Question = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Response = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_query", x => x.QueryId);
+                    table.PrimaryKey("PK_Query", x => x.QueryId);
                     table.ForeignKey(
-                        name: "FK_query_customers_CustomerId",
+                        name: "FK_Query_Customers_CustomerId",
                         column: x => x.CustomerId,
-                        principalTable: "customers",
+                        principalTable: "Customers",
                         principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "claim",
+                name: "Claim",
                 columns: table => new
                 {
-                    ClaimId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClaimId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     PolicyAccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DocumentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     AmountToBeClaimed = table.Column<double>(type: "float", nullable: false),
@@ -359,25 +357,25 @@ namespace Insurance_final_project.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_claim", x => x.ClaimId);
+                    table.PrimaryKey("PK_Claim", x => x.ClaimId);
                     table.ForeignKey(
-                        name: "FK_claim_documents_DocumentId",
+                        name: "FK_Claim_Documents_DocumentId",
                         column: x => x.DocumentId,
-                        principalTable: "documents",
+                        principalTable: "Documents",
                         principalColumn: "DocumentId");
                     table.ForeignKey(
-                        name: "FK_claim_policyAccounts_PolicyAccountId",
+                        name: "FK_Claim_PolicyAccounts_PolicyAccountId",
                         column: x => x.PolicyAccountId,
-                        principalTable: "policyAccounts",
+                        principalTable: "PolicyAccounts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "policyCancel",
+                name: "PolicyCancel",
                 columns: table => new
                 {
-                    PolicyCancelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PolicyCancelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     Amount = table.Column<double>(type: "float", nullable: false),
                     IsApproved = table.Column<bool>(type: "bit", nullable: false),
                     DateAndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -385,20 +383,20 @@ namespace Insurance_final_project.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_policyCancel", x => x.PolicyCancelId);
+                    table.PrimaryKey("PK_PolicyCancel", x => x.PolicyCancelId);
                     table.ForeignKey(
-                        name: "FK_policyCancel_policyAccounts_PolicyAccountId",
+                        name: "FK_PolicyCancel_PolicyAccounts_PolicyAccountId",
                         column: x => x.PolicyAccountId,
-                        principalTable: "policyAccounts",
+                        principalTable: "PolicyAccounts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "policyInstallments",
+                name: "PolicyInstallments",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     PolicyAccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     InstallmentPaidDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     InstallmentDueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -407,20 +405,20 @@ namespace Insurance_final_project.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_policyInstallments", x => x.Id);
+                    table.PrimaryKey("PK_PolicyInstallments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_policyInstallments_policyAccounts_PolicyAccountId",
+                        name: "FK_PolicyInstallments_PolicyAccounts_PolicyAccountId",
                         column: x => x.PolicyAccountId,
-                        principalTable: "policyAccounts",
+                        principalTable: "PolicyAccounts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "transaction",
+                name: "Transaction",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -430,24 +428,24 @@ namespace Insurance_final_project.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_transaction", x => x.Id);
+                    table.PrimaryKey("PK_Transaction", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_transaction_customers_CustomerId",
+                        name: "FK_Transaction_Customers_CustomerId",
                         column: x => x.CustomerId,
-                        principalTable: "customers",
+                        principalTable: "Customers",
                         principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_transaction_policyAccounts_PolicyAccountId",
+                        name: "FK_Transaction_PolicyAccounts_PolicyAccountId",
                         column: x => x.PolicyAccountId,
-                        principalTable: "policyAccounts",
+                        principalTable: "PolicyAccounts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_admins_UserId",
-                table: "admins",
+                name: "IX_Admins_UserId",
+                table: "Admins",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -456,98 +454,98 @@ namespace Insurance_final_project.Migrations
                 column: "CustomersCustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_agents_UserId",
-                table: "agents",
+                name: "IX_Agents_UserId",
+                table: "Agents",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_claim_DocumentId",
-                table: "claim",
+                name: "IX_Claim_DocumentId",
+                table: "Claim",
                 column: "DocumentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_claim_PolicyAccountId",
-                table: "claim",
+                name: "IX_Claim_PolicyAccountId",
+                table: "Claim",
                 column: "PolicyAccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_commissionsRequest_AgentId",
-                table: "commissionsRequest",
+                name: "IX_CommissionsRequests_AgentId",
+                table: "CommissionsRequests",
                 column: "AgentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_customers_CityId",
-                table: "customers",
+                name: "IX_Customers_CityId",
+                table: "Customers",
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_customers_StateId",
-                table: "customers",
+                name: "IX_Customers_StateId",
+                table: "Customers",
                 column: "StateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_customers_UserId",
-                table: "customers",
+                name: "IX_Customers_UserId",
+                table: "Customers",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_documents_CustomerId",
-                table: "documents",
+                name: "IX_Documents_CustomerId",
+                table: "Documents",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_employees_UserId",
-                table: "employees",
+                name: "IX_Employees_UserId",
+                table: "Employees",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_policies_PolicyTypeId",
-                table: "policies",
+                name: "IX_Policies_PolicyTypeId",
+                table: "Policies",
                 column: "PolicyTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_policyAccounts_AgentId",
-                table: "policyAccounts",
+                name: "IX_PolicyAccounts_AgentId",
+                table: "PolicyAccounts",
                 column: "AgentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_policyAccounts_CustomerId",
-                table: "policyAccounts",
+                name: "IX_PolicyAccounts_CustomerId",
+                table: "PolicyAccounts",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_policyAccounts_PolicyId",
-                table: "policyAccounts",
+                name: "IX_PolicyAccounts_PolicyId",
+                table: "PolicyAccounts",
                 column: "PolicyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_policyCancel_PolicyAccountId",
-                table: "policyCancel",
+                name: "IX_PolicyCancel_PolicyAccountId",
+                table: "PolicyCancel",
                 column: "PolicyAccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_policyInstallments_PolicyAccountId",
-                table: "policyInstallments",
+                name: "IX_PolicyInstallments_PolicyAccountId",
+                table: "PolicyInstallments",
                 column: "PolicyAccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_query_CustomerId",
-                table: "query",
+                name: "IX_Query_CustomerId",
+                table: "Query",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_transaction_CustomerId",
-                table: "transaction",
+                name: "IX_Transaction_CustomerId",
+                table: "Transaction",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_transaction_PolicyAccountId",
-                table: "transaction",
+                name: "IX_Transaction_PolicyAccountId",
+                table: "Transaction",
                 column: "PolicyAccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_users_RoleId",
-                table: "users",
+                name: "IX_Users_RoleId",
+                table: "Users",
                 column: "RoleId");
         }
 
@@ -555,61 +553,61 @@ namespace Insurance_final_project.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "admins");
+                name: "Admins");
 
             migrationBuilder.DropTable(
                 name: "AgentCustomer");
 
             migrationBuilder.DropTable(
-                name: "claim");
+                name: "Claim");
 
             migrationBuilder.DropTable(
-                name: "commissionsRequest");
+                name: "CommissionsRequests");
 
             migrationBuilder.DropTable(
-                name: "employees");
+                name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "policyCancel");
+                name: "PolicyCancel");
 
             migrationBuilder.DropTable(
-                name: "policyInstallments");
+                name: "PolicyInstallments");
 
             migrationBuilder.DropTable(
-                name: "query");
+                name: "Query");
 
             migrationBuilder.DropTable(
-                name: "transaction");
+                name: "Transaction");
 
             migrationBuilder.DropTable(
-                name: "documents");
+                name: "Documents");
 
             migrationBuilder.DropTable(
-                name: "policyAccounts");
+                name: "PolicyAccounts");
 
             migrationBuilder.DropTable(
-                name: "agents");
+                name: "Agents");
 
             migrationBuilder.DropTable(
-                name: "customers");
+                name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "policies");
+                name: "Policies");
 
             migrationBuilder.DropTable(
-                name: "citys");
+                name: "Cities");
 
             migrationBuilder.DropTable(
-                name: "states");
+                name: "States");
 
             migrationBuilder.DropTable(
-                name: "users");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "policyTypes");
+                name: "PolicyTypes");
 
             migrationBuilder.DropTable(
-                name: "role");
+                name: "Role");
         }
     }
 }
