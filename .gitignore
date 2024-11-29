@@ -47,6 +47,9 @@ Desktop.ini
 *.bak
 *.swp
 
+#ignore migrations
+**/Migrations/
+
 # JetBrains Rider
 .idea/
 
