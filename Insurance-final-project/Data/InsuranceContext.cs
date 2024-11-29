@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Abstractions;
 
 namespace Insurance_final_project.Data
 {

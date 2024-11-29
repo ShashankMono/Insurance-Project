@@ -4,6 +4,7 @@ using Insurance_final_project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Insurance_final_project.Migrations
 {
     [DbContext(typeof(InsuranceContext))]
-    partial class InsuranceContextModelSnapshot : ModelSnapshot
+    [Migration("20241129103958_v1")]
+    partial class v1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,7 +188,7 @@ namespace Insurance_final_project.Migrations
 
                     b.HasIndex("AgentId");
 
-                    b.ToTable("CommissionRequests");
+                    b.ToTable("CommissionsRequests");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.Customer", b =>
@@ -422,9 +425,6 @@ namespace Insurance_final_project.Migrations
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
-
-                    b.Property<bool>("Approved")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("DateAndTime")
                         .HasColumnType("datetime2");
@@ -794,7 +794,7 @@ namespace Insurance_final_project.Migrations
             modelBuilder.Entity("Insurance_final_project.Models.Transaction", b =>
                 {
                     b.HasOne("Insurance_final_project.Models.Customer", "Customer")
-                        .WithMany("Transactions")
+                        .WithMany("transactions")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -839,7 +839,7 @@ namespace Insurance_final_project.Migrations
 
                     b.Navigation("Queries");
 
-                    b.Navigation("Transactions");
+                    b.Navigation("transactions");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.Policy", b =>

@@ -15,6 +15,8 @@ namespace Insurance_final_project.Models
         public Agent Agent { get; set; }
 
         public bool TransactionStatus { get; set; } = false;
+
+        //Transaction Date will be added when actual withdrwal is done and TransactionStatus will be true
         public DateTime? TransactionDate { get; set; }
     }
 }

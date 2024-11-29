@@ -15,7 +15,7 @@ namespace Insurance_final_project.Models
 
         [ForeignKey("User")]
         public Guid UserId { get; set; } // Foreign key to User
-        public User? User { get; set; } // Navigation property for OTO relationship
+        public User User { get; set; } // Navigation property for OTO relationship
 
         public ICollection<Customer>? Customers { get; set; }  // MTM relationship
 

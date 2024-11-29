@@ -7,7 +7,7 @@ namespace Insurance_final_project.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public string Type { get; set; } // Installment Payment or Withdrawal
+        public string Type { get; set; } // Installment Payment or Withdrawal // getting string from fronend from selectors
         public double Amount { get; set; }
 
         [ForeignKey("Customer")]
