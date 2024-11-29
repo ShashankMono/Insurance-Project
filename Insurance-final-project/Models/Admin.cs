@@ -6,7 +6,7 @@ namespace Insurance_final_project.Models
     public class Admin
     {
         [Key]
-        public Guid Id { get; set; }  
+        public Guid AdminId { get; set; }  
         [Required]
         public string FirstName { get; set; }
         [Required]
