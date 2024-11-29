@@ -40,7 +40,8 @@
 
         // Foreign Key to User (One-to-One)
         [Required(ErrorMessage = "User is required.")]
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
+        //public bool IsApproved { get; set; } = false;
     }
 
 }

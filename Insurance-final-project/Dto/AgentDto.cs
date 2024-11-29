@@ -27,7 +27,7 @@
         public string MobileNo { get; set; } = string.Empty;
 
         [Required]
-        public int UserId { get; set; } // Foreign key to User
+        public Guid UserId { get; set; } // Foreign key to User
 
         [Range(0, double.MaxValue, ErrorMessage = "Commission earned must be a non-negative value.")]
         public double CommissionEarned { get; set; } // Total commission earned so far
@@ -35,9 +35,9 @@
         [Range(0, double.MaxValue, ErrorMessage = "Total commission must be a non-negative value.")]
         public double TotalCommission { get; set; } // Overall commission expected
 
-        [Required(ErrorMessage = "Status is required.")]
-        [StringLength(20, ErrorMessage = "Status cannot exceed 20 characters.")]
-        public bool IsActive { get; set; } = true; // Status of the agent
+        //[Required(ErrorMessage = "Status is required.")]
+        //[StringLength(20, ErrorMessage = "Status cannot exceed 20 characters.")]
+        //public bool IsActive { get; set; } = true; // Status of the agent
     }
 
 }

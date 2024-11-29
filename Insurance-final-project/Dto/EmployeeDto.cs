@@ -27,10 +27,10 @@ namespace Insurance_final_project.Dto
         [Range(0, double.MaxValue, ErrorMessage = "Salary must be a positive number.")]
         public double Salary { get; set; } // Employee's salary
 
-        [Required]
-        public bool IsActive { get; set; } = true; // Default Active status
+        //[Required]
+        //public bool IsActive { get; set; } = true; // Default Active status
 
         [Required(ErrorMessage = "User ID is required.")]
-        public int UserId { get; set; } // Link to User Entity
+        public Guid UserId { get; set; } // Link to User Entity
     }
 }

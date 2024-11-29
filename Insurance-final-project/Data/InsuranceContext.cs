@@ -6,7 +6,7 @@ namespace Insurance_final_project.Data
 {
     public class InsuranceContext:DbContext
     {
-        public DbSet<Admin> Admins {  get; set; }
+        public DbSet<Admin> Admins { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Agent> Agents { get; set; }
         public DbSet<Customer> Customers { get; set; }
@@ -14,7 +14,7 @@ namespace Insurance_final_project.Data
         public DbSet<City> Cities { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<Claim> Claim { get; set; }
-        public DbSet<CommissionWithdrawal> CommissionsRequests { get; set; }
+        public DbSet<CommissionWithdrawal> CommissionRequests { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<PolicyAccount> PolicyAccounts { get; set; }
         public DbSet<PolicyCancel> PolicyCancel { get; set; }
@@ -24,10 +24,9 @@ namespace Insurance_final_project.Data
         public DbSet<Role> Role { get; set; }
         public DbSet<Transaction> Transaction { get; set; }
         public DbSet<User> Users { get; set; }
-
-        public InsuranceContext(DbContextOptions options):base(options)
+        public InsuranceContext(DbContextOptions options) : base(options)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -177,4 +176,5 @@ namespace Insurance_final_project.Data
             });
         }
     }
+
 }

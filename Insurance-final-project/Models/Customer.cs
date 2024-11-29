@@ -47,7 +47,7 @@ namespace Insurance_final_project.Models
         public bool IsApproved { get; set; } = false;
 
         //one-to-many realtionship with transaction table
-        public ICollection<Transaction>? transactions { get; set; }
+        public ICollection<Transaction>? Transactions { get; set; }
     }
 
 }

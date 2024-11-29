@@ -10,7 +10,7 @@ namespace Insurance_final_project.Dto
 
         public bool ApprovedStatus { get; set; } = false;
         public bool TransactionStatus { get; set; } = false;
-        public DateTime ? TransactionDate { get; set; }
+        public DateTime? TransactionDate { get; set; }
         [Required]
         public Guid AgentId { get; set; }
     }
