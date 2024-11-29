@@ -25,13 +25,13 @@ namespace Insurance_final_project.Dto
         public string InstallmentType { get; set; } // Monthly, Quarterly, etc.
 
         [Required]
-        public Guid AgentId { get; set; }
+        public Guid? AgentId { get; set; }
 
         [Required]
         [StringLength(50, ErrorMessage = "Status cannot exceed 50 characters.")]
         public string Status { get; set; } // Open or Closed
 
         [Range(0, double.MaxValue, ErrorMessage = "Agent commission must be non-negative.")]
-        public double AgentCommission { get; set; }
+        public double? AgentCommission { get; set; }
     }
 }

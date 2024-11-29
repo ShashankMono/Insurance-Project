@@ -14,10 +14,11 @@ namespace Insurance_final_project.Models
         public string Address { get; set; } 
         public string EmailId { get; set; } 
         public double Salary { get; set; } 
-        public bool IsActive { get; set; } = true; 
+        //public bool IsActive { get; set; } = true;
 
         // Foreign Key to User
-        public int UserId { get; set; } // Link to User Entity
+        [ForeignKey("User")]
+        public Guid UserId { get; set; } // Link to User Entity
         public User User { get; set; } // Navigation property for User
 
     }

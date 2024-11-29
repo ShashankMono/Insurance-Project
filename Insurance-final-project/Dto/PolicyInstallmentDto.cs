@@ -16,7 +16,7 @@ namespace Insurance_final_project.Dto
 
         [Required]
         [StringLength(20, ErrorMessage = "Status cannot exceed 20 characters.")]
-        public string Status { get; set; }
+        public bool IsPaid { get; set; } = false;
 
         [Required]
         [Range(1, double.MaxValue, ErrorMessage = "Amount must be greater than zero.")]

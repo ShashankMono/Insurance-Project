@@ -18,7 +18,7 @@ namespace Insurance_final_project.Dto
         [ForeignKey("Role")]
         public int RoleId { get; set; } // Foreign key linking to Role
 
-        public Role? Role { get; set; } // Navigation property for Role
+        public Role Role { get; set; } // Navigation property for Role
 
         // IsActive property, defaulting to true only for customers
         [Required]

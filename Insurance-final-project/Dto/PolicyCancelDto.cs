@@ -9,12 +9,12 @@ namespace Insurance_final_project.Dto
         public double Amount { get; set; }
 
         [Required]
-        public bool Approved { get; set; }
+        public bool Approved { get; set; } = false;
 
         [Required]
         public DateTime DateAndTime { get; set; }
 
         [Required(ErrorMessage = "Policy Account ID is required.")]
-        public int PolicyAccountId { get; set; }
+        public Guid PolicyAccountId { get; set; }
     }
 }

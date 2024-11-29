@@ -18,7 +18,7 @@ namespace Insurance_final_project.Dto
         [StringLength(500)]
         public string Description { get; set; }
 
-        public bool ApprovedStatus { get; set; }
+        public bool ApprovedStatus { get; set; } = false;
         public DateTime DateTime { get; set; }
         public DateTime? AcknowledgementDate { get; set; }
     }

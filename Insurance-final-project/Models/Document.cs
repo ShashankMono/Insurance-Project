@@ -20,9 +20,9 @@ namespace Insurance_final_project.Models
         // Foreign Key to Customer (many-to-one relationship)
         [ForeignKey("Customer")]
         [Required(ErrorMessage = "Customer ID is required.")]
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
 
         // Navigation property to Customer
-        public Customer? Customer { get; set; }
+        public Customer Customer { get; set; }
     }
 }

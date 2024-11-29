@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Insurance_final_project.Dto
 {
-    public class Query
+    public class QueryDto
     {
 
         [Required(ErrorMessage = "Question is required.")]
@@ -17,6 +17,6 @@ namespace Insurance_final_project.Dto
         public Customer Customer { get; set; }
 
         [Required(ErrorMessage = "Customer ID is required.")]
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
     }
 }
