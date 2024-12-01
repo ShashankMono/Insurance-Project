@@ -116,7 +116,12 @@ namespace Insurance_final_project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("StateId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("CityId");
+
+                    b.HasIndex("StateId");
 
                     b.ToTable("Cities");
                 });
@@ -423,9 +428,6 @@ namespace Insurance_final_project.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<bool>("Approved")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("DateAndTime")
                         .HasColumnType("datetime2");
 
@@ -643,6 +645,17 @@ namespace Insurance_final_project.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Insurance_final_project.Models.City", b =>
+                {
+                    b.HasOne("Insurance_final_project.Models.State", "State")
+                        .WithMany("Cities")
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("State");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.Claim", b =>
@@ -866,6 +879,8 @@ namespace Insurance_final_project.Migrations
 
             modelBuilder.Entity("Insurance_final_project.Models.State", b =>
                 {
+                    b.Navigation("Cities");
+
                     b.Navigation("Customer");
                 });
 #pragma warning restore 612, 618

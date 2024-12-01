@@ -14,10 +14,11 @@ namespace Insurance_final_project.Repositories
             _table = _context.Set<T>();
         }
 
-        public int Add(T entity)
+        public T Add(T entity)
         {
             _table.Add(entity);
-            return _context.SaveChanges();
+            _context.SaveChanges();
+            return entity;
         }
 
         public int Delete(T entity)
@@ -26,7 +27,7 @@ namespace Insurance_final_project.Repositories
             return _context.SaveChanges();
         }
 
-        public T Get(int id)
+        public T Get(Guid id)
         {
             return _table.Find(id);
         }

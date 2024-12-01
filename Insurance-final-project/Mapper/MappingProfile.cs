@@ -33,7 +33,7 @@ namespace Insurance_final_project.Mapper
             CreateMap<Employee, EmployeeDto>().ReverseMap();
 
             // Policy
-            CreateMap<Policy, PolicyDTO>().ReverseMap();
+            CreateMap<Policy, PolicyDto>().ReverseMap();
 
             // Policy Account
             CreateMap<PolicyAccount, PolicyAccountDto>().ReverseMap();
