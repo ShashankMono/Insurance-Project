@@ -27,7 +27,7 @@ namespace Insurance_final_project.Repositories
             return _context.SaveChanges();
         }
 
-        public T Get(int id)
+        public T Get(Guid id)
         {
             return _table.Find(id);
         }

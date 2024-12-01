@@ -70,6 +70,7 @@ namespace Insurance_final_project
 
             app.UseHttpsRedirection();
             app.UseCors("AllowAngularApp");
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

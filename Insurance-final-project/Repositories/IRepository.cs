@@ -6,7 +6,7 @@ namespace Insurance_final_project.Repositories
         public T Add(T entity);
         public IQueryable<T> GetAll();
         public T Update(T entity);
-        public T Get(int id);
+        public T Get(Guid id);
         public int Delete(T entity);
     }
 }

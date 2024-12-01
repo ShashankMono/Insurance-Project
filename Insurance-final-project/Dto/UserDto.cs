@@ -6,6 +6,7 @@ namespace Insurance_final_project.Dto
 {
     public class UserDto
     {
+        public Guid UserId { get; set; }
         [Required(ErrorMessage = "Username is required.")]
         [StringLength(50, ErrorMessage = "Username cannot exceed 50 characters.")]
         public string Username { get; set; } // Username of the user

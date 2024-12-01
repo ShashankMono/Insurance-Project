@@ -60,7 +60,7 @@ namespace Insurance_final_project.Services
             _Mapper = mapper;
         }
 
-        public Guid AddNewUser()
+        public UserDto AddNewUser()
         {
             var newUsername = Guid.NewGuid().ToString();
             Random random = new Random();
@@ -72,82 +72,91 @@ namespace Insurance_final_project.Services
                 RoleId = _RoleRepo.GetAll().FirstOrDefault(r => r.RoleName == "Agent").RoleId,
             };
             User userAgent = _UserRepo.Add(_Mapper.Map<UserDto, User>(user));
-            return userAgent.UserId;
+            user.UserId = userAgent.UserId;
+            return user;
         }
-        public Guid AddAgent(AgentDto newAgent)
+        public async Task<UserDto> AddAgent(AgentDto newAgent)
         {
             Agent agent = _Mapper.Map<AgentDto,Agent>(newAgent);
-            agent.UserId = AddNewUser();
+            UserDto user = AddNewUser();
+            agent.UserId = user.UserId;
             Agent agentAdded = _AgentRepo.Add(agent);
-            return agentAdded.AgentId;
+            return user;
         }
 
-        public Guid AddEmployee(EmployeeDto newEmployee)
+        public async Task<UserDto> AddEmployee(EmployeeDto newEmployee)
         {
             Employee employee = _Mapper.Map<EmployeeDto, Employee>(newEmployee);
-            employee.UserId = AddNewUser();
+            UserDto user = AddNewUser();
+            employee.UserId = user.UserId;
             Employee employeeAdded = _EmployeeRepo.Add(employee);
-            return employeeAdded.EmployeeId;
+            return user;
         }
 
-        public Guid AddPolicy(PolicyDTO policy)
+        public async Task<Guid> AddPolicy(PolicyDTO policy)
         {
             var newPolicy = _Mapper.Map<PolicyDTO, Policy>(policy);
             Policy policyAdded = _PolicyRepo.Add(newPolicy);
             return policyAdded.Id;
         }
 
-        public Guid AddPolicyType(PolicyTypeDto policyType)
+        public async Task<Guid> AddPolicyType(PolicyTypeDto policyType)
         {
             var newPolicyType = _Mapper.Map<PolicyTypeDto, PolicyType>(policyType);
             PolicyType policyTypeAdded = _PolicyTypeRepo.Add(newPolicyType);
             return policyTypeAdded.Id;
         }
 
-        public Guid AddRole(RoleDto role)
+        public async Task<Guid> AddRole(RoleDto role)
         {
             var newRole = _Mapper.Map<RoleDto, Role>(role);
             Role roleAdded = _RoleRepo.Add(newRole);
             return roleAdded.RoleId;
         }
 
-        public Guid ApproveCustomer(CustomerDto customer)
+        public async Task<Guid> ApproveCustomer(CustomerDto customer)
         {
             Customer updateCustomer = _Mapper.Map<CustomerDto, Customer>(customer);
             Customer updatedCustomer = _CustomerRepo.Update(updateCustomer);
             return updatedCustomer.CustomerId;
         }
 
-        public Guid ApprovePolicyCancelation(PolicyCancelDto policyCancel)
+        public async Task<Guid> ApprovePolicyCancelation(PolicyCancelDto policyCancel)
         {
             var updatePolicyCancelStatus = _Mapper.Map<PolicyCancelDto, PolicyCancel>(policyCancel);
             PolicyCancel updatedPolicyCancel = _PolicyCancelRepo.Update(updatePolicyCancelStatus);
             return updatedPolicyCancel.PolicyCancelId;
         }
 
-        public Guid ApproveWithdrawal(CommissionWithdrawalDto withdrawRequest)
+        public async Task<Guid> ApproveWithdrawal(CommissionWithdrawalDto withdrawRequest)
         {
             var updateWithdrawRequestStatus = _Mapper.Map<CommissionWithdrawalDto, CommissionWithdrawal>(withdrawRequest);
             CommissionWithdrawal updatedWithdrawRequestStatus = _CommissionWithdrawalRepo.Update(updateWithdrawRequestStatus);
             return updatedWithdrawRequestStatus.Id;
         }
 
-        public Guid City(CityDto city)
+        public async Task<Guid> AddCity(CityDto city)
         {
             return _CityRepo.Add(_Mapper.Map<CityDto, City>(city)).CityId;
         }
+        public async Task<Guid> UpdateCity(CityDto city)
+        {
+            return _CityRepo.Update(_Mapper.Map<CityDto, City>(city)).CityId;
+        }
 
-        public Guid ClaimApproval(ClaimDto claim)
+        public async Task<Guid> ClaimApproval(ClaimDto claim)
         {
             return _ClaimRepo.Update(_Mapper.Map<ClaimDto, Claim>(claim)).ClaimId;
         }
 
-        public Guid DeActivateUser(UserDto user)
+        public async Task<Guid> DeActivateUser(ChangeUserStatusDto user)//changes has been done in this function
         {
-            return _UserRepo.Update(_Mapper.Map<UserDto, User>(user)).UserId;
+            User existingUser = _UserRepo.Get(user.UserId); 
+            existingUser.IsActive = user.IsActive;
+            return _UserRepo.Update(existingUser).UserId;
         }
 
-        public AgentDto GetAgentReport(AgentDto agent)
+        public async Task<AgentDto> GetAgentReport(AgentDto agent)
         {
             return _Mapper.Map<Agent, AgentDto>(_AgentRepo.GetAll()
                 .Include(a => a.PolicyAccounts)
@@ -156,22 +165,22 @@ namespace Insurance_final_project.Services
                 .FirstOrDefault(a => a.AgentId == agent.AgentId));
         }
 
-        public List<ClaimDto> GetClaimAccounts()
+        public async Task<List<ClaimDto>> GetClaimAccounts()
         {
             return _Mapper.Map<List<Claim>, List<ClaimDto>>(_ClaimRepo.GetAll().Include(c=>c.Document).ToList());
         }
 
-        public List<CommissionDto> GetCommissions()
+        public async Task<List<CommissionDto>> GetCommissions()
         {
             return _Mapper.Map<List<Commission>, List<CommissionDto>>(_CommissionRepo.GetAll().ToList());
         }
 
-        public List<CommissionWithdrawalDto> GetCommissionsWithdrawal()
+        public async Task<List<CommissionWithdrawalDto>> GetCommissionsWithdrawal()
         {
             return _Mapper.Map<List<CommissionWithdrawal>, List<CommissionWithdrawalDto>>(_CommissionWithdrawalRepo.GetAll().ToList());
         }
 
-        public List<CustomerDto> GetCustomerAccounts()
+        public async Task<List<CustomerDto>> GetCustomerAccounts()
         {
             return _Mapper.Map<List<Customer>, List<CustomerDto>>(_CustomerRepo.GetAll()
                 .Include(c=>c.Transactions)
@@ -180,7 +189,7 @@ namespace Insurance_final_project.Services
                 .ToList());
         }
 
-        public PolicyAccountDto GetPolicyAccount(PolicyAccountDto policyAccount)
+        public async Task<PolicyAccountDto> GetPolicyAccount(PolicyAccountDto policyAccount)
         {
             return _Mapper.Map<PolicyAccount, PolicyAccountDto>(_PolicyAccountRepo.GetAll()
                 .Include(p=>p.Policy)
@@ -190,34 +199,56 @@ namespace Insurance_final_project.Services
                 );
         }
 
-        public List<PolicyAccountDto> GetPolicyAccounts()
+        public async Task<List<PolicyAccountDto>> GetAllPolicyAccounts()
         {
             return _Mapper.Map<List<PolicyAccount>, List<PolicyAccountDto>>(_PolicyAccountRepo.GetAll().ToList());
         }
 
-        public List<PolicyCancelDto> GetPolicyCancels()
+        public async Task<List<PolicyCancelDto>> GetPolicyCancels()
         {
             return _Mapper.Map<List<PolicyCancel>, List<PolicyCancelDto>>(_PolicyCancelRepo.GetAll().ToList());
         }
 
-        public List<TransactionDto> GetTransactions()
+        public async Task<List<TransactionDto>> GetTransactions()
         {
             return _Mapper.Map<List<Transaction>,List<TransactionDto>>(_TransactionRepo.GetAll().ToList());
         }
 
-        public Guid AddState(StateDto state)
+        public async Task<Guid> AddState(StateDto state)
         {
             return _StateRepo.Add(_Mapper.Map<StateDto, State>(state)).StateId;
         }
 
-        public Guid UpdatePolicy(PolicyDTO policy)
+        public async Task<Guid> UpdatePolicy(PolicyDTO policy)
         {
             return _PolicyRepo.Update(_Mapper.Map<PolicyDTO, Policy>(policy)).Id;
         }
 
-        public Guid State(StateDto state)
+        public async Task<Guid> UpdateState(StateDto state)
         {
-            throw new NotImplementedException();
+            return _StateRepo.Update(_Mapper.Map<StateDto, State>(state)).StateId;
+        }
+
+        public async Task<List<EmployeeDto>> GetAllEmployee()
+        {
+            return _Mapper.Map<List<Employee>,List<EmployeeDto>>(_EmployeeRepo.GetAll().ToList());
+        }
+
+        public async Task<List<AgentDto>> GetAllAgents()
+        {
+            return _Mapper.Map<List<Agent>,List<AgentDto>>(_AgentRepo.GetAll().ToList());
+        }
+
+        public async Task<List<PolicyDTO>> GetPolicies()
+        {
+            return _Mapper.Map<List<Policy>,List<PolicyDTO>>(_PolicyRepo.GetAll().ToList());
+        }
+
+        public async Task<PolicyDTO> GetPolicy(Guid policyId)
+        {
+            return _Mapper.Map<Policy,PolicyDTO>(_PolicyRepo.GetAll()
+                .Include(p=>p.PolicyAccounts)
+                .FirstOrDefault(x => x.Id == policyId));
         }
     }
 }

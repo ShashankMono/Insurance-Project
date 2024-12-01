@@ -5,32 +5,37 @@ namespace Insurance_final_project.Services
 {
     public interface IAdminService
     {
-        //public User AddUser(UserDto userDto);
-        public Guid AddEmployee(EmployeeDto employee);
-        public Guid AddAgent(AgentDto agent);
-        public Guid City(CityDto city);
-        public Guid State(StateDto state);
-        public List<CommissionDto> GetCommissions();
-        public List<PolicyAccountDto> GetPolicyAccounts();
-        public List<ClaimDto> GetClaimAccounts();
-        public Guid ClaimApproval(ClaimDto claim);
-        public Guid DeActivateUser(UserDto user);
-        public List<CommissionWithdrawalDto> GetCommissionsWithdrawal();
-        public Guid ApproveWithdrawal(CommissionWithdrawalDto withdrawRequest);
-        public List<PolicyCancelDto> GetPolicyCancels();
-        public Guid ApprovePolicyCancelation(PolicyCancelDto policyCancel);
-        public List<TransactionDto> GetTransactions();
-        public Guid AddPolicy(PolicyDTO policy);
-        public Guid UpdatePolicy(PolicyDTO policy);
-        public List<CustomerDto> GetCustomerAccounts();
-        public Guid ApproveCustomer(CustomerDto customer);
-        public AgentDto GetAgentReport(AgentDto agent);// incliudes all fields like commissions, commission withdrwal, policy account
-        public PolicyAccountDto GetPolicyAccount(PolicyAccountDto policyAccount);
-        public Guid AddRole(RoleDto role);
-        public Guid AddPolicyType(PolicyTypeDto policyType);
+        Task<UserDto> AddEmployee(EmployeeDto employee);
+        Task<List<EmployeeDto>> GetAllEmployee(); // new added
+        Task<UserDto> AddAgent(AgentDto agent);
+        Task<List<AgentDto>> GetAllAgents(); // new added
+        Task<Guid> AddCity(CityDto city);
+        Task<Guid> UpdateCity(CityDto city);
+        Task<Guid> AddState(StateDto state);
+        Task<Guid> UpdateState(StateDto state);
+        Task<List<CommissionDto>> GetCommissions();
+        Task<List<PolicyAccountDto>> GetAllPolicyAccounts();
+        Task<List<ClaimDto>> GetClaimAccounts();
+        Task<Guid> ClaimApproval(ClaimDto claim);
+        Task<Guid> DeActivateUser(ChangeUserStatusDto user);
+        Task<List<CommissionWithdrawalDto>> GetCommissionsWithdrawal();
+        Task<Guid> ApproveWithdrawal(CommissionWithdrawalDto withdrawRequest);
+        Task<List<PolicyCancelDto>> GetPolicyCancels();
+        Task<Guid> ApprovePolicyCancelation(PolicyCancelDto policyCancel);
+        Task<List<TransactionDto>> GetTransactions();
+        Task<Guid> AddPolicy(PolicyDTO policy);
+        Task<Guid> UpdatePolicy(PolicyDTO policy);
+        Task<List<PolicyDTO>> GetPolicies(); // added new
+        Task<PolicyDTO> GetPolicy(Guid policyId); // added new
+        Task<List<CustomerDto>> GetCustomerAccounts();
+        Task<Guid> ApproveCustomer(CustomerDto customer);
+        Task<AgentDto> GetAgentReport(AgentDto agent); // includes all fields like commissions, commission withdrawal, policy account
+        Task<PolicyAccountDto> GetPolicyAccount(PolicyAccountDto policyAccount);
+        Task<Guid> AddRole(RoleDto role);
+        Task<Guid> AddPolicyType(PolicyTypeDto policyType);
 
 
-        
+
 
 
     }
