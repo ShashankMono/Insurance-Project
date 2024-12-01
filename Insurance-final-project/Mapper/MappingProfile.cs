@@ -60,7 +60,10 @@ namespace Insurance_final_project.Mapper
             CreateMap<Transaction, TransactionDto>().ReverseMap();
 
             // User
-            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>()
+                .ForMember(dest=> dest.HashedPassword,src=>src.MapFrom(s=>BCrypt.Net.BCrypt.HashPassword(s.Password)));
+
         }
     }
 }

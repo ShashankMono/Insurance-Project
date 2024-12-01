@@ -1,9 +1,12 @@
 
 using Insurance_final_project.Data;
+using Insurance_final_project.Exceptions;
+using Insurance_final_project.Mapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Insurance_final_project
 {
@@ -13,15 +16,23 @@ namespace Insurance_final_project
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+
             // Add services to the container.
             builder.Services.AddDbContext<InsuranceContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("connect"));
             });
             builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(x =>
+            {
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddExceptionHandler<AppExceptionHandler>();
 
             builder.Services.AddCors(options =>
             {
@@ -55,6 +66,7 @@ namespace Insurance_final_project
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseExceptionHandler(_=>{});
 
             app.UseHttpsRedirection();
             app.UseCors("AllowAngularApp");

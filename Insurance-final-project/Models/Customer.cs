@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Insurance_final_project.Constant;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Metadata;
 
@@ -27,7 +28,7 @@ namespace Insurance_final_project.Models
         public string NomineeRelation { get; set; }
 
         // Relationships with Agent and Policy Account Many to many realtionship with customer
-        public ICollection<Agent>? Agent { get; set; }  // Navigation property
+        //public ICollection<Agent>? Agent { get; set; }  // Navigation property
 
         // Relationship with Policy Account (one-to-Many)
         public ICollection<PolicyAccount>? PolicyAccounts { get; set; }
@@ -44,7 +45,7 @@ namespace Insurance_final_project.Models
         public ICollection<Query>? Queries { get; set; }
 
         //Approval of cutomer account, admin will approve
-        public bool IsApproved { get; set; } = false;
+        public string IsApproved { get; set; } = ApprovalType.Pending.ToString();
 
         //one-to-many realtionship with transaction table
         public ICollection<Transaction>? Transactions { get; set; }

@@ -4,6 +4,7 @@ namespace Insurance_final_project.Dto
 {
     public class PolicyAccountDto
     {
+        public Guid Id { get; set; }
         [Required]
         public Guid PolicyId { get; set; }
 

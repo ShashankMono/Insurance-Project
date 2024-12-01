@@ -423,9 +423,6 @@ namespace Insurance_final_project.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<bool>("Approved")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("DateAndTime")
                         .HasColumnType("datetime2");
 

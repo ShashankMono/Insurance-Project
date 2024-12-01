@@ -17,6 +17,9 @@ namespace Insurance_final_project.Models
         [ForeignKey("PolicyAccount")]
         public Guid PolicyAccountId { get; set; }
         public PolicyAccount PolicyAccount { get; set; }
+        [ForeignKey("PolicyInstallment")]
+        public Guid PolicyInstallmentId { get; set; }
+        public PolicyInstallment policyInstallement { get; set; }
 
         public DateTime DateTime { get; set; }
         public string ReferenceNumber { get; set; }
