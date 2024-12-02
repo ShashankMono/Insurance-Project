@@ -11,6 +11,7 @@ namespace Insurance_final_project.Services
         private readonly IRepository<Customer> _customerRepository;
         private readonly IRepository<PolicyAccount> _policyAccountRepository;
         private readonly IRepository<CommissionWithdrawal> _withdrawalRepository;
+        private readonly IRepository<Transaction> _transactionRepository;
         private readonly IRepository<Policy> _policyRepository;
         private readonly IRepository<Claim> _claimRepository;
         private readonly IMapper _mapper;
@@ -20,6 +21,7 @@ namespace Insurance_final_project.Services
             IRepository<Customer> customerRepository,
             IRepository<PolicyAccount> policyAccountRepository,
             IRepository<CommissionWithdrawal> withdrawalRepository,
+            IRepository<Transaction> transactionRepository,
             IRepository<Policy> policyRepository,
             IRepository<Claim> claimRepository,
             IMapper mapper)
@@ -28,16 +30,10 @@ namespace Insurance_final_project.Services
             _customerRepository = customerRepository;
             _policyAccountRepository = policyAccountRepository;
             _withdrawalRepository = withdrawalRepository;
+            _transactionRepository = transactionRepository;
             _policyRepository = policyRepository;
             _claimRepository = claimRepository;
             _mapper = mapper;
-        }
-
-        public AgentDto RegisterAgent(AgentDto agentDto)
-        {
-            var agent = _mapper.Map<Agent>(agentDto);
-            agent = _agentRepository.Add(agent);
-            return _mapper.Map<AgentDto>(agent);
         }
 
         public AgentDto GetAgentById(Guid agentId)
@@ -47,33 +43,6 @@ namespace Insurance_final_project.Services
                 throw new Exception("Agent not found.");
             return _mapper.Map<AgentDto>(agent);
         }
-        // View Customers - only those that have bought the policy with the help of that agent
-        //public ICollection<CustomerDto> GetCustomersByAgent(Guid agentId)
-        //{
-        //    var customers = _customerRepository.GetAll()
-        //    .Where(c => c.AgentId == agentId && c.PolicyAccounts.Any())
-        //    .ToList();
-        //    return _mapper.Map<ICollection<CustomerDto>>(customers);
-        //}
-
-        public void RecommendPlan(Guid customerId, Guid policyId, Guid agentId, PolicyAccountDto policyAccountDto)
-        {
-            var policyAccount = new PolicyAccount
-            {
-                PolicyId = policyId,
-                CustomerId = customerId,
-                AgentId = agentId,
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now.AddYears(policyAccountDto.EndDate.Year - DateTime.Now.Year),
-                Status = "Pending",
-                InstallmentType = "Monthly",
-                CoverageAmount = 0,
-                TotalAmountPaid = 0,
-            };
-
-            _policyAccountRepository.Add(policyAccount);
-        }
-
         public ICollection<CommissionWithdrawalDto> GetCommissionWithdrawals(Guid agentId)
         {
             var withdrawals = _withdrawalRepository.GetAll()
@@ -100,6 +69,21 @@ namespace Insurance_final_project.Services
             };
 
             _withdrawalRepository.Add(withdrawal);
+            // Update the agent's commission balance
+            agent.CommissionEarned -= amount;
+            _agentRepository.Update(agent);
+            var transaction = new Transaction
+            {
+                Id = Guid.NewGuid(),
+                Type = "Commission Withdrawal",
+                Amount = amount,
+                CustomerId = Guid.Empty, 
+                PolicyAccountId = Guid.Empty,
+                DateTime = DateTime.UtcNow,
+                ReferenceNumber = Guid.NewGuid().ToString()
+            };
+
+            _transactionRepository.Add(transaction);
         }
 
         public double ViewTotalCommission(Guid agentId)
@@ -110,14 +94,17 @@ namespace Insurance_final_project.Services
             return agent.CommissionEarned;
         }
 
-        //public ICollection<ClaimDto> ViewCustomerClaims(Guid agentId)
-        //{
-        //    var claims = _policyAccountRepository.GetAll()
-        //        .Where(p => p.AgentId == agentId)
-        //        .SelectMany(p => p.policyInstallments)
-        //        .SelectMany(i => i.PolicyAccount.Claims)
-        //        .ToList();
-        //    return _mapper.Map<ICollection<ClaimDto>>(claims);
-        //}
+        public ICollection<PolicyAccountDto> GetPolicyAccountsByAgent(Guid agentId)
+        {
+            var agent = _agentRepository.Get(agentId);
+            if (agent == null)
+                throw new Exception("Agent not found.");
+
+            var policyAccounts = _policyAccountRepository.GetAll()
+                .Where(pa => pa.AgentId == agentId)
+                .ToList();
+
+            return _mapper.Map<ICollection<PolicyAccountDto>>(policyAccounts);
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace Insurance_final_project.Services
         private readonly IRepository<PolicyInstallment> _installmentRepository;
         private readonly IRepository<Claim> _claimRepository;
         private readonly IRepository<Query> _queryRepository;
+        private readonly IRepository<Transaction> _transactionRepository;
         private readonly IMapper _mapper;
 
         public CustomerService(
@@ -32,6 +33,7 @@ namespace Insurance_final_project.Services
             IRepository<PolicyInstallment> installmentRepository,
             IRepository<Claim> claimRepository,
             IRepository<Query> queryRepository,
+            IRepository<Transaction> transactionRepository,
             IMapper mapper)
         {
             _customerRepository = customerRepository;
@@ -43,6 +45,7 @@ namespace Insurance_final_project.Services
             _installmentRepository = installmentRepository;
             _claimRepository = claimRepository;
             _queryRepository = queryRepository;
+            _transactionRepository = transactionRepository;
             _mapper = mapper;
         }
 
@@ -61,13 +64,14 @@ namespace Insurance_final_project.Services
                 policyAccount.StartDate,
                 policyAccountDto.PolicyTerm,
                 policyAccountDto.InstallmentType,
-                policyAccountDto.CoverageAmount
+                policyAccountDto.CoverageAmount,
+                policyAccountDto.CustomerId
     );
 
 
-            return policyAccount.Id;//check
+            return policyAccount.Id;
         }
-        public void AddInstallments(Guid policyId, DateTime startDate, int years, string choice, double totalAmount)
+        public void AddInstallments(Guid policyAccountId, DateTime startDate, int years, string choice, double totalAmount, Guid customerId)
         {
             int installmentsPerYear = 0;
 
@@ -89,47 +93,73 @@ namespace Insurance_final_project.Services
                     throw new ArgumentException("Invalid choice");
             }
 
-            int totalInstallments = installmentsPerYear * years;//firstentry outside loop with obj, transaction entry added by calling Get
+            int totalInstallments = installmentsPerYear * years; 
             int intervalInMonths = 12 / installmentsPerYear;
 
             double installmentAmount = totalAmount / totalInstallments;
-            var firstInstallment = new PolicyInstallment
+            
+            for (int i = 0; i < totalInstallments; i++)
             {
-                Id = Guid.NewGuid(),
-                InstallmentPaidDate = startDate,
-                Amount = installmentAmount,
-                PolicyAccountId = policyId,
-                IsPaid = true
-            };
-            _installmentRepository.Add(firstInstallment);
-            //List<PolicyInstallment> installments = new List<PolicyInstallment>();
-            for (int i = 1; i < totalInstallments; i++)//i=1
-            {
-                DateTime installmentDate = startDate.AddMonths(i * intervalInMonths);
-
+                DateTime installmentDueDate = startDate.AddMonths(i * intervalInMonths);
+                bool isFirstInstallment = (i == 0);//check for first entry during creation of accountPolicy
                 var installment = new PolicyInstallment
                 {
                     Id = Guid.NewGuid(),
-                    InstallmentPaidDate = installmentDate,
+                    PolicyAccountId = policyAccountId,
+                    InstallmentDueDate = installmentDueDate,
+                    IsPaid = isFirstInstallment,
                     Amount = installmentAmount,
-                    PolicyAccountId = policyId,
-                    IsPaid = false
+                    InstallmentPaidDate = (DateTime)(isFirstInstallment ? startDate : (DateTime?)null)
                 };
 
                 _installmentRepository.Add(installment);
-
+                if (isFirstInstallment)
+                {
+                    var transaction = new Transaction
+                    {
+                        Id = Guid.NewGuid(),
+                        Type = "Installment Payment",
+                        Amount = installmentAmount,
+                        CustomerId = customerId,
+                        PolicyAccountId = policyAccountId,
+                        PolicyInstallmentId = installment.Id,
+                        DateTime = DateTime.UtcNow,
+                        ReferenceNumber = Guid.NewGuid().ToString()
+                    };
+                    _transactionRepository.Add(transaction);
+                }
             }
 
         }
-        //public void BuyPolicy(Guid customerId, PolicyAccountDto policyAccountDto, PolicyDto policyDto)
-        //{
-        //    var policyAccount = _mapper.Map<PolicyAccount>(policyAccountDto);
-        //    policyAccount.CustomerId = customerId;
-        //    policyAccount.Status = "Active";
-        //    policyAccount.StartDate = DateTime.Now;
-        //    policyAccount.EndDate = DateTime.Now.AddYears(policyDto.MaximumPolicyTerm);
-        //    _policyAccountRepository.Add(policyAccount);
-        //}
+        public bool PayInstallment(Guid installmentId, Guid customerId)
+        {
+            var installment = _installmentRepository.Get(installmentId);
+
+            if (installment == null || installment.IsPaid)
+            {
+                return false;
+            }
+
+            installment.IsPaid = true;
+            installment.InstallmentPaidDate = DateTime.UtcNow;
+
+            _installmentRepository.Update(installment);
+
+            var transaction = new Transaction
+            {
+                Id = Guid.NewGuid(),
+                Type = "Installment Payment",
+                Amount = installment.Amount,
+                CustomerId = customerId,
+                PolicyAccountId = installment.PolicyAccountId,
+                PolicyInstallmentId = installment.Id,
+                DateTime = DateTime.UtcNow,
+                ReferenceNumber = Guid.NewGuid().ToString()
+            };
+
+            _transactionRepository.Add(transaction);
+            return true;
+        }
         public bool CancelPolicy(Guid policyAccountId)
         {
             var policyAccount = _policyAccountRepository.Get(policyAccountId);
@@ -211,11 +241,7 @@ namespace Insurance_final_project.Services
             customer = _customerRepository.Add(customer);
             return _mapper.Map<CustomerDto>(customer);
         }
-        public ICollection<PolicyDto> GetAvailablePolicies()
-        {
-            var policies = _policyRepository.GetAll().ToList();
-            return _mapper.Map<List<PolicyDto>>(policies);
-        }
+        
         public ICollection<PolicyAccountDto> GetPoliciesByCustomer(Guid customerId)
         {
             var policies = _policyAccountRepository.GetAll()

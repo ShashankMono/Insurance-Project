@@ -16,12 +16,6 @@ namespace Insurance_final_project.Controllers
             _agentService = agentService;
         }
 
-        [HttpPost("register")]
-        public IActionResult RegisterAgent(AgentDto agentDto)
-        {
-            var agent = _agentService.RegisterAgent(agentDto);
-            return Ok(agent);
-        }
 
         [HttpGet("{agentId}")]
         public IActionResult GetAgentById(Guid agentId)
@@ -30,12 +24,6 @@ namespace Insurance_final_project.Controllers
             return Ok(agent);
         }
 
-        [HttpPost("recommendPlan")]
-        public IActionResult RecommendPlan(Guid customerId, Guid policyId, Guid agentId, PolicyAccountDto policyAccountDto)
-        {
-            _agentService.RecommendPlan(customerId, policyId, agentId, policyAccountDto);
-            return Ok("Plan recommended successfully.");
-        }
 
         [HttpGet("commissionWithdrawals/{agentId}")]
         public IActionResult GetCommissionWithdrawals(Guid agentId)
@@ -45,17 +33,11 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpPost("withdrawCommission")]
-        public IActionResult WithdrawCommission(Guid agentId, double amount)
+        public IActionResult WithdrawCommission(CommissionWithdrawalDto commissionWithdrawalDto)
         {
-            try
-            {
-                _agentService.WithdrawCommission(agentId, amount);
-                return Ok("Commission withdrawal requested.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _agentService.WithdrawCommission(commissionWithdrawalDto.AgentId, commissionWithdrawalDto.Amount);
+            return Ok("Commission withdrawal requested.");
+            
         }
 
         [HttpGet("totalCommission/{agentId}")]
@@ -63,6 +45,13 @@ namespace Insurance_final_project.Controllers
         {
             var commission = _agentService.ViewTotalCommission(agentId);
             return Ok(commission);
+        }
+        [HttpGet("{agentId}/policyAccounts")]
+        public IActionResult GetPolicyAccountsByAgent(Guid agentId)
+        {
+            var policyAccounts = _agentService.GetPolicyAccountsByAgent(agentId);
+            return Ok(policyAccounts);
+            
         }
     }
 }

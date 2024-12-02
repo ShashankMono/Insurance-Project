@@ -16,7 +16,23 @@ namespace Insurance_final_project.Controllers
         {
             _customerService = customerService;
         }
+        [HttpPost("createPolicyAccount")]
+        public IActionResult CreatePolicyAccount(PolicyAccountDto policyAccountDto)
+        {
+            var policyAccountId = _customerService.CreatePolicyAccount(policyAccountDto);
+            return Ok(new { PolicyAccountId = policyAccountId });
+            
+        }
+        [HttpPost("payInstallment/{installmentId}")]
+        public IActionResult PayInstallment(Guid installmentId, [FromBody] Guid customerId)
+        {
+            var result = _customerService.PayInstallment(installmentId, customerId);
+            if (!result)
+                return BadRequest("Failed to pay installment. It may already be paid or does not exist.");
 
+            return Ok("Installment paid successfully.");
+            
+        }
         [HttpPost("register")]
         public IActionResult RegisterCustomer(CustomerDto customerDto)
         {
@@ -72,11 +88,5 @@ namespace Insurance_final_project.Controllers
             return Ok("Claim submitted successfully.");
         }
 
-        [HttpGet("availablePolicies")]
-        public IActionResult GetAvailablePolicies()
-        {
-            var policies = _customerService.GetAvailablePolicies();
-            return Ok(policies);
-        }
     }
 }
