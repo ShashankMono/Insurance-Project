@@ -37,7 +37,7 @@ namespace Insurance_final_project.Services
             return _mapper.Map<List<User>, List<UserDto>>(_userRepo.GetAll().ToList());
         }
 
-        public (string token,User userData) LogIn(UserDto user)
+        public (string token,User userData) LogIn(UserLoginDto user)
         {
             var existingUser = _userRepo.GetAll().FirstOrDefault(u=>u.Username == user.Username);
             if (existingUser == null) {
@@ -72,9 +72,9 @@ namespace Insurance_final_project.Services
             return jwt;
         }
 
-        public bool UpdateUser(UserDto user)
+        public bool UpdateUser(UserLoginDto user)
         {
-            if (_userRepo.Update(_mapper.Map<UserDto, User>(user)) == null)
+            if (_userRepo.Update(_mapper.Map<UserLoginDto, User>(user)) == null)
             {
                 throw new UserInvalidException("Invalid User!");
             }   

@@ -24,7 +24,7 @@ namespace Insurance_final_project.Data
         public DbSet<Role> Role { get; set; }
         public DbSet<Transaction> Transaction { get; set; }
         public DbSet<User> Users { get; set; }
-        public InsuranceContext(DbContextOptions options) : base(options)
+        public InsuranceContext(DbContextOptions<InsuranceContext> options) : base(options)
         {
 
         }

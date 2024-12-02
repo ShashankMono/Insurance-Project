@@ -15,11 +15,11 @@ namespace Insurance_final_project.Dto
         [StringLength(100, ErrorMessage = "Password cannot exceed 100 characters.")]
         public string Password { get; set; } // Password for the user
 
-        [Required(ErrorMessage = "Role ID is required.")]
+        [Required(ErrorMessage = "Role is required.")]
         [ForeignKey("Role")]
         public Guid RoleId { get; set; } // Foreign key linking to Role
 
-        public Role? Role { get; set; } // Navigation property for Role
+        //public Role? Role { get; set; } // Navigation property for Role
 
         // IsActive property, defaulting to true only for customers
         [Required]

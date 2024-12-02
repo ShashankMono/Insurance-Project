@@ -1,15 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata;
+﻿using Insurance_final_project.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Insurance_final_project.Dto
 {
     public class ClaimDto
     {
+        public Guid ClaimId { get; set; }
         [Required]
         public Guid PolicyAccountId { get; set; }
+        public PolicyAccount PolicyAccount { get; set; }
 
         [Required]
         public Guid DocumentId { get; set; }
+        public Document Document { get; set; }
 
         [Required]
         [Range(1, double.MaxValue, ErrorMessage = "Amount must be greater than zero.")]

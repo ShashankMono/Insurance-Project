@@ -61,6 +61,7 @@ namespace Insurance_final_project.Mapper
 
             // User
             CreateMap<User, UserDto>();
+            CreateMap<UserLoginDto, User>();
             CreateMap<UserDto, User>()
                 .ForMember(dest=> dest.HashedPassword,src=>src.MapFrom(s=>BCrypt.Net.BCrypt.HashPassword(s.Password)));
 

@@ -2,6 +2,8 @@
 using Insurance_final_project.Data;
 using Insurance_final_project.Exceptions;
 using Insurance_final_project.Mapper;
+using Insurance_final_project.Repositories;
+using Insurance_final_project.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -17,8 +19,9 @@ namespace Insurance_final_project
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
-
+            
             // Add services to the container.
+
             builder.Services.AddDbContext<InsuranceContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("connect"));
@@ -28,6 +31,11 @@ namespace Insurance_final_project
             {
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             });
+            builder.Services.AddTransient<IAdminService, AdminService>();
+            builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+            builder.Services.AddTransient<ICommonService, CommonService>();
+            builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

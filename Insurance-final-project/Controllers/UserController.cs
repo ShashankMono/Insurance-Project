@@ -37,7 +37,7 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] UserDto loginDetails)
+        public IActionResult Login([FromBody] UserLoginDto loginDetails)
         {
             ValidateModel(); // Validate the model
 
@@ -46,7 +46,7 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult UpdateUser([FromBody] UserDto updatedUser)
+        public IActionResult UpdateUser([FromBody] UserLoginDto updatedUser)
         {
             ValidateModel(); // Validate the model
 

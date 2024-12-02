@@ -37,7 +37,7 @@
         [StringLength(100, ErrorMessage = "Nominee relation cannot be longer than 100 characters.")]
         public string NomineeRelation { get; set; }
 
-
+        public string IsApproved { get; set; }
         // Foreign Key to User (One-to-One)
         [Required(ErrorMessage = "User is required.")]
         public Guid UserId { get; set; }

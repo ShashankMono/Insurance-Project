@@ -22,21 +22,6 @@ namespace Insurance_final_project.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AgentCustomer", b =>
-                {
-                    b.Property<Guid>("AgentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CustomersCustomerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("AgentId", "CustomersCustomerId");
-
-                    b.HasIndex("CustomersCustomerId");
-
-                    b.ToTable("AgentCustomer");
-                });
-
             modelBuilder.Entity("Insurance_final_project.Models.Admin", b =>
                 {
                     b.Property<Guid>("AdminId")
@@ -116,7 +101,12 @@ namespace Insurance_final_project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("StateId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("CityId");
+
+                    b.HasIndex("StateId");
 
                     b.ToTable("Cities");
                 });
@@ -134,8 +124,9 @@ namespace Insurance_final_project.Migrations
                     b.Property<double>("AmountToBeClaimed")
                         .HasColumnType("float");
 
-                    b.Property<bool>("ApprovedStatus")
-                        .HasColumnType("bit");
+                    b.Property<string>("ApprovedStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClaimDescription")
                         .IsRequired()
@@ -159,6 +150,32 @@ namespace Insurance_final_project.Migrations
                     b.ToTable("Claim");
                 });
 
+            modelBuilder.Entity("Insurance_final_project.Models.Commission", b =>
+                {
+                    b.Property<Guid>("CommissionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AgentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("CommissionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CommissionId");
+
+                    b.HasIndex("AgentId");
+
+                    b.ToTable("Commission");
+                });
+
             modelBuilder.Entity("Insurance_final_project.Models.CommissionWithdrawal", b =>
                 {
                     b.Property<Guid>("Id")
@@ -172,8 +189,9 @@ namespace Insurance_final_project.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<bool>("ApprovedStatus")
-                        .HasColumnType("bit");
+                    b.Property<string>("ApprovedStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("TransactionDate")
                         .HasColumnType("datetime2");
@@ -206,8 +224,9 @@ namespace Insurance_final_project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsApproved")
-                        .HasColumnType("bit");
+                    b.Property<string>("IsApproved")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -264,8 +283,9 @@ namespace Insurance_final_project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsVerified")
-                        .HasColumnType("bit");
+                    b.Property<string>("IsVerified")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DocumentId");
 
@@ -426,8 +446,9 @@ namespace Insurance_final_project.Migrations
                     b.Property<DateTime>("DateAndTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsApproved")
-                        .HasColumnType("bit");
+                    b.Property<string>("IsApproved")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("PolicyAccountId")
                         .HasColumnType("uniqueidentifier");
@@ -461,9 +482,15 @@ namespace Insurance_final_project.Migrations
                     b.Property<Guid>("PolicyAccountId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("TransactionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PolicyAccountId");
+
+                    b.HasIndex("TransactionId")
+                        .IsUnique();
 
                     b.ToTable("PolicyInstallments");
                 });
@@ -560,6 +587,9 @@ namespace Insurance_final_project.Migrations
                     b.Property<Guid>("PolicyAccountId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("PolicyInstallmentId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("ReferenceNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -584,12 +614,12 @@ namespace Insurance_final_project.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("NEWSEQUENTIALID()");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Password")
+                    b.Property<string>("HashedPassword")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
@@ -603,21 +633,6 @@ namespace Insurance_final_project.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("AgentCustomer", b =>
-                {
-                    b.HasOne("Insurance_final_project.Models.Agent", null)
-                        .WithMany()
-                        .HasForeignKey("AgentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Insurance_final_project.Models.Customer", null)
-                        .WithMany()
-                        .HasForeignKey("CustomersCustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.Admin", b =>
@@ -642,6 +657,17 @@ namespace Insurance_final_project.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Insurance_final_project.Models.City", b =>
+                {
+                    b.HasOne("Insurance_final_project.Models.State", "State")
+                        .WithMany("Cities")
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("State");
+                });
+
             modelBuilder.Entity("Insurance_final_project.Models.Claim", b =>
                 {
                     b.HasOne("Insurance_final_project.Models.Document", "Document")
@@ -659,10 +685,19 @@ namespace Insurance_final_project.Migrations
                     b.Navigation("PolicyAccount");
                 });
 
+            modelBuilder.Entity("Insurance_final_project.Models.Commission", b =>
+                {
+                    b.HasOne("Insurance_final_project.Models.Agent", null)
+                        .WithMany("Commissions")
+                        .HasForeignKey("AgentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Insurance_final_project.Models.CommissionWithdrawal", b =>
                 {
                     b.HasOne("Insurance_final_project.Models.Agent", "Agent")
-                        .WithMany()
+                        .WithMany("CommissionWithdrawal")
                         .HasForeignKey("AgentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -774,7 +809,15 @@ namespace Insurance_final_project.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Insurance_final_project.Models.Transaction", "Transaction")
+                        .WithOne("policyInstallement")
+                        .HasForeignKey("Insurance_final_project.Models.PolicyInstallment", "TransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("PolicyAccount");
+
+                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("Insurance_final_project.Models.Query", b =>
@@ -820,6 +863,10 @@ namespace Insurance_final_project.Migrations
 
             modelBuilder.Entity("Insurance_final_project.Models.Agent", b =>
                 {
+                    b.Navigation("CommissionWithdrawal");
+
+                    b.Navigation("Commissions");
+
                     b.Navigation("PolicyAccounts");
                 });
 
@@ -863,7 +910,15 @@ namespace Insurance_final_project.Migrations
 
             modelBuilder.Entity("Insurance_final_project.Models.State", b =>
                 {
+                    b.Navigation("Cities");
+
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("Insurance_final_project.Models.Transaction", b =>
+                {
+                    b.Navigation("policyInstallement")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
