@@ -1,5 +1,6 @@
 
 using Insurance_final_project.Data;
+using Insurance_final_project.Exceptions;
 using Insurance_final_project.Mapper;
 using Insurance_final_project.Repositories;
 using Insurance_final_project.Services;
@@ -18,8 +19,10 @@ namespace Insurance_final_project
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
             
+            // Add services to the container.
+
             builder.Services.AddDbContext<InsuranceContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("connect"));
@@ -42,9 +45,20 @@ namespace Insurance_final_project
             builder.Services.AddTransient<ICustomerService, CustomerService>();
             builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(x =>
+            {
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            });
+            builder.Services.AddTransient<IAdminService, AdminService>();
+            builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+            builder.Services.AddTransient<ICommonService, CommonService>();
+            builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddExceptionHandler<AppExceptionHandler>();
 
             builder.Services.AddCors(options =>
             {
@@ -78,9 +92,11 @@ namespace Insurance_final_project
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseExceptionHandler(_=>{});
 
             app.UseHttpsRedirection();
             app.UseCors("AllowAngularApp");
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

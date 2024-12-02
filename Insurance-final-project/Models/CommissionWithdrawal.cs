@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Insurance_final_project.Constant;
 
 namespace Insurance_final_project.Models
 {
@@ -8,8 +9,8 @@ namespace Insurance_final_project.Models
         [Key]
         public Guid Id { get; set; }
         public double Amount { get; set; } // Will be compared with commission earned
-        public bool ApprovedStatus { get; set; } = false;
-        //public string ApprovedStatus { get; set; } = ApprovalType.Pending.ToString();
+        public string ApprovedStatus { get; set; } = ApprovalType.Pending.ToString();
+
         [ForeignKey("Agent")]
         public Guid AgentId { get; set; }
         public Agent Agent { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata;
+using Insurance_final_project.Constant;
 
 namespace Insurance_final_project.Models
 {
@@ -20,7 +21,7 @@ namespace Insurance_final_project.Models
         //public string ApprovedStatus { get; set; } = ApprovalType.Pending.ToString(); // Approval status of the claim
         public double AmountToBeClaimed { get; set; }
         public string ClaimDescription { get; set; }
-        public bool ApprovedStatus { get; set; } = false; // Approval status of the claim
+        public string ApprovedStatus { get; set; } = ApprovalType.Pending.ToString(); // Approval status of the claim
         public DateTime DateAndTime { get; set; }
         public DateTime? AcknowledgementDate { get; set; }
     }

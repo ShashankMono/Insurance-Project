@@ -8,7 +8,8 @@ namespace Insurance_final_project.Models
         [Key]
         public Guid UserId { get; set; } 
         public string Username { get; set; } 
-        public string Password { get; set; }
+        public string HashedPassword { get; set; }
+
         [ForeignKey("Role")]
         public Guid RoleId { get; set; } 
         public Role? Role { get; set; } //Navigation

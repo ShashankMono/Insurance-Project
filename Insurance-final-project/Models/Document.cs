@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Insurance_final_project.Constant;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Insurance_final_project.Models
@@ -15,8 +16,9 @@ namespace Insurance_final_project.Models
         public string DocumentFileURL { get; set; } 
 
         //Check verification of the document which will be changed by employee
-        public bool IsVerified { get; set; } = false;
-        //public string IsVerified { get; set; } = VerificationType.Pending.ToString();
+        public string IsVerified { get; set; } = VerificationType.Pending.ToString();
+
+
         // Foreign Key to Customer (many-to-one relationship)
         [ForeignKey("Customer")]
         [Required(ErrorMessage = "Customer ID is required.")]

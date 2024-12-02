@@ -9,9 +9,11 @@ namespace Insurance_final_project.Models
         public Guid CityId { get; set; }
 
         public string CityName { get; set; }
+
         public State State { get; set; }
         [ForeignKey("State")]
         public Guid StateId { get; set; }
+
         public ICollection<Customer>? Customers { get; set; }
     }
 }
