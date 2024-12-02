@@ -5,6 +5,7 @@ using Insurance_final_project.Mapper;
 using Insurance_final_project.Repositories;
 using Insurance_final_project.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -26,6 +27,23 @@ namespace Insurance_final_project
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("connect"));
             });
+
+            builder.Services.AddControllers().AddJsonOptions(x =>
+            {
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            });
+
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
+
+
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+            builder.Services.AddTransient<IAgentService, AgentService>();
+            builder.Services.AddTransient<ICustomerService, CustomerService>();
+            builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddControllers();
             builder.Services.AddControllers().AddJsonOptions(x =>
             {

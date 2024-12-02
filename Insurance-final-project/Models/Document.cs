@@ -18,6 +18,7 @@ namespace Insurance_final_project.Models
         //Check verification of the document which will be changed by employee
         public string IsVerified { get; set; } = VerificationType.Pending.ToString();
 
+
         // Foreign Key to Customer (many-to-one relationship)
         [ForeignKey("Customer")]
         [Required(ErrorMessage = "Customer ID is required.")]

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Insurance_final_project.Dto
 {
-    public class PolicyDTO
+    public class PolicyDto
     {
         [Required]
         [StringLength(100, ErrorMessage = "Policy name cannot exceed 100 characters.")]

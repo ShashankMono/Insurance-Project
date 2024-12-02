@@ -13,6 +13,7 @@ namespace Insurance_final_project.Models
 
         public string IsApproved { get; set; } = ApprovalType.Pending.ToString(); 
 
+
         public DateTime DateAndTime { get; set; } // Date and Time of cancellation
 
         [ForeignKey("PolicyAccount")]

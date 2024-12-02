@@ -19,6 +19,5 @@ namespace Insurance_final_project.Models
         public Guid? TransactionId { get; set; }
         public Transaction? Transaction { get; set; }
 
-        
     }
 }
