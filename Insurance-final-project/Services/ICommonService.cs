@@ -7,7 +7,7 @@ namespace Insurance_final_project.Services
     {
         public List<CityDto> GetCities();
         public List<StateDto> GetStates();
-        public List<PolicyDTO> GetPolicies();
+        public List<PolicyDto> GetPolicies();
         public List<RoleDto> GetRoles();
         public List<string> GetapprovalTypes();
         public List<string> GetPolicyAccountStatus();

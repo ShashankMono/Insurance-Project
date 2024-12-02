@@ -35,7 +35,7 @@ namespace Insurance_final_project.Services
             throw new NotImplementedException();
         }
 
-        public List<PolicyDTO> GetPolicies()
+        public List<PolicyDto> GetPolicies()
         {
             throw new NotImplementedException();
         }

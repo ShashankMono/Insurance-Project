@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Insurance_final_project.Constant;
 using Insurance_final_project.Dto;
 using Insurance_final_project.Models;
 using Insurance_final_project.Repositories;
@@ -64,7 +65,7 @@ namespace Insurance_final_project.Services
                 AgentId = agentId,
                 Amount = amount,
                 TransactionDate = DateTime.Now,
-                ApprovedStatus = false,
+                ApprovedStatus = ApprovalType.Pending.ToString(),
                 TransactionStatus = false,
             };
 

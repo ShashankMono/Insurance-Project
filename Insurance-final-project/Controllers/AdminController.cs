@@ -44,7 +44,7 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpPost("add-policy")]
-        public IActionResult AddPolicy([FromBody] PolicyDTO policy)
+        public IActionResult AddPolicy([FromBody] PolicyDto policy)
         {
             ValidateModel(); 
 
@@ -208,7 +208,7 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpPut("update-policy")]
-        public IActionResult UpdatePolicy([FromBody] PolicyDTO policy)
+        public IActionResult UpdatePolicy([FromBody] PolicyDto policy)
         {
             ValidateModel(); 
 

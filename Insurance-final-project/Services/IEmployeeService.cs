@@ -17,8 +17,8 @@ namespace Insurance_final_project.Services
         Task<Guid> ChangeApproveStatus(DocumentDto document);
         Task<AgentDto> GetAgentReport(AgentDto agent); // Includes all fields like commissions, commission withdrawal, policy account
         Task<PolicyAccountDto> GetPolicyAccount(PolicyAccountDto policyAccount);
-        Task<List<PolicyDTO>> GetPolicies();
-        Task<PolicyDTO> GetPolicy(Guid policyId);
+        Task<List<PolicyDto>> GetPolicies();
+        Task<PolicyDto> GetPolicy(Guid policyId);
 
     }
 }

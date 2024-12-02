@@ -121,9 +121,9 @@ namespace Insurance_final_project.Services
                 .ToList());
         }
 
-        public async Task<List<PolicyDTO>> GetPolicies()
+        public async Task<List<PolicyDto>> GetPolicies()
         {
-            return _Mapper.Map<List<Policy>, List<PolicyDTO>>(_PolicyRepo.GetAll().ToList());
+            return _Mapper.Map<List<Policy>, List<PolicyDto>>(_PolicyRepo.GetAll().ToList());
         }
 
         public async Task<PolicyAccountDto> GetPolicyAccount(PolicyAccountDto policyAccount)
@@ -141,9 +141,9 @@ namespace Insurance_final_project.Services
             return _Mapper.Map<List<PolicyCancel>, List<PolicyCancelDto>>(_PolicyCancelRepo.GetAll().ToList());
         }
 
-        public async Task<PolicyDTO> GetPolicy(Guid policyId)
+        public async Task<PolicyDto> GetPolicy(Guid policyId)
         {
-            return _Mapper.Map<Policy, PolicyDTO>(_PolicyRepo.GetAll()
+            return _Mapper.Map<Policy, PolicyDto>(_PolicyRepo.GetAll()
                 .Include(p => p.PolicyAccounts)
                 .FirstOrDefault(x => x.Id == policyId));
         }
