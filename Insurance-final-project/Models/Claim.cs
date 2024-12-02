@@ -17,7 +17,7 @@ namespace Insurance_final_project.Models
         [ForeignKey("Document")]
         public Guid? DocumentId { get; set; }
         public Document Document { get; set; }
-
+        //public string ApprovedStatus { get; set; } = ApprovalType.Pending.ToString(); // Approval status of the claim
         public double AmountToBeClaimed { get; set; }
         public string ClaimDescription { get; set; }
         public bool ApprovedStatus { get; set; } = false; // Approval status of the claim

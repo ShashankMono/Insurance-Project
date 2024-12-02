@@ -15,6 +15,9 @@ namespace Insurance_final_project.Models
         public DateTime InstallmentDueDate { get; set; }
         public bool IsPaid { get; set; } = false; // Paid or Pending
         public double Amount { get; set; }
+        [ForeignKey("Transaction")]
+        public Guid TransactionId { get; set; }
+        public Transaction Transaction { get; set; }
 
         
     }

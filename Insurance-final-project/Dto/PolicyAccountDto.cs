@@ -19,7 +19,7 @@ namespace Insurance_final_project.Dto
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-
+        public int PolicyTerm { get; set; }
         [Required]
         [StringLength(50, ErrorMessage = "Installment type cannot exceed 50 characters.")]
         public string InstallmentType { get; set; } // Monthly, Quarterly, etc.

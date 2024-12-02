@@ -5,6 +5,7 @@ using AutoMapper;
 using Insurance_final_project.Dto;
 using Insurance_final_project.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Insurance_final_project.Data;
 
 namespace Insurance_final_project.Services
 {
@@ -48,30 +49,87 @@ namespace Insurance_final_project.Services
         public Guid CreatePolicyAccount(PolicyAccountDto policyAccountDto)
         {
             var policyAccount = _mapper.Map<PolicyAccount>(policyAccountDto);
-            policyAccount.Status = "Open";
+            
             policyAccount.StartDate = DateTime.UtcNow;
-            policyAccount.EndDate = DateTime.UtcNow.AddYears(policyAccount.Policy.MaximumPolicyTerm);
+            policyAccount.EndDate = DateTime.UtcNow.AddYears(policyAccountDto.PolicyTerm);//years
+
 
             _policyAccountRepository.Add(policyAccount);
+            //AddInstallments(policyId,startDate,years, choice, totalAmount)
+            AddInstallments(
+                policyAccount.Id,
+                policyAccount.StartDate,
+                policyAccountDto.PolicyTerm,
+                policyAccountDto.InstallmentType,
+                policyAccountDto.CoverageAmount
+    );
 
-            var customer = _customerRepository.Get(policyAccount.CustomerId);
-            if (customer.PolicyAccounts == null)
-                customer.PolicyAccounts = new List<PolicyAccount>();
 
-            customer.PolicyAccounts.Add(policyAccount);
-            _customerRepository.Update(customer);
-
-            return policyAccount.Id;
+            return policyAccount.Id;//check
         }
-        public void BuyPolicy(Guid customerId, PolicyAccountDto policyAccountDto, PolicyDto policyDto)
+        public void AddInstallments(Guid policyId, DateTime startDate, int years, string choice, double totalAmount)
         {
-            var policyAccount = _mapper.Map<PolicyAccount>(policyAccountDto);
-            policyAccount.CustomerId = customerId;
-            policyAccount.Status = "Active";
-            policyAccount.StartDate = DateTime.Now;
-            policyAccount.EndDate = DateTime.Now.AddYears(policyDto.MaximumPolicyTerm);
-            _policyAccountRepository.Add(policyAccount);
+            int installmentsPerYear = 0;
+
+            switch (choice)
+            {
+                case "Quarterly":
+                    installmentsPerYear = 4;
+                    break;
+                case "Monthly":
+                    installmentsPerYear = 12;
+                    break;
+                case "Half-Yearly":
+                    installmentsPerYear = 2;
+                    break;
+                case "Yearly":
+                    installmentsPerYear = 1;
+                    break;
+                default:
+                    throw new ArgumentException("Invalid choice");
+            }
+
+            int totalInstallments = installmentsPerYear * years;//firstentry outside loop with obj, transaction entry added by calling Get
+            int intervalInMonths = 12 / installmentsPerYear;
+
+            double installmentAmount = totalAmount / totalInstallments;
+            var firstInstallment = new PolicyInstallment
+            {
+                Id = Guid.NewGuid(),
+                InstallmentPaidDate = startDate,
+                Amount = installmentAmount,
+                PolicyAccountId = policyId,
+                IsPaid = true
+            };
+            _installmentRepository.Add(firstInstallment);
+            //List<PolicyInstallment> installments = new List<PolicyInstallment>();
+            for (int i = 1; i < totalInstallments; i++)//i=1
+            {
+                DateTime installmentDate = startDate.AddMonths(i * intervalInMonths);
+
+                var installment = new PolicyInstallment
+                {
+                    Id = Guid.NewGuid(),
+                    InstallmentPaidDate = installmentDate,
+                    Amount = installmentAmount,
+                    PolicyAccountId = policyId,
+                    IsPaid = false
+                };
+
+                _installmentRepository.Add(installment);
+
+            }
+
         }
+        //public void BuyPolicy(Guid customerId, PolicyAccountDto policyAccountDto, PolicyDto policyDto)
+        //{
+        //    var policyAccount = _mapper.Map<PolicyAccount>(policyAccountDto);
+        //    policyAccount.CustomerId = customerId;
+        //    policyAccount.Status = "Active";
+        //    policyAccount.StartDate = DateTime.Now;
+        //    policyAccount.EndDate = DateTime.Now.AddYears(policyDto.MaximumPolicyTerm);
+        //    _policyAccountRepository.Add(policyAccount);
+        //}
         public bool CancelPolicy(Guid policyAccountId)
         {
             var policyAccount = _policyAccountRepository.Get(policyAccountId);

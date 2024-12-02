@@ -9,7 +9,7 @@ namespace Insurance_final_project.Models
         public Guid Id { get; set; }
         public double Amount { get; set; } // Will be compared with commission earned
         public bool ApprovedStatus { get; set; } = false;
-
+        //public string ApprovedStatus { get; set; } = ApprovalType.Pending.ToString();
         [ForeignKey("Agent")]
         public Guid AgentId { get; set; }
         public Agent Agent { get; set; }
