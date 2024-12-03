@@ -6,6 +6,7 @@ using Insurance_final_project.Dto;
 using Insurance_final_project.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Insurance_final_project.Data;
+using Insurance_final_project.Constant;
 
 namespace Insurance_final_project.Services
 {
@@ -175,7 +176,7 @@ namespace Insurance_final_project.Services
                 {
                     PolicyAccountId = policyAccount.Id,
                     Amount = policyAccount.TotalAmountPaid,
-                    IsApproved = false,
+                    IsApproved = ApprovalType.Pending.ToString(),
                     DateAndTime = DateTime.UtcNow
                 };
 
@@ -195,7 +196,7 @@ namespace Insurance_final_project.Services
             var claim = _mapper.Map<Claim>(claimDto);
             claim.PolicyAccountId = policyAccountId;
             claim.DateAndTime = DateTime.UtcNow;
-            claim.ApprovedStatus = false;
+            claim.ApprovedStatus = ApprovalType.Pending.ToString();
 
             _claimRepository.Add(claim);
             return true;

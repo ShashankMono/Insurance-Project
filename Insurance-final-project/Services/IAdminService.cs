@@ -23,10 +23,10 @@ namespace Insurance_final_project.Services
         Task<List<PolicyCancelDto>> GetPolicyCancels();
         Task<Guid> ApprovePolicyCancelation(PolicyCancelDto policyCancel);
         Task<List<TransactionDto>> GetTransactions();
-        Task<Guid> AddPolicy(PolicyDTO policy);
-        Task<Guid> UpdatePolicy(PolicyDTO policy);
-        Task<List<PolicyDTO>> GetPolicies(); // added new
-        Task<PolicyDTO> GetPolicy(Guid policyId); // added new
+        Task<Guid> AddPolicy(PolicyDto policy);
+        Task<Guid> UpdatePolicy(PolicyDto policy);
+        Task<List<PolicyDto>> GetPolicies(); // added new
+        Task<PolicyDto> GetPolicy(Guid policyId); // added new
         Task<List<CustomerDto>> GetCustomerAccounts();
         Task<Guid> ApproveCustomer(CustomerDto customer);
         Task<AgentDto> GetAgentReport(AgentDto agent); // includes all fields like commissions, commission withdrawal, policy account

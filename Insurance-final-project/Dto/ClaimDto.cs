@@ -1,4 +1,5 @@
-﻿using Insurance_final_project.Models;
+﻿using Insurance_final_project.Constant;
+using Insurance_final_project.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace Insurance_final_project.Dto
@@ -21,7 +22,7 @@ namespace Insurance_final_project.Dto
         [StringLength(500)]
         public string Description { get; set; }
 
-        public bool ApprovedStatus { get; set; } = false;
+        public string ApprovedStatus { get; set; } = ApprovalType.Pending.ToString();
         public DateTime DateTime { get; set; }
         public DateTime? AcknowledgementDate { get; set; }
     }
