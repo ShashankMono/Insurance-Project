@@ -12,7 +12,7 @@ namespace Insurance_final_project.Mapper
             CreateMap<Admin, AdminDto>().ReverseMap();
 
             // Agent
-            CreateMap<Agent, AgentDto>().ReverseMap();
+            CreateMap<Agent, AgentInputDto>().ReverseMap();
 
             // City
             CreateMap<City, CityDto>().ReverseMap();
@@ -65,6 +65,9 @@ namespace Insurance_final_project.Mapper
             CreateMap<UserDto, User>()
                 .ForMember(dest=> dest.HashedPassword,src=>src.MapFrom(s=>BCrypt.Net.BCrypt.HashPassword(s.Password)));
 
+            CreateMap<Agent, AgentResponseDto>().ReverseMap();
+            CreateMap<ApprovalDto, PolicyCancel>().ReverseMap();
+            CreateMap<CityInputDto, City>().ReverseMap();
         }
     }
 }

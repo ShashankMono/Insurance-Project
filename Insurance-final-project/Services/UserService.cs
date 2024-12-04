@@ -72,12 +72,13 @@ namespace Insurance_final_project.Services
             return jwt;
         }
 
-        public bool UpdateUser(UserLoginDto user)
+        public bool UpdateUser(UserDto user)
         {
-            if (_userRepo.Update(_mapper.Map<UserLoginDto, User>(user)) == null)
+            if (_userRepo.Get(_mapper.Map<UserDto, User>(user).UserId) == null)
             {
                 throw new UserInvalidException("Invalid User!");
-            }   
+            }
+            _userRepo.Update(_mapper.Map<UserDto, User>(user));
             return true;
         }
 

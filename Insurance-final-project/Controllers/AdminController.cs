@@ -26,7 +26,7 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpPost("add-agent")]
-        public IActionResult AddAgent([FromBody] AgentDto newAgent)
+        public IActionResult AddAgent([FromBody] AgentInputDto newAgent)
         {
             ValidateModel(); 
 
@@ -80,9 +80,9 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpPost("approve-policy-cancellation")]
-        public IActionResult ApprovePolicyCancellation([FromBody] PolicyCancelDto policyCancel)
+        public IActionResult ApprovePolicyCancellation([FromBody] ApprovalDto policyCancel)
         {
-            ValidateModel(); 
+            ValidateModel();
 
             var policyCancelId = _adminService.ApprovePolicyCancelation(policyCancel);
             return Ok(new { Success = true, Data = policyCancelId, Message = "Policy cancellation approved successfully." });
@@ -116,7 +116,7 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpPost("claim-approval")]
-        public IActionResult ClaimApproval([FromBody] ClaimDto claim)
+        public IActionResult ClaimApproval([FromBody] ApprovalDto claim)
         {
             ValidateModel(); 
 
@@ -134,7 +134,7 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpGet("get-agent-report")]
-        public IActionResult GetAgentReport([FromQuery] AgentDto agent)
+        public IActionResult GetAgentReport([FromBody] AgentInputDto agent)
         {
             ValidateModel(); 
 

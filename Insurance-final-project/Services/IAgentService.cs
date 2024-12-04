@@ -5,7 +5,7 @@ namespace Insurance_final_project.Services
 {
     public interface IAgentService
     {
-        public AgentDto GetAgentById(Guid agentId);
+        public AgentInputDto GetAgentById(Guid agentId);
         
         public ICollection<CommissionWithdrawalDto> GetCommissionWithdrawals(Guid agentId);
         public void WithdrawCommission(Guid agentId, double amount);

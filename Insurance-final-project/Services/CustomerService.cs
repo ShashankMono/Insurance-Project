@@ -7,6 +7,7 @@ using Insurance_final_project.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Insurance_final_project.Data;
 using Insurance_final_project.Constant;
+using Insurance_final_project.Exceptions;
 
 namespace Insurance_final_project.Services
 {
@@ -226,14 +227,13 @@ namespace Insurance_final_project.Services
         {
             var customer = _mapper.Map<Customer>(customerDto);
             var existingCustomer = _customerRepository.Get(customer.CustomerId);
-            if (existingCustomer != null)
+            if (existingCustomer == null)
             {
-                
-                _customerRepository.Update(customer);
-                return true;
+                throw new CustomerNotFoundException("Customer not found!");
             }
 
-            return false;
+            _customerRepository.Update(customer);
+             return true;
         }
         
         public CustomerDto RegisterCustomer(CustomerDto customerDto)

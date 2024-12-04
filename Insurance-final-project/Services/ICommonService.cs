@@ -13,5 +13,6 @@ namespace Insurance_final_project.Services
         public List<string> GetPolicyAccountStatus();
         public List<string> GetTransactionStatus();
         public List<string> GetVerificationType();
+        public List<string> GetPolicyType();
     }
 }

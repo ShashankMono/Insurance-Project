@@ -26,7 +26,7 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpPost("add-agent")]
-        public async Task<IActionResult> AddAgent([FromBody] AgentDto newAgent)
+        public async Task<IActionResult> AddAgent([FromBody] AgentInputDto newAgent)
         {
             ValidateModel();
             var user = await _employeeService.AddAgent(newAgent);
@@ -44,7 +44,7 @@ namespace Insurance_final_project.Controllers
         [HttpGet("get-agent-report/{agentId}")]
         public async Task<IActionResult> GetAgentReport(Guid agentId)
         {
-            var agent = await _employeeService.GetAgentReport(new AgentDto { AgentId = agentId });
+            var agent = await _employeeService.GetAgentReport(new AgentInputDto { AgentId = agentId });
             return Ok(new { Success = true, Data = agent, Message = "Agent report retrieved successfully." });
         }
 

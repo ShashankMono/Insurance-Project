@@ -27,9 +27,6 @@ namespace Insurance_final_project.Models
         public string Nominee { get; set; }
         public string NomineeRelation { get; set; }
 
-        // Relationships with Agent and Policy Account Many to many realtionship with customer
-        //public ICollection<Agent>? Agent { get; set; }  // Navigation property
-
         // Relationship with Policy Account (one-to-Many)
         public ICollection<PolicyAccount>? PolicyAccounts { get; set; }
 

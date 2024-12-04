@@ -6,7 +6,7 @@
 
     public class CustomerDto
     {
-
+        public Guid CustomerId { get; set; }
         [Required(ErrorMessage = "First Name is required.")]
         [StringLength(100, ErrorMessage = "First Name cannot be longer than 100 characters.")]
         public string FirstName { get; set; }
@@ -41,7 +41,12 @@
         // Foreign Key to User (One-to-One)
         [Required(ErrorMessage = "User is required.")]
         public Guid UserId { get; set; }
-        //public bool IsApproved { get; set; } = false;
+        public ICollection<PolicyAccount>? PolicyAccounts { get; set; }
+
+        // Relationship with Documents (one-to-Many)
+        public ICollection<Document>? Documents { get; set; }
+        public ICollection<Query>? Queries { get; set; }
+        public ICollection<Transaction>? Transactions { get; set; }
     }
 
 }

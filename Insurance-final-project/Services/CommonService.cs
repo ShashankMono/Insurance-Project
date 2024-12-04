@@ -64,5 +64,9 @@ namespace Insurance_final_project.Services
         {
             throw new NotImplementedException();
         }
+        public List<string> GetPolicyType()
+        {
+            throw new NotImplementedException();
+        };
     }
 }

@@ -5,8 +5,8 @@ namespace Insurance_final_project.Services
     public interface IEmployeeService
     {
         Task<Guid> UpdateEmployeeProfile(EmployeeDto employee);
-        Task<UserDto> AddAgent(AgentDto agent);
-        Task<List<AgentDto>> GetAllAgents();
+        Task<UserDto> AddAgent(AgentInputDto agent);
+        Task<List<AgentInputDto>> GetAllAgents();
         Task<List<CommissionDto>> GetCommissions();
         Task<List<PolicyAccountDto>> GetAllPolicyAccounts();
         Task<List<ClaimDto>> GetClaimAccounts();
@@ -15,7 +15,7 @@ namespace Insurance_final_project.Services
         Task<List<TransactionDto>> GetTransactions();
         Task<List<CustomerDto>> GetCustomerAccounts();
         Task<Guid> ChangeApproveStatus(DocumentDto document);
-        Task<AgentDto> GetAgentReport(AgentDto agent); // Includes all fields like commissions, commission withdrawal, policy account
+        Task<AgentInputDto> GetAgentReport(AgentInputDto agent); // Includes all fields like commissions, commission withdrawal, policy account
         Task<PolicyAccountDto> GetPolicyAccount(PolicyAccountDto policyAccount);
         Task<List<PolicyDto>> GetPolicies();
         Task<PolicyDto> GetPolicy(Guid policyId);

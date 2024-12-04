@@ -46,7 +46,7 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult UpdateUser([FromBody] UserLoginDto updatedUser)
+        public IActionResult UpdateUser([FromBody] UserDto updatedUser)
         {
             ValidateModel(); // Validate the model
 

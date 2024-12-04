@@ -6,6 +6,7 @@ namespace Insurance_final_project.Dto
 {
     public class DocumentDto
     {
+        public Guid DocumentId { get; set; }
         [Required(ErrorMessage = "Document Type is required.")]
         [StringLength(100, ErrorMessage = "Document Type cannot be longer than 100 characters.")]
         public string DocumentType { get; set; }
