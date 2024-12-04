@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Insurance Yo</a>
+  
+      
+  
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="aboutDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              About Us
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+              <li>
+                <a class="dropdown-item" href="#">Developers</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Contact Us</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="servicesDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Services
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+              <li>
+                <a class="dropdown-item" href="#">What We Do</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Insurance Types</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Insurance Policies</a>
+              </li>
+            </ul>
+          </li>
+          
+        </ul>
+        <button class="btn btn-primary" (click)="navigateToLogin()">Login</button>
+        <button routerLink="/register-customer" class="btn btn-success">Register Customer</button>
+
+      </div>
+    </div>
+</nav>
+  

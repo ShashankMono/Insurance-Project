@@ -3,7 +3,8 @@ using Insurance_final_project.Constant;
 using Insurance_final_project.Dto;
 using Insurance_final_project.Models;
 using Insurance_final_project.Repositories;
-
+using Insurance_final_project.Mapper;
+using AutoMapper;
 namespace Insurance_final_project.Services
 {
     public class CommonService : ICommonService

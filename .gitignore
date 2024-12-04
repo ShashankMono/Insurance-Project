@@ -47,9 +47,6 @@ Desktop.ini
 *.bak
 *.swp
 
-#ignore migrations
-**/Migrations/
-
 # JetBrains Rider
 .idea/
 
@@ -58,4 +55,60 @@ Desktop.ini
 *.ipr
 *.iws
 out/
-"Insurance-final-project/appsettings.json" 
+
+# Compiled output
+dist/
+out-tsc/
+build/
+
+# Dependency directories
+node_modules/
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Temporary and log files
+*.log
+*.tmp
+*.bak
+*.swp
+*.DS_Store
+*.AppleDouble
+Thumbs.db
+
+# Angular specific files
+.angular/
+.angular/cache/
+
+# Environment files
+src/environments/*.ts
+
+# Package lock and yarn lock
+package-lock.json
+yarn.lock
+
+# Coverage output
+coverage/
+
+# Compiled JavaScript files
+*.js
+*.js.map
+
+# Compiled CSS files
+*.css
+*.css.map
+
+# Test outputs
+test-reports/
+karma-coverage/
+karma-results.json
+
+# Miscellaneous
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
