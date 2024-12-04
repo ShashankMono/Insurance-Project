@@ -5,6 +5,7 @@ namespace Insurance_final_project.Dto
 {
     public class PolicyDto
     {
+        public Guid Id { get; set; }
         [Required]
         [StringLength(100, ErrorMessage = "Policy name cannot exceed 100 characters.")]
         public string Name { get; set; }
@@ -38,5 +39,6 @@ namespace Insurance_final_project.Dto
 
         [Range(0.01, 100, ErrorMessage = "Commission percentage must be between 0.01 and 100.")]
         public double CommissionPercentage { get; set; }
+        public ICollection<PolicyAccount>? PolicyAccounts { get; set; }
     }
 }

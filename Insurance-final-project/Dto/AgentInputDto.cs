@@ -3,7 +3,7 @@
     using Insurance_final_project.Models;
     using System.ComponentModel.DataAnnotations;
 
-    public class AgentDto
+    public class AgentInputDto
     {
         public Guid AgentId { get; set; }
         [Required(ErrorMessage = "First name is required.")]
@@ -35,9 +35,8 @@
         [Range(0, double.MaxValue, ErrorMessage = "Total commission must be a non-negative value.")]
         public double? TotalCommission { get; set; } = 0; // Overall commission expected
 
-        //[Required(ErrorMessage = "Status is required.")]
-        //[StringLength(20, ErrorMessage = "Status cannot exceed 20 characters.")]
-        //public bool IsActive { get; set; } = true; // Status of the agent
+
+
     }
 
 }

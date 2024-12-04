@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Insurance_final_project.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Insurance_final_project.Dto
 {
     public class EmployeeDto
     {
+        public Guid EmployeeId { get; set; }
         [Required(ErrorMessage = "First name is required.")]
         [StringLength(50, ErrorMessage = "First name cannot exceed 50 characters.")]
         public string FirstName { get; set; } // Employee's first name
@@ -27,10 +29,8 @@ namespace Insurance_final_project.Dto
         [Range(0, double.MaxValue, ErrorMessage = "Salary must be a positive number.")]
         public double Salary { get; set; } // Employee's salary
 
-        //[Required]
-        //public bool IsActive { get; set; } = true; // Default Active status
-
         [Required(ErrorMessage = "User ID is required.")]
         public Guid UserId { get; set; } // Link to User Entity
+        public User User { get; set; }
     }
 }

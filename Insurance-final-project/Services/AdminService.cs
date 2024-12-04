@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Insurance_final_project.Constant;
 using Insurance_final_project.Dto;
+using Insurance_final_project.Exceptions;
 using Insurance_final_project.Models;
 using Insurance_final_project.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -60,7 +62,7 @@ namespace Insurance_final_project.Services
             _Mapper = mapper;
         }
 
-        public UserDto AddNewUser()
+        public UserDto AddNewUser(Guid roleId)
         {
             var newUsername = Guid.NewGuid().ToString();
             Random random = new Random();
@@ -69,16 +71,16 @@ namespace Insurance_final_project.Services
             {
                 Username = newUsername,
                 Password = password,
-                RoleId = _RoleRepo.GetAll().FirstOrDefault(r => r.RoleName == "Agent").RoleId,
+                RoleId = roleId,
             };
             User userAgent = _UserRepo.Add(_Mapper.Map<UserDto, User>(user));
             user.UserId = userAgent.UserId;
             return user;
         }
-        public async Task<UserDto> AddAgent(AgentDto newAgent)
+        public async Task<UserDto> AddAgent(AgentInputDto newAgent)
         {
-            Agent agent = _Mapper.Map<AgentDto,Agent>(newAgent);
-            UserDto user = AddNewUser();
+            Agent agent = _Mapper.Map<AgentInputDto,Agent>(newAgent);
+            UserDto user = AddNewUser(_RoleRepo.GetAll().FirstOrDefault(r => r.RoleName == "Agent").RoleId);
             agent.UserId = user.UserId;
             Agent agentAdded = _AgentRepo.Add(agent);
             return user;
@@ -87,7 +89,7 @@ namespace Insurance_final_project.Services
         public async Task<UserDto> AddEmployee(EmployeeDto newEmployee)
         {
             Employee employee = _Mapper.Map<EmployeeDto, Employee>(newEmployee);
-            UserDto user = AddNewUser();
+            UserDto user = AddNewUser(_RoleRepo.GetAll().FirstOrDefault(r => r.RoleName == "Employee").RoleId);
             employee.UserId = user.UserId;
             Employee employeeAdded = _EmployeeRepo.Add(employee);
             return user;
@@ -103,6 +105,10 @@ namespace Insurance_final_project.Services
         public async Task<Guid> AddPolicyType(PolicyTypeDto policyType)
         {
             var newPolicyType = _Mapper.Map<PolicyTypeDto, PolicyType>(policyType);
+            if(_PolicyTypeRepo.GetAll().FirstOrDefault(p=>p.Type.ToLower() == newPolicyType.Type.ToLower()) != null)
+            {
+                throw new PolicyTypeExistException("Type of policy already exist!");
+            }
             PolicyType policyTypeAdded = _PolicyTypeRepo.Add(newPolicyType);
             return policyTypeAdded.Id;
         }
@@ -121,10 +127,19 @@ namespace Insurance_final_project.Services
             return updatedCustomer.CustomerId;
         }
 
-        public async Task<Guid> ApprovePolicyCancelation(PolicyCancelDto policyCancel)
+        public async Task<Guid> ApprovePolicyCancelation(ApprovalDto policyCancel)
         {
-            var updatePolicyCancelStatus = _Mapper.Map<PolicyCancelDto, PolicyCancel>(policyCancel);
-            PolicyCancel updatedPolicyCancel = _PolicyCancelRepo.Update(updatePolicyCancelStatus);
+            var policyCan = _PolicyCancelRepo.Get(policyCancel.Id);
+            if(policyCan.IsApproved == ApprovalType.Approved.ToString())
+            {
+                var policyAccount = _PolicyAccountRepo.GetAll().FirstOrDefault(pa=>pa.Id == policyCan.PolicyAccountId);
+                if (policyAccount != null) throw new PolicyAccountNotFountException("Policy Account not found!");
+                policyAccount.Status = PolicyAccountStatus.Closed.ToString();
+                _PolicyAccountRepo.Update(policyAccount);
+            }
+            policyCan.IsApproved = policyCancel.IsApproved;
+            PolicyCancel updatedPolicyCancel = _PolicyCancelRepo.Update(policyCan);
+            
             return updatedPolicyCancel.PolicyCancelId;
         }
 
@@ -135,18 +150,20 @@ namespace Insurance_final_project.Services
             return updatedWithdrawRequestStatus.Id;
         }
 
-        public async Task<Guid> AddCity(CityDto city)
+        public async Task<Guid> AddCity(CityInputDto city)
         {
-            return _CityRepo.Add(_Mapper.Map<CityDto, City>(city)).CityId;
+            return _CityRepo.Add(_Mapper.Map<CityInputDto, City>(city)).CityId;
         }
-        public async Task<Guid> UpdateCity(CityDto city)
+        public async Task<Guid> UpdateCity(CityInputDto city)
         {
-            return _CityRepo.Update(_Mapper.Map<CityDto, City>(city)).CityId;
+            return _CityRepo.Update(_Mapper.Map<CityInputDto, City>(city)).CityId;
         }
 
-        public async Task<Guid> ClaimApproval(ClaimDto claim)
+        public async Task<Guid> ClaimApproval(ApprovalDto claim)
         {
-            return _ClaimRepo.Update(_Mapper.Map<ClaimDto, Claim>(claim)).ClaimId;
+            var claimAccount = _ClaimRepo.GetAll().FirstOrDefault(c=>c.ClaimId == claim.Id);
+            claimAccount.ApprovedStatus = claim.IsApproved;
+            return _ClaimRepo.Update(claimAccount).ClaimId;
         }
 
         public async Task<Guid> DeActivateUser(ChangeUserStatusDto user)//changes has been done in this function
@@ -156,9 +173,9 @@ namespace Insurance_final_project.Services
             return _UserRepo.Update(existingUser).UserId;
         }
 
-        public async Task<AgentDto> GetAgentReport(AgentDto agent)
+        public async Task<AgentResponseDto> GetAgentReport(AgentInputDto agent)
         {
-            return _Mapper.Map<Agent, AgentDto>(_AgentRepo.GetAll()
+            return _Mapper.Map<Agent, AgentResponseDto>(_AgentRepo.GetAll()
                 .Include(a => a.PolicyAccounts)
                 .Include(a => a.Commissions)
                 .Include(a => a.CommissionWithdrawal)
@@ -234,9 +251,9 @@ namespace Insurance_final_project.Services
             return _Mapper.Map<List<Employee>,List<EmployeeDto>>(_EmployeeRepo.GetAll().ToList());
         }
 
-        public async Task<List<AgentDto>> GetAllAgents()
+        public async Task<List<AgentInputDto>> GetAllAgents()
         {
-            return _Mapper.Map<List<Agent>,List<AgentDto>>(_AgentRepo.GetAll().ToList());
+            return _Mapper.Map<List<Agent>,List<AgentInputDto>>(_AgentRepo.GetAll().ToList());
         }
 
         public async Task<List<PolicyDto>> GetPolicies()

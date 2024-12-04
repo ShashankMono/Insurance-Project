@@ -26,18 +26,18 @@ namespace Insurance_final_project.Services
             _mapper = mapper;
             _config = configure;
         }
-        public Guid AddUser(UserDto user)
+        public async Task<Guid> AddUser(UserDto user)
         {
             User newUser = _userRepo.Add(_mapper.Map<UserDto,User>(user));
             return newUser.UserId;
         }
 
-        public List<UserDto> GetUsers()
+        public async Task<List<UserDto>> GetUsers()
         {
             return _mapper.Map<List<User>, List<UserDto>>(_userRepo.GetAll().ToList());
         }
 
-        public (string token,User userData) LogIn(UserLoginDto user)
+        public async Task<(string token,User userData)> LogIn(UserLoginDto user)
         {
             var existingUser = _userRepo.GetAll().FirstOrDefault(u=>u.Username == user.Username);
             if (existingUser == null) {
@@ -72,21 +72,22 @@ namespace Insurance_final_project.Services
             return jwt;
         }
 
-        public bool UpdateUser(UserLoginDto user)
+        public async Task<bool> UpdateUser(UserDto user)
         {
-            if (_userRepo.Update(_mapper.Map<UserLoginDto, User>(user)) == null)
+            if (_userRepo.Get(_mapper.Map<UserDto, User>(user).UserId) == null)
             {
                 throw new UserInvalidException("Invalid User!");
-            }   
+            }
+            _userRepo.Update(_mapper.Map<UserDto, User>(user));
             return true;
         }
 
-        public UserDto GetUserById(Guid id)
+        public async Task<UserDto> GetUserById(Guid id)
         {
             return _mapper.Map<User, UserDto>(_userRepo.Get(id));
         }
 
-        public bool ChangePassword(ChangePasswordDto changePassword)
+        public async Task<bool> ChangePassword(ChangePasswordDto changePassword)
         {
             var existingUser = _userRepo.GetAll().FirstOrDefault(u=>u.Username==changePassword.Username);
             if (existingUser == null) {
@@ -103,7 +104,7 @@ namespace Insurance_final_project.Services
             return true;
         }
 
-        public bool DeactivateUser(ChangeUserStatusDto changeStatus)
+        public async Task<bool> DeactivateUser(ChangeUserStatusDto changeStatus)
         {
             var existingUser = _userRepo.Get(changeStatus.UserId);
             existingUser.IsActive = changeStatus.IsActive;

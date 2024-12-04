@@ -37,12 +37,12 @@ namespace Insurance_final_project.Services
             _mapper = mapper;
         }
 
-        public AgentDto GetAgentById(Guid agentId)
+        public AgentInputDto GetAgentById(Guid agentId)
         {
             var agent = _agentRepository.Get(agentId);
             if (agent == null)
                 throw new Exception("Agent not found.");
-            return _mapper.Map<AgentDto>(agent);
+            return _mapper.Map<AgentInputDto>(agent);
         }
         public ICollection<CommissionWithdrawalDto> GetCommissionWithdrawals(Guid agentId)
         {

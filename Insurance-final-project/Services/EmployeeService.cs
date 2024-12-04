@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Insurance_final_project.Dto;
+using Insurance_final_project.Exceptions;
 using Insurance_final_project.Models;
 using Insurance_final_project.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -53,7 +54,7 @@ namespace Insurance_final_project.Services
             _TransactionRepo = transactionRepo;
             _Mapper = mapper;
         }
-        public async Task<UserDto> AddAgent(AgentDto newAgent)
+        public async Task<UserDto> AddAgent(AgentInputDto newAgent)
         {
             var newUsername = Guid.NewGuid().ToString();
             Random random = new Random();
@@ -66,7 +67,7 @@ namespace Insurance_final_project.Services
             };
             User userAgent = _UserRepo.Add(_Mapper.Map<UserDto, User>(user));
             user.UserId = userAgent.UserId;
-            Agent agent = _Mapper.Map<AgentDto, Agent>(newAgent);
+            Agent agent = _Mapper.Map<AgentInputDto, Agent>(newAgent);
             agent.UserId = user.UserId;
             Agent agentAdded = _AgentRepo.Add(agent);
             return user;
@@ -78,18 +79,18 @@ namespace Insurance_final_project.Services
             return _DocumentRepo.Update(_Mapper.Map<DocumentDto, Document>(document)).DocumentId;
         }
 
-        public async Task<AgentDto> GetAgentReport(AgentDto agent)
+        public async Task<AgentInputDto> GetAgentReport(AgentInputDto agent)
         {
-            return _Mapper.Map<Agent, AgentDto>(_AgentRepo.GetAll()
+            return _Mapper.Map<Agent, AgentInputDto>(_AgentRepo.GetAll()
             .Include(a => a.PolicyAccounts)
             .Include(a => a.Commissions)
             .Include(a => a.CommissionWithdrawal)
             .FirstOrDefault(a => a.AgentId == agent.AgentId));
         }
 
-        public async Task<List<AgentDto>> GetAllAgents()
+        public async Task<List<AgentInputDto>> GetAllAgents()
         {
-            return _Mapper.Map<List<Agent>, List<AgentDto>>(_AgentRepo.GetAll().ToList());
+            return _Mapper.Map<List<Agent>, List<AgentInputDto>>(_AgentRepo.GetAll().ToList());
         }
 
         public async Task<List<PolicyAccountDto>> GetAllPolicyAccounts()
@@ -155,6 +156,10 @@ namespace Insurance_final_project.Services
 
         public async Task<Guid> UpdateEmployeeProfile(EmployeeDto employee)
         {
+            if(_EmployeeRepo.Get(_Mapper.Map<EmployeeDto, Employee>(employee).EmployeeId) == null)
+            {
+                throw new InvalidEmployeeException("Employee not found!");
+            }
             return _EmployeeRepo.Update(_Mapper.Map<EmployeeDto, Employee>(employee)).EmployeeId;
         }
     }
