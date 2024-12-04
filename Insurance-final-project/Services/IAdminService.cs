@@ -9,8 +9,8 @@ namespace Insurance_final_project.Services
         Task<List<EmployeeDto>> GetAllEmployee(); // new added
         Task<UserDto> AddAgent(AgentInputDto agent);
         Task<List<AgentInputDto>> GetAllAgents(); // new added
-        Task<Guid> AddCity(CityDto city);
-        Task<Guid> UpdateCity(CityDto city);
+        Task<Guid> AddCity(CityInputDto city);
+        Task<Guid> UpdateCity(CityInputDto city);
         Task<Guid> AddState(StateDto state);
         Task<Guid> UpdateState(StateDto state);
         Task<List<CommissionDto>> GetCommissions();

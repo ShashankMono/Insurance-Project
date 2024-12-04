@@ -98,7 +98,7 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpPost("add-city")]
-        public IActionResult AddCity([FromBody] CityDto city)
+        public IActionResult AddCity([FromBody] CityInputDto city)
         {
             ValidateModel(); 
 
@@ -107,7 +107,7 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpPut("update-city")]
-        public IActionResult UpdateCity([FromBody] CityDto city)
+        public IActionResult UpdateCity([FromBody] CityInputDto city)
         {
             ValidateModel(); 
 
