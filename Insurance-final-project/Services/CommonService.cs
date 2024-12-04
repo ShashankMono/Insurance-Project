@@ -1,4 +1,5 @@
-﻿using Insurance_final_project.Constant;
+﻿using AutoMapper;
+using Insurance_final_project.Constant;
 using Insurance_final_project.Dto;
 using Insurance_final_project.Models;
 using Insurance_final_project.Repositories;
@@ -10,17 +11,26 @@ namespace Insurance_final_project.Services
         private readonly IRepository<Policy> _policyRepository;
         private readonly IRepository<State> _stateRepo;
         private readonly IRepository<City> _cityRepo;
+        IMapper _mapper;
+        private readonly IRepository<Role> _roleRepo;
+        private readonly IRepository<PolicyType> _policyType;
 
         public CommonService(IRepository<Policy> policyRepository,
             IRepository<State> stateRepo,
-            IRepository<City> cityRepo
+            IRepository<City> cityRepo,
+            IMapper mapper,
+            IRepository<Role> roleRepo,
+            IRepository<PolicyType> policyType
             )
         {
             _policyRepository = policyRepository;
             _stateRepo = stateRepo;
             _cityRepo = cityRepo;
+            _mapper = mapper;
+            _roleRepo = roleRepo;
+            _policyType = policyType;
         }
-        public List<string> GetapprovalTypes()
+        public async Task<List<string>> GetapprovalTypes()
         {
             Array approvalTypes = Enum.GetValues(typeof(ApprovalType));
             List<string> types = new List<string>();
@@ -30,43 +40,72 @@ namespace Insurance_final_project.Services
             return types;
         }
 
-        public List<CityDto> GetCities()
+        public async Task<List<CityDto>> GetCities()
         {
-            throw new NotImplementedException();
+            return _mapper.Map<List<City>,List<CityDto>>(_cityRepo.GetAll().ToList());
         }
 
-        public List<PolicyDto> GetPolicies()
+        public async Task<List<PolicyDto>> GetPolicies()
         {
-            throw new NotImplementedException();
+            return _mapper.Map<List<Policy>,List<PolicyDto>>(_policyRepository.GetAll().ToList());
         }
 
-        public List<string> GetPolicyAccountStatus()
+        public async Task<List<string>> GetPolicyAccountStatus()
         {
-            throw new NotImplementedException();
+            Array accountStatus = Enum.GetValues(typeof(PolicyAccountStatus));
+            List<string> status = new List<string>();
+            foreach (PolicyAccountStatus aStatus in accountStatus)
+            {
+                status.Add(aStatus.ToString());
+            }
+            return status;
         }
 
-        public List<RoleDto> GetRoles()
+        public async Task<List<RoleDto>> GetRoles()
         {
-            throw new NotImplementedException();
+            return _mapper.Map<List<Role>, List<RoleDto>>(_roleRepo.GetAll().ToList());
         }
 
-        public List<StateDto> GetStates()
+        public async Task<List<StateDto>> GetStates()
         {
-            throw new NotImplementedException();
+            return _mapper.Map<List<State>,List<StateDto>>(_stateRepo.GetAll().ToList());
         }
 
-        public List<string> GetTransactionStatus()
+        public async Task<List<string>> GetTransactionStatus()
         {
-            throw new NotImplementedException();
+            Array TransactionType = Enum.GetValues(typeof(TransactionType));
+            List<string> type = new List<string>();
+            foreach (var status in TransactionType)
+            {
+                type.Add(status.ToString());
+            }
+            return type;
         }
 
-        public List<string> GetVerificationType()
+        public async Task<List<string>> GetVerificationType()
         {
-            throw new NotImplementedException();
+            Array verification = Enum.GetValues(typeof(VerificationType));
+            List<string> verify = new List<string>();
+            foreach (var value in verification)
+            {
+                verify.Add(value.ToString());
+            }
+            return verify;
         }
-        public List<string> GetPolicyType()
+        public async Task<List<PolicyTypeDto>> GetPolicyType()
         {
-            throw new NotImplementedException();
-        };
+            return _mapper.Map<List<PolicyType>, List<PolicyTypeDto>>(_policyType.GetAll().ToList());
+        }
+
+        public async Task<List<string>> GetpolicyInstallmentType()
+        {
+            Array installment = Enum.GetValues(typeof(InstallmentType));
+            List<string> iType = new List<string>();
+            foreach (var type in installment)
+            {
+                iType.Add(type.ToString());
+            }
+            return iType;
+        }
     }
 }
