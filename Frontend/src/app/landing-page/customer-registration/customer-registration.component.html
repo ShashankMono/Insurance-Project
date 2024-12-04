@@ -1,0 +1,52 @@
+<div class="container">
+    <h2>Register Customer</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="firstName" class="form-label">First Name:</label>
+          <input id="firstName" formControlName="firstName" type="text" class="form-control" />
+        </div>
+        <div class="col-md-6">
+          <label for="lastName" class="form-label">Last Name:</label>
+          <input id="lastName" formControlName="lastName" type="text" class="form-control" />
+        </div>
+      </div>
+      
+      <div class="mb-3">
+        <label for="emailId" class="form-label">Email:</label>
+        <input id="emailId" formControlName="emailId" type="email" class="form-control" />
+      </div>
+      
+      <div class="mb-3">
+        <label for="mobileNo" class="form-label">Mobile No:</label>
+        <input id="mobileNo" formControlName="mobileNo" type="text" class="form-control" />
+      </div>
+      
+      <div class="mb-3">
+        <label for="stateId" class="form-label">State:</label>
+        <select id="stateId" formControlName="stateId" (change)="onStateChange($event)" class="form-select">
+          <option *ngFor="let state of states" [value]="state.stateId">{{ state.stateName }}</option>
+        </select>
+      </div>
+      
+      <div class="mb-3">
+        <label for="cityId" class="form-label">City:</label>
+        <select id="cityId" formControlName="cityId" class="form-select">
+          <option *ngFor="let city of cities" [value]="city.cityId">{{ city.cityName }}</option>
+        </select>
+      </div>
+      
+      <div class="mb-3">
+        <label for="userId" class="form-label">Username:</label>
+        <input id="userId" formControlName="userId" type="text" class="form-control" />
+      </div>
+      
+      <div class="mb-3">
+        <label for="password" class="form-label">Password:</label>
+        <input id="password" formControlName="password" type="password" class="form-control" />
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+  </div>
+  
