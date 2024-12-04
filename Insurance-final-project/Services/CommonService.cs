@@ -2,7 +2,8 @@
 using Insurance_final_project.Dto;
 using Insurance_final_project.Models;
 using Insurance_final_project.Repositories;
-
+using Insurance_final_project.Mapper;
+using AutoMapper;
 namespace Insurance_final_project.Services
 {
     public class CommonService : ICommonService
@@ -10,15 +11,18 @@ namespace Insurance_final_project.Services
         private readonly IRepository<Policy> _policyRepository;
         private readonly IRepository<State> _stateRepo;
         private readonly IRepository<City> _cityRepo;
+        private readonly IMapper _mapper;
 
         public CommonService(IRepository<Policy> policyRepository,
             IRepository<State> stateRepo,
-            IRepository<City> cityRepo
+            IRepository<City> cityRepo,
+            IMapper mapper
             )
         {
             _policyRepository = policyRepository;
             _stateRepo = stateRepo;
             _cityRepo = cityRepo;
+            _mapper= mapper;
         }
         public List<string> GetapprovalTypes()
         {
@@ -30,7 +34,7 @@ namespace Insurance_final_project.Services
             return types;
         }
 
-        public List<CityDto> GetCities()
+        public ICollection<CityDto> GetCities()
         {
             throw new NotImplementedException();
         }
@@ -50,7 +54,7 @@ namespace Insurance_final_project.Services
             throw new NotImplementedException();
         }
 
-        public List<StateDto> GetStates()
+        public ICollection<StateDto> GetStates()
         {
             throw new NotImplementedException();
         }

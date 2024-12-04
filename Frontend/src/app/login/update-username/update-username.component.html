@@ -1,0 +1,18 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-sm" style="width: 100%; max-width: 400px;">
+      <h1 class="text-center mb-4">Update Username</h1>
+      <form [formGroup]="updateUsernameForm" (ngSubmit)="updateUsername()">
+        <div>
+          <label for="newUsername">New Username</label>
+          <input id="newUsername" formControlName="newUsername" />
+        </div>
+        <div>
+          <label for="confirmUsername">Confirm Username</label>
+          <input id="confirmUsername" formControlName="confirmUsername" />
+        </div>
+        <button type="submit">Update Username</button>
+      </form>
+    </div>
+</div>
+
+  

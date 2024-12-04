@@ -5,8 +5,8 @@ namespace Insurance_final_project.Services
 {
     public interface ICommonService
     {
-        public List<CityDto> GetCities();
-        public List<StateDto> GetStates();
+        public ICollection<CityDto> GetCities();
+        public ICollection<StateDto> GetStates();
         public List<PolicyDto> GetPolicies();
         public List<RoleDto> GetRoles();
         public List<string> GetapprovalTypes();
