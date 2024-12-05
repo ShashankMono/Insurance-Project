@@ -1,1 +1,43 @@
-<p>admin-dashboard works!</p>
+<div class="container-fluid vh-100">
+  <app-admin-header></app-admin-header>
+  
+  <div class="container py-5">
+    <div class="text-center mb-4">
+      <h1 class="display-4 text-primary">Admin Dashboard</h1>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card shadow border-primary">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Actions</h4>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="addAgent()">Add Agent</button>
+            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="addEmployee()">Add Employee</button>
+            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="addPolicy()">Add Policy</button>
+            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="addCity()">Add City</button>
+            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="addState()">Add State</button>
+            <!-- <button class="btn btn-outline-primary btn-block w-100" (click)="approveCustomer()">Approve Customer</button> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Reports Section -->
+      <div class="col-md-6">
+        <div class="card shadow border-primary">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">View Reports</h4>
+          </div>
+          <div class="card-body">
+            <!-- <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="viewAgentReport()">View Agent Report</button>
+            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="viewClaimAccounts()">View Claim Accounts</button>
+            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="viewCommissions()">View Commissions</button>
+            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="viewCustomerAccounts()">View Customer Accounts</button>
+            <button class="btn btn-outline-primary btn-block w-100" (click)="viewPolicyAccount()">View Policy Account</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

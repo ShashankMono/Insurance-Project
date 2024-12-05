@@ -25,6 +25,7 @@
       <div class="mb-3">
         <label for="stateId" class="form-label">State:</label>
         <select id="stateId" formControlName="stateId" (change)="onStateChange($event)" class="form-select">
+          <option value="" disabled selected>Select State</option>
           <option *ngFor="let state of states" [value]="state.stateId">{{ state.stateName }}</option>
         </select>
       </div>
@@ -32,9 +33,11 @@
       <div class="mb-3">
         <label for="cityId" class="form-label">City:</label>
         <select id="cityId" formControlName="cityId" class="form-select">
+          <option value="" disabled selected>Select City</option>
           <option *ngFor="let city of cities" [value]="city.cityId">{{ city.cityName }}</option>
         </select>
       </div>
+      
       
       <div class="mb-3">
         <label for="userId" class="form-label">Username:</label>
@@ -48,5 +51,5 @@
       
       <button type="submit" class="btn btn-primary">Register</button>
     </form>
-  </div>
+</div>
   

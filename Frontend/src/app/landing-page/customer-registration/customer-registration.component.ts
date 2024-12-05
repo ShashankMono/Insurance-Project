@@ -1,21 +1,22 @@
 import { Component,OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/services/login.service';
-import { HttpClient } from '@angular/common/http';
+import { State } from 'src/app/models/state';
+import { City } from 'src/app/models/city';
 @Component({
   selector: 'app-customer-registration',
   templateUrl: './customer-registration.component.html',
   styleUrls: ['./customer-registration.component.css']
 })
-export class CustomerRegistrationComponent implements OnInit{
+export class CustomerRegistrationComponent implements OnInit {
   registerForm: FormGroup;
-  states = [];
-  cities = [];
+  states:any;
+  cities: any;
 
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService
-  ){
+  ) {
     this.registerForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -23,27 +24,36 @@ export class CustomerRegistrationComponent implements OnInit{
       mobileNo: ['', Validators.required],
       stateId: ['', Validators.required],
       cityId: ['', Validators.required],
-      nominee: ['', Validators.required],
-      nomineeRelation: ['', Validators.required],
       userId: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   ngOnInit(): void {
-    // Fetch the states when the component loads
-    this.loginService.getStates().subscribe((data) => {
-      this.states = data;
+    this.loginService.getStates().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.states = Array.isArray(data) ? data : [];
+      },
+      error: (err) => {
+        console.error('Error fetching states:', err);
+      }
     });
   }
 
   onStateChange(event: any): void {
-    const stateId = event.target.value;
-    // Fetch cities for the selected state
-    this.loginService.getCitiesByState(stateId).subscribe((data) => {
-      this.cities = data;
+    const stateId = +event.target.value; 
+    this.loginService.getCitiesByState(stateId).subscribe({
+      next: (data) => {
+        console.log('Fetched cities:', data);
+        this.cities = Array.isArray(data) ? data : [];
+      },
+      error: (err) => {
+        console.error('Error fetching cities:', err);
+      }
     });
   }
+
 
   onSubmit(): void {
     if (this.registerForm.valid) {

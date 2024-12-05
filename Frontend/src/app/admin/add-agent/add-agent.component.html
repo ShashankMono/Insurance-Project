@@ -1,0 +1,72 @@
+<div class="container py-5">
+    <h2 class="text-center mb-4">Add Agent</h2>
+    <form [formGroup]="addAgentForm" (ngSubmit)="onSubmit()">
+      <div class="form-group mb-3">
+        <label for="firstName">First Name</label>
+        <input
+          type="text"
+          id="firstName"
+          class="form-control"
+          formControlName="firstName"
+          placeholder="Enter first name"
+        />
+        <small *ngIf="addAgentForm.get('firstName')?.invalid && addAgentForm.get('firstName')?.touched" class="text-danger">
+          First name is required
+        </small>
+      </div>
+      <div class="form-group mb-3">
+        <label for="lastName">Last Name</label>
+        <input
+          type="text"
+          id="lastName"
+          class="form-control"
+          formControlName="lastName"
+          placeholder="Enter last name"
+        />
+        <small *ngIf="addAgentForm.get('lastName')?.invalid && addAgentForm.get('lastName')?.touched" class="text-danger">
+          Last name is required
+        </small>
+      </div>
+      <div class="form-group mb-3">
+        <label for="qualification">Qualification</label>
+        <input
+          type="text"
+          id="qualification"
+          class="form-control"
+          formControlName="qualification"
+          placeholder="Enter qualification"
+        />
+        <small *ngIf="addAgentForm.get('qualification')?.invalid && addAgentForm.get('qualification')?.touched" class="text-danger">
+          Qualification is required
+        </small>
+      </div>
+      <div class="form-group mb-3">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          formControlName="email"
+          placeholder="Enter email"
+        />
+        <small *ngIf="addAgentForm.get('email')?.invalid && addAgentForm.get('email')?.touched" class="text-danger">
+          Valid email is required
+        </small>
+      </div>
+      <div class="form-group mb-3">
+        <label for="mobileNo">Mobile Number</label>
+        <input
+          type="text"
+          id="mobileNo"
+          class="form-control"
+          formControlName="mobileNo"
+          placeholder="Enter mobile number"
+        />
+        <small *ngIf="addAgentForm.get('mobileNo')?.invalid && addAgentForm.get('mobileNo')?.touched" class="text-danger">
+          Mobile number is required
+        </small>
+      </div>
+      <button class="btn btn-primary w-100" type="submit" [disabled]="addAgentForm.invalid">Add Agent</button>
+    </form>
+  </div>
+  

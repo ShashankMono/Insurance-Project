@@ -1,0 +1,47 @@
+<div class="container">
+    <h2>Add Policy</h2>
+    <form [formGroup]="addPolicyForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="policyName">Policy Name:</label>
+        <input type="text" id="policyName" class="form-control" formControlName="policyName" />
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" class="form-control" formControlName="description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="minimumAgeCriteria">Minimum Age:</label>
+        <input type="number" id="minimumAgeCriteria" class="form-control" formControlName="minimumAgeCriteria" />
+      </div>
+      <div class="form-group">
+        <label for="maximumAgeCriteria">Maximum Age:</label>
+        <input type="number" id="maximumAgeCriteria" class="form-control" formControlName="maximumAgeCriteria" />
+      </div>
+      <div class="form-group">
+        <label for="minimumPolicyTerm">Minimum Policy Term:</label>
+        <input type="number" id="minimumPolicyTerm" class="form-control" formControlName="minimumPolicyTerm" />
+      </div>
+      <div class="form-group">
+        <label for="maximumPolicyTerm">Maximum Policy Term:</label>
+        <input type="number" id="maximumPolicyTerm" class="form-control" formControlName="maximumPolicyTerm" />
+      </div>
+      <div class="form-group">
+        <label for="minimumInvestmentAmount">Minimum Investment Amount:</label>
+        <input type="number" id="minimumInvestmentAmount" class="form-control" formControlName="minimumInvestmentAmount" />
+      </div>
+      <div class="form-group">
+        <label for="maximumInvestmentAmount">Maximum Investment Amount:</label>
+        <input type="number" id="maximumInvestmentAmount" class="form-control" formControlName="maximumInvestmentAmount" />
+      </div>
+      <div class="form-group">
+        <label for="profitPercentage">Profit Percentage:</label>
+        <input type="number" id="profitPercentage" class="form-control" formControlName="profitPercentage" />
+      </div>
+      <div class="form-group">
+        <label for="commissionPercentage">Commission Percentage:</label>
+        <input type="number" id="commissionPercentage" class="form-control" formControlName="commissionPercentage" />
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="addPolicyForm.invalid">Add Policy</button>
+    </form>
+</div>
+  

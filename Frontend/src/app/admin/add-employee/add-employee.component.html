@@ -1,0 +1,53 @@
+<div class="container">
+    <h2>Add Employee</h2>
+    <form [formGroup]="addEmployeeForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" class="form-control" formControlName="firstName" />
+        <div *ngIf="addEmployeeForm.get('firstName')?.touched && addEmployeeForm.get('firstName')?.invalid" class="text-danger">
+          First name is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" class="form-control" formControlName="lastName" />
+        <div *ngIf="addEmployeeForm.get('lastName')?.touched && addEmployeeForm.get('lastName')?.invalid" class="text-danger">
+          Last name is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="mobileNo">Mobile Number:</label>
+        <input type="text" id="mobileNo" class="form-control" formControlName="mobileNo" />
+        <div *ngIf="addEmployeeForm.get('mobileNo')?.touched && addEmployeeForm.get('mobileNo')?.invalid" class="text-danger">
+          Mobile number is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <textarea
+          id="address"
+          formControlName="address"
+          class="form-control"
+          placeholder="Enter address"
+          rows="3"
+          required
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="EmailId">Email:</label>
+        <input type="email" id="EmailId" class="form-control" formControlName="EmailId" />
+        <div *ngIf="addEmployeeForm.get('EmailId')?.touched && addEmployeeForm.get('EmailId')?.invalid" class="text-danger">
+          Valid email is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="salary">Salary:</label>
+        <input type="number" id="salary" class="form-control" formControlName="salary" />
+        <div *ngIf="addEmployeeForm.get('salary')?.touched && addEmployeeForm.get('salary')?.invalid" class="text-danger">
+          Salary is required.
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="addEmployeeForm.invalid">Add Employee</button>
+    </form>
+</div>
+  

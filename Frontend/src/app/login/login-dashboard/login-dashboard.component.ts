@@ -20,37 +20,41 @@ export class LoginDashboardComponent {
     console.log('LoginDashboardComponent loaded');
   }
 
-  logIn(){
+  logIn() {
     this.loginService.signIn(this.loginForm.value).subscribe({
-      next:(response)=>{
-        this.myToken=response.headers.get('Jwt');
+      next: (response) => {
+        this.myToken = response.headers.get('Jwt');
         localStorage.setItem('token', this.myToken);
-
-        this.role=response.body;
-        localStorage.setItem('role',this.role.roleName)
-
-        if(this.role.roleName==='Admin'){
-          this.router.navigateByUrl('/admin-dashboard');
-        } 
-        else if(this.role.roleName==='Customer')
-        {
-          this.router.navigateByUrl('/customer-dashboard');
-        }
-        else if(this.role.roleName==='Employee'){
-          this.router.navigateByUrl('/employee-dashboard');
-        }
-        else if(this.role.roleName==='Agent'){
-          this.router.navigateByUrl('/agent-dashboard');
-        }
-        else{
-          this.router.navigateByUrl('/login-dashboard');
-          alert("incorrect username or password")
+  
+        const userData = response.body;
+  
+        if (userData && userData.role) {
+          localStorage.setItem('role', userData.role.roleName);
+  
+          switch (userData.role.roleName) {
+            case 'Admin':
+              this.router.navigateByUrl('/admin-dashboard');
+              break;
+            case 'Customer':
+              this.router.navigateByUrl('/customer-dashboard');
+              break;
+            case 'Employee':
+              this.router.navigateByUrl('/employee-dashboard');
+              break;
+            case 'Agent':
+              this.router.navigateByUrl('/agent-dashboard');
+              break;
+            default:
+              this.router.navigateByUrl('/login-dashboard');
+              alert('Incorrect username or password');
+              break;
+          }
         }
       },
-      error:(err:HttpErrorResponse)=>{
-        console.error('Error signing in:',err);
+      error: (err: HttpErrorResponse) => {
+        console.error('Error signing in:', err);
         alert('Login failed. Please check your credentials and try again.');
       }
     });
-  }
+  }  
 }
