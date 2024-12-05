@@ -31,7 +31,7 @@ namespace Insurance_final_project.Services
             _roleRepo = roleRepo;
             _policyType = policyType;
         }
-        public async Task<List<string>> GetapprovalTypes()
+        public List<string> GetapprovalTypes()
         {
             Array approvalTypes = Enum.GetValues(typeof(ApprovalType));
             List<string> types = new List<string>();
@@ -41,17 +41,8 @@ namespace Insurance_final_project.Services
             return types;
         }
 
-        public async Task<List<CityDto>> GetCities()
-        {
-            return _mapper.Map<List<City>,List<CityDto>>(_cityRepo.GetAll().ToList());
-        }
 
-        public async Task<List<PolicyDto>> GetPolicies()
-        {
-            return _mapper.Map<List<Policy>,List<PolicyDto>>(_policyRepository.GetAll().ToList());
-        }
-
-        public async Task<List<string>> GetPolicyAccountStatus()
+        public List<string> GetPolicyAccountStatus()
         {
             Array accountStatus = Enum.GetValues(typeof(PolicyAccountStatus));
             List<string> status = new List<string>();
@@ -62,17 +53,7 @@ namespace Insurance_final_project.Services
             return status;
         }
 
-        public async Task<List<RoleDto>> GetRoles()
-        {
-            return _mapper.Map<List<Role>, List<RoleDto>>(_roleRepo.GetAll().ToList());
-        }
-
-        public async Task<List<StateDto>> GetStates()
-        {
-            return _mapper.Map<List<State>,List<StateDto>>(_stateRepo.GetAll().ToList());
-        }
-
-        public async Task<List<string>> GetTransactionStatus()
+        public List<string> GetTransactionStatus()
         {
             Array TransactionType = Enum.GetValues(typeof(TransactionType));
             List<string> type = new List<string>();
@@ -83,7 +64,7 @@ namespace Insurance_final_project.Services
             return type;
         }
 
-        public async Task<List<string>> GetVerificationType()
+        public List<string> GetVerificationType()
         {
             Array verification = Enum.GetValues(typeof(VerificationType));
             List<string> verify = new List<string>();
@@ -93,12 +74,9 @@ namespace Insurance_final_project.Services
             }
             return verify;
         }
-        public async Task<List<PolicyTypeDto>> GetPolicyType()
-        {
-            return _mapper.Map<List<PolicyType>, List<PolicyTypeDto>>(_policyType.GetAll().ToList());
-        }
 
-        public async Task<List<string>> GetpolicyInstallmentType()
+
+        public List<string> GetpolicyInstallmentType()
         {
             Array installment = Enum.GetValues(typeof(InstallmentType));
             List<string> iType = new List<string>();
@@ -107,6 +85,17 @@ namespace Insurance_final_project.Services
                 iType.Add(type.ToString());
             }
             return iType;
+        }
+
+        public List<string> GetDocumentType()
+        {
+            Array docs = Enum.GetValues(typeof(DocumentTypes));
+            List<string> document = new List<string>();
+            foreach (var type in docs)
+            {
+                document.Add(type.ToString());
+            }
+            return document;
         }
     }
 }

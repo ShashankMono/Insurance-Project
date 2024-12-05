@@ -9,6 +9,7 @@ namespace Insurance_final_project.Controllers
     [ApiController]
     public class CommonFeaturesController : ControllerBase
     {
+
         private readonly ICommonService _commonService;
 
         public CommonFeaturesController(ICommonService commonService)
@@ -16,92 +17,80 @@ namespace Insurance_final_project.Controllers
             _commonService = commonService;
         }
 
-        private void ValidateModel()
+        [HttpGet("approval")]
+        public IActionResult GetApprovalTypes()
         {
-            if (!ModelState.IsValid)
+            var approvalTypes = _commonService.GetapprovalTypes();
+            return Ok(new
             {
-                throw new ValidationException("Invalid model state.");
-            }
+                Success = true,
+                Data = approvalTypes,
+                Message = "Approval types retrieved successfully."
+            });
         }
 
-        [HttpGet("approval-types")]
-        public async Task<IActionResult> GetApprovalTypes()
+
+        [HttpGet("Account_status")]
+        public IActionResult GetPolicyAccountStatus()
         {
-            ValidateModel();
-            var approvalTypes = await _commonService.GetapprovalTypes();
-            return Ok(new { Success = true, Data = approvalTypes, Message = "Approval types fetched successfully." });
+            var accountStatus = _commonService.GetPolicyAccountStatus();
+            return Ok(new
+            {
+                Success = true,
+                Data = accountStatus,
+                Message = "Policy account statuses retrieved successfully."
+            });
         }
 
-        [HttpGet("cities")]
-        public async Task<IActionResult> GetCities()
+        [HttpGet("transaction_status")]
+        public IActionResult GetTransactionStatus()
         {
-            ValidateModel();
-            var cities = await _commonService.GetCities();
-            return Ok(new { Success = true, Data = cities, Message = "Cities fetched successfully." });
+            var transactionTypes = _commonService.GetTransactionStatus();
+            return Ok(new
+            {
+                Success = true,
+                Data = transactionTypes,
+                Message = "Transaction statuses retrieved successfully."
+            });
         }
 
-        [HttpGet("policies")]
-        public async Task<IActionResult> GetPolicies()
+
+        [HttpGet("verification")]
+        public IActionResult GetVerificationType()
         {
-            ValidateModel();
-            var policies = await _commonService.GetPolicies();
-            return Ok(new { Success = true, Data = policies, Message = "Policies fetched successfully." });
+            var verificationTypes = _commonService.GetVerificationType();
+            return Ok(new
+            {
+                Success = true,
+                Data = verificationTypes,
+                Message = "Verification types retrieved successfully."
+            });
         }
 
-        [HttpGet("policy-account-status")]
-        public async Task<IActionResult> GetPolicyAccountStatus()
+
+        [HttpGet("installment_types")]
+        public IActionResult GetPolicyInstallmentType()
         {
-            ValidateModel();
-            var statuses = await _commonService.GetPolicyAccountStatus();
-            return Ok(new { Success = true, Data = statuses, Message = "Policy account statuses fetched successfully." });
+            var installmentTypes = _commonService.GetpolicyInstallmentType();
+            return Ok(new
+            {
+                Success = true,
+                Data = installmentTypes,
+                Message = "Policy installment types retrieved successfully."
+            });
         }
 
-        [HttpGet("roles")]
-        public async Task<IActionResult> GetRoles()
-        {
-            ValidateModel();
-            var roles = await _commonService.GetRoles();
-            return Ok(new { Success = true, Data = roles, Message = "Roles fetched successfully." });
-        }
 
-        [HttpGet("states")]
-        public async Task<IActionResult> GetStates()
+        [HttpGet("document_types")]
+        public IActionResult GetDocumentType()
         {
-            ValidateModel();
-            var states = await _commonService.GetStates();
-            return Ok(new { Success = true, Data = states, Message = "States fetched successfully." });
-        }
-
-        [HttpGet("transaction-status")]
-        public async Task<IActionResult> GetTransactionStatus()
-        {
-            ValidateModel();
-            var statuses = await _commonService.GetTransactionStatus();
-            return Ok(new { Success = true, Data = statuses, Message = "Transaction statuses fetched successfully." });
-        }
-
-        [HttpGet("verification-types")]
-        public async Task<IActionResult> GetVerificationTypes()
-        {
-            ValidateModel();
-            var verificationTypes = await _commonService.GetVerificationType();
-            return Ok(new { Success = true, Data = verificationTypes, Message = "Verification types fetched successfully." });
-        }
-
-        [HttpGet("policy-types")]
-        public async Task<IActionResult> GetPolicyTypes()
-        {
-            ValidateModel();
-            var policyTypes = await _commonService.GetPolicyType();
-            return Ok(new { Success = true, Data = policyTypes, Message = "Policy types fetched successfully." });
-        }
-
-        [HttpGet("policy-installment-types")]
-        public async Task<IActionResult> GetPolicyInstallmentTypes()
-        {
-            ValidateModel();
-            var installmentTypes = await _commonService.GetpolicyInstallmentType();
-            return Ok(new { Success = true, Data = installmentTypes, Message = "Policy installment types fetched successfully." });
+            var documentTypes = _commonService.GetDocumentType();
+            return Ok(new
+            {
+                Success = true,
+                Data = documentTypes,
+                Message = "Document types retrieved successfully."
+            });
         }
     }
 }

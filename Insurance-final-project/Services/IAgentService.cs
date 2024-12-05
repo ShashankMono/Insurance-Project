@@ -6,11 +6,12 @@ namespace Insurance_final_project.Services
     public interface IAgentService
     {
         public AgentInputDto GetAgentById(Guid agentId);
-        
-        public ICollection<CommissionWithdrawalDto> GetCommissionWithdrawals(Guid agentId);
-        public void WithdrawCommission(Guid agentId, double amount);
+
+        public Task<UserDto> AddAgent(AgentInputDto agent);
+        public Task<List<AgentInputDto>> GetAllAgents();
         public double ViewTotalCommission(Guid agentId);
+        public Task<Guid> UpdateAgent(AgentInputDto agent);
         
-        public ICollection<PolicyAccountDto> GetPolicyAccountsByAgent(Guid agentId);
+
     }
 }

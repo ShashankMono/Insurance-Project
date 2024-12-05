@@ -6,14 +6,20 @@ namespace Insurance_final_project.Models
     public class Query
     {
         [Key]
-        public Guid QueryId { get; set; } // Primary Key
-        public string Question { get; set; } // Query or question from the customer
-        public string Response { get; set; } // Response to the customer's query
+        public Guid QueryId { get; set; } 
 
-        // Navigation property to Customer (many-to-one relationship)
-        public Customer Customer { get; set; }
+        [Required(ErrorMessage = "Question is required.")]
+        [MaxLength(1000, ErrorMessage = "Question cannot exceed 1000 characters.")]
+        public string Question { get; set; } 
+
+        [MaxLength(1000, ErrorMessage = "Response cannot exceed 1000 characters.")]
+        public string Response { get; set; } 
+
+        [Required(ErrorMessage = "Customer ID is required.")]
         [ForeignKey("Customer")]
-        public Guid CustomerId { get; set; } // Foreign Key to Customer
+        public Guid CustomerId { get; set; } 
+
+        public Customer Customer { get; set; } 
     }
 
 }

@@ -1,22 +1,23 @@
 ﻿using Insurance_final_project.Models;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Insurance_final_project.Dto
 {
     public class QueryDto
     {
 
+        public Guid QueryId { get; set; }
+
         [Required(ErrorMessage = "Question is required.")]
-        [StringLength(500, ErrorMessage = "Question cannot exceed 500 characters.")]
+        [MaxLength(1000, ErrorMessage = "Question cannot exceed 1000 characters.")]
         public string Question { get; set; }
 
-        [StringLength(1000, ErrorMessage = "Response cannot exceed 1000 characters.")]
+        [MaxLength(1000, ErrorMessage = "Response cannot exceed 1000 characters.")]
         public string Response { get; set; }
 
-        // Navigation property to Customer (many-to-one relationship)
-        public Customer Customer { get; set; }
-
         [Required(ErrorMessage = "Customer ID is required.")]
+        [ForeignKey("Customer")]
         public Guid CustomerId { get; set; }
     }
 }

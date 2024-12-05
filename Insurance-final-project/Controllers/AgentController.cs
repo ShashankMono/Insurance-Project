@@ -1,4 +1,5 @@
 ﻿using Insurance_final_project.Dto;
+using Insurance_final_project.Models;
 using Insurance_final_project.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,42 +17,88 @@ namespace Insurance_final_project.Controllers
             _agentService = agentService;
         }
 
-
-        [HttpGet("{agentId}")]
-        public IActionResult GetAgentById(Guid agentId)
+        [HttpGet("{id}")]
+        public IActionResult GetAgentById(Guid id)
         {
-            var agent = _agentService.GetAgentById(agentId);
-            return Ok(agent);
+            var agent = _agentService.GetAgentById(id);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = agent,
+                Message = "Agent retrieved successfully."
+            });
         }
 
-
-        [HttpGet("commissionWithdrawals/{agentId}")]
-        public IActionResult GetCommissionWithdrawals(Guid agentId)
+        [HttpGet("{id}/commission")]
+        public IActionResult ViewTotalCommission(Guid id)
         {
-            var withdrawals = _agentService.GetCommissionWithdrawals(agentId);
-            return Ok(withdrawals);
+            var commission = _agentService.ViewTotalCommission(id);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = commission,
+                Message = "Total commission retrieved successfully."
+            });
         }
 
-        [HttpPost("withdrawCommission")]
-        public IActionResult WithdrawCommission(CommissionWithdrawalDto commissionWithdrawalDto)
+        // Add Agent
+        [HttpPost("add")]
+        public async Task<IActionResult> AddAgent([FromBody] AgentInputDto newAgent)
         {
-            _agentService.WithdrawCommission(commissionWithdrawalDto.AgentId, commissionWithdrawalDto.Amount);
-            return Ok("Commission withdrawal requested.");
-            
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+                return BadRequest(new { Success = false, Data = (object)null, Message = "Validation failed.", Errors = errors });
+            }
+
+            var user = await _agentService.AddAgent(newAgent);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = user,
+                Message = "Agent added successfully."
+            });
         }
 
-        [HttpGet("totalCommission/{agentId}")]
-        public IActionResult ViewTotalCommission(Guid agentId)
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllAgents()
         {
-            var commission = _agentService.ViewTotalCommission(agentId);
-            return Ok(commission);
+            var agents = await _agentService.GetAllAgents();
+
+            return Ok(new
+            {
+                Success = true,
+                Data = agents,
+                Message = "All agents retrieved successfully."
+            });
         }
-        [HttpGet("{agentId}/policyAccounts")]
-        public IActionResult GetPolicyAccountsByAgent(Guid agentId)
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateAgent(AgentInputDto agent)
         {
-            var policyAccounts = _agentService.GetPolicyAccountsByAgent(agentId);
-            return Ok(policyAccounts);
-            
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+                return BadRequest(new { Success = false, Data = (object)null, Message = "Validation failed.", Errors = errors });
+            }
+
+            var response = _agentService.UpdateAgent(agent);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = response,
+                Message = "All agents retrieved successfully."
+            });
         }
     }
 }

@@ -1,26 +1,29 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Insurance_final_project.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Insurance_final_project.Dto
 {
     public class CommissionDto
     {
-        // no need of Dto
-        [Required(ErrorMessage = "Commission type is required.")]
-        [StringLength(100, ErrorMessage = "Commission type cannot exceed 100 characters.")]
-        public string CommissionType { get; set; } 
+        public Guid CommissionId { get; set; }
+
+        [Required(ErrorMessage = "Commission Type is required.")]
+        [MaxLength(50, ErrorMessage = "Commission Type cannot exceed 50 characters.")]
+        public string CommissionType { get; set; }
 
         [Required(ErrorMessage = "Agent ID is required.")]
         [ForeignKey("Agent")]
-        public Guid AgentId { get; set; } 
+        public Guid AgentId { get; set; }
 
-        [Required(ErrorMessage = "Amount is required.")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
-        public double Amount { get; set; } 
+        [Range(0, double.MaxValue, ErrorMessage = "Amount cannot be negative.")]
+        public double Amount { get; set; }
 
         [Required(ErrorMessage = "Date is required.")]
-        [DataType(DataType.Date)]
-        //[CustomValidation(typeof(DateValidator), nameof(DateValidator.ValidatePastDate))]
-        public DateTime Date { get; set; } 
+        public DateTime Date { get; set; }
+
+        [Required(ErrorMessage = "Policy Account ID is required.")]
+        [ForeignKey("PolicyAccount")]
+        public Guid PolicyAccountId { get; set; }
     }
 }

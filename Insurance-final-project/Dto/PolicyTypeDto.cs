@@ -5,10 +5,13 @@ namespace Insurance_final_project.Dto
 {
     public class PolicyTypeDto
     {
-        public Guid Id { get; set; }
-        [Required]
-        [StringLength(50, ErrorMessage = "Type cannot exceed 50 characters.")]
-        public string Type { get; set; }
-        public ICollection<Policy>? Policies { get; set; }
+        [Key]
+        public Guid Id { get; set; } 
+
+        [Required(ErrorMessage = "Policy Type is required.")]
+        [MaxLength(100, ErrorMessage = "Policy Type cannot exceed 100 characters.")]
+        public string Type { get; set; } 
+
+        public bool IsActive { get; set; } = true; 
     }
 }

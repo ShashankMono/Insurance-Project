@@ -7,6 +7,7 @@ using Insurance_final_project.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -26,6 +27,8 @@ namespace Insurance_final_project
             builder.Services.AddDbContext<InsuranceContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("connect"));
+                options.ConfigureWarnings(warnings =>
+                    warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
             });
 
             builder.Services.AddControllers().AddJsonOptions(x =>
@@ -43,6 +46,25 @@ namespace Insurance_final_project
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddTransient<IAgentService, AgentService>();
             builder.Services.AddTransient<ICustomerService, CustomerService>();
+            builder.Services.AddTransient<IAdminService, AdminService>();
+            builder.Services.AddTransient <ICityService,CityService>();
+            builder.Services.AddTransient<IClaimService,ClaimService>();
+            builder.Services.AddTransient<ICommissionWithdrawalService, ComissionWithdrawalService>();
+            builder.Services.AddTransient<ICommissionService, CommissionService>();
+            builder.Services.AddTransient<ICustomerService, CustomerService>();
+            builder.Services.AddTransient<IDocumentService, DocumentService>();
+            builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+            builder.Services.AddTransient<INomineeService, NomineeService>();
+            builder.Services.AddTransient<IPolicyAccountService, PolicyAccountService>();
+            builder.Services.AddTransient<IPolicyCancelService, PolicyCancelService>();
+            builder.Services.AddTransient<IPolicyInstallmentService, PolicyInstallmentService>();
+            builder.Services.AddTransient<IPolicyService, PolicyService>();
+            builder.Services.AddTransient<IPolicyTypeService, PolicyTypeService>();
+            builder.Services.AddTransient<IQueryService, QueryService>();
+            builder.Services.AddTransient<IRoleService, RoleService>();
+            builder.Services.AddTransient<IStateService, StateService>();
+            builder.Services.AddTransient<ITransactionService, TransactionService>();
+            builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddControllers();
             builder.Services.AddControllers().AddJsonOptions(x =>

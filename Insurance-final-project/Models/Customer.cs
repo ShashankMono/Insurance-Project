@@ -8,43 +8,58 @@ namespace Insurance_final_project.Models
     public class Customer
     {
         [Key]
-        public Guid CustomerId { get; set; }
+        public Guid CustomerId { get; set; } 
+
+        [Required(ErrorMessage = "First Name is required.")]
+        [MaxLength(50, ErrorMessage = "First Name cannot exceed 50 characters.")]
         public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Last Name is required.")]
+        [MaxLength(50, ErrorMessage = "Last Name cannot exceed 50 characters.")]
         public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Email ID is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email format.")]
         public string EmailId { get; set; }
+
+        [Required(ErrorMessage = "Mobile Number is required.")]
+        [Phone(ErrorMessage = "Invalid mobile number format.")]
+        [MaxLength(10, ErrorMessage = "Mobile Number cannot exceed 10 characters.")]
         public string MobileNo { get; set; }
 
+        [Required(ErrorMessage = "Date of Birth is required.")]
+        [DataType(DataType.Date, ErrorMessage = "Invalid date format.")]
+        public DateTime DateOfBirth { get; set; }
+
         // Relationships with State and City
+        [Required(ErrorMessage = "State ID is required.")]
         [ForeignKey("State")]
         public Guid StateId { get; set; }
-        public State? State { get; set; }  // Navigation property
+        public State? State { get; set; } 
 
+        [Required(ErrorMessage = "City ID is required.")]
         [ForeignKey("City")]
         public Guid CityId { get; set; }
-        public City? City { get; set; }    // Navigation property
+        public City? City { get; set; } 
 
         // Nominee Details
-        public string Nominee { get; set; }
-        public string NomineeRelation { get; set; }
+        public ICollection<Nominee>? Nomines { get; set; } 
 
-        // Relationship with Policy Account (one-to-Many)
         public ICollection<PolicyAccount>? PolicyAccounts { get; set; }
 
-        // Relationship with Documents (one-to-Many)
         public ICollection<Document>? Documents { get; set; }
 
-        // Foreign key to User (one-to-one)
+        [Required(ErrorMessage = "User ID is required.")]
         [ForeignKey("User")]
         public Guid UserId { get; set; }
         public User User { get; set; }
 
-        // Queries (one-to-many)
         public ICollection<Query>? Queries { get; set; }
 
-        //Approval of cutomer account, admin will approve
+        [Required(ErrorMessage = "Approval status is required.")]
+        [MaxLength(20, ErrorMessage = "Approval status cannot exceed 20 characters.")]
         public string IsApproved { get; set; } = ApprovalType.Pending.ToString();
 
-        //one-to-many realtionship with transaction table
         public ICollection<Transaction>? Transactions { get; set; }
     }
 

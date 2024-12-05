@@ -1,44 +1,52 @@
 ﻿using Insurance_final_project.Models;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Insurance_final_project.Dto
 {
     public class PolicyDto
     {
         public Guid Id { get; set; }
-        [Required]
-        [StringLength(100, ErrorMessage = "Policy name cannot exceed 100 characters.")]
+
+        [Required(ErrorMessage = "Policy Name is required.")]
+        [MaxLength(100, ErrorMessage = "Policy Name cannot exceed 100 characters.")]
         public string Name { get; set; }
 
-        [StringLength(1000, ErrorMessage = "Policy description cannot exceed 1000 characters.")]
+        [Required(ErrorMessage = "Policy Description is required.")]
+        [MaxLength(500, ErrorMessage = "Description cannot exceed 500 characters.")]
         public string Description { get; set; }
 
-        [Required]
+        [Url(ErrorMessage = "Invalid image URL format.")]
+        public string ImageUrl { get; set; }
+
+        [Required(ErrorMessage = "Policy Type ID is required.")]
+        [ForeignKey("PolicyType")]
         public Guid PolicyTypeId { get; set; }
 
-        [Range(0, 150, ErrorMessage = "Minimum age criteria must be between 0 and 150.")]
+        [Range(18, 100, ErrorMessage = "Minimum Age Criteria must be between 18 and 100.")]
         public int MinimumAgeCriteria { get; set; }
 
-        [Range(0, 150, ErrorMessage = "Maximum age criteria must be between 0 and 150.")]
+        [Range(18, 100, ErrorMessage = "Maximum Age Criteria must be between 18 and 100.")]
         public int MaximumAgeCriteria { get; set; }
 
-        [Range(0.01, double.MaxValue, ErrorMessage = "Minimum investment amount must be greater than zero.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Minimum Investment Amount cannot be negative.")]
         public double MinimumInvestmentAmount { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Minimum policy term must be at least 1 year.")]
+        [Range(1, 100, ErrorMessage = "Minimum Policy Term must be between 1 and 100 years.")]
         public int MinimumPolicyTerm { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Maximum policy term must be at least 1 year.")]
+        [Range(1, 100, ErrorMessage = "Maximum Policy Term must be between 1 and 100 years.")]
         public int MaximumPolicyTerm { get; set; }
 
-        [Range(0.01, double.MaxValue, ErrorMessage = "Maximum investment amount must be greater than zero.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Maximum Investment Amount cannot be negative.")]
         public double MaximumInvestmentAmount { get; set; }
 
-        [Range(0.01, 100, ErrorMessage = "Profit percentage must be between 0.01 and 100.")]
-        public double ProfitPercentage { get; set; }
+        [Range(0, 100, ErrorMessage = "Profit Percentage must be between 0 and 100.")]
+        public double? ProfitPercentage { get; set; }
 
-        [Range(0.01, 100, ErrorMessage = "Commission percentage must be between 0.01 and 100.")]
+        [Range(0, 100, ErrorMessage = "Commission Percentage must be between 0 and 100.")]
         public double CommissionPercentage { get; set; }
-        public ICollection<PolicyAccount>? PolicyAccounts { get; set; }
+
+        public bool IsActive { get; set; } = true;
     }
 }

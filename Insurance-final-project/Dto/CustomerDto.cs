@@ -1,52 +1,55 @@
 ﻿namespace Insurance_final_project.Dto
 {
+    using Insurance_final_project.Constant;
     using Insurance_final_project.Models;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using Document = Models.Document;
 
     public class CustomerDto
     {
         public Guid CustomerId { get; set; }
+
         [Required(ErrorMessage = "First Name is required.")]
-        [StringLength(100, ErrorMessage = "First Name cannot be longer than 100 characters.")]
+        [MaxLength(50, ErrorMessage = "First Name cannot exceed 50 characters.")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Last Name is required.")]
-        [StringLength(100, ErrorMessage = "Last Name cannot be longer than 100 characters.")]
+        [MaxLength(50, ErrorMessage = "Last Name cannot exceed 50 characters.")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Email ID is required.")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address.")]
+        [EmailAddress(ErrorMessage = "Invalid email format.")]
         public string EmailId { get; set; }
 
         [Required(ErrorMessage = "Mobile Number is required.")]
-        [Phone(ErrorMessage = "Invalid Mobile Number.")]
+        [Phone(ErrorMessage = "Invalid mobile number format.")]
+        [MaxLength(10, ErrorMessage = "Mobile Number cannot exceed 10 characters.")]
         public string MobileNo { get; set; }
 
-        // Foreign Key to State
-        [Required(ErrorMessage = "State is required.")]
-        public int StateId { get; set; }
+        [Required(ErrorMessage = "Date of Birth is required.")]
+        [DataType(DataType.Date, ErrorMessage = "Invalid date format.")]
+        public DateTime DateOfBirthDay { get; set; }
 
-        // Foreign Key to City
-        [Required(ErrorMessage = "City is required.")]
-        public int CityId { get; set; }
+        // Relationships with State and City
+        [Required(ErrorMessage = "State ID is required.")]
+        [ForeignKey("State")]
+        public Guid StateId { get; set; }
 
-        [StringLength(100, ErrorMessage = "Nominee name cannot be longer than 100 characters.")]
-        public string Nominee { get; set; }
 
-        [StringLength(100, ErrorMessage = "Nominee relation cannot be longer than 100 characters.")]
-        public string NomineeRelation { get; set; }
+        [Required(ErrorMessage = "City ID is required.")]
+        [ForeignKey("City")]
+        public Guid CityId { get; set; }
 
-        public string IsApproved { get; set; }
-        // Foreign Key to User (One-to-One)
-        [Required(ErrorMessage = "User is required.")]
+        [Required(ErrorMessage = "User ID is required.")]
+        [ForeignKey("User")]
         public Guid UserId { get; set; }
-        public ICollection<PolicyAccount>? PolicyAccounts { get; set; }
 
-        // Relationship with Documents (one-to-Many)
-        public ICollection<Document>? Documents { get; set; }
         public ICollection<Query>? Queries { get; set; }
-        public ICollection<Transaction>? Transactions { get; set; }
+
+        [Required(ErrorMessage = "Approval status is required.")]
+        [MaxLength(20, ErrorMessage = "Approval status cannot exceed 20 characters.")]
+        public string IsApproved { get; set; } = ApprovalType.Pending.ToString();
     }
 
 }

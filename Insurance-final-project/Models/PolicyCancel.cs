@@ -7,17 +7,20 @@ namespace Insurance_final_project.Models
     public class PolicyCancel
     {
         [Key]
-        public Guid PolicyCancelId { get; set; } // Primary Key
+        public Guid PolicyCancelId { get; set; } 
 
-        public double Amount { get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "Amount cannot be negative.")]
+        public double Amount { get; set; } 
 
-        public string IsApproved { get; set; } = ApprovalType.Pending.ToString(); 
+        [Required(ErrorMessage = "Approval status is required.")]
+        public string IsApproved { get; set; } = ApprovalType.Pending.ToString();
 
+        [Required(ErrorMessage = "Date and Time of cancellation is required.")]
+        public DateTime DateAndTime { get; set; } 
 
-        public DateTime DateAndTime { get; set; } // Date and Time of cancellation
-
+        [Required(ErrorMessage = "Policy Account ID is required.")]
         [ForeignKey("PolicyAccount")]
-        public Guid PolicyAccountId { get; set; } // Foreign Key
+        public Guid PolicyAccountId { get; set; }
 
         public PolicyAccount PolicyAccount { get; set; }
     }

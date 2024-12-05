@@ -1,40 +1,30 @@
 ﻿using AutoMapper;
 using Insurance_final_project.Constant;
 using Insurance_final_project.Dto;
+using Insurance_final_project.Exceptions;
 using Insurance_final_project.Models;
 using Insurance_final_project.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Insurance_final_project.Services
 {
     public class AgentService : IAgentService
     {
         private readonly IRepository<Agent> _agentRepository;
-        private readonly IRepository<Customer> _customerRepository;
-        private readonly IRepository<PolicyAccount> _policyAccountRepository;
-        private readonly IRepository<CommissionWithdrawal> _withdrawalRepository;
-        private readonly IRepository<Transaction> _transactionRepository;
-        private readonly IRepository<Policy> _policyRepository;
-        private readonly IRepository<Claim> _claimRepository;
-        private readonly IMapper _mapper;
+        private readonly IMapper _Mapper;
+        private readonly IRepository<Role> _RoleRepo;
+        private readonly IUserService _userService;
 
         public AgentService(
             IRepository<Agent> agentRepository,
-            IRepository<Customer> customerRepository,
-            IRepository<PolicyAccount> policyAccountRepository,
-            IRepository<CommissionWithdrawal> withdrawalRepository,
-            IRepository<Transaction> transactionRepository,
-            IRepository<Policy> policyRepository,
-            IRepository<Claim> claimRepository,
+            IRepository<Role> roleRepo,
+            IUserService UserService,
             IMapper mapper)
         {
             _agentRepository = agentRepository;
-            _customerRepository = customerRepository;
-            _policyAccountRepository = policyAccountRepository;
-            _withdrawalRepository = withdrawalRepository;
-            _transactionRepository = transactionRepository;
-            _policyRepository = policyRepository;
-            _claimRepository = claimRepository;
-            _mapper = mapper;
+            _Mapper = mapper;
+            _RoleRepo = roleRepo;
+            _userService = UserService;
         }
 
         public AgentInputDto GetAgentById(Guid agentId)
@@ -42,50 +32,9 @@ namespace Insurance_final_project.Services
             var agent = _agentRepository.Get(agentId);
             if (agent == null)
                 throw new Exception("Agent not found.");
-            return _mapper.Map<AgentInputDto>(agent);
-        }
-        public ICollection<CommissionWithdrawalDto> GetCommissionWithdrawals(Guid agentId)
-        {
-            var withdrawals = _withdrawalRepository.GetAll()
-                .Where(w => w.AgentId == agentId)
-                .ToList();
-            return _mapper.Map<ICollection<CommissionWithdrawalDto>>(withdrawals);
+            return _Mapper.Map<AgentInputDto>(agent);
         }
 
-        public void WithdrawCommission(Guid agentId, double amount)
-        {
-            var agent = _agentRepository.Get(agentId);
-            if (agent == null)
-                throw new Exception("Agent not found.");
-            if (agent.CommissionEarned < amount)
-                throw new Exception("Insufficient commission balance.");
-
-            var withdrawal = new CommissionWithdrawal
-            {
-                AgentId = agentId,
-                Amount = amount,
-                TransactionDate = DateTime.Now,
-                ApprovedStatus = ApprovalType.Pending.ToString(),
-                TransactionStatus = false,
-            };
-
-            _withdrawalRepository.Add(withdrawal);
-            // Update the agent's commission balance
-            agent.CommissionEarned -= amount;
-            _agentRepository.Update(agent);
-            var transaction = new Transaction
-            {
-                Id = Guid.NewGuid(),
-                Type = "Commission Withdrawal",
-                Amount = amount,
-                CustomerId = Guid.Empty, 
-                PolicyAccountId = Guid.Empty,
-                DateTime = DateTime.UtcNow,
-                ReferenceNumber = Guid.NewGuid().ToString()
-            };
-
-            _transactionRepository.Add(transaction);
-        }
 
         public double ViewTotalCommission(Guid agentId)
         {
@@ -95,17 +44,27 @@ namespace Insurance_final_project.Services
             return agent.CommissionEarned;
         }
 
-        public ICollection<PolicyAccountDto> GetPolicyAccountsByAgent(Guid agentId)
+        public async Task<UserDto> AddAgent(AgentInputDto newAgent)
         {
-            var agent = _agentRepository.Get(agentId);
-            if (agent == null)
-                throw new Exception("Agent not found.");
+            Agent agent = _Mapper.Map<AgentInputDto, Agent>(newAgent);
+            UserDto user = _userService.AddNewUser(_RoleRepo.GetAll().FirstOrDefault(r => r.RoleName == "Agent").RoleId);
+            agent.UserId = user.UserId;
+            Agent agentAdded = _agentRepository.Add(agent);
+            return user;
+        }
 
-            var policyAccounts = _policyAccountRepository.GetAll()
-                .Where(pa => pa.AgentId == agentId)
-                .ToList();
+        public async Task<List<AgentInputDto>> GetAllAgents()
+        {
+            return _Mapper.Map<List<Agent>, List<AgentInputDto>>(_agentRepository.GetAll().ToList());
+        }
 
-            return _mapper.Map<ICollection<PolicyAccountDto>>(policyAccounts);
+        public async Task<Guid> UpdateAgent(AgentInputDto agent)
+        {
+            if(_agentRepository.GetAll().AsNoTracking().FirstOrDefault(a=>a.AgentId==agent.AgentId) == null)
+            {
+                throw new InvalidGuidException("Agent no found!");
+            }
+            return _agentRepository.Update(_Mapper.Map<Agent>(agent)).AgentId;
         }
     }
 }
