@@ -1,23 +1,25 @@
-﻿using Insurance_final_project.Models;
+﻿using Insurance_final_project.Constant;
+using Insurance_final_project.Models;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Insurance_final_project.Dto
 {
     public class PolicyCancelDto
     {
         public Guid PolicyCancelId { get; set; }
-        [Required]
-        [Range(0.00, double.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
-        public double Amount { get; set; } 
 
-        [Required]
-        public string IsApproved { get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "Amount cannot be negative.")]
+        public double Amount { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Approval status is required.")]
+        public string IsApproved { get; set; } = ApprovalType.Pending.ToString();
+
+        [Required(ErrorMessage = "Date and Time of cancellation is required.")]
         public DateTime DateAndTime { get; set; }
 
         [Required(ErrorMessage = "Policy Account ID is required.")]
+        [ForeignKey("PolicyAccount")]
         public Guid PolicyAccountId { get; set; }
-        public PolicyAccount? PolicyAccount { get; set; }
     }
 }

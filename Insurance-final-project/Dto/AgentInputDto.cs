@@ -23,7 +23,8 @@
         public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Mobile number is required.")]
-        [RegularExpression(@"^\+?[1-9]\d{1,14}$", ErrorMessage = "Invalid mobile number format.")]
+        [Phone(ErrorMessage = "Invalid phone number format.")]
+        [MaxLength(10, ErrorMessage = "Mobile Number cannot exceed 10 characters.")]
         public string MobileNo { get; set; } = string.Empty;
 
         [Required]

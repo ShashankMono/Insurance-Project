@@ -4,9 +4,11 @@ using Insurance_final_project.Dto;
 using Insurance_final_project.Exceptions;
 using Insurance_final_project.Models;
 using Insurance_final_project.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Claim = System.Security.Claims.Claim;
@@ -18,6 +20,7 @@ namespace Insurance_final_project.Services
         private readonly IRepository<User> _userRepo;
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
+        private readonly IRepository<Role> _roleRepo;
         public UserService(IRepository<User> userRepo,
             IMapper mapper
             ,IConfiguration configure)
@@ -28,8 +31,28 @@ namespace Insurance_final_project.Services
         }
         public async Task<Guid> AddUser(UserDto user)
         {
+            var existingUser = _userRepo.GetAll().AsNoTracking().FirstOrDefault(u => u.Username == user.Username);
+            if (existingUser != null)
+            {
+                throw new UsernameAlreadyUsedEException("Username Exist!");
+            }
             User newUser = _userRepo.Add(_mapper.Map<UserDto,User>(user));
             return newUser.UserId;
+        }
+        public UserDto AddNewUser(Guid roleId)
+        {
+            var newUsername = Guid.NewGuid().ToString();
+            Random random = new Random();
+            var password = random.Next(100001, 1000000).ToString();
+            UserDto user = new UserDto()
+            {
+                Username = newUsername,
+                Password = password,
+                RoleId = roleId,
+            };
+            User userAgent = _userRepo.Add(_mapper.Map<UserDto, User>(user));
+            user.UserId = userAgent.UserId;
+            return user;
         }
 
         public async Task<List<UserDto>> GetUsers()
@@ -39,11 +62,11 @@ namespace Insurance_final_project.Services
 
         public async Task<(string token,User userData)> LogIn(UserLoginDto user)
         {
-            var existingUser = _userRepo.GetAll().FirstOrDefault(u=>u.Username == user.Username);
+            var existingUser = _userRepo.GetAll().AsNoTracking().Include(u=>u.Role).FirstOrDefault(u => u.Username == user.Username);
             if (existingUser == null) {
                 throw new UserInvalidException("Invalid Username!");
             }
-            if (!BCrypt.Net.BCrypt.EnhancedVerify(user.Password, existingUser.HashedPassword))
+            if (!BCrypt.Net.BCrypt.EnhancedVerify(user.Password, existingUser.Password))
             {
                 throw new PasswordInvalidException("Invalid Password!");
             }
@@ -74,7 +97,7 @@ namespace Insurance_final_project.Services
 
         public async Task<bool> UpdateUser(UserDto user)
         {
-            if (_userRepo.Get(_mapper.Map<UserDto, User>(user).UserId) == null)
+            if (_userRepo.GetAll().AsNoTracking().FirstOrDefault(u=>u.UserId == user.UserId ) == null)
             {
                 throw new UserInvalidException("Invalid User!");
             }
@@ -89,15 +112,15 @@ namespace Insurance_final_project.Services
 
         public async Task<bool> ChangePassword(ChangePasswordDto changePassword)
         {
-            var existingUser = _userRepo.GetAll().FirstOrDefault(u=>u.Username==changePassword.Username);
+            var existingUser = _userRepo.GetAll().AsNoTracking().FirstOrDefault(u=>u.Username==changePassword.Username);
             if (existingUser == null) {
                 throw new UserInvalidException("Invalid User!");
             }
-            if (!BCrypt.Net.BCrypt.EnhancedVerify(changePassword.OldPassword, existingUser.HashedPassword))
+            if (!BCrypt.Net.BCrypt.EnhancedVerify(changePassword.OldPassword, existingUser.Password))
             {
                 throw new PasswordInvalidException("Invalid Old password!");
             }
-            existingUser.HashedPassword = BCrypt.Net.BCrypt.HashPassword(changePassword.NewPassword);
+            existingUser.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(changePassword.NewPassword);
             var response = _userRepo.Update(existingUser);
             if (response == null)
                 return false;
@@ -106,11 +129,24 @@ namespace Insurance_final_project.Services
 
         public async Task<bool> DeactivateUser(ChangeUserStatusDto changeStatus)
         {
-            var existingUser = _userRepo.Get(changeStatus.UserId);
+            var existingUser = _userRepo.GetAll().AsNoTracking().FirstOrDefault(u=>u.UserId == changeStatus.UserId);
+            if(existingUser == null)
+            {
+                throw new UserInvalidException("User not found!");
+            }
             existingUser.IsActive = changeStatus.IsActive;
             var updateStatus = _userRepo.Update(existingUser);
             if(updateStatus == null) return false;
             return true;
+        }
+
+        public async Task<List<UserDto>> GetUsersByRole(Guid RoleId)
+        {
+            if(_roleRepo.Get(RoleId) == null)
+            {
+                throw new InvalidGuidException("Role not found!");
+            }
+            return _mapper.Map<List<User>, List<UserDto>>(_userRepo.GetAll().Where(u=>u.RoleId == RoleId).ToList());
         }
     }
 }

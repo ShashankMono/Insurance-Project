@@ -1,36 +1,39 @@
 ﻿using Insurance_final_project.Models;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Insurance_final_project.Dto
 {
     public class EmployeeDto
     {
         public Guid EmployeeId { get; set; }
-        [Required(ErrorMessage = "First name is required.")]
-        [StringLength(50, ErrorMessage = "First name cannot exceed 50 characters.")]
-        public string FirstName { get; set; } // Employee's first name
 
-        [Required(ErrorMessage = "Last name is required.")]
-        [StringLength(50, ErrorMessage = "Last name cannot exceed 50 characters.")]
-        public string LastName { get; set; } // Employee's last name
+        [Required(ErrorMessage = "First Name is required.")]
+        [MaxLength(50, ErrorMessage = "First Name cannot exceed 50 characters.")]
+        public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Mobile number is required.")]
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "Mobile number must be 10 digits.")]
-        public string MobileNo { get; set; } // Employee's mobile number
+        [Required(ErrorMessage = "Last Name is required.")]
+        [MaxLength(50, ErrorMessage = "Last Name cannot exceed 50 characters.")]
+        public string LastName { get; set; }
 
-        [StringLength(250, ErrorMessage = "Address cannot exceed 250 characters.")]
-        public string Address { get; set; } // Employee's address
+        [Required(ErrorMessage = "Mobile Number is required.")]
+        [Phone(ErrorMessage = "Invalid mobile number format.")]
+        [MaxLength(15, ErrorMessage = "Mobile Number cannot exceed 15 characters.")]
+        public string MobileNo { get; set; }
+
+        [Required(ErrorMessage = "Address is required.")]
+        [MaxLength(200, ErrorMessage = "Address cannot exceed 200 characters.")]
+        public string Address { get; set; }
 
         [Required(ErrorMessage = "Email ID is required.")]
         [EmailAddress(ErrorMessage = "Invalid email format.")]
-        public string EmailId { get; set; } // Employee's email address
+        public string EmailId { get; set; }
 
-        [Required(ErrorMessage = "Salary is required.")]
-        [Range(0, double.MaxValue, ErrorMessage = "Salary must be a positive number.")]
-        public double Salary { get; set; } // Employee's salary
+        [Range(0, double.MaxValue, ErrorMessage = "Salary cannot be negative.")]
+        public double Salary { get; set; }
 
         [Required(ErrorMessage = "User ID is required.")]
-        public Guid UserId { get; set; } // Link to User Entity
-        public User User { get; set; }
+        [ForeignKey("User")]
+        public Guid UserId { get; set; }
     }
 }

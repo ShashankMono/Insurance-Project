@@ -16,76 +16,92 @@ namespace Insurance_final_project.Controllers
         {
             _customerService = customerService;
         }
-        [HttpPost("createPolicyAccount")]
-        public IActionResult CreatePolicyAccount(PolicyAccountDto policyAccountDto)
-        {
-            var policyAccountId = _customerService.CreatePolicyAccount(policyAccountDto);
-            return Ok(new { PolicyAccountId = policyAccountId });
-            
-        }
-        [HttpPost("payInstallment/{installmentId}")]
-        public IActionResult PayInstallment(Guid installmentId, [FromBody] Guid customerId)
-        {
-            var result = _customerService.PayInstallment(installmentId, customerId);
-            if (!result)
-                return BadRequest("Failed to pay installment. It may already be paid or does not exist.");
 
-            return Ok("Installment paid successfully.");
-            
+        [HttpGet("{customerId}")]
+        public IActionResult GetCustomerById(Guid customerId)
+        {
+            var customer = _customerService.GetCustomerById(customerId);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = customer,
+                Message = "Customer retrieved successfully."
+            });
         }
+
+
+        [HttpPut("update")]
+        public IActionResult UpdateProfile([FromBody] CustomerDto customerDto)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                return BadRequest(new
+                {
+                    Success = false,
+                    Data = (object)null,
+                    Message = "Validation failed.",
+                    Errors = errors
+                });
+            }
+
+            _customerService.UpdateProfile(customerDto);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = (object)null,
+                Message = "Customer profile updated successfully."
+            });
+        }
+
         [HttpPost("register")]
-        public IActionResult RegisterCustomer(CustomerDto customerDto)
+        public IActionResult RegisterCustomer([FromBody] CustomerDto customerDto)
         {
-            var customer = _customerService.RegisterCustomer(customerDto);
-            return Ok(customer);
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                return BadRequest(new
+                {
+                    Success = false,
+                    Data = (object)null,
+                    Message = "Validation failed.",
+                    Errors = errors
+                });
+            }
+
+            var newCustomer = _customerService.RegisterCustomer(customerDto);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = newCustomer,
+                Message = "Customer registered successfully."
+            });
         }
 
-        [HttpGet("profile/{id}")]
-        public IActionResult GetCustomerById(Guid id)
+        [HttpGet("accounts")]
+        public async Task<IActionResult> GetCustomerAccounts()
         {
-            var customer = _customerService.GetCustomerById(id);
-            return Ok(customer);
-        }
+            var customers = await _customerService.GetCustomerAccounts();
 
-        [HttpPut("updateProfile")]
-        public IActionResult UpdateProfile(CustomerDto customerDto)
-        {
-            var result = _customerService.UpdateProfile(customerDto);
-            if (!result) 
-                return BadRequest("Unable to update profile.");
-            return Ok("Profile updated successfully.");
-        }
-
-        [HttpPost("submitQuery")]
-        public IActionResult SubmitQuery(QueryDto queryDto)
-        {
-            _customerService.SubmitQuery(queryDto);
-            return Ok("Query submitted successfully.");
-        }
-
-        [HttpGet("policies/{customerId}")]
-        public IActionResult GetPoliciesByCustomer(Guid customerId)
-        {
-            var policies = _customerService.GetPoliciesByCustomer(customerId);
-            return Ok(policies);
-        }
-
-        [HttpPost("cancelPolicy/{policyAccountId}")]
-        public IActionResult CancelPolicy(Guid policyAccountId)
-        {
-            var success = _customerService.CancelPolicy(policyAccountId);
-            if (!success) 
-                return BadRequest("Unable to cancel policy.");
-            return Ok("Policy cancelled successfully.");
-        }
-
-        [HttpPost("claimPolicy/{policyAccountId}")]
-        public IActionResult ClaimPolicy(Guid policyAccountId,ClaimDto claimDto)
-        {
-            var success = _customerService.ClaimPolicy(policyAccountId, claimDto);
-            if (!success) 
-                return BadRequest("Unable to submit claim.");
-            return Ok("Claim submitted successfully.");
+            return Ok(new
+            {
+                Success = true,
+                Data = customers,
+                Message = "Customers and their accounts retrieved successfully."
+            });
         }
 
     }

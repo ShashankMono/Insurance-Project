@@ -1,38 +1,39 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Insurance_final_project.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Insurance_final_project.Dto
 {
     public class PolicyAccountDto
     {
         public Guid Id { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Policy ID is required.")]
+        [ForeignKey("Policy")]
         public Guid PolicyId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Customer ID is required.")]
+        [ForeignKey("Customer")]
         public Guid CustomerId { get; set; }
 
-        [Required]
-        [Range(0.01, double.MaxValue, ErrorMessage = "Coverage amount must be greater than zero.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Coverage Amount cannot be negative.")]
         public double CoverageAmount { get; set; }
 
-        [Range(0, double.MaxValue, ErrorMessage = "Total amount paid must be non-negative.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Total Amount Paid cannot be negative.")]
         public double TotalAmountPaid { get; set; }
+        [Required(ErrorMessage = "Policy term is required")]
+        public int PolicyTerm {  get; set; }
 
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public int PolicyTerm { get; set; }
-        [Required]
-        [StringLength(50, ErrorMessage = "Installment type cannot exceed 50 characters.")]
-        public string InstallmentType { get; set; } // Monthly, Quarterly, etc.
+        [Required(ErrorMessage = "Installment Type is required.")]
+        [MaxLength(50, ErrorMessage = "Installment Type cannot exceed 50 characters.")]
+        public string InstallmentType { get; set; }
 
-        [Required]
+        [ForeignKey("Agent")]
         public Guid? AgentId { get; set; }
 
-        [Required]
-        [StringLength(50, ErrorMessage = "Status cannot exceed 50 characters.")]
-        public string Status { get; set; } // Open or Closed
+        [Required(ErrorMessage = "Status is required.")]
+        [MaxLength(20, ErrorMessage = "Status cannot exceed 20 characters.")]
+        public string Status { get; set; }
 
-        [Range(0, double.MaxValue, ErrorMessage = "Agent commission must be non-negative.")]
-        public double? AgentCommission { get; set; }
     }
 }

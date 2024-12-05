@@ -47,9 +47,6 @@ Desktop.ini
 *.bak
 *.swp
 
-#ignore migrations
-**/Migrations/
-
 # JetBrains Rider
 .idea/
 
@@ -58,6 +55,7 @@ Desktop.ini
 *.ipr
 *.iws
 out/
+
 # Compiled output
 dist/
 out-tsc/

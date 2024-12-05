@@ -12,5 +12,7 @@ namespace Insurance_final_project.Services
         public  Task<UserDto> GetUserById(Guid id);
         public  Task<bool> ChangePassword(ChangePasswordDto changePassword);
         public  Task<bool> DeactivateUser(ChangeUserStatusDto changeStatus);
+        public UserDto AddNewUser(Guid roleId);
+        public Task<List<UserDto>> GetUsersByRole(Guid RoleId);
     }
 }

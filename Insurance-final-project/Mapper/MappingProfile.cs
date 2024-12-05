@@ -23,6 +23,9 @@ namespace Insurance_final_project.Mapper
             // Commission Withdrawal
             CreateMap<CommissionWithdrawal, CommissionWithdrawalDto>().ReverseMap();
 
+            // Agent Commission
+            CreateMap<Commission, CommissionDto>().ReverseMap();
+
             // Customer
             CreateMap<Customer, CustomerDto>().ReverseMap();
 
@@ -59,15 +62,19 @@ namespace Insurance_final_project.Mapper
             // Transaction
             CreateMap<Transaction, TransactionDto>().ReverseMap();
 
+            //CreateMap<>();
             // User
             CreateMap<User, UserDto>();
             CreateMap<UserLoginDto, User>();
             CreateMap<UserDto, User>()
-                .ForMember(dest=> dest.HashedPassword,src=>src.MapFrom(s=>BCrypt.Net.BCrypt.HashPassword(s.Password)));
+                .ForMember(dest=> dest.Password,val=>val.MapFrom(src=>BCrypt.Net.BCrypt.EnhancedHashPassword(src.Password,13)));
 
-            CreateMap<Agent, AgentResponseDto>().ReverseMap();
+            CreateMap<Agent, AgentInputDto>().ReverseMap();
             CreateMap<ApprovalDto, PolicyCancel>().ReverseMap();
-            CreateMap<CityInputDto, City>().ReverseMap();
+            CreateMap<CityDto, City>().ReverseMap();
+            CreateMap<Nominee,NomineeDto>() .ReverseMap();
+            CreateMap<User, UserLogInResponseDto>()
+                .ForMember(dest=>dest.RoleName,val=>val.MapFrom(src=>src.Role.RoleName));
         }
     }
 }

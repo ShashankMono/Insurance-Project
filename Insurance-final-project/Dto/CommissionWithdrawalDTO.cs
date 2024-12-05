@@ -1,18 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Insurance_final_project.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Insurance_final_project.Dto
 {
     public class CommissionWithdrawalDto
     {
         public Guid Id { get; set; }
-        [Required] 
-        [Range(0.00, double.MaxValue, ErrorMessage = "Commission amount must be greater than zero.")]
+
+        [Required(ErrorMessage = "Amount is required.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Amount cannot be negative.")]
         public double Amount { get; set; }
 
-        public bool ApprovedStatus { get; set; } = false;
-        public bool TransactionStatus { get; set; } = false;
-        public DateTime? TransactionDate { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Agent ID is required.")]
+        [ForeignKey("Agent")]
         public Guid AgentId { get; set; }
     }
 }
