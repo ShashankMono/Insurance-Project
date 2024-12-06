@@ -69,8 +69,8 @@ namespace Insurance_final_project.Controllers
             return Ok(new { Success = true, Data = dataObj.userData, Message = "User logged in successfully." });
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateUser([FromBody] UserDto updatedUser)
+        [HttpPut("UpdateUsernam")]
+        public async Task<IActionResult> UpdateUser([FromBody] UserUpdateDto updatedUser)
         {
             if (!ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace Insurance_final_project.Controllers
                 });
             }
 
-            var userId = await _userService.UpdateUser(updatedUser);
+            var userId = await _userService.UpdateUsername(updatedUser);
             return Ok(new { Success = true, Data = userId, Message = "User updated successfully." });
         }
 

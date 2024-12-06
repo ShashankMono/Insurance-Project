@@ -77,6 +77,7 @@ namespace Insurance_final_project.Mapper
                 .ForMember(dest=>dest.RoleName,val=>val.MapFrom(src=>src.Role.RoleName));
             CreateMap<Agent, AgentResponseDto>().ReverseMap();
             CreateMap<AgentInputDto, AgentResponseDto>().ReverseMap();
+            CreateMap<UserDto,UserUpdateDto>().ReverseMap();
         }
     }
 }

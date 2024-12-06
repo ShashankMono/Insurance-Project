@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using Insurance_final_project.Constant;
 using Insurance_final_project.Dto;
+using Insurance_final_project.Exceptions;
 using Insurance_final_project.Models;
 using Insurance_final_project.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Insurance_final_project.Services
 {
-    public class PolicyAccountService:IPolicyAccountService
+    public class PolicyAccountService : IPolicyAccountService
     {
         private readonly IRepository<PolicyAccount> _PolicyAccountRepo;
         private readonly IMapper _Mapper;
@@ -15,17 +16,20 @@ namespace Insurance_final_project.Services
         private readonly ICommissionService _commissionService;
         private readonly IMapper _mapper;
         private readonly IRepository<Agent> _agentRepo;
+        private readonly IRepository<Policy> _policyRepo;
         public PolicyAccountService(IRepository<PolicyAccount> repo
             , IMapper mapper
             , ICommissionService commissionService
             , IPolicyInstallmentService PolicyInstallmentService
-            , IRepository<Agent> agent)
+            , IRepository<Agent> agent
+            , IRepository<Policy> policyRepo)
         {
             _PolicyAccountRepo = repo;
             _Mapper = mapper;
             _PolicyInstallmentService = PolicyInstallmentService;
             _commissionService = commissionService;
             _agentRepo = agent;
+            _policyRepo = policyRepo;
         }
 
         public async Task<PolicyAccountDto> GetPolicyAccountById(Guid policyAccountId)
@@ -44,7 +48,10 @@ namespace Insurance_final_project.Services
         public async Task<Guid> CreatePolicyAccount(PolicyAccountDto policyAccountDto)
         {
             var policyAccount = _Mapper.Map<PolicyAccount>(policyAccountDto);
-
+            var policy = _policyRepo.Get(policyAccountDto.PolicyId);
+            if (policy == null || !policy.IsActive) {
+                throw new PolicyNotFoundException("Policy not found!");
+            }
             policyAccount.StartDate = DateTime.UtcNow;
             policyAccount.EndDate = DateTime.UtcNow.AddYears(policyAccountDto.PolicyTerm);//years
 
