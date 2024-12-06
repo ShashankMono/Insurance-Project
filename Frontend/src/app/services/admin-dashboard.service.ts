@@ -12,22 +12,22 @@ export class AdminDashboardService {
   constructor(private http: HttpClient) {}
 
   addAgent(agent: any): Observable<any> {
-    return this.http.post(`${this.url}/Agent/add`, agent);
+    return this.http.post(`${this.url}/Agent`, agent);
   }
   getAgents(): Observable<{ data: any[] }> {
-    return this.http.get<{ data: any[] }>(`${this.url}/Agent/all`);
+    return this.http.get<{ data: any[] }>(`${this.url}/Agent`);
   }
 
   
   addEmployee(employee: any): Observable<any> {
-    return this.http.post(`${this.url}/Employee/add`, employee);
+    return this.http.post(`${this.url}/Employee`, employee);
   }
   getEmployees(): Observable<{ data: any[] }> {
-    return this.http.get<{ data: any[] }>(`${this.url}/Employee/all`);
+    return this.http.get<{ data: any[] }>(`${this.url}/Employee`);
   }
   
   addCity(city: any): Observable<any> {
-    return this.http.post(`${this.url}/City/add`, city);
+    return this.http.post(`${this.url}/City`, city);
   }
 
   addState(state: any): Observable<any> {
@@ -41,7 +41,7 @@ export class AdminDashboardService {
   }
 
   getCities(): Observable<City[]> {
-    return this.http.get<{ data: City[] }>(`${this.url}/City/all`).pipe(
+    return this.http.get<{ data: City[] }>(`${this.url}/City`).pipe(
       map((response) => response.data)
     );
   }
@@ -63,38 +63,38 @@ export class AdminDashboardService {
   }
   
   getAgentReport(): Observable<any> {
-    return this.http.get(`${this.url}/Agent/all`);
+    return this.http.get(`${this.url}/Agent`);
   }
 
-  getClaimAccounts(): Observable<any> {
-    return this.http.get(`${this.url}/get-claim-accounts`);
-  }
+  // getClaimAccounts(): Observable<any> {
+  //   return this.http.get(`${this.url}/get-claim-accounts`);
+  // }
 
-  getCommissions(): Observable<any> {
-    return this.http.get(`${this.url}/get-commissions`);
-  }
+  // getCommissions(): Observable<any> {
+  //   return this.http.get(`${this.url}/get-commissions`);
+  // }
 
-  getCustomerAccounts(): Observable<any> {
-    return this.http.get(`${this.url}/get-customer-accounts`);
-  }
+  // getCustomerAccounts(): Observable<any> {
+  //   return this.http.get(`${this.url}/get-customer-accounts`);
+  // }
 
-  getPolicyAccount(): Observable<any> {
-    return this.http.get(`${this.url}/get-policy-account`);
-  }
+  // getPolicyAccount(): Observable<any> {
+  //   return this.http.get(`${this.url}/get-policy-account`);
+  // }
   getAllUsers(): Observable<any> {
-    return this.http.get('https://localhost:7258/api/User/get-all-users');
+    return this.http.get(`${this.url}/User`);
   }
   
   addUser(user: any): Observable<any> {
-    return this.http.post('https://localhost:7258/api/User/register', user);
+    return this.http.post(`${this.url}/User`, user);
   }
   
   getAllRoles(): Observable<any> {
-    return this.http.get('https://localhost:7258/api/Role');
+    return this.http.get(`${this.url}/Role`);
   }
   
   addRole(role: any): Observable<any> {
-    return this.http.post('https://localhost:7258/api/Role', role);
+    return this.http.post(`${this.url}/Role`, role);
   }
   
 }

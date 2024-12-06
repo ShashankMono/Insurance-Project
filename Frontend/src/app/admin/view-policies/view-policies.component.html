@@ -13,7 +13,7 @@
         <tr *ngFor="let policy of policies">
           <td>{{ policy.name }}</td>
           <td>{{ policy.description }}</td>
-          <td>{{ policy.policyType.type }}</td>
+          <td>{{ policy.policyTypeId }}</td>
           <td>{{ policy.isActive ? 'Active' : 'Inactive' }}</td>
         </tr>
       </tbody>
