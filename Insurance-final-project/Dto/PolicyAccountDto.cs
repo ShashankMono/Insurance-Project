@@ -21,7 +21,11 @@ namespace Insurance_final_project.Dto
         [Range(0, double.MaxValue, ErrorMessage = "Total Amount Paid cannot be negative.")]
         public double TotalAmountPaid { get; set; }
         [Required(ErrorMessage = "Policy term is required")]
+        [Range(0, int.MaxValue, ErrorMessage = "Policy term cannot be negative.")]
         public int PolicyTerm {  get; set; }
+
+        [MaxLength(20, ErrorMessage = "Verification status cannot exceed 20 characters.")]
+        public string IsApproved { get; set; } = VerificationType.Pending.ToString();
 
         [Required(ErrorMessage = "Installment Type is required.")]
         [MaxLength(50, ErrorMessage = "Installment Type cannot exceed 50 characters.")]

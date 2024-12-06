@@ -78,6 +78,7 @@ namespace Insurance_final_project.Mapper
             CreateMap<Agent, AgentResponseDto>().ReverseMap();
             CreateMap<AgentInputDto, AgentResponseDto>().ReverseMap();
             CreateMap<UserDto,UserUpdateDto>().ReverseMap();
+            CreateMap<PolicyAccountDocument, PolicyAccountDocumentDto>().ReverseMap();
         }
     }
 }

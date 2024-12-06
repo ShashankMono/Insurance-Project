@@ -49,6 +49,7 @@ namespace Insurance_final_project.Services
         {
             var policyAccount = _Mapper.Map<PolicyAccount>(policyAccountDto);
             var policy = _policyRepo.Get(policyAccountDto.PolicyId);
+
             if (policy == null || !policy.IsActive) {
                 throw new PolicyNotFoundException("Policy not found!");
             }
@@ -67,17 +68,17 @@ namespace Insurance_final_project.Services
             //    policyAccountDto.CustomerId
             //    );
 
-            if (policyAccount.AgentId != null)
-            {
-                var commission = new CommissionDto()
-                {
-                    PolicyAccountId = policyAccount.Id,
-                    AgentId = (Guid)policyAccount.AgentId,
-                    Date = DateTime.UtcNow,
-                    CommissionType = CommissionType.Regisration.ToString()
-                };
-                _commissionService.AddCommission(commission, policyAccount.TotalAmountPaid);
-            }
+            //if (policyAccount.AgentId != null)
+            //{
+            //    var commission = new CommissionDto()
+            //    {
+            //        PolicyAccountId = policyAccount.Id,
+            //        AgentId = (Guid)policyAccount.AgentId,
+            //        Date = DateTime.UtcNow,
+            //        CommissionType = CommissionType.Regisration.ToString()
+            //    };
+            //    _commissionService.AddCommission(commission, policyAccount.TotalAmountPaid);
+            //}
 
             return policyAccount.Id;
         }
