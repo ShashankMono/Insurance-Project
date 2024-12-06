@@ -14,17 +14,20 @@ namespace Insurance_final_project.Services
         private readonly IMapper _Mapper;
         private readonly IRepository<Role> _RoleRepo;
         private readonly IUserService _userService;
+        private readonly IEmailService _emailService;
 
         public AgentService(
             IRepository<Agent> agentRepository,
             IRepository<Role> roleRepo,
             IUserService UserService,
+            IEmailService emailService,
             IMapper mapper)
         {
             _agentRepository = agentRepository;
             _Mapper = mapper;
             _RoleRepo = roleRepo;
             _userService = UserService;
+            _emailService = emailService;
         }
 
         public AgentInputDto GetAgentById(Guid agentId)

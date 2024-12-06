@@ -13,23 +13,32 @@ namespace Insurance_final_project.Services
         private readonly IUserService _userService;
         private readonly IMapper _Mapper;
         private readonly IRepository<Role> _RoleRepo;
+        private readonly IEmailService _emailService;
         public EmployeeService(
         IRepository<Employee> employeeRepo,
         IUserService userService,
         IRepository<Role> roleRepo,
+        IEmailService emailService,
         IMapper mapper)
         {
             _RoleRepo = roleRepo;
             _userService = userService;
             _EmployeeRepo = employeeRepo;
+            _emailService = emailService;
             _Mapper = mapper;
         }
         public async Task<UserDto> AddEmployee(EmployeeDto newEmployee)
         {
             Employee employee = _Mapper.Map<EmployeeDto, Employee>(newEmployee);
-            UserDto user = _userService.AddNewUser(_RoleRepo.GetAll().FirstOrDefault(r => r.RoleName == "Employee").RoleId);
+            var RoleId = _RoleRepo.GetAll().FirstOrDefault(r => r.RoleName == "Employee").RoleId;
+            if (RoleId == null)
+            {
+                throw new RoleNotFoundException("Role not found! Please add role \"Employee\"");
+            }
+            UserDto user = _userService.AddNewUser(RoleId);
             employee.UserId = user.UserId;
             Employee employeeAdded = _EmployeeRepo.Add(employee);
+            _emailService.SendUserDetailthroughEmail(employeeAdded.EmailId,"Employee username and password",user);
             return user;
         }
 
@@ -40,10 +49,12 @@ namespace Insurance_final_project.Services
 
         public async Task<Guid> UpdateEmployeeProfile(EmployeeDto employee)
         {
-            if(_EmployeeRepo.GetAll().AsNoTracking().FirstOrDefault(e=>e.EmployeeId == employee.EmployeeId) == null)
+            var existingEmployee = _EmployeeRepo.GetAll().AsNoTracking().FirstOrDefault(e => e.EmployeeId == employee.EmployeeId);
+            if ( existingEmployee== null)
             {
                 throw new InvalidEmployeeException("Employee not found!");
             }
+            employee.UserId = existingEmployee.UserId;
             return _EmployeeRepo.Update(_Mapper.Map<EmployeeDto, Employee>(employee)).EmployeeId;
         }
     }

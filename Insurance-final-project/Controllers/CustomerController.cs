@@ -31,7 +31,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPut("update")]
+        [HttpPut]
         public IActionResult UpdateProfile([FromBody] CustomerDto customerDto)
         {
 
@@ -61,7 +61,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost("register")]
+        [HttpPost]
         public IActionResult RegisterCustomer([FromBody] CustomerDto customerDto)
         {
 
@@ -91,7 +91,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("accounts")]
+        [HttpGet]
         public async Task<IActionResult> GetCustomerAccounts()
         {
             var customers = await _customerService.GetCustomerAccounts();

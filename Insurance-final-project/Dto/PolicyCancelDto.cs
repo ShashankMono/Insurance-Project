@@ -19,7 +19,6 @@ namespace Insurance_final_project.Dto
         public DateTime DateAndTime { get; set; }
 
         [Required(ErrorMessage = "Policy Account ID is required.")]
-        [ForeignKey("PolicyAccount")]
         public Guid PolicyAccountId { get; set; }
     }
 }

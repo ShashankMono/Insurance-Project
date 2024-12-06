@@ -70,7 +70,7 @@ node_modules/
 *.suo
 *.ntvs*
 *.njsproj
-*.sln
+
 
 # Temporary and log files
 *.log

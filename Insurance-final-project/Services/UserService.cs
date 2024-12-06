@@ -95,13 +95,20 @@ namespace Insurance_final_project.Services
             return jwt;
         }
 
-        public async Task<bool> UpdateUser(UserDto user)
+        public async Task<bool> UpdateUsername(UserUpdateDto userUpdate)
         {
-            if (_userRepo.GetAll().AsNoTracking().FirstOrDefault(u=>u.UserId == user.UserId ) == null)
+            var existingUser = _userRepo.GetAll().AsNoTracking().FirstOrDefault(u => u.UserId == userUpdate.UserId);
+            if ( existingUser == null)
             {
                 throw new UserInvalidException("Invalid User!");
             }
-            _userRepo.Update(_mapper.Map<UserDto, User>(user));
+            var checkUsername = _userRepo.GetAll().AsNoTracking().FirstOrDefault(u => u.Username == userUpdate.Username);
+            if (checkUsername != null)
+            {
+                throw new UsernameAlreadyUsedEException("Username Exist!");
+            }
+            existingUser.Username = userUpdate.Username;
+            _userRepo.Update(existingUser);
             return true;
         }
 

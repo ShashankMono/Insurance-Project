@@ -17,7 +17,7 @@ namespace Insurance_final_project.Controllers
         }
 
         // Add Installments
-        [HttpPost("add")]
+        [HttpPost]
         public IActionResult AddInstallments(PolicyInstallmentDto installmentData)
         {
             _policyInstallmentService.AddInstallments(installmentData);

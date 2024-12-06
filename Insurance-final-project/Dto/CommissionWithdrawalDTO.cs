@@ -13,7 +13,6 @@ namespace Insurance_final_project.Dto
         public double Amount { get; set; }
 
         [Required(ErrorMessage = "Agent ID is required.")]
-        [ForeignKey("Agent")]
         public Guid AgentId { get; set; }
     }
 }

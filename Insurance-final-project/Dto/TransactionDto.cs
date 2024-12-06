@@ -16,16 +16,12 @@ namespace Insurance_final_project.Dto
         public double Amount { get; set; }
 
         [Required(ErrorMessage = "Customer ID is required.")]
-        [ForeignKey("Customer")]
         public Guid CustomerId { get; set; }
 
         public Customer Customer { get; set; }
         [Required(ErrorMessage = "Policy Account ID is required.")]
-        [ForeignKey("PolicyAccount")]
         public Guid PolicyAccountId { get; set; }
 
-
-        [ForeignKey("PolicyInstallment")]
         public Guid PolicyInstallmentId { get; set; }
 
         [Required(ErrorMessage = "Transaction Date and Time is required.")]

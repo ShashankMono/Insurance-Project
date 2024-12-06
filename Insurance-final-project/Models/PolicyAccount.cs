@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Insurance_final_project.Constant;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Insurance_final_project.Models
@@ -50,5 +51,10 @@ namespace Insurance_final_project.Models
 
         [Range(0, double.MaxValue, ErrorMessage = "Agent Commission cannot be negative.")]
         public double? AgentCommission { get; set; } = 0;
+        public List<PolicyAccountDocument>? AccountDocuments { get; set; }
+
+        [Required(ErrorMessage = "Approval status is required")]
+
+        public string IsApproved { get; set; } = ApprovalType.Pending.ToString();
     }
 }

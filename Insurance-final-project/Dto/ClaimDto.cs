@@ -10,11 +10,9 @@ namespace Insurance_final_project.Dto
         public Guid ClaimId { get; set; }
 
         [Required(ErrorMessage = "Policy Account ID is required.")]
-        [ForeignKey("PolicyAccount")]
         public Guid PolicyAccountId { get; set; }
 
         [Required(ErrorMessage = "Document is required.")]
-        [ForeignKey("Document")]
         public Guid DocumentId { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "Amount to be claimed cannot be negative.")]

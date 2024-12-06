@@ -16,7 +16,7 @@ namespace Insurance_final_project.Controllers
             _claimService = claimService;
         }
 
-        [HttpGet("accounts")]
+        [HttpGet]
         public async Task<IActionResult> GetClaimAccounts()
         {
             var claims = await _claimService.GetClaimAccounts();
@@ -58,7 +58,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost("{policyAccountId}/add")]
+        [HttpPost("{policyAccountId}")]
         public async Task<IActionResult> AddClaimPolicy(Guid policyAccountId, [FromBody] ClaimDto claimDto)
         {
 
@@ -88,7 +88,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost("withdraw")]
+        [HttpPost]
         public async Task<IActionResult> ClaimWithdrawal([FromBody] ClaimDto claimDto)
         {
             if (!ModelState.IsValid)

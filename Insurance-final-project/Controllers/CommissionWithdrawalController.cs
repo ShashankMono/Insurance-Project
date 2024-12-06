@@ -16,8 +16,7 @@ namespace Insurance_final_project.Controllers
             _commissionWithdrawalService = commissionWithdrawalService;
         }
 
-        // Get All Commission Withdrawals
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<IActionResult> GetCommissionsWithdrawal()
         {
             var withdrawals = await _commissionWithdrawalService.GetCommissionsWithdrawal();
@@ -30,8 +29,8 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        // Add Commission Withdrawal Request
-        [HttpPost("add")]
+
+        [HttpPost]
         public async Task<IActionResult> AddWithdrawalRequest([FromBody] CommissionWithdrawalDto withdrawRequest)
         {
             // Validate model state
@@ -61,7 +60,6 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        // Get Commission Withdrawals by Agent ID
         [HttpGet("{agentId}")]
         public async Task<IActionResult> GetCommissionWithdrawalByAgentId(Guid agentId)
         {

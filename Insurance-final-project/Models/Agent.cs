@@ -16,6 +16,7 @@ namespace Insurance_final_project.Models
         [MaxLength(50, ErrorMessage = "Last Name cannot exceed 50 characters.")]
         public string LastName { get; set; }
 
+        [Required(ErrorMessage = "Qualification is required.")]
         [MaxLength(100, ErrorMessage = "Qualification cannot exceed 100 characters.")]
         public string Qualification { get; set; }
 

@@ -12,7 +12,6 @@ namespace Insurance_final_project.Dto
         [MaxLength(100, ErrorMessage = "City Name cannot exceed 100 characters.")]
         public string CityName { get; set; }
 
-        [ForeignKey("State")]
         [Required(ErrorMessage = "StateId is required.")]
         public Guid StateId { get; set; }
 

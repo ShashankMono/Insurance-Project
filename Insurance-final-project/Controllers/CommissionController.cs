@@ -16,7 +16,7 @@ namespace Insurance_final_project.Controllers
             _commissionService = commissionService;
         }
 
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<IActionResult> GetCommissions()
         {
             var commissions = await _commissionService.GetCommissions();
@@ -42,7 +42,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddCommission([FromBody] CommissionDto commissionDto, [FromQuery] double amountPaid)
         {
             if (!ModelState.IsValid)
