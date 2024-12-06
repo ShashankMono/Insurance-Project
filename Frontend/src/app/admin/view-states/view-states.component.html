@@ -1,0 +1,12 @@
+<table *ngIf="states.length > 0" class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>State Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let state of states">
+        <td>{{ state.stateName }}</td>
+      </tr>
+    </tbody>
+</table>

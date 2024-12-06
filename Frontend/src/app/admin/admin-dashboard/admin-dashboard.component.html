@@ -1,43 +1,118 @@
-<div class="container-fluid vh-100">
+<div class="container-fluid vh-100 bg-light">
   <app-admin-header></app-admin-header>
-  
+
   <div class="container py-5">
     <div class="text-center mb-4">
       <h1 class="display-4 text-primary">Admin Dashboard</h1>
+      
     </div>
 
     <div class="row g-4">
-      <div class="col-md-6">
-        <div class="card shadow border-primary">
+
+      <div class="col-md-4">
+        <div class="card shadow-sm border-primary">
           <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Actions</h4>
+            <h5 class="mb-0"><i class="bi bi-people-fill me-2"></i>User Management</h5>
           </div>
           <div class="card-body">
-            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="addAgent()">Add Agent</button>
-            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="addEmployee()">Add Employee</button>
-            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="addPolicy()">Add Policy</button>
-            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="addCity()">Add City</button>
-            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="addState()">Add State</button>
-            <!-- <button class="btn btn-outline-primary btn-block w-100" (click)="approveCustomer()">Approve Customer</button> -->
+            <!-- View All Users -->
+            <button class="btn btn-outline-primary w-100 mb-2" (click)="viewAllUsers()">
+              <i class="bi bi-eye me-2"></i>View All Users
+            </button>
+            <!-- Add User -->
+            <button class="btn btn-outline-primary w-100 mb-2" (click)="addUser()">
+              <i class="bi bi-person-plus me-2"></i>Add User
+            </button>
+            <!-- Add Role -->
+            <button class="btn btn-outline-primary w-100 mb-2" (click)="addRole()">
+              <i class="bi bi-person-badge-fill me-2"></i>Add Role
+            </button>
+            <!-- View All Roles -->
+            <button class="btn btn-outline-primary w-100" (click)="viewAllRoles()">
+              <i class="bi bi-list-task me-2"></i>View All Roles
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- Reports Section -->
-      <div class="col-md-6">
-        <div class="card shadow border-primary">
-          <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">View Reports</h4>
+      <div class="col-md-4">
+        <div class="card shadow-sm border-success">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0"><i class="bi bi-person-workspace me-2"></i>Agent & Employee Management</h5>
           </div>
           <div class="card-body">
-            <!-- <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="viewAgentReport()">View Agent Report</button>
-            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="viewClaimAccounts()">View Claim Accounts</button>
-            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="viewCommissions()">View Commissions</button>
-            <button class="btn btn-outline-primary btn-block mb-2 w-100" (click)="viewCustomerAccounts()">View Customer Accounts</button>
-            <button class="btn btn-outline-primary btn-block w-100" (click)="viewPolicyAccount()">View Policy Account</button> -->
+            <button class="btn btn-outline-success w-100 mb-2" (click)="addAgent()">
+              <i class="bi bi-person-plus me-2"></i>Add Agent
+            </button>
+            
+            <button class="btn btn-outline-success w-100 mb-2" (click)="addEmployee()">
+              <i class="bi bi-person-badge me-2"></i>Add Employee
+            </button>
+            <button class="btn btn-outline-success w-100 mb-2" (click)="viewAllAgents()">
+              <i class="bi bi-person-badge me-2"></i>View All Agents
+            </button>
+            
+            <button class="btn btn-outline-success w-100 mb-2" (click)="viewAllEmployee()">
+              <i class="bi bi-person-badge me-2"></i>View All Employees
+            </button>
           </div>
         </div>
       </div>
+
+      <div class="col-md-4">
+        <div class="card shadow-sm border-info">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0"><i class="bi bi-geo-alt-fill me-2"></i>City & State Management</h5>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-outline-info w-100 mb-2" (click)="addCity()">
+              <i class="bi bi-building me-2"></i>Add City
+            </button>
+            
+            <button class="btn btn-outline-info w-100 mb-2" (click)="getCities()">
+              <i class="bi bi-map me-2"></i>View All Cities
+            </button>
+      
+            <button class="btn btn-outline-info w-100 mb-2" (click)="getStates()">
+              <i class="bi bi-globe me-2"></i>View All States
+            </button>
+      
+            <button class="btn btn-outline-info w-100" (click)="addState()">
+              <i class="bi bi-globe me-2"></i>Add State
+            </button>
+      
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card shadow-sm border-danger">
+          <div class="card-header bg-danger text-white">
+            <h5 class="mb-0"><i class="bi bi-shield-fill-check me-2"></i>Policy</h5>
+          </div>
+          <div class="card-body">
+            <!-- Add Policy Button -->
+            <button class="btn btn-outline-danger w-100 mb-2" (click)="addPolicy()">
+              <i class="bi bi-file-earmark-plus me-2"></i>Add Policy
+            </button>
+            
+            <!-- View Policies Button -->
+            <button class="btn btn-outline-danger w-100 mb-2" (click)="viewPolicies()">
+              <i class="bi bi-file-earmark-text me-2"></i>View Policies
+            </button>
+            
+            <!-- Add Policy Type Button -->
+            <button class="btn btn-outline-danger w-100 mb-2" (click)="addPolicyType()">
+              <i class="bi bi-file-earmark-plus me-2"></i>Add Policy Type
+            </button>
+            
+            <!-- View Policy Types Button -->
+            <button class="btn btn-outline-danger w-100" (click)="viewPolicyTypes()">
+              <i class="bi bi-file-earmark-text me-2"></i>View Policy Types
+            </button>
+          </div>
+        </div>
+      </div>
+      
     </div>
   </div>
 </div>

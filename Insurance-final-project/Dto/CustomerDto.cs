@@ -41,9 +41,8 @@
         [ForeignKey("City")]
         public Guid CityId { get; set; }
 
-        [Required(ErrorMessage = "User ID is required.")]
         [ForeignKey("User")]
-        public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
 
         public ICollection<Query>? Queries { get; set; }
 

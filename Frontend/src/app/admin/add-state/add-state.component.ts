@@ -1,26 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AdminDashboardService } from 'src/app/services/admin-dashboard.service';
 import { Router } from '@angular/router';
-import { AddStateService } from 'src/app/services/add-state.service';
+
 @Component({
   selector: 'app-add-state',
   templateUrl: './add-state.component.html',
   styleUrls: ['./add-state.component.css']
 })
-export class AddStateComponent implements OnInit {
-  addStateForm: FormGroup;
+export class AddStateComponent {
+  addStateForm = new FormGroup({
+    stateName: new FormControl('', Validators.required),
+  });
 
-  constructor(
-    private fb: FormBuilder,
-    private addStateService: AddStateService,
-    private router: Router
-  ) {
-    this.addStateForm = this.fb.group({
-      stateName: ['', Validators.required],
-    });
+  constructor(private addStateService: AdminDashboardService, private router: Router) {
+   
   }
-
-  ngOnInit(): void {}
 
   onSubmit(): void {
     if (this.addStateForm.valid) {
@@ -31,7 +26,6 @@ export class AddStateComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error adding state:', error);
-          alert('Failed to add state. Please try again.');
         },
       });
     }

@@ -63,7 +63,7 @@ namespace Insurance_final_project.Controllers
                 });
             }
 
-            (string token, User userData) = await _userService.LogIn(loginDetails);
+            (string token, UserLogInResponseDto userData) = await _userService.LogIn(loginDetails);
             var dataObj = new {token=token, userData=userData};
             Response.Headers.Add("Jwt", dataObj.token);
             return Ok(new { Success = true, Data = dataObj.userData, Message = "User logged in successfully." });

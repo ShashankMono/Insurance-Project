@@ -1,0 +1,20 @@
+<div class="container py-5">
+    <h2 class="text-center mb-4">View All Users</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Role</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.username }}</td>
+          <td>{{ user.roleName }}</td>
+          <td>{{ user.isActive ? 'Active' : 'Inactive' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

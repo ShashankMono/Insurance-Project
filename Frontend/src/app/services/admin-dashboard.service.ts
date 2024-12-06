@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { map, Observable } from 'rxjs';
+import { State } from '../models/state';
+import { City } from '../models/city';
 @Injectable({
   providedIn: 'root',
 })
@@ -10,8 +11,59 @@ export class AdminDashboardService {
 
   constructor(private http: HttpClient) {}
 
+  addAgent(agent: any): Observable<any> {
+    return this.http.post(`${this.url}/Agent/add`, agent);
+  }
+  getAgents(): Observable<{ data: any[] }> {
+    return this.http.get<{ data: any[] }>(`${this.url}/Agent/all`);
+  }
+
+  
+  addEmployee(employee: any): Observable<any> {
+    return this.http.post(`${this.url}/Employee/add`, employee);
+  }
+  getEmployees(): Observable<{ data: any[] }> {
+    return this.http.get<{ data: any[] }>(`${this.url}/Employee/all`);
+  }
+  
+  addCity(city: any): Observable<any> {
+    return this.http.post(`${this.url}/City/add`, city);
+  }
+
+  addState(state: any): Observable<any> {
+    return this.http.post(`${this.url}/State`, state);
+  }
+
+  getStates(): Observable<State[]> {
+    return this.http.get<{ data: State[] }>(`${this.url}/State`).pipe(
+      map((response) => response.data)
+    );
+  }
+
+  getCities(): Observable<City[]> {
+    return this.http.get<{ data: City[] }>(`${this.url}/City/all`).pipe(
+      map((response) => response.data)
+    );
+  }
+  
+  addPolicyType(policyType: any): Observable<any> {
+    return this.http.post(`${this.url}/PolicyType`, policyType);
+  }
+  
+  addPolicy(policy: any): Observable<any> {
+    return this.http.post(`${this.url}/Policy`, policy);
+  }
+  
+  getPolicyType(): Observable<{ data: any[] }> {
+    return this.http.get<{ data: any[] }>(`${this.url}/PolicyType`);
+  }
+  
+  getPolicy(): Observable<{ success: boolean; data: any[]; message: string }> {
+    return this.http.get<{ success: boolean; data: any[]; message: string }>(`${this.url}/Policy`);
+  }
+  
   getAgentReport(): Observable<any> {
-    return this.http.get(`${this.url}/get-agent-report`);
+    return this.http.get(`${this.url}/Agent/all`);
   }
 
   getClaimAccounts(): Observable<any> {
@@ -29,4 +81,20 @@ export class AdminDashboardService {
   getPolicyAccount(): Observable<any> {
     return this.http.get(`${this.url}/get-policy-account`);
   }
+  getAllUsers(): Observable<any> {
+    return this.http.get('https://localhost:7258/api/User/get-all-users');
+  }
+  
+  addUser(user: any): Observable<any> {
+    return this.http.post('https://localhost:7258/api/User/register', user);
+  }
+  
+  getAllRoles(): Observable<any> {
+    return this.http.get('https://localhost:7258/api/Role');
+  }
+  
+  addRole(role: any): Observable<any> {
+    return this.http.post('https://localhost:7258/api/Role', role);
+  }
+  
 }

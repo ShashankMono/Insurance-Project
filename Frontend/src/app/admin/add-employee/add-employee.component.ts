@@ -1,27 +1,26 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AddEmployeeService } from 'src/app/services/add-employee.service'; 
+import { AdminDashboardService } from 'src/app/services/admin-dashboard.service';
 @Component({
   selector: 'app-add-employee',
   templateUrl: './add-employee.component.html',
   styleUrls: ['./add-employee.component.css']
 })
 export class AddEmployeeComponent {
-  addEmployeeForm: FormGroup;
+  addEmployeeForm=new FormGroup({
+    firstName: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+    lastName: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+    mobileNo: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')]),
+    address: new FormControl('', [Validators.required, Validators.maxLength(200)]),
+    emailId: new FormControl('', [Validators.required, Validators.email]), // Changed to match backend
+    salary: new FormControl('', [Validators.required])
+  })
 
-  constructor(private fb: FormBuilder,
-    private addEmployeeService: AddEmployeeService,
+  constructor(private addEmployeeService: AdminDashboardService,
     private router: Router
   ) {
-    this.addEmployeeForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      mobileNo: ['', Validators.required],
-      address:['',Validators.required],
-      EmailId: ['', [Validators.required, Validators.email]],
-      salary: ['', Validators.required],
-    });
+    
   }
 
   ngOnInit(): void {}

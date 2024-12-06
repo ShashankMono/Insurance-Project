@@ -32,8 +32,7 @@ namespace Insurance_final_project.Dto
         [Range(0, double.MaxValue, ErrorMessage = "Salary cannot be negative.")]
         public double Salary { get; set; }
 
-        [Required(ErrorMessage = "User ID is required.")]
         [ForeignKey("User")]
-        public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
     }
 }

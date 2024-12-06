@@ -34,6 +34,29 @@ import { AddPolicyComponent } from './admin/add-policy/add-policy.component';
 import { ApproveCustomerComponent } from './admin/approve-customer/approve-customer.component';
 import { AddCityComponent } from './admin/add-city/add-city.component';
 import { AddStateComponent } from './admin/add-state/add-state.component';
+import { LoginHeaderComponent } from './login/login-header/login-header.component';
+import { ViewStatesComponent } from './admin/view-states/view-states.component';
+import { ViewCitiesComponent } from './admin/view-cities/view-cities.component';
+import { ViewEmployeesComponent } from './admin/view-employees/view-employees.component';
+import { ViewAgentsComponent } from './admin/view-agents/view-agents.component';
+import { ViewPolicyTypesComponent } from './admin/view-policy-types/view-policy-types.component';
+
+import { ViewPoliciesComponent } from './admin/view-policies/view-policies.component';
+import { AddPolicyTypeComponent } from './admin/add-policy-type/add-policy-type.component';
+import { ViewUsersComponent } from './admin/view-users/view-users.component';
+import { ViewRolesComponent } from './admin/view-roles/view-roles.component';
+import { AddRoleComponent } from './admin/add-role/add-role.component';
+import { AddUserComponent } from './admin/add-user/add-user.component';
+import { ViewAllPoliciesComponent } from './customer/view-all-policies/view-all-policies.component';
+import { DisplayPolicyComponent } from './customer/display-policy/display-policy.component';
+import { PolicyAccountComponent } from './customer/policy-account/policy-account.component';
+import { AddClaimComponent } from './customer/add-claim/add-claim.component';
+import { WithdrawClaimComponent } from './customer/withdraw-claim/withdraw-claim.component';
+import { TransactionHistoryComponent } from './customer/transaction-history/transaction-history.component';
+import { AddNomineeComponent } from './customer/add-nominee/add-nominee.component';
+import { EditNomineeComponent } from './customer/edit-nominee/edit-nominee.component';
+import { DeleteNomineeComponent } from './customer/delete-nominee/delete-nominee.component';
+import { AddQueryComponent } from './customer/add-query/add-query.component';
 
 
 
@@ -63,7 +86,29 @@ import { AddStateComponent } from './admin/add-state/add-state.component';
     AddPolicyComponent,
     ApproveCustomerComponent,
     AddCityComponent,
-    AddStateComponent
+    AddStateComponent,
+    LoginHeaderComponent,
+    ViewStatesComponent,
+    ViewCitiesComponent,
+    ViewEmployeesComponent,
+    ViewAgentsComponent,
+    ViewPolicyTypesComponent,
+    AddPolicyTypeComponent,
+    ViewPoliciesComponent,
+    ViewUsersComponent,
+    ViewRolesComponent,
+    AddRoleComponent,
+    AddUserComponent,
+    ViewAllPoliciesComponent,
+    DisplayPolicyComponent,
+    PolicyAccountComponent,
+    AddClaimComponent,
+    WithdrawClaimComponent,
+    TransactionHistoryComponent,
+    AddNomineeComponent,
+    EditNomineeComponent,
+    DeleteNomineeComponent,
+    AddQueryComponent
     
   ],
   imports: [

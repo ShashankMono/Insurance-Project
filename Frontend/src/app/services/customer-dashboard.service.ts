@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CustomerDashboardService {
-  private url = 'https://localhost:7258/api/Customer';
+  private url = 'https://localhost:7258/api';
 
   constructor(private http: HttpClient) {}
 
@@ -18,8 +18,8 @@ export class CustomerDashboardService {
     return this.http.post(`${this.url}/payInstallment/${installmentId}`, { customerId });
   }
 
-  registerCustomer(data: any): Observable<any> {
-    return this.http.post(`${this.url}/register`, data);
+  registerCustomer(customer: any): Observable<any> {
+    return this.http.post(`${this.url}/Customer/register`, customer);
   }
 
   getProfile(id: string): Observable<any> {

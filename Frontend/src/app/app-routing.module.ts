@@ -16,10 +16,21 @@ import { AddCityComponent } from './admin/add-city/add-city.component';
 import { AddPolicyComponent } from './admin/add-policy/add-policy.component';
 import { AddEmployeeComponent } from './admin/add-employee/add-employee.component';
 import { AddAgentComponent } from './admin/add-agent/add-agent.component';
+import { ViewCitiesComponent } from './admin/view-cities/view-cities.component';
+import { ViewStatesComponent } from './admin/view-states/view-states.component';
+import { ViewAgentsComponent } from './admin/view-agents/view-agents.component';
+import { ViewEmployeesComponent } from './admin/view-employees/view-employees.component';
+import { ViewPolicyTypesComponent } from './admin/view-policy-types/view-policy-types.component';
+import { ViewPoliciesComponent } from './admin/view-policies/view-policies.component';
+import { AddPolicyTypeComponent } from './admin/add-policy-type/add-policy-type.component';
+import { ViewUsersComponent } from './admin/view-users/view-users.component';
+import { AddRoleComponent } from './admin/add-role/add-role.component';
+import { ViewRolesComponent } from './admin/view-roles/view-roles.component';
+import { AddUserComponent } from './admin/add-user/add-user.component';
 const routes: Routes = [
   { 
     path: '',
-    redirectTo: 'landing-page', 
+    redirectTo: '/landing-page', 
     pathMatch: 'full' 
   },
   { 
@@ -41,10 +52,10 @@ const routes: Routes = [
   {
     path:'admin-dashboard',
     component:AdminDashboardComponent,
-    // canActivate:[AuthGuard],
-    // data:{
-    //   role:'Admin'
-    // }
+    canActivate:[AuthGuard],
+    data:{
+      role:'Admin'
+    }
   },
   {
     path: 'agent-dashboard',
@@ -57,10 +68,10 @@ const routes: Routes = [
   {
     path: 'customer-dashboard',
     component: CustomerDashboardComponent,
-    // canActivate: [AuthGuard],
-    // data: {
-    //   role: 'Customer',
-    // }
+    canActivate: [AuthGuard],
+    data: {
+      role: 'Customer',
+    }
   },
   
   {
@@ -95,6 +106,50 @@ const routes: Routes = [
   { 
     path: 'add-state', 
     component:AddStateComponent
+  },
+  {
+    path:'view-cities',
+    component:ViewCitiesComponent
+  },
+  {
+    path:'view-states',
+    component:ViewStatesComponent
+  },
+  {
+    path:'view-agents',
+    component:ViewAgentsComponent
+  },
+  {
+    path:'view-employees',
+    component:ViewEmployeesComponent
+  },
+  {
+    path:'view-policy-types',
+    component:ViewPolicyTypesComponent
+  },
+  {
+    path:'view-policies',
+    component:ViewPoliciesComponent
+  },
+  { 
+    path: 'add-policy-types', 
+    component: AddPolicyTypeComponent
+  },
+  {
+    path: 'view-users',
+    component: ViewUsersComponent 
+  },
+  {
+    path: 'add-users',
+    component: AddUserComponent
+  },
+  {
+    path: 'add-role',
+    component: AddRoleComponent
+  },
+  {
+    path: 'view-roles',
+    component: ViewRolesComponent
   }
 ];
 

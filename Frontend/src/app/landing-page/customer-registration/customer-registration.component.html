@@ -1,55 +1,86 @@
-<div class="container">
-    <h2>Register Customer</h2>
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label for="firstName" class="form-label">First Name:</label>
-          <input id="firstName" formControlName="firstName" type="text" class="form-control" />
-        </div>
-        <div class="col-md-6">
-          <label for="lastName" class="form-label">Last Name:</label>
-          <input id="lastName" formControlName="lastName" type="text" class="form-control" />
-        </div>
+<div class="container mt-5">
+  <h1>Customer Registration</h1>
+  <form [formGroup]="customerRegistrationForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="firstName" class="form-label">First Name</label>
+      <input
+        type="text"
+        id="firstName"
+        formControlName="firstName"
+        class="form-control"
+        [ngClass]="{'is-invalid': customerRegistrationForm.get('firstName')?.invalid && customerRegistrationForm.get('firstName')?.touched}"
+      />
+      <div *ngIf="customerRegistrationForm.get('firstName')?.invalid && customerRegistrationForm.get('firstName')?.touched" class="invalid-feedback">
+        First Name is required and cannot exceed 50 characters.
       </div>
-      
-      <div class="mb-3">
-        <label for="emailId" class="form-label">Email:</label>
-        <input id="emailId" formControlName="emailId" type="email" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="lastName" class="form-label">Last Name</label>
+      <input
+        type="text"
+        id="lastName"
+        formControlName="lastName"
+        class="form-control"
+        [ngClass]="{'is-invalid': customerRegistrationForm.get('lastName')?.invalid && customerRegistrationForm.get('lastName')?.touched}"
+      />
+      <div *ngIf="customerRegistrationForm.get('lastName')?.invalid && customerRegistrationForm.get('lastName')?.touched" class="invalid-feedback">
+        Last Name is required and cannot exceed 50 characters.
       </div>
-      
-      <div class="mb-3">
-        <label for="mobileNo" class="form-label">Mobile No:</label>
-        <input id="mobileNo" formControlName="mobileNo" type="text" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="emailId" class="form-label">Email</label>
+      <input
+        type="email"
+        id="emailId"
+        formControlName="emailId"
+        class="form-control"
+        [ngClass]="{'is-invalid': customerRegistrationForm.get('emailId')?.invalid && customerRegistrationForm.get('emailId')?.touched}"
+      />
+      <div *ngIf="customerRegistrationForm.get('emailId')?.invalid && customerRegistrationForm.get('emailId')?.touched" class="invalid-feedback">
+        Valid Email is required.
       </div>
-      
-      <div class="mb-3">
-        <label for="stateId" class="form-label">State:</label>
-        <select id="stateId" formControlName="stateId" (change)="onStateChange($event)" class="form-select">
-          <option value="" disabled selected>Select State</option>
-          <option *ngFor="let state of states" [value]="state.stateId">{{ state.stateName }}</option>
-        </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="mobileNo" class="form-label">Mobile Number</label>
+      <input
+        type="text"
+        id="mobileNo"
+        formControlName="mobileNo"
+        class="form-control"
+        [ngClass]="{'is-invalid': customerRegistrationForm.get('mobileNo')?.invalid && customerRegistrationForm.get('mobileNo')?.touched}"
+      />
+      <div *ngIf="customerRegistrationForm.get('mobileNo')?.invalid && customerRegistrationForm.get('mobileNo')?.touched" class="invalid-feedback">
+        Valid Mobile Number (10 digits) is required.
       </div>
-      
-      <div class="mb-3">
-        <label for="cityId" class="form-label">City:</label>
-        <select id="cityId" formControlName="cityId" class="form-select">
-          <option value="" disabled selected>Select City</option>
-          <option *ngFor="let city of cities" [value]="city.cityId">{{ city.cityName }}</option>
-        </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="dateOfBirth" class="form-label">Date of Birth</label>
+      <input
+        type="date"
+        id="dateOfBirth"
+        formControlName="dateOfBirth"
+        class="form-control"
+        [ngClass]="{'is-invalid': customerRegistrationForm.get('dateOfBirth')?.invalid && customerRegistrationForm.get('dateOfBirth')?.touched}"
+      />
+      <div *ngIf="customerRegistrationForm.get('dateOfBirth')?.invalid && customerRegistrationForm.get('dateOfBirth')?.touched" class="invalid-feedback">
+        Date of Birth is required.
       </div>
-      
-      
-      <div class="mb-3">
-        <label for="userId" class="form-label">Username:</label>
-        <input id="userId" formControlName="userId" type="text" class="form-control" />
-      </div>
-      
-      <div class="mb-3">
-        <label for="password" class="form-label">Password:</label>
-        <input id="password" formControlName="password" type="password" class="form-control" />
-      </div>
-      
-      <button type="submit" class="btn btn-primary">Register</button>
-    </form>
+    </div>
+
+    <div class="mb-3">
+      <label for="stateId" class="form-label">State</label>
+      <input type="text" id="stateId" formControlName="stateId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="cityId" class="form-label">City</label>
+      <input type="text" id="cityId" formControlName="cityId" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="customerRegistrationForm.invalid">Register</button>
+  </form>
 </div>
-  

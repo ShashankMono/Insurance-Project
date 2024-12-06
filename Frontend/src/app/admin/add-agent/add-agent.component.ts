@@ -1,31 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AddAgentService } from 'src/app/services/add-agent.service';
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AdminDashboardService } from 'src/app/services/admin-dashboard.service';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-add-agent',
   templateUrl: './add-agent.component.html',
   styleUrls: ['./add-agent.component.css']
 })
-export class AddAgentComponent implements OnInit {
-  addAgentForm: FormGroup;
+export class AddAgentComponent{
+  addAgentForm = new FormGroup({
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    qualification: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    mobileNo: new FormControl('', [Validators.required]),
+  });
 
-  constructor(private fb: FormBuilder, private addAgentService: AddAgentService,private router: Router) {
-    this.addAgentForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      qualification: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      mobileNo: ['', [Validators.required]],
-    });
+  constructor(private addAgentService: AdminDashboardService, private router: Router) {
+    
   }
 
-  ngOnInit(): void {}
 
   onSubmit(): void {
     if (this.addAgentForm.valid) {
       const agentData = {
-        ...this.addAgentForm.value,
+        firstName: this.addAgentForm.value.firstName,
+        lastName: this.addAgentForm.value.lastName,
+        qualification: this.addAgentForm.value.qualification,
+        email: this.addAgentForm.value.email,
+        mobileNo: this.addAgentForm.value.mobileNo,
         commissionEarned: 0, // Default value
         totalCommission: 0, // Default value
       };
@@ -34,7 +38,6 @@ export class AddAgentComponent implements OnInit {
         next: (response) => {
           console.log('Agent added successfully:', response);
           alert('Agent added successfully!');
-          // Redirect to the admin dashboard
           this.router.navigate(['/admin-dashboard']);
         },
         error: (error) => {

@@ -9,23 +9,23 @@ import { UserData } from '../models/user-data';
   providedIn: 'root'
 })
 export class LoginService {
-  url="https://localhost:7258/api"
+  url="https://localhost:7258/api/User/login"
   
   
   constructor(private http: HttpClient) {}
   signIn(signInData: any): Observable<HttpResponse<UserData | null>> {
-    return this.http.post<UserData>(`${this.url}/User/login`, signInData, { observe: 'response' });
+    return this.http.post<UserData>(`${this.url}`, signInData, { observe: 'response' });
   }
   
-  getStates(): Observable<State[]> {
-    return this.http.get<State[]>(`${this.url}/CommonFeatures/states`);
-  }
+  // getStates(): Observable<State[]> {
+  //   return this.http.get<State[]>(`${this.url}/CommonFeatures/states`);
+  // }
 
-  getCitiesByState(stateId: number): Observable<City[]> {
-    return this.http.get<City[]>(`${this.url}/CommonFeatures/cities?stateId=${stateId}`);
-  }
+  // getCitiesByState(stateId: number): Observable<City[]> {
+  //   return this.http.get<City[]>(`${this.url}/CommonFeatures/cities?stateId=${stateId}`);
+  // }
 
-  registerCustomer(customerData: any): Observable<any> {
-    return this.http.post(`${this.url}/customers/register`, customerData);
-  }
+  // registerCustomer(customerData: any): Observable<any> {
+  //   return this.http.post(`${this.url}/customers/register`, customerData);
+  // }
 }

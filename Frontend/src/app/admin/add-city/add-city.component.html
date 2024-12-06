@@ -1,1 +1,37 @@
-<p>add-city works!</p>
+<div class="container">
+    <h2>Add City</h2>
+    <form [formGroup]="addCityForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="cityName">City Name:</label>
+        <input
+          type="text"
+          id="cityName"
+          class="form-control"
+          formControlName="cityName"
+          placeholder="Enter city name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="stateId">State:</label>
+        <select
+            id="stateId"
+            class="form-control"
+            formControlName="stateId"
+        >
+            <option value="" disabled selected>Select a state</option>
+            <option *ngFor="let state of states" [value]="state.stateId">
+                {{ state.stateName }}
+            </option>
+        </select>
+
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="addCityForm.invalid"
+      >
+        Add City
+      </button>
+    </form>
+</div>
+  

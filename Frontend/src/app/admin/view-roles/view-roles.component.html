@@ -1,0 +1,18 @@
+<div class="container py-5">
+    <h2 class="text-center mb-4">View All Roles</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Role ID</th>
+          <th>Role Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let role of roles">
+          <td>{{ role.roleId }}</td>
+          <td>{{ role.roleName }}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+  

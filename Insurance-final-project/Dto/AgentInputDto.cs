@@ -27,8 +27,7 @@
         [MaxLength(10, ErrorMessage = "Mobile Number cannot exceed 10 characters.")]
         public string MobileNo { get; set; } = string.Empty;
 
-        [Required]
-        public Guid UserId { get; set; } // Foreign key to User
+        public Guid? UserId { get; set; } // Foreign key to User
 
         [Range(0, double.MaxValue, ErrorMessage = "Commission earned must be a non-negative value.")]
         public double? CommissionEarned { get; set; } = 0; // Total commission earned so far
