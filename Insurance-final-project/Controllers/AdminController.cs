@@ -18,11 +18,10 @@ namespace Insurance_final_project.Controllers
             _adminService = adminService;
         }
 
-        // Add Admin
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddAdmin([FromBody] AdminDto adminDto)
         {
-            // Check if the model state is valid
+
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values
@@ -42,11 +41,9 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        // Update Admin
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateAdmin([FromBody] AdminDto adminDto)
         {
-            // Check if the model state is valid
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values

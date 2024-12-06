@@ -18,7 +18,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddEmployee([FromBody] EmployeeDto newEmployee)
         {
 
@@ -48,7 +48,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<IActionResult> GetAllEmployees()
         {
             var employees = await _employeeService.GetAllEmployee();
@@ -62,7 +62,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateEmployeeProfile([FromBody] EmployeeDto employee)
         {
             if (!ModelState.IsValid)

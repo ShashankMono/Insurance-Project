@@ -20,7 +20,6 @@ namespace Insurance_final_project.Dto
         public string ImageUrl { get; set; }
 
         [Required(ErrorMessage = "Policy Type ID is required.")]
-        [ForeignKey("PolicyType")]
         public Guid PolicyTypeId { get; set; }
 
         [Range(18, 100, ErrorMessage = "Minimum Age Criteria must be between 18 and 100.")]

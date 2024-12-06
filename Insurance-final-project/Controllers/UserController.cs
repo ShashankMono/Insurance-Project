@@ -21,7 +21,7 @@ namespace Insurance_final_project.Controllers
 
         
 
-        [HttpPost("register")]
+        [HttpPost]
         public async Task<IActionResult> Register([FromBody] UserDto newUser)
         {
             if (!ModelState.IsValid)
@@ -63,13 +63,13 @@ namespace Insurance_final_project.Controllers
                 });
             }
 
-            (string token, User userData) = await _userService.LogIn(loginDetails);
+            (string token, UserLogInResponseDto userData) = await _userService.LogIn(loginDetails);
             var dataObj = new {token=token, userData=userData};
             Response.Headers.Add("Jwt", dataObj.token);
             return Ok(new { Success = true, Data = dataObj.userData, Message = "User logged in successfully." });
         }
 
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateUser([FromBody] UserDto updatedUser)
         {
             if (!ModelState.IsValid)
@@ -92,8 +92,8 @@ namespace Insurance_final_project.Controllers
             return Ok(new { Success = true, Data = userId, Message = "User updated successfully." });
         }
 
-        [HttpGet("get-profile")]
-        public async Task<IActionResult> GetUserProfile([FromQuery] Guid userId)
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetUserProfile( Guid userId)
         {
             var userProfile = await _userService.GetUserById(userId);
             return Ok(new { Success = true, Data = userProfile, Message = "User profile retrieved successfully." });
@@ -123,7 +123,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpGet("get-all-users")]
+        [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userService.GetUsers();
@@ -153,8 +153,8 @@ namespace Insurance_final_project.Controllers
             return Ok(new { Success = true, Data = userId, Message = "User deactivated successfully." });
         }
 
-        [HttpGet("ByRole")]
-        public async Task<IActionResult> GetUsersByRole([FromBody] Guid RoleId)
+        [HttpGet("role/{RoleId}")]
+        public async Task<IActionResult> GetUsersByRole( Guid RoleId)
         {
             var user = await _userService.GetUsersByRole(RoleId);
             return Ok(new { Success = true, Data = user, Message = "User retrieved successfully." });

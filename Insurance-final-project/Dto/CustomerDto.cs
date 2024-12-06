@@ -31,21 +31,15 @@
         [DataType(DataType.Date, ErrorMessage = "Invalid date format.")]
         public DateTime DateOfBirthDay { get; set; }
 
-        // Relationships with State and City
         [Required(ErrorMessage = "State ID is required.")]
-        [ForeignKey("State")]
         public Guid StateId { get; set; }
 
 
         [Required(ErrorMessage = "City ID is required.")]
-        [ForeignKey("City")]
         public Guid CityId { get; set; }
 
         [Required(ErrorMessage = "User ID is required.")]
-        [ForeignKey("User")]
         public Guid UserId { get; set; }
-
-        public ICollection<Query>? Queries { get; set; }
 
         [Required(ErrorMessage = "Approval status is required.")]
         [MaxLength(20, ErrorMessage = "Approval status cannot exceed 20 characters.")]

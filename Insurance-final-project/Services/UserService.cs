@@ -60,7 +60,7 @@ namespace Insurance_final_project.Services
             return _mapper.Map<List<User>, List<UserDto>>(_userRepo.GetAll().ToList());
         }
 
-        public async Task<(string token,User userData)> LogIn(UserLoginDto user)
+        public async Task<(string token,UserLogInResponseDto userData)> LogIn(UserLoginDto user)
         {
             var existingUser = _userRepo.GetAll().AsNoTracking().Include(u=>u.Role).FirstOrDefault(u => u.Username == user.Username);
             if (existingUser == null) {
@@ -71,7 +71,7 @@ namespace Insurance_final_project.Services
                 throw new PasswordInvalidException("Invalid Password!");
             }
             var token = CreateToken(existingUser);
-            return (token,existingUser);
+            return (token,_mapper.Map<UserLogInResponseDto>(existingUser));
         }
 
         private string CreateToken(User user)

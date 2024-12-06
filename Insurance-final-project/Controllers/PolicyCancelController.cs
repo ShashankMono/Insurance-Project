@@ -39,7 +39,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost("approve")]
+        [HttpPut("approve")]
         public async Task<IActionResult> ApprovePolicyCancelation([FromBody] ApprovalDto approvalDto)
         {
             if (!ModelState.IsValid)
@@ -69,7 +69,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<IActionResult> GetPolicyCancels()
         {
             var policyCancels = await _policyCancelService.GetPolicyCancels();

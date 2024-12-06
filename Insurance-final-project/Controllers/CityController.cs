@@ -16,7 +16,7 @@ namespace Insurance_final_project.Controllers
             _cityService = cityService;
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddCity([FromBody] CityDto city)
         {
             if (!ModelState.IsValid)
@@ -45,7 +45,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateCity([FromBody] CityDto city)
         {
             if (!ModelState.IsValid)
@@ -74,7 +74,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<IActionResult> GetCities()
         {
             var cities = await _cityService.GetCities();

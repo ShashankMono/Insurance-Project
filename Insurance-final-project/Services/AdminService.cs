@@ -25,10 +25,12 @@ namespace Insurance_final_project.Services
 
         public async Task<Guid> UpdateAdmin(AdminDto adminDto)
         {
-            if(_adminRepo.GetAll().AsNoTracking().FirstOrDefault(a=>a.AdminId ==adminDto.AdminId) == null)
+            var existingAdmin = _adminRepo.GetAll().AsNoTracking().FirstOrDefault(a => a.AdminId == adminDto.AdminId);
+            if ( existingAdmin== null)
             {
                 throw new InvalidGuidException("Admin not found!");
             }
+            adminDto.UserId = existingAdmin.UserId;
             return _adminRepo.Update(_mapper.Map<Admin>(adminDto)).AdminId;
         }
 

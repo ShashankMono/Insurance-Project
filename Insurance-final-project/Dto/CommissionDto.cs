@@ -13,7 +13,6 @@ namespace Insurance_final_project.Dto
         public string CommissionType { get; set; }
 
         [Required(ErrorMessage = "Agent ID is required.")]
-        [ForeignKey("Agent")]
         public Guid AgentId { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "Amount cannot be negative.")]
@@ -23,7 +22,6 @@ namespace Insurance_final_project.Dto
         public DateTime Date { get; set; }
 
         [Required(ErrorMessage = "Policy Account ID is required.")]
-        [ForeignKey("PolicyAccount")]
         public Guid PolicyAccountId { get; set; }
     }
 }

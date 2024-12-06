@@ -17,7 +17,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddDocument([FromBody] DocumentDto document)
         {
 
@@ -48,7 +48,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPut("change-status")]
+        [HttpPut]
         public async Task<IActionResult> ChangeApproveStatus([FromBody] DocumentDto document)
         {
 
@@ -78,7 +78,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<IActionResult> GetDocuments()
         {
             var documents = await _documentService.GetDocument();

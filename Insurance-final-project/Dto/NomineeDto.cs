@@ -16,7 +16,6 @@ namespace Insurance_final_project.Dto
         public string NomineeRelation { get; set; }
 
         [Required(ErrorMessage = "Customer ID is required.")]
-        [ForeignKey("Customer")]
         public Guid CustomerId { get; set; }
     }
 }

@@ -44,6 +44,7 @@ namespace Insurance_final_project
 
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
+            builder.Services.AddTransient<IEmailService,EmailService>();
             builder.Services.AddTransient<IAgentService, AgentService>();
             builder.Services.AddTransient<ICustomerService, CustomerService>();
             builder.Services.AddTransient<IAdminService, AdminService>();

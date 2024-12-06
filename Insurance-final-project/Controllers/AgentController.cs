@@ -44,7 +44,7 @@ namespace Insurance_final_project.Controllers
         }
 
         // Add Agent
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddAgent([FromBody] AgentInputDto newAgent)
         {
             if (!ModelState.IsValid)
@@ -66,7 +66,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<IActionResult> GetAllAgents()
         {
             var agents = await _agentService.GetAllAgents();

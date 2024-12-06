@@ -5,10 +5,10 @@ namespace Insurance_final_project.Services
 {
     public interface IAgentService
     {
-        public AgentInputDto GetAgentById(Guid agentId);
+        public AgentResponseDto GetAgentById(Guid agentId);
 
         public Task<UserDto> AddAgent(AgentInputDto agent);
-        public Task<List<AgentInputDto>> GetAllAgents();
+        public Task<List<AgentResponseDto>> GetAllAgents();
         public double ViewTotalCommission(Guid agentId);
         public Task<Guid> UpdateAgent(AgentInputDto agent);
         

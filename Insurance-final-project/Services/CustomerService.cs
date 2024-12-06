@@ -46,7 +46,7 @@ namespace Insurance_final_project.Services
             {
                 throw new CustomerNotFoundException("Customer not found!");
             }
-
+            customer.UserId = existingCustomer.UserId;  
             _customerRepository.Update(customer);
              return true;
         }

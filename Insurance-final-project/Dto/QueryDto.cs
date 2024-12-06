@@ -17,7 +17,6 @@ namespace Insurance_final_project.Dto
         public string Response { get; set; }
 
         [Required(ErrorMessage = "Customer ID is required.")]
-        [ForeignKey("Customer")]
         public Guid CustomerId { get; set; }
     }
 }

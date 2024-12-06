@@ -31,7 +31,7 @@ namespace Insurance_final_project.Controllers
         }
 
         // Get All Policy Accounts
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<IActionResult> GetAllPolicyAccounts()
         {
             var policyAccounts = await _policyAccountService.GetAllPolicyAccounts();
@@ -44,8 +44,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        // Create Policy Account
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<IActionResult> CreatePolicyAccount([FromBody] PolicyAccountDto policyAccountDto)
         {
             // Validate model state
