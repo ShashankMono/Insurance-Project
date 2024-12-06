@@ -22,6 +22,7 @@ namespace Insurance_final_project.Services
         }
         public async Task<Guid> AddDocument(PolicyAccountDocumentDto document)
         {
+            check(document);
             return _documentRepo.Add(_Mapper.Map<PolicyAccountDocument>(document)).DocumentId;
         }
 
@@ -35,15 +36,26 @@ namespace Insurance_final_project.Services
             _documentRepo.Delete(document);
             return true;
         }
-
+        public void check(PolicyAccountDocumentDto document)
+        {
+            if(_PolicyAccountRepository.Get(document.PolicyAccountId) == null)
+            {
+                throw new InvalidGuidException("Account not found!");
+            }
+        }
         public async Task<List<PolicyAccountDocumentDto>> GetDocuments(Guid policyAccountId)
         {
+            if(_PolicyAccountRepository.Get(policyAccountId) == null)
+            {
+                throw new InvalidGuidException("Invalid PolicyAccount");
+            }
 
             return _Mapper.Map<List<PolicyAccountDocumentDto>>(_documentRepo.GetAll().AsNoTracking().Where(d=>d.PolicyAccountId == policyAccountId).ToList());
         }
 
         public async Task<Guid> UpdateDocument(UpdateDocumentDto updateDoc)
         {
+            check(updateDoc);
             var document = _documentRepo.GetAll().AsNoTracking().FirstOrDefault(d => d.DocumentId == updateDoc.DocumentId);
             if (document == null)
             {

@@ -11,10 +11,12 @@ namespace Insurance_final_project.Services
     {
         private readonly IRepository<Query> _QueryRepo;
         private readonly IMapper _Mapper;
-        public QueryService(IRepository<Query> repo, IMapper mapper)
+        private readonly IRepository<Customer> _customerRepo;
+        public QueryService(IRepository<Query> repo, IMapper mapper, IRepository<Customer> customerRepo)
         {
             _QueryRepo = repo;
             _Mapper = mapper;
+            _customerRepo = customerRepo;
         }
 
         public async Task<List<QueryDto>> GetQueryByCustomerId(Guid customerId)
@@ -33,6 +35,10 @@ namespace Insurance_final_project.Services
 
         public async Task<Guid> SubmitQuery(QueryDto queryDto)
         {
+            if(_customerRepo.Get(queryDto.CustomerId) == null)
+            {
+                throw new InvalidGuidException("Customer not found!");
+            }
             var query = _Mapper.Map<Query>(queryDto);
             _QueryRepo.Add(query);
             return query.QueryId;

@@ -18,10 +18,20 @@ namespace Insurance_final_project.Services
         }
         public async Task<Guid> AddState(StateDto state)
         {
+            check(state);
             return _StateRepo.Add(_Mapper.Map<StateDto, State>(state)).StateId;
+        }
+
+        public void check(StateDto state)
+        {
+            if (_StateRepo.GetAll().FirstOrDefault(p => p.StateName.ToLower() == state.StateName.ToLower()) != null)
+            {
+                throw new DataAlreadyPresnetException("Type of policy already exist!");
+            }
         }
         public async Task<Guid> UpdateState(StateDto state)
         {
+            check(state);
             if (_StateRepo.GetAll().AsNoTracking().FirstOrDefault(s=>s.StateId == state.StateId) == null) {
                 throw new InvalidGuidException("State not found!");
             }

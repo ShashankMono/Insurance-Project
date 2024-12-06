@@ -18,7 +18,15 @@ namespace Insurance_final_project.Services
         }
         public async Task<Guid> AddCity(CityDto city)
         {
+            checkCityname(city);
             return _CityRepo.Add(_Mapper.Map<CityDto, City>(city)).CityId;
+        }
+        public void checkCityname(CityDto city)
+        {
+            if(_CityRepo.GetAll().AsNoTracking().Where(c=>c.StateId == city.StateId).FirstOrDefault(c=>c.CityName.ToLower() == city.CityName.ToLower()) != null)
+            {
+                throw new DataAlreadyPresnetException("City already present in that state!");
+            }
         }
         public async Task<Guid> UpdateCity(CityDto city)
         {
@@ -26,6 +34,7 @@ namespace Insurance_final_project.Services
             {
                 throw new CityNotFoundException("City not found!");
             }
+            checkCityname(city);
             return _CityRepo.Update(_Mapper.Map<CityDto, City>(city)).CityId;
         }
         public async Task<List<CityDto>> GetCities()

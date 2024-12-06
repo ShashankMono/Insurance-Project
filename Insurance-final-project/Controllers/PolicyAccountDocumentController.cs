@@ -9,9 +9,9 @@ namespace Insurance_final_project.Controllers
     [ApiController]
     public class PolicyAccountDocumentController : ControllerBase
     {
-        private readonly PolicyAccountDocumentService _service;
+        private readonly IPolicyAccountDocumentService _service;
 
-        public PolicyAccountDocumentController(PolicyAccountDocumentService service)
+        public PolicyAccountDocumentController(IPolicyAccountDocumentService service)
         {
             _service = service;
         }

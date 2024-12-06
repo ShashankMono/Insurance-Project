@@ -23,11 +23,13 @@ namespace Insurance_final_project.Services
         private readonly IRepository<Role> _roleRepo;
         public UserService(IRepository<User> userRepo,
             IMapper mapper
-            ,IConfiguration configure)
+            ,IConfiguration configure
+            , IRepository<Role> roleRepo)
         {
             _userRepo = userRepo;
             _mapper = mapper;
             _config = configure;
+            _roleRepo = roleRepo;
         }
         public async Task<Guid> AddUser(UserDto user)
         {

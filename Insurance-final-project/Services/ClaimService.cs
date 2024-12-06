@@ -36,6 +36,7 @@ namespace Insurance_final_project.Services
         public async Task<Guid> AddClaimPolicy(Guid policyAccountId, ClaimDto claimDto)
         {
             var policyAccount = _policyAccountRepository.Get(policyAccountId);
+           
             if (policyAccount == null || policyAccount.EndDate > DateTime.UtcNow)
                 throw new InvalidClaimRequestException("Invalid claim request!");
 

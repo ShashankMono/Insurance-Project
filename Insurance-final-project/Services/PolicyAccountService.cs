@@ -17,12 +17,14 @@ namespace Insurance_final_project.Services
         private readonly IMapper _mapper;
         private readonly IRepository<Agent> _agentRepo;
         private readonly IRepository<Policy> _policyRepo;
+        private readonly IRepository<Customer> _customerRepo;
         public PolicyAccountService(IRepository<PolicyAccount> repo
             , IMapper mapper
             , ICommissionService commissionService
             , IPolicyInstallmentService PolicyInstallmentService
             , IRepository<Agent> agent
-            , IRepository<Policy> policyRepo)
+            , IRepository<Policy> policyRepo
+            , IRepository<Customer> customerRepo)
         {
             _PolicyAccountRepo = repo;
             _Mapper = mapper;
@@ -30,6 +32,7 @@ namespace Insurance_final_project.Services
             _commissionService = commissionService;
             _agentRepo = agent;
             _policyRepo = policyRepo;
+            _customerRepo = customerRepo;
         }
 
         public async Task<PolicyAccountDto> GetPolicyAccountById(Guid policyAccountId)
@@ -48,10 +51,19 @@ namespace Insurance_final_project.Services
         public async Task<Guid> CreatePolicyAccount(PolicyAccountDto policyAccountDto)
         {
             var policyAccount = _Mapper.Map<PolicyAccount>(policyAccountDto);
+
+            if(_customerRepo.Get(policyAccount.CustomerId) == null)
+            {
+                throw new InvalidGuidException("Customer not found!");
+            }
             var policy = _policyRepo.Get(policyAccountDto.PolicyId);
 
             if (policy == null || !policy.IsActive) {
                 throw new PolicyNotFoundException("Policy not found!");
+            }
+            if (policyAccount.AgentId != null && _agentRepo.Get((Guid)policyAccount.AgentId) == null)
+            {
+                throw new InvalidGuidException("Agent not found!");
             }
             policyAccount.StartDate = DateTime.UtcNow;
             policyAccount.EndDate = DateTime.UtcNow.AddYears(policyAccountDto.PolicyTerm);//years

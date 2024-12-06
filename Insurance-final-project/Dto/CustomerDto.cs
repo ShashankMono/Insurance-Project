@@ -29,7 +29,7 @@
 
         [Required(ErrorMessage = "Date of Birth is required.")]
         [DataType(DataType.Date, ErrorMessage = "Invalid date format.")]
-        public DateTime DateOfBirthDay { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
         [Required(ErrorMessage = "State ID is required.")]
         public Guid StateId { get; set; }
