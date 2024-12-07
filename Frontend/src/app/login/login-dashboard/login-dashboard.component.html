@@ -4,13 +4,17 @@
       <form [formGroup]="loginForm" (ngSubmit)="logIn()">
         
         <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
+          <label for="username" class="form-label">Username<span class="text-danger">*</span></label>
           <input type="text" id="username" class="form-control" formControlName="username" placeholder="Enter Username">
         </div>
   
         <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
+          <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
           <input type="password" id="password" class="form-control" formControlName="password" placeholder="Enter Password">
+        </div>
+        <div class="mb-3 captcha-container">
+          <label class="form-label">Solve the CAPTCHA<span class="text-danger">*</span>: {{ captcha.question }}</label>
+          <input type="text" id="captcha" class="form-control" [(ngModel)]="captchaAnswer" placeholder="Enter CAPTCHA answer" required>
         </div>
   
         <div class="mb-3 text-end">

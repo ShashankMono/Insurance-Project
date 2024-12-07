@@ -39,7 +39,7 @@
         public Guid CityId { get; set; }
 
         [Required(ErrorMessage = "User ID is required.")]
-        public Guid? UserId { get; set; }
+        public Guid UserId { get; set; }
 
         [Required(ErrorMessage = "Approval status is required.")]
         [MaxLength(20, ErrorMessage = "Approval status cannot exceed 20 characters.")]

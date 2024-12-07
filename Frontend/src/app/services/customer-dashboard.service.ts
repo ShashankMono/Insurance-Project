@@ -8,7 +8,7 @@ import { Policy } from '../models/policy';
 })
 export class CustomerDashboardService {
   private url = 'https://localhost:7258/api';
-
+  
   constructor(private http: HttpClient) {}
 
   getPolicies(): Observable<any[]> {
@@ -93,5 +93,8 @@ export class CustomerDashboardService {
   // Withdraw Claim
   withdrawClaim(policyAccountId: string): Observable<any> {
     return this.http.delete(`${this.url}/Claim/${policyAccountId}`);
+  }
+  registerCustomer(customerData: any): Observable<any> {
+    return this.http.post<any>(`${this.url}/Customer`, customerData);
   }
 }

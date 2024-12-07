@@ -43,6 +43,7 @@ import { ViewProfileComponent } from './customer/view-profile/view-profile.compo
 import { ViewQueriesComponent } from './customer/view-queries/view-queries.component';
 import { ViewNomineesComponent } from './customer/view-nominees/view-nominees.component';
 import { PolicyOperationsComponent } from './customer/policy-operations/policy-operations.component';
+import { UserRegistrationComponent } from './landing-page/user-registration/user-registration.component';
 const routes: Routes = [
   { 
     path: '',
@@ -98,9 +99,13 @@ const routes: Routes = [
       role:'Employee'
     }
   },
+  {
+    path:'user-registration',
+    component:UserRegistrationComponent
+  },
   
   {
-    path: 'register-customer', 
+    path: 'customer-registration', 
     component: CustomerRegistrationComponent 
   },
   { 
