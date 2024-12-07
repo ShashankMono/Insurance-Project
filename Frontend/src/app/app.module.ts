@@ -57,6 +57,13 @@ import { AddNomineeComponent } from './customer/add-nominee/add-nominee.componen
 import { EditNomineeComponent } from './customer/edit-nominee/edit-nominee.component';
 import { DeleteNomineeComponent } from './customer/delete-nominee/delete-nominee.component';
 import { AddQueryComponent } from './customer/add-query/add-query.component';
+import { PayInstallmentComponent } from './customer/pay-installment/pay-installment.component';
+import { CancelPolicyComponent } from './customer/cancel-policy/cancel-policy.component';
+import { EditProfileComponent } from './customer/edit-profile/edit-profile.component';
+import { ViewProfileComponent } from './customer/view-profile/view-profile.component';
+import { ViewQueriesComponent } from './customer/view-queries/view-queries.component';
+import { ViewNomineesComponent } from './customer/view-nominees/view-nominees.component';
+import { PolicyOperationsComponent } from './customer/policy-operations/policy-operations.component';
 
 
 
@@ -108,7 +115,14 @@ import { AddQueryComponent } from './customer/add-query/add-query.component';
     AddNomineeComponent,
     EditNomineeComponent,
     DeleteNomineeComponent,
-    AddQueryComponent
+    AddQueryComponent,
+    PayInstallmentComponent,
+    CancelPolicyComponent,
+    EditProfileComponent,
+    ViewProfileComponent,
+    ViewQueriesComponent,
+    ViewNomineesComponent,
+    PolicyOperationsComponent
     
   ],
   imports: [

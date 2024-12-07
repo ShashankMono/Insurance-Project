@@ -1,86 +1,95 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-customer-dashboard',
   templateUrl: './customer-dashboard.component.html',
   styleUrls: ['./customer-dashboard.component.css']
 })
-export class CustomerDashboardComponent {
-  constructor(private customerService: CustomerDashboardService) {}
-
-  // Methods to interact with service
-  viewProfile(): void {
-    const customerId = 'CUSTOMER_ID';
-    this.customerService.getProfile(customerId).subscribe({
-      next: (profile) => console.log('Profile:', profile),
-      error: (err) => console.error(err),
-    });
-  }
-
-  editProfile(): void {
-    const updatedData = {
-      // Populate with updated profile data
-    };
-    this.customerService.updateProfile(updatedData).subscribe({
-      next: (res) => console.log('Profile Updated:', res),
-      error: (err) => console.error(err),
-    });
-  }
+export class CustomerDashboardComponent{
+  policyAccounts: any[] = [];
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+  customerDashboardService: any;
+  
+  constructor(private customerService: CustomerDashboardService, private router: Router) {}
 
   viewPolicies(): void {
-    const customerId = 'CUSTOMER_ID';
-    this.customerService.getPolicies(customerId).subscribe({
-      next: (policies) => console.log('Policies:', policies),
-      error: (err) => console.error(err),
-    });
+    this.router.navigate(['/view-policies']);
   }
 
   createPolicyAccount(): void {
-    const data = {
-      // Populate with required data for policy account creation
-    };
-    this.customerService.createPolicyAccount(data).subscribe({
-      next: (res) => console.log('Policy Account Created:', res),
-      error: (err) => console.error(err),
-    });
+    this.router.navigate(['/create-policy-account']);
   }
 
   cancelPolicy(): void {
-    const policyAccountId = 'POLICY_ACCOUNT_ID';
-    this.customerService.cancelPolicy(policyAccountId).subscribe({
-      next: (res) => console.log('Policy Cancelled:', res),
-      error: (err) => console.error(err),
-    });
+    this.router.navigate(['/cancel-policy']);
   }
 
   claimPolicy(): void {
-    const policyAccountId = 'POLICY_ACCOUNT_ID';
-    const claimData = {
-      // Populate with claim data
-    };
-    this.customerService.claimPolicy(policyAccountId, claimData).subscribe({
-      next: (res) => console.log('Policy Claimed:', res),
-      error: (err) => console.error(err),
-    });
+    this.router.navigate(['/claim-policy']);
   }
 
   payInstallment(): void {
-    const installmentId = 'INSTALLMENT_ID';
-    const customerId = 'CUSTOMER_ID';
-    this.customerService.payInstallment(installmentId, customerId).subscribe({
-      next: (res) => console.log('Installment Paid:', res),
-      error: (err) => console.error(err),
-    });
+    this.router.navigate(['/pay-installment']);
+  }
+
+  viewProfile(): void {
+    this.router.navigate(['/view-profile']);
+  }
+
+  editProfile(): void {
+    this.router.navigate(['/edit-profile']);
+  }
+
+  addNominee(): void {
+    this.router.navigate(['/add-nominee']);
+  }
+
+  viewNominee(): void {
+    this.router.navigate(['/view-nominee']);
+  }
+
+  deleteNominee(nomineeId: string): void {
+    this.customerService.deleteNominee(nomineeId).subscribe(
+      () => {
+        console.log('Nominee deleted successfully.');
+      },
+      (error) => {
+        console.error('Error deleting nominee:', error);
+      }
+    );
   }
 
   submitQuery(): void {
-    const queryData = {
-      // Populate with query data
-    };
-    this.customerService.submitQuery(queryData).subscribe({
-      next: (res) => console.log('Query Submitted:', res),
-      error: (err) => console.error(err),
-    });
+    this.router.navigate(['/submit-query']);
+  }
+
+  viewQueries(): void {
+    this.router.navigate(['/view-queries']);
+  }
+
+  
+  navigateToPolicyOperations(): void {
+    this.router.navigate(['/policy-operations']);
+  }
+
+  // displayPolicies(): void {
+  //   this.customerService.getPolicies().subscribe(
+  //     (response) => {
+  //       console.log('Policies retrieved successfully:', response);
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching policies:', error);
+  //     }
+  //   );
+  // }
+
+  getTransactionHistory(): void {
+    this.router.navigate(['/transaction-history']);
+  }
+
+  withdrawClaim(policyAccountId: string): void {
+    this.router.navigate(['/withdraw-claim', { policyAccountId }]);
   }
 }

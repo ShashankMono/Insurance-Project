@@ -26,17 +26,17 @@ export class CustomerRegistrationComponent  {
   }
 
   onSubmit(): void {
-    if (this.customerRegistrationForm.valid) {
-      this.customerService.registerCustomer(this.customerRegistrationForm.value).subscribe({
-        next: (response) => {
-          alert('Customer registered successfully!');
-          console.log(response);
-        },
-        error: (err) => {
-          console.error(err);
-          alert('Registration failed.');
-        },
-      });
-    }
+    // if (this.customerRegistrationForm.valid) {
+    //   this.customerService.registerCustomer(this.customerRegistrationForm.value).subscribe({
+    //     next: (response) => {
+    //       alert('Customer registered successfully!');
+    //       console.log(response);
+    //     },
+    //     error: (err) => {
+    //       console.error(err);
+    //       alert('Registration failed.');
+    //     },
+    //   });
+    // }
   }
 }

@@ -27,6 +27,22 @@ import { ViewUsersComponent } from './admin/view-users/view-users.component';
 import { AddRoleComponent } from './admin/add-role/add-role.component';
 import { ViewRolesComponent } from './admin/view-roles/view-roles.component';
 import { AddUserComponent } from './admin/add-user/add-user.component';
+import { PolicyAccountComponent } from './customer/policy-account/policy-account.component';
+import { DisplayPolicyComponent } from './customer/display-policy/display-policy.component';
+import { WithdrawClaimComponent } from './customer/withdraw-claim/withdraw-claim.component';
+import { TransactionHistoryComponent } from './customer/transaction-history/transaction-history.component';
+import { AddQueryComponent } from './customer/add-query/add-query.component';
+import { EditNomineeComponent } from './customer/edit-nominee/edit-nominee.component';
+import { AddNomineeComponent } from './customer/add-nominee/add-nominee.component';
+import { ViewAllPoliciesComponent } from './customer/view-all-policies/view-all-policies.component';
+import { PayInstallmentComponent } from './customer/pay-installment/pay-installment.component';
+import { AddClaimComponent } from './customer/add-claim/add-claim.component';
+import { CancelPolicyComponent } from './customer/cancel-policy/cancel-policy.component';
+import { EditProfileComponent } from './customer/edit-profile/edit-profile.component';
+import { ViewProfileComponent } from './customer/view-profile/view-profile.component';
+import { ViewQueriesComponent } from './customer/view-queries/view-queries.component';
+import { ViewNomineesComponent } from './customer/view-nominees/view-nominees.component';
+import { PolicyOperationsComponent } from './customer/policy-operations/policy-operations.component';
 const routes: Routes = [
   { 
     path: '',
@@ -129,7 +145,7 @@ const routes: Routes = [
   },
   {
     path:'view-policies',
-    component:ViewPoliciesComponent
+    component:ViewAllPoliciesComponent
   },
   { 
     path: 'add-policy-types', 
@@ -150,6 +166,64 @@ const routes: Routes = [
   {
     path: 'view-roles',
     component: ViewRolesComponent
+  },
+  { 
+    path: 'view-policies', 
+    component: DisplayPolicyComponent
+  },
+  { 
+    path: 'create-policy-account/:policyId', 
+    component: PolicyAccountComponent 
+  },
+  {
+    path:'create-policy-account',
+    component:PolicyAccountComponent
+  },
+  { 
+    path: 'cancel-policy/:policyAccountId', 
+    component: CancelPolicyComponent
+  },
+  { 
+    path: 'claim-policy/:policyAccountId', 
+    component: AddClaimComponent
+  },
+  { 
+    path: 'pay-installment/:policyAccountId', 
+    component: PayInstallmentComponent
+  },
+  { 
+    path: 'view-profile', 
+    component: ViewProfileComponent
+  },
+  { path: 'edit-profile', 
+    component: EditProfileComponent
+  },
+  { path: 'add-nominee', 
+    component: AddNomineeComponent
+  },
+  { path: 'view-nominee', 
+    component: ViewNomineesComponent
+  },
+  {
+    path:'edit-nominee/:id',
+    component:EditNomineeComponent
+  },
+  { path: 'submit-query',
+    component: AddQueryComponent
+  },
+  { path: 'view-queries', 
+    component: ViewQueriesComponent
+  },
+  { path: 'transaction-history', 
+    component: TransactionHistoryComponent
+  },
+  { 
+    path: 'withdraw-claim', 
+    component: WithdrawClaimComponent 
+  },
+  {
+    path:'policy-operations',
+    component:PolicyOperationsComponent
   }
 ];
 

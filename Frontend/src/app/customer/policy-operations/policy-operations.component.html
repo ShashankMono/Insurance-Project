@@ -1,0 +1,59 @@
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Policy Operations</h1>
+
+    <!-- Success/Error Alerts -->
+    <div *ngIf="successMessage" class="alert alert-success text-center">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger text-center">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Policy Accounts Table -->
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Policy ID</th>
+          <th>Coverage Amount</th>
+          <th>Policy Term</th>
+          <th>Installment Type</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let policy of policyAccounts">
+          <td>{{ policy.policyId }}</td>
+          <td>{{ policy.coverageAmount }}</td>
+          <td>{{ policy.policyTerm }}</td>
+          <td>{{ policy.installmentType }}</td>
+          <td>{{ policy.status }}</td>
+          <td>
+            <button
+              class="btn btn-primary"
+              (click)="payInstallment(policy.id)"
+              [disabled]="policy.status === 'Closed'"
+            >
+              Pay Installment
+            </button>
+
+            <button
+              class="btn btn-danger"
+              (click)="cancelPolicy(policy.id)"
+              [disabled]="policy.status === 'Closed'"
+            >
+              Cancel Policy
+            </button>
+
+            <button
+              class="btn btn-warning"
+              (click)="claimPolicy(policy.id)"
+              [disabled]="policy.status === 'Closed'"
+            >
+              Claim Policy
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>

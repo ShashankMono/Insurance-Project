@@ -15,7 +15,7 @@
     <h1 class="text-center mb-5">Customer Dashboard</h1>
 
     <div class="dashboard-section">
-      <h2>Policy Management</h2>
+      <h2>Policy View and Buy</h2>
       <div class="d-flex justify-content-center flex-wrap">
         <button class="btn btn-primary dashboard-btn" (click)="viewPolicies()">
           <i class="bi bi-card-list"></i>
@@ -23,8 +23,16 @@
         </button>
         <button class="btn btn-success dashboard-btn" (click)="createPolicyAccount()">
           <i class="bi bi-plus-circle"></i>
-          <span>Create Policy Account</span>
+          <span>Buy Policy</span>
         </button>
+        
+
+      </div>
+    </div>
+    <div class="dashboard-section mt-5">
+      <h2>Policy Reports</h2>
+      <div class="d-flex justify-content-center flex-wrap">
+        
         <button class="btn btn-danger dashboard-btn" (click)="cancelPolicy()">
           <i class="bi bi-x-circle"></i>
           <span>Cancel Policy</span>
@@ -33,15 +41,15 @@
           <i class="bi bi-receipt"></i>
           <span>Claim Policy</span>
         </button>
+
       </div>
     </div>
-
     <div class="dashboard-section mt-5">
-      <h2>Payments</h2>
+      <h2>Payments and Operations</h2>
       <div class="d-flex justify-content-center">
-        <button class="btn btn-info dashboard-btn" (click)="payInstallment()">
+        <button class="btn btn-info dashboard-btn" (click)="navigateToPolicyOperations()">
           <i class="bi bi-cash"></i>
-          <span>Pay Installment</span>
+          <span>Policy Operations</span>
         </button>
       </div>
     </div>
@@ -59,8 +67,24 @@
         </button>
       </div>
     </div>
+    <div class="dashboard-section mt-5">
+      <h2>Nominee</h2>
+      <div class="d-flex justify-content-center flex-wrap">
+        <button class="btn btn-primary dashboard-btn" (click)="addNominee()">
+          <i class="bi bi-person-plus"></i>
+          <span>Add Nominee</span>
+        </button>
+        <button class="btn btn-secondary dashboard-btn" (click)="viewNominee()">
+          <i class="bi bi-people"></i>
+          <span>View Nominees</span>
+        </button>
+      </div>
+    </div>
+
+    
+
+    
   </div>
 
- 
 </body>
 </html>
