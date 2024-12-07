@@ -13,7 +13,13 @@ export class AppComponent {
     // Listen to route changes
     this.router.events.subscribe(() => {
       // List of routes where the header should NOT be displayed
-      const noHeaderRoutes = ['', '/login-dashboard', '/landing-page','/customer-registration'];
+      const noHeaderRoutes = ['', 
+        '/login-dashboard', 
+        '/landing-page',
+        '/customer-registration',
+        '/create-policy-account',
+        '/policy-operations'
+      ];
       this.showHeader = !noHeaderRoutes.includes(this.router.url);
     });
   }

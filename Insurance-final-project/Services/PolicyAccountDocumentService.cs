@@ -22,7 +22,7 @@ namespace Insurance_final_project.Services
         }
         public async Task<Guid> AddDocument(PolicyAccountDocumentDto document)
         {
-            check(document.DocumentId);
+            check(document.PolicyAccountId);
             return _documentRepo.Add(_Mapper.Map<PolicyAccountDocument>(document)).DocumentId;
         }
 
@@ -36,9 +36,9 @@ namespace Insurance_final_project.Services
             _documentRepo.Delete(document);
             return true;
         }
-        public void check(Guid document)
+        public void check(Guid policyAccountId)
         {
-            if(_PolicyAccountRepository.Get(document) == null)
+            if (_PolicyAccountRepository.Get(policyAccountId) == null)
             {
                 throw new InvalidGuidException("Account not found!");
             }
@@ -55,7 +55,6 @@ namespace Insurance_final_project.Services
 
         public async Task<Guid> UpdateDocument(UpdateDocumentDto updateDoc)
         {
-            check(updateDoc.DocumentId);
             var document = _documentRepo.GetAll().AsNoTracking().FirstOrDefault(d => d.DocumentId == updateDoc.DocumentId);
             if (document == null)
             {

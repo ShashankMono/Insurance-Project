@@ -44,6 +44,8 @@ import { ViewQueriesComponent } from './customer/view-queries/view-queries.compo
 import { ViewNomineesComponent } from './customer/view-nominees/view-nominees.component';
 import { PolicyOperationsComponent } from './customer/policy-operations/policy-operations.component';
 import { UserRegistrationComponent } from './landing-page/user-registration/user-registration.component';
+import { CustomerDocumentsComponent } from './customer/customer-documents/customer-documents.component';
+import { PolicyAccountDocumentsComponent } from './customer/policy-account-documents/policy-account-documents.component';
 const routes: Routes = [
   { 
     path: '',
@@ -229,6 +231,14 @@ const routes: Routes = [
   {
     path:'policy-operations',
     component:PolicyOperationsComponent
+  },
+  {
+    path:'customer-documents',
+    component:CustomerDocumentsComponent
+  },
+  {
+    path:'policy-account-documents/:policyAccountId',
+    component:PolicyAccountDocumentsComponent
   }
 ];
 

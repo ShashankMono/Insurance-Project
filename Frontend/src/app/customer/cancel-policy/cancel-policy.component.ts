@@ -21,7 +21,7 @@ export class CancelPolicyComponent implements OnInit {
   fetchPolicyAccounts(): void {
     this.customerDashboardService.getPolicyAccounts().subscribe(
       (response) => {
-        this.policyAccounts = response.data;  // Assuming the data contains the policy accounts
+        this.policyAccounts = response.data; 
       },
       (error) => {
         console.error('Error fetching policy accounts', error);

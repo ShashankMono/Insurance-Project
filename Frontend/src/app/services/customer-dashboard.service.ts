@@ -31,6 +31,15 @@ export class CustomerDashboardService {
   getPolicyAccounts(): Observable<any> {
     return this.http.get<any>(`${this.url}/PolicyAccount`);
   }
+  uploadFile(fileData: FormData) {
+    return this.http.post<any>(`${this.url}/FileUpload`, fileData);
+  }
+  
+  saveDocument(documentData: any) {
+    return this.http.post<any>(`${this.url}/PolicyAccountDocument`, documentData);
+  }
+  
+  
 
   cancelPolicyAccount(policyAccountId: string): Observable<any> {
     return this.http.put<any>(
@@ -82,6 +91,20 @@ export class CustomerDashboardService {
   
   deleteNominee(nomineeId: string): Observable<any> {
     return this.http.delete(`${this.url}/Nominee/${nomineeId}`);
+  }
+  addPolicyAccountDocument(document: any) {
+    return this.http.post<any>(`${this.url}/PolicyAccountDocument`, document);
+  }
+  getPolicyAccountDocuments(policyAccountId: string) {
+    return this.http.get<any>(`${this.url}/PolicyAccountDocument/${policyAccountId}`);
+  }
+  
+  updatePolicyAccountDocument(document: any) {
+    return this.http.put<any>(`${this.url}/PolicyAccountDocument`, document);
+  }
+  
+  deletePolicyAccountDocument(documentId: string) {
+    return this.http.delete<any>(`${this.url}/PolicyAccountDocument/${documentId}`);
   }
   
 
