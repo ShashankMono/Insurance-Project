@@ -57,6 +57,7 @@ namespace Insurance_final_project
             builder.Services.AddTransient<IEmployeeService, EmployeeService>();
             builder.Services.AddTransient<INomineeService, NomineeService>();
             builder.Services.AddTransient<IPolicyAccountService, PolicyAccountService>();
+            builder.Services.AddTransient<IPolicyAccountDocumentService, PolicyAccountDocumentService>();
             builder.Services.AddTransient<IPolicyCancelService, PolicyCancelService>();
             builder.Services.AddTransient<IPolicyInstallmentService, PolicyInstallmentService>();
             builder.Services.AddTransient<IPolicyService, PolicyService>();

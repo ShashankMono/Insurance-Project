@@ -14,14 +14,23 @@ namespace Insurance_final_project.Services
     public class CustomerService:ICustomerService
     {
         private readonly IRepository<Customer> _customerRepository;
+        private readonly IRepository<User> _userRepo;
+        private readonly IRepository<State> _stateRepo;
+        private readonly IRepository<City> _cityRepo;
         private readonly IMapper _mapper;
 
         public CustomerService(
             IRepository<Customer> customerRepository,
-            IMapper mapper)
+            IMapper mapper
+            , IRepository<City> city
+            , IRepository<State> stateRepo
+            , IRepository<User> userRepo)
         {
             _customerRepository = customerRepository;
             _mapper = mapper;
+            _cityRepo = city;
+            _stateRepo = stateRepo;
+            _userRepo = userRepo;
         }
 
         public CustomerDto GetCustomerById(Guid customerId)
@@ -41,6 +50,7 @@ namespace Insurance_final_project.Services
         public bool UpdateProfile(CustomerDto customerDto)
         {
             var customer = _mapper.Map<Customer>(customerDto);
+            check(customerDto);
             var existingCustomer = _customerRepository.GetAll().AsNoTracking().FirstOrDefault(c=>c.CustomerId ==customer.CustomerId);
             if (existingCustomer == null)
             {
@@ -50,10 +60,25 @@ namespace Insurance_final_project.Services
             _customerRepository.Update(customer);
              return true;
         }
-        
+        public void check(CustomerDto customerDto)
+        {
+            if (_userRepo.Get(customerDto.UserId) == null)
+            {
+                throw new InvalidGuidException("User not found!");
+            }
+            else if (_stateRepo.Get(customerDto.StateId) == null)
+            {
+                throw new InvalidGuidException("State not found!");
+            }
+            else if (_cityRepo.Get(customerDto.CityId) == null)
+            {
+                throw new InvalidGuidException("City not found!");
+            }
+        }
         public CustomerDto RegisterCustomer(CustomerDto customerDto)
         {
             var customer = _mapper.Map<Customer>(customerDto);
+            check(customerDto);
             customer = _customerRepository.Add(customer);
             return _mapper.Map<CustomerDto>(customer);
         }

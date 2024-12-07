@@ -24,20 +24,27 @@ namespace Insurance_final_project.Services
         public async Task<Guid> AddPolicyType(PolicyTypeDto policyType)
         {
             var newPolicyType = _Mapper.Map<PolicyTypeDto, PolicyType>(policyType);
-            if (_PolicyTypeRepo.GetAll().FirstOrDefault(p => p.Type.ToLower() == newPolicyType.Type.ToLower()) != null)
-            {
-                throw new PolicyTypeExistException("Type of policy already exist!");
-            }
+            check(policyType);
             PolicyType policyTypeAdded = _PolicyTypeRepo.Add(newPolicyType);
             return policyTypeAdded.Id;
         }
 
+        public void check(PolicyTypeDto newPolicyType)
+        {
+            if (_PolicyTypeRepo.GetAll().FirstOrDefault(p => p.Type.ToLower() == newPolicyType.Type.ToLower()) != null)
+            {
+                throw new PolicyTypeExistException("Type of policy already exist!");
+            }
+        }
+
         public async Task<Guid> UpdatePolicyType(PolicyTypeDto policyType)
         {
+
             if (_PolicyTypeRepo.GetAll().AsNoTracking().FirstOrDefault(pt=>pt.Id == policyType.Id) == null)
             {
                 throw new InvalidGuidException("Invalid Policy type!");
             }
+            check(policyType);
             return _PolicyTypeRepo.Update(_Mapper.Map<PolicyType>(policyType)).Id;
         }
 

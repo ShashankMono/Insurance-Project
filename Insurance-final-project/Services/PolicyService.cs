@@ -11,19 +11,31 @@ namespace Insurance_final_project.Services
     {
         private readonly IRepository<Policy> _PolicyRepo;
         private readonly IMapper _Mapper;
-        public PolicyService(IRepository<Policy> repo, IMapper mapper)
+        private readonly IRepository<PolicyType> _typeRepo;
+        public PolicyService(IRepository<Policy> repo, IMapper mapper,IRepository<PolicyType> type)
         {
             _PolicyRepo = repo;
             _Mapper = mapper;
+            _typeRepo = type;
         }
         public async Task<Guid> AddPolicy(PolicyDto policy)
         {
+            check(policy);
             var newPolicy = _Mapper.Map<PolicyDto, Policy>(policy);
             Policy policyAdded = _PolicyRepo.Add(newPolicy);
             return policyAdded.Id;
         }
+
+        public void check(PolicyDto policy)
+        {
+            if (_PolicyRepo.GetAll().AsNoTracking().FirstOrDefault(p => p.Name.ToLower() == policy.Name.ToLower()) != null)
+            {
+                throw new DataAlreadyPresnetException("Policy scheme already exist!");
+            }
+        }
         public async Task<Guid> UpdatePolicy(PolicyDto policy)
         {
+            check(policy);
             if (_PolicyRepo.GetAll().AsNoTracking().FirstOrDefault(p=>p.Id == policy.Id) == null)
             {
                 throw new InvalidGuidException("Invalid Policy!");
@@ -45,6 +57,10 @@ namespace Insurance_final_project.Services
 
         public async Task<List<PolicyDto>> GetPoliciesByTypeId(Guid PolicyTypeId)
         {
+            if (_typeRepo.Get(PolicyTypeId) == null)
+            {
+                throw new InvalidGuidException("Policy Plan not found!");
+            }
             return _Mapper.Map<List<PolicyDto>>(_PolicyRepo.GetAll().Where(p=>p.PolicyTypeId == PolicyTypeId).ToList());
         }
 

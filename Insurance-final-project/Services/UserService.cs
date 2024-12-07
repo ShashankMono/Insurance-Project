@@ -23,8 +23,8 @@ namespace Insurance_final_project.Services
         private readonly IRepository<Role> _roleRepo;
         public UserService(IRepository<User> userRepo,
             IMapper mapper
-            ,IConfiguration configure,
-            IRepository<Role> roleRepo)
+            ,IConfiguration configure
+            , IRepository<Role> roleRepo)
         {
             _userRepo = userRepo;
             _mapper = mapper;

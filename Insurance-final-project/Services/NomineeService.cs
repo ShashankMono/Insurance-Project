@@ -11,16 +11,24 @@ namespace Insurance_final_project.Services
     {
         private IRepository<Nominee> _nomineeRepo;
         private IMapper _mapper;
-        public NomineeService(IRepository<Nominee>repo,IMapper mapper)
+        public IRepository<Customer> _customerRepo;
+        public NomineeService(IRepository<Nominee>repo,IMapper mapper,IRepository<Customer> cutomerRepo)
         {
             _nomineeRepo = repo;
             _mapper = mapper;
+            _customerRepo = cutomerRepo;
         }
         public async Task<Guid> AddNominee(NomineeDto nominee)
         {
+            check(nominee);
             return _nomineeRepo.Add(_mapper.Map<Nominee>(nominee)).Id;
         }
 
+        public void check(NomineeDto nominee)
+        {
+            if (_customerRepo.Get(nominee.CustomerId) == null)
+                throw new InvalidGuidException("Customer not found!");
+        }
         public async Task<NomineeDto> GetNominee(Guid nomineeId)
         {
             var nominee = _nomineeRepo.Get(nomineeId);
@@ -42,7 +50,7 @@ namespace Insurance_final_project.Services
 
         public async Task<Guid> UpdateNominee(NomineeDto nominee)
         {
-             
+             check(nominee);
             if (_nomineeRepo.GetAll().AsNoTracking().FirstOrDefault(n=> n.Id ==nominee.Id) == null)
             {
                 throw new InvalidGuidException("Invalid Nominee!");

@@ -11,15 +11,21 @@ namespace Insurance_final_project.Services
     {
         private readonly IRepository<Document> _DocumentRepo;
         private readonly IMapper _Mapper;
-        public DocumentService(IRepository<Document> repo, IMapper mapper)
+        private readonly IRepository<Customer> _customerRepo;
+        public DocumentService(IRepository<Document> repo, IMapper mapper, IRepository<Customer> customerRepo)
         {
             _DocumentRepo = repo;
             _Mapper = mapper;
+            _customerRepo = customerRepo;
         }
 
         public async Task<Guid> AddDocument(DocumentDto document)
         {
             var existingDocument = _DocumentRepo.GetAll().AsNoTracking().FirstOrDefault(d => d.CustomerId == document.CustomerId && d.DocumentType == document.DocumentType);
+            if(_customerRepo.Get(document.CustomerId) == null)
+            {
+                throw new InvalidGuidException("Customer not found!");
+            }
             if(existingDocument != null)
             {
                 throw new DocumentExistException("Document already exist!");
@@ -32,6 +38,10 @@ namespace Insurance_final_project.Services
             if (_DocumentRepo.GetAll().AsNoTracking().FirstOrDefault(d=>d.DocumentId == document.DocumentId) == null)
             {
                 throw new InvalidGuidException("Invalid Document!");
+            }
+            if (_customerRepo.Get(document.CustomerId) == null)
+            {
+                throw new InvalidGuidException("Customer not found!");
             }
             return _DocumentRepo.Update(_Mapper.Map<DocumentDto, Document>(document)).DocumentId;
         }
