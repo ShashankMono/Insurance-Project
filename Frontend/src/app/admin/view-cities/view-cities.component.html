@@ -1,0 +1,14 @@
+<table *ngIf="cities.length > 0" class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>City Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let city of cities">
+        <td>{{ city.cityName }}</td>
+        
+      </tr>
+    </tbody>
+  </table>
+  

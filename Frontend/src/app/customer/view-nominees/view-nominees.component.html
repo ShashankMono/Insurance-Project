@@ -1,0 +1,36 @@
+<div class="container mt-5">
+    <h1 class="text-center">Nominees</h1>
+    <div *ngIf="nominees.length === 0" class="text-center mt-4">
+      <p>No nominees found.</p>
+      <button class="btn btn-primary" routerLink="/add-nominee">Add Nominee</button>
+    </div>
+  
+    <div *ngIf="nominees.length > 0" class="mt-4">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nominee Name</th>
+            <th>Relation</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let nominee of nominees; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ nominee.nomineeName }}</td>
+            <td>{{ nominee.nomineeRelation }}</td>
+            <td>
+              <button class="btn btn-warning btn-sm" (click)="editNominee(nominee.id)">
+                Edit
+              </button>
+              <button class="btn btn-danger btn-sm" (click)="deleteNominee(nominee.id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+  

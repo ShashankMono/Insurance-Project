@@ -15,42 +15,48 @@ export class LoginDashboardComponent {
     password: new FormControl('', Validators.required)
   });
   myToken:any="";
-  role:any="";
+  userData:any="";
+  role:any=""
   constructor(private loginService:LoginService,private router:Router){
     console.log('LoginDashboardComponent loaded');
   }
 
-  logIn(){
+  logIn() {
     this.loginService.signIn(this.loginForm.value).subscribe({
-      next:(response)=>{
-        this.myToken=response.headers.get('Jwt');
+      next: (response) => {
+        this.myToken = response.headers.get('Jwt');
         localStorage.setItem('token', this.myToken);
-
-        this.role=response.body;
-        localStorage.setItem('role',this.role.roleName)
-
-        if(this.role.roleName==='Admin'){
-          this.router.navigateByUrl('/admin-dashboard');
-        } 
-        else if(this.role.roleName==='Customer')
-        {
-          this.router.navigateByUrl('/customer-dashboard');
-        }
-        else if(this.role.roleName==='Employee'){
-          this.router.navigateByUrl('/employee-dashboard');
-        }
-        else if(this.role.roleName==='Agent'){
-          this.router.navigateByUrl('/agent-dashboard');
-        }
-        else{
-          this.router.navigateByUrl('/login-dashboard');
-          alert("incorrect username or password")
+  
+        this.userData = response.body;
+  
+        if (this.userData && this.userData.data) {
+          localStorage.setItem('role', this.userData.data.roleName);
+  
+          switch (this.userData.data.roleName) {
+            case 'Admin':
+              this.router.navigate(['/admin-dashboard']);
+              break;
+            case 'Customer':
+              this.router.navigate(['/customer-dashboard']);
+              break;
+            case 'Employee':
+              this.router.navigate(['/employee-dashboard']);
+              break;
+            case 'Agent':
+              this.router.navigate(['/agent-dashboard']);
+              break;
+            default:
+              alert('Login failed. Role not recognized.');
+              this.router.navigate(['/login-dashboard']);
+          }
+        } else {
+          alert('Login failed. No user data received.');
         }
       },
-      error:(err:HttpErrorResponse)=>{
-        console.error('Error signing in:',err);
+      error: (err: HttpErrorResponse) => {
+        console.error('Error signing in:', err);
         alert('Login failed. Please check your credentials and try again.');
-      }
+      },
     });
   }
 }

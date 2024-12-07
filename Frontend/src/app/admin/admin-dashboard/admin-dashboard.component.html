@@ -1,1 +1,118 @@
-<p>admin-dashboard works!</p>
+<div class="container-fluid vh-100 bg-light">
+  <app-admin-header></app-admin-header>
+
+  <div class="container py-5">
+    <div class="text-center mb-4">
+      <h1 class="display-4 text-primary">Admin Dashboard</h1>
+      
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="card shadow-sm border-primary">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-people-fill me-2"></i>User Management</h5>
+          </div>
+          <div class="card-body">
+            <!-- View All Users -->
+            <button class="btn btn-outline-primary w-100 mb-2" (click)="viewAllUsers()">
+              <i class="bi bi-eye me-2"></i>View All Users
+            </button>
+            <!-- Add User -->
+            <button class="btn btn-outline-primary w-100 mb-2" (click)="addUser()">
+              <i class="bi bi-person-plus me-2"></i>Add User
+            </button>
+            <!-- Add Role -->
+            <button class="btn btn-outline-primary w-100 mb-2" (click)="addRole()">
+              <i class="bi bi-person-badge-fill me-2"></i>Add Role
+            </button>
+            <!-- View All Roles -->
+            <button class="btn btn-outline-primary w-100" (click)="viewAllRoles()">
+              <i class="bi bi-list-task me-2"></i>View All Roles
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card shadow-sm border-success">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0"><i class="bi bi-person-workspace me-2"></i>Agent & Employee Management</h5>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-outline-success w-100 mb-2" (click)="addAgent()">
+              <i class="bi bi-person-plus me-2"></i>Add Agent
+            </button>
+            
+            <button class="btn btn-outline-success w-100 mb-2" (click)="addEmployee()">
+              <i class="bi bi-person-badge me-2"></i>Add Employee
+            </button>
+            <button class="btn btn-outline-success w-100 mb-2" (click)="viewAllAgents()">
+              <i class="bi bi-person-badge me-2"></i>View All Agents
+            </button>
+            
+            <button class="btn btn-outline-success w-100 mb-2" (click)="viewAllEmployee()">
+              <i class="bi bi-person-badge me-2"></i>View All Employees
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card shadow-sm border-info">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0"><i class="bi bi-geo-alt-fill me-2"></i>City & State Management</h5>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-outline-info w-100 mb-2" (click)="addCity()">
+              <i class="bi bi-building me-2"></i>Add City
+            </button>
+            
+            <button class="btn btn-outline-info w-100 mb-2" (click)="getCities()">
+              <i class="bi bi-map me-2"></i>View All Cities
+            </button>
+      
+            <button class="btn btn-outline-info w-100 mb-2" (click)="getStates()">
+              <i class="bi bi-globe me-2"></i>View All States
+            </button>
+      
+            <button class="btn btn-outline-info w-100" (click)="addState()">
+              <i class="bi bi-globe me-2"></i>Add State
+            </button>
+      
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card shadow-sm border-danger">
+          <div class="card-header bg-danger text-white">
+            <h5 class="mb-0"><i class="bi bi-shield-fill-check me-2"></i>Policy</h5>
+          </div>
+          <div class="card-body">
+            
+            <button class="btn btn-outline-danger w-100 mb-2" (click)="addPolicy()">
+              <i class="bi bi-file-earmark-plus me-2"></i>Add a Scheme
+            </button>
+            
+            
+            <button class="btn btn-outline-danger w-100 mb-2" (click)="viewPolicies()">
+              <i class="bi bi-file-earmark-text me-2"></i>View Schemes
+            </button>
+            
+           
+            <button class="btn btn-outline-danger w-100 mb-2" (click)="addPolicyType()">
+              <i class="bi bi-file-earmark-plus me-2"></i>Add a Plan
+            </button>
+            
+           
+            <button class="btn btn-outline-danger w-100" (click)="viewPolicyTypes()">
+              <i class="bi bi-file-earmark-text me-2"></i>View Plans
+            </button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>

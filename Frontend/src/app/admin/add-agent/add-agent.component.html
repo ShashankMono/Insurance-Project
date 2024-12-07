@@ -1,0 +1,41 @@
+<div class="container py-5">
+    <h2 class="text-center mb-4">Add Agent</h2>
+    <form [formGroup]="addAgentForm" (ngSubmit)="onSubmit()">
+      <div class="form-group mb-3">
+        <label for="firstName">First Name <span class="text-danger">*</span>:</label>
+        <input type="text" id="firstName" class="form-control" formControlName="firstName" />
+        <div *ngIf="addAgentForm.get('firstName')?.touched && addAgentForm.get('firstName')?.invalid" class="text-danger">
+          First name is required.
+        </div>
+      </div>
+      <div class="form-group mb-3">
+        <label for="lastName">Last Name <span class="text-danger">*</span>:</label>
+        <input type="text" id="lastName" class="form-control" formControlName="lastName" />
+        <div *ngIf="addAgentForm.get('lastName')?.touched && addAgentForm.get('lastName')?.invalid" class="text-danger">
+          Last name is required.
+        </div>
+      </div>
+      <div class="form-group mb-3">
+        <label for="qualification">Qualification <span class="text-danger">*</span>:</label>
+        <input type="text" id="qualification" class="form-control" formControlName="qualification" />
+        <div *ngIf="addAgentForm.get('qualification')?.touched && addAgentForm.get('qualification')?.invalid" class="text-danger">
+          Qualification is required.
+        </div>
+      </div>
+      <div class="form-group mb-3">
+        <label for="email">Email <span class="text-danger">*</span>:</label>
+        <input type="email" id="email" class="form-control" formControlName="email" />
+        <div *ngIf="addAgentForm.get('email')?.touched && addAgentForm.get('email')?.invalid" class="text-danger">
+          Valid email is required.
+        </div>
+      </div>
+      <div class="form-group mb-3">
+        <label for="mobileNo">Mobile Number <span class="text-danger">*</span>:</label>
+        <input type="text" id="mobileNo" class="form-control" formControlName="mobileNo" />
+        <div *ngIf="addAgentForm.get('mobileNo')?.touched && addAgentForm.get('mobileNo')?.invalid" class="text-danger">
+          Mobile number is required.
+        </div>
+      </div>
+      <button class="btn btn-primary w-100" type="submit" [disabled]="addAgentForm.invalid">Add Agent</button>
+    </form>
+</div>

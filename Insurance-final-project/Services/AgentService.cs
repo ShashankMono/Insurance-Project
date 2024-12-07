@@ -51,14 +51,14 @@ namespace Insurance_final_project.Services
         {
             Agent agent = _Mapper.Map<AgentInputDto, Agent>(newAgent);
             var RoleId = _RoleRepo.GetAll().FirstOrDefault(r => r.RoleName == "Agent").RoleId;
-            if(RoleId == null)
+            if (RoleId == null)
             {
                 throw new RoleNotFoundException("Role not found! Please add role \"Agent\"");
             }
             UserDto user = _userService.AddNewUser(RoleId);
             agent.UserId = user.UserId;
             Agent agentAdded = _agentRepository.Add(agent);
-            _emailService.SendUserDetailthroughEmail(agentAdded.Email,"Agent username and password",user);
+            _emailService.SendUserDetailthroughEmail(agentAdded.Email, "Agent username and password", user);
             return user;
         }
 
@@ -71,7 +71,7 @@ namespace Insurance_final_project.Services
         {
             var agent = _Mapper.Map<AgentResponseDto>(agentInput);
             var ExistingAgent = _agentRepository.GetAll().AsNoTracking().FirstOrDefault(a => a.AgentId == agent.AgentId);
-            if(ExistingAgent == null)
+            if (ExistingAgent == null)
             {
                 throw new InvalidGuidException("Agent no found!");
             }

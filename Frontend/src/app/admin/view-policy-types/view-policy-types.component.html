@@ -1,0 +1,19 @@
+<div class="container py-5">
+    <h2 class="text-center mb-4">View Policy Types</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let policyType of policyTypes">
+          
+          <td>{{ policyType.type }}</td>
+          <td>{{ policyType.isActive ? 'Active' : 'Inactive' }}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+  

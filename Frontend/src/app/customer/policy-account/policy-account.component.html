@@ -1,0 +1,101 @@
+<!-- policy-account.component.html -->
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Create Policy Account</h1>
+  
+    <!-- Alert for Success or Error Messages -->
+    <div *ngIf="successMessage" class="alert alert-success text-center">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger text-center">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Reactive Form -->
+    <form [formGroup]="policyAccountForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="policyId" class="form-label">Policy</label>
+        <select
+          id="policyId"
+          class="form-control"
+          formControlName="policyId"
+        >
+          <option value="">-- Select Policy --</option>
+          <option *ngFor="let policy of policies" [value]="policy.id">
+            {{ policy.name }}
+          </option>
+        </select>
+        <div *ngIf="policyAccountForm.get('policyId')?.invalid && policyAccountForm.get('policyId')?.touched" class="text-danger">
+          Policy is required.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="customerId" class="form-label">Customer ID</label>
+        <input
+          type="text"
+          id="customerId"
+          class="form-control"
+          formControlName="customerId"
+          placeholder="Enter Customer ID"
+        />
+        <div *ngIf="policyAccountForm.get('customerId')?.invalid && policyAccountForm.get('customerId')?.touched" class="text-danger">
+          Customer ID is required.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="coverageAmount" class="form-label">Coverage Amount</label>
+        <input
+          type="number"
+          id="coverageAmount"
+          class="form-control"
+          formControlName="coverageAmount"
+          placeholder="Enter Coverage Amount"
+        />
+        <div *ngIf="policyAccountForm.get('coverageAmount')?.invalid && policyAccountForm.get('coverageAmount')?.touched" class="text-danger">
+          Coverage Amount must be a positive value.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="policyTerm" class="form-label">Policy Term (in years)</label>
+        <input
+          type="number"
+          id="policyTerm"
+          class="form-control"
+          formControlName="policyTerm"
+          placeholder="Enter Policy Term"
+        />
+        <div *ngIf="policyAccountForm.get('policyTerm')?.invalid && policyAccountForm.get('policyTerm')?.touched" class="text-danger">
+          Policy Term must be a positive value.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="installmentType" class="form-label">Installment Type</label>
+        <select
+          id="installmentType"
+          class="form-control"
+          formControlName="installmentType"
+        >
+          <option value="">-- Select Installment Type --</option>
+          <option *ngFor="let type of installmentTypes" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+        <div *ngIf="policyAccountForm.get('installmentType')?.invalid && policyAccountForm.get('installmentType')?.touched" class="text-danger">
+          Installment Type is required.
+        </div>
+      </div>
+  
+      <button
+        type="submit"
+        class="btn btn-primary w-100 mt-3"
+        [disabled]="policyAccountForm.invalid"
+      >
+        Create Policy Account
+      </button>
+    </form>
+</div>
+  
