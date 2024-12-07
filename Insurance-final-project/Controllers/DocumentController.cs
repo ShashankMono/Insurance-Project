@@ -48,8 +48,8 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPut]
-        public async Task<IActionResult> ChangeApproveStatus([FromBody] DocumentDto document)
+        [HttpPut("approve")]
+        public async Task<IActionResult> ChangeApproveStatus([FromBody] VerificationDto document)
         {
 
             if (!ModelState.IsValid)
@@ -69,6 +69,36 @@ namespace Insurance_final_project.Controllers
             }
 
             var documentId = await _documentService.ChangeApproveStatus(document);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = documentId,
+                Message = "Document approval status updated successfully."
+            });
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateDoc([FromBody] DocumentDto document)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                return BadRequest(new
+                {
+                    Success = false,
+                    Data = (object)null,
+                    Message = "Validation failed.",
+                    Errors = errors
+                });
+            }
+
+            var documentId = await _documentService.UpdateDocument(document);
 
             return Ok(new
             {

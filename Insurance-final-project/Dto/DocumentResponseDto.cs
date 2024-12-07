@@ -1,11 +1,10 @@
-﻿using Insurance_final_project.Models;
+﻿using Insurance_final_project.Constant;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Insurance_final_project.Constant;
 
 namespace Insurance_final_project.Dto
 {
-    public class DocumentDto
+    public class DocumentResponseDto
     {
         public Guid DocumentId { get; set; }
 
@@ -21,10 +20,12 @@ namespace Insurance_final_project.Dto
         [Url(ErrorMessage = "Invalid URL format.")]
         public string DocumentFileURL { get; set; }
 
+        [Required(ErrorMessage = "Verification status is required.")]
+        [MaxLength(20, ErrorMessage = "Verification status cannot exceed 20 characters.")]
+        public string IsVerified { get; set; } = VerificationType.Pending.ToString();
+
         [Required(ErrorMessage = "Customer ID is required.")]
         [ForeignKey("Customer")]
         public Guid CustomerId { get; set; }
-
-
     }
 }
