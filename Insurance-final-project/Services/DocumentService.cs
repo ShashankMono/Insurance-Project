@@ -33,9 +33,24 @@ namespace Insurance_final_project.Services
             return _DocumentRepo.Add(_Mapper.Map<Document>(document)).DocumentId;
         }
 
-        public async Task<Guid> ChangeApproveStatus(DocumentDto document)
+        public async Task<Guid> ChangeApproveStatus(VerificationDto document)
         {
-            if (_DocumentRepo.GetAll().AsNoTracking().FirstOrDefault(d=>d.DocumentId == document.DocumentId) == null)
+            var Document = _DocumentRepo.GetAll().AsNoTracking().FirstOrDefault(d => d.DocumentId == document.Id);
+            if ( Document == null)
+            {
+                throw new InvalidGuidException("Invalid Document!");
+            }
+            if (_customerRepo.Get(document.CustomerId) == null)
+            {
+                throw new InvalidGuidException("Customer not found!");
+            }
+            Document.IsVerified = document.IsVerified;
+            return _DocumentRepo.Update(Document).DocumentId;
+        }
+
+        public async Task<Guid> UpdateDocument(DocumentDto document)
+        {
+            if (_DocumentRepo.GetAll().AsNoTracking().FirstOrDefault(d => d.DocumentId == document.DocumentId) == null)
             {
                 throw new InvalidGuidException("Invalid Document!");
             }
@@ -46,9 +61,9 @@ namespace Insurance_final_project.Services
             return _DocumentRepo.Update(_Mapper.Map<DocumentDto, Document>(document)).DocumentId;
         }
 
-        public async Task<List<DocumentDto>> GetDocument()
+        public async Task<List<DocumentResponseDto>> GetDocument()
         {
-            return _Mapper.Map<List<DocumentDto>>(_DocumentRepo.GetAll().ToList());
+            return _Mapper.Map<List<DocumentResponseDto>>(_DocumentRepo.GetAll().ToList());
         }
     }
 }

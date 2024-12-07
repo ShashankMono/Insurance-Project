@@ -99,7 +99,6 @@ coverage/
 *.js
 *.js.map
 
-
 # Test outputs
 test-reports/
 karma-coverage/
