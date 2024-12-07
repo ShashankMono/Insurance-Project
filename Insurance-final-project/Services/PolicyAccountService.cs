@@ -51,11 +51,19 @@ namespace Insurance_final_project.Services
         public async Task<Guid> CreatePolicyAccount(PolicyAccountDto policyAccountDto)
         {
             var policyAccount = _Mapper.Map<PolicyAccount>(policyAccountDto);
-
-            if(_customerRepo.Get(policyAccount.CustomerId) == null)
+            var customer = _customerRepo.Get(policyAccount.CustomerId);
+            if (customer == null)
             {
                 throw new InvalidGuidException("Customer not found!");
             }
+            //else if(customer.IsApproved == ApprovalType.Pending.ToString())
+            //{
+            //    throw new CustomerNotApprovedException("Customer approval pending!");
+            //}
+            //else if (customer.IsApproved == ApprovalType.Rejected.ToString())
+            //{
+            //    throw new CustomerNotApprovedException("Customer approval Rejected!");
+            //}
             var policy = _policyRepo.Get(policyAccountDto.PolicyId);
 
             if (policy == null || !policy.IsActive) {

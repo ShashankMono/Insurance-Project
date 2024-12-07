@@ -1,4 +1,5 @@
 
+using CloudinaryDotNet;
 using Insurance_final_project.Data;
 using Insurance_final_project.Exceptions;
 using Insurance_final_project.Mapper;
@@ -60,6 +61,7 @@ namespace Insurance_final_project
             builder.Services.AddTransient<IPolicyAccountDocumentService, PolicyAccountDocumentService>();
             builder.Services.AddTransient<IPolicyCancelService, PolicyCancelService>();
             builder.Services.AddTransient<IPolicyInstallmentService, PolicyInstallmentService>();
+            builder.Services.AddTransient<IFileUploadService, FileUploadService>();
             builder.Services.AddTransient<IPolicyService, PolicyService>();
             builder.Services.AddTransient<IPolicyTypeService, PolicyTypeService>();
             builder.Services.AddTransient<IQueryService, QueryService>();
