@@ -12,15 +12,25 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginDashboardComponent {
   loginForm = new FormGroup({
     username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
+    password: new FormControl('', Validators.required),
+    
   });
+  captcha: { question: string; answer: number } = { question: '', answer: 0 };
+  captchaAnswer: string = '';
   myToken:any="";
   userData:any="";
   role:any=""
   constructor(private loginService:LoginService,private router:Router){
     console.log('LoginDashboardComponent loaded');
   }
-
+  ngOnInit(): void {
+    this.generateCaptcha();
+  }
+  generateCaptcha(): void {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    this.captcha = { question: `${num1} + ${num2}`, answer: num1 + num2 };
+  }
   logIn() {
     this.loginService.signIn(this.loginForm.value).subscribe({
       next: (response) => {

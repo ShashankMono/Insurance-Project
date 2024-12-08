@@ -26,6 +26,10 @@ export class CustomerDashboardComponent{
     this.router.navigate(['/cancel-policy']);
   }
 
+  document(){
+    this.router.navigate(['/customer-documents'])
+  }
+
   claimPolicy(): void {
     this.router.navigate(['/claim-policy']);
   }

@@ -1,0 +1,53 @@
+<!-- <div class="container mt-5">
+    <h2 class="text-center">Customer Documents</h2>
+  
+    <div class="text-end mb-3">
+      <button class="btn btn-primary" (click)="openAddDocumentPopup()">Add New Document</button>
+    </div>
+    <div class="row">
+      <div class="col-md-4" *ngFor="let document of documents">
+        <div class="card">
+          <img [src]="document.documentFileURL" class="card-img-top" alt="Document Image">
+          <div class="card-body">
+            <h5 class="card-title">{{ document.documentName }}</h5>
+            <p><strong>Type:</strong> {{ document.documentType }}</p>
+            <p><strong>Status:</strong> {{ document.isVerified }}</p>
+            <div class="d-flex justify-content-between">
+              <button class="btn btn-success btn-sm" (click)="openUpdateDocumentPopup(document)">Update</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteDocument(document.documentId)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="showPopup" class="popup">
+      <div class="popup-content">
+        <h4 *ngIf="!isUpdateMode">Add New Document</h4>
+        <h4 *ngIf="isUpdateMode">Update Document</h4>
+        <form [formGroup]="documentForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label class="form-label">Document Name</label>
+            <input type="text" class="form-control" formControlName="documentName" placeholder="Enter Document Name">
+          </div>
+          <div *ngIf="!isUpdateMode" class="mb-3">
+            <label class="form-label">Document URL</label>
+            <input type="text" class="form-control" formControlName="documentFileURL" placeholder="Enter Document URL">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Document Type</label>
+            <input type="text" class="form-control" formControlName="documentType" placeholder="Enter Document Type">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Verification Status</label>
+            <input type="text" class="form-control" formControlName="isVerified" placeholder="Verification Status">
+          </div>
+          <button type="submit" class="btn btn-primary w-100">
+            {{ isUpdateMode ? 'Update Document' : 'Add Document' }}
+          </button>
+        </form>
+        <button class="btn btn-secondary w-100 mt-2" (click)="closePopup()">Cancel</button>
+      </div>
+    </div>
+</div>
+   -->
