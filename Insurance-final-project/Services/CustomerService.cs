@@ -61,6 +61,18 @@ namespace Insurance_final_project.Services
             return _mapper.Map<CustomerProfileDto>(customer);
         }
 
+        public bool ApproveCustomer(ApprovalDto approval)
+        {
+            var existingCustomer = _customerRepository.GetAll().AsNoTracking().FirstOrDefault(c => c.CustomerId == approval.Id);
+            if (existingCustomer == null)
+            {
+                throw new CustomerNotFoundException("Customer not found!");
+            }
+            existingCustomer.IsApproved = approval.IsApproved;
+            _customerRepository.Update(existingCustomer);
+            return true;
+        }
+
 
         public bool UpdateProfile(CustomerDto customerDto)
         {

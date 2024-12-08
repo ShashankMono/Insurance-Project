@@ -66,9 +66,9 @@ namespace Insurance_final_project.Services
             else if (customer.IsApproved == ApprovalType.Rejected.ToString())
             {
                 throw new CustomerNotApprovedException("Customer approval Rejected!");
-            }else if ( age > policy.MinimumAgeCriteria && age<policy.MaximumAgeCriteria)
+            }else if ( age < policy.MinimumAgeCriteria && age>policy.MaximumAgeCriteria)
             {
-                throw new InvalidAgeException("Customer of this age not eligible");
+                throw new InvalidAgeException($"Customer of this age not eligible{age}");
             }
 
             if (policy == null || !policy.IsActive) {

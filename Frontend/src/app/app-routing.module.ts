@@ -46,6 +46,7 @@ import { PolicyOperationsComponent } from './customer/policy-operations/policy-o
 import { UserRegistrationComponent } from './landing-page/user-registration/user-registration.component';
 import { CustomerDocumentsComponent } from './customer/customer-documents/customer-documents.component';
 import { PolicyAccountDocumentsComponent } from './customer/policy-account-documents/policy-account-documents.component';
+
 const routes: Routes = [
   { 
     path: '',

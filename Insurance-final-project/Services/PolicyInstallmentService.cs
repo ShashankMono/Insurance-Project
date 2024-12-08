@@ -19,12 +19,14 @@ namespace Insurance_final_project.Services
         public PolicyInstallmentService(IRepository<PolicyInstallment> installmentRepository
             , IRepository<Transaction> transactionRepository
             , IMapper mappere
-            , ICommissionService commissionService)
+            , ICommissionService commissionService
+            ,IRepository<PolicyAccount> policyAccount)
         {
             _installmentRepository = installmentRepository;
             _transactionRepository = transactionRepository;
             _Mapper = mappere;
             _CommissionService = commissionService;
+            _policyAccountRepo = policyAccount;
         }
         public void AddInstallments(PolicyInstallmentDto installmentData)
         {
@@ -131,6 +133,10 @@ namespace Insurance_final_project.Services
 
         public async Task<List<PolicyInstallmentDto>> GetInstallmentsByPolicyAccountId(Guid PolicyAccountId)
         {
+            if(_policyAccountRepo.Get(PolicyAccountId) == null)
+            {
+                throw new InvalidGuidException("Account not found!");
+            }
             return _Mapper.Map<List<PolicyInstallmentDto>>(_installmentRepository.GetAll().Where(i=>i.PolicyAccountId == PolicyAccountId).ToList());
         }
 

@@ -41,8 +41,6 @@ namespace Insurance_final_project.Models
         [Required(ErrorMessage = "End Date is required.")]
         public DateTime EndDate { get; set; } 
 
-
-
         [Required(ErrorMessage = "Installment Type is required.")]
         [MaxLength(50, ErrorMessage = "Installment Type cannot exceed 50 characters.")]
         public string InstallmentType { get; set; } 

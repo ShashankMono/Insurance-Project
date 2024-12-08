@@ -1,4 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
 
 @Component({
@@ -9,11 +11,30 @@ import { CustomerDashboardService } from 'src/app/services/customer-dashboard.se
 export class PayInstallmentComponent implements OnInit {
   policyAccounts: any[] = [];
   errorMessage: string | null = null;
+  policyAccountId:any=""
+  installments:any=""
 
-  constructor(private dashboardService: CustomerDashboardService) {}
+  constructor(private dashboardService: CustomerDashboardService, private router:ActivatedRoute) {
+    this.policyAccountId=router.snapshot.paramMap.get('id');
+  }
 
   ngOnInit(): void {
     this.fetchPolicyAccounts();
+  }
+
+  getInstallments(){
+    if(this.policyAccountId == null){
+      alert("Account not found!");
+    }
+    this.dashboardService.getInstallment(this.policyAccountId).subscribe({
+      next:(response)=>{
+        console.log(response);
+        this.installments=response.data
+      },
+      error:(err:HttpErrorResponse)=>{
+        alert(err.error);
+      }
+    })
   }
 
   fetchPolicyAccounts(): void {
@@ -26,6 +47,8 @@ export class PayInstallmentComponent implements OnInit {
       }
     );
   }
+
+
 
   cancelPolicy(policyAccountId: string): void {
     this.dashboardService.cancelPolicyAccount(policyAccountId).subscribe(
@@ -54,7 +77,7 @@ export class PayInstallmentComponent implements OnInit {
     );
   }
 
-  payInstallment(installmentId: string): void {
+  payInstallment(installmentId: any): void {
     const customerId = localStorage.getItem('customerId');
     if (!customerId) {
       alert('Customer ID not found');

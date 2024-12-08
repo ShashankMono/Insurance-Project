@@ -71,6 +71,7 @@ import { PolicyAccountDocumentsComponent } from './customer/policy-account-docum
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -130,7 +131,7 @@ import { PolicyAccountDocumentsComponent } from './customer/policy-account-docum
     UserRegistrationComponent,
     DocumentComponent,
     CustomerDocumentsComponent,
-    PolicyAccountDocumentsComponent
+    PolicyAccountDocumentsComponent,
     
   ],
   imports: [
