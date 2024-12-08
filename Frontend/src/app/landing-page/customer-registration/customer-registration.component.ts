@@ -19,11 +19,13 @@ export class CustomerRegistrationComponent implements OnInit {
   states: any[] = [];
   cities: any[] = [];
   userId: string='';
+  MaxDate: any = "";
 
   constructor(
     private customerService: CustomerDashboardService,
     private stateService: StateService,
-    private cityService: CityService
+    private cityService: CityService,
+    private router : Router
   ) {
     this.customerForm = new FormGroup({
       firstName: new FormControl('', Validators.required),
@@ -42,6 +44,12 @@ export class CustomerRegistrationComponent implements OnInit {
     console.log(this.userId)
     this.loadStates();
     this.loadCities();
+    const today = new Date();
+    const MaxDate = new Date(
+      today.getFullYear() - 18,
+      today.getMonth(),
+      today.getDate())
+      this.MaxDate = MaxDate.toISOString().split('T')[0];    
   }
 
   loadStates() {
@@ -79,6 +87,7 @@ export class CustomerRegistrationComponent implements OnInit {
     this.customerService.registerCustomer(customerData).subscribe((response) => {
       if (response.success) {
         alert('Customer registered successfully!');
+        this.router.navigate(["/login-dashboard"])
       } else {
         alert(response.message);
       }

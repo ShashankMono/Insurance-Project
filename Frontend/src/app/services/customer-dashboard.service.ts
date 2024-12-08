@@ -62,6 +62,10 @@ export class CustomerDashboardService {
     );
   }
 
+  getInstallment(accountId:any):Observable<any>{
+    return this.http.get<any>(`${this.url}/PolicyInstallment/policyaccount/${accountId}`);
+  }
+
   // Profile
   getCustomerDetails(userId: string): Observable<any> {
     return this.http.get(`${this.url}/Customer/User/${userId}`);

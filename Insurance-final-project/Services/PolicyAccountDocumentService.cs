@@ -38,7 +38,7 @@ namespace Insurance_final_project.Services
         }
         public void check(Guid policyAccountId)
         {
-            if (_PolicyAccountRepository.Get(policyAccountId) == null)
+            if(_PolicyAccountRepository.Get(policyAccountId) == null)
             {
                 throw new InvalidGuidException("Account not found!");
             }

@@ -30,6 +30,19 @@ namespace Insurance_final_project.Controllers
             });
         }
 
+        [HttpGet("User/{UserId}")]
+        public IActionResult GetCustomerByUserId(Guid UserId)
+        {
+            var customer = _customerService.GetCustomerByUserId(UserId);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = customer,
+                Message = "Customer retrieved successfully."
+            });
+        }
+
 
         [HttpPut]
         public IActionResult UpdateProfile([FromBody] CustomerDto customerDto)
@@ -52,6 +65,36 @@ namespace Insurance_final_project.Controllers
             }
 
             _customerService.UpdateProfile(customerDto);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = (object)null,
+                Message = "Customer profile updated successfully."
+            });
+        }
+
+        [HttpPost("/approve")]
+        public IActionResult ApproveCustomer([FromBody] ApprovalDto approval)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                return BadRequest(new
+                {
+                    Success = false,
+                    Data = (object)null,
+                    Message = "Validation failed.",
+                    Errors = errors
+                });
+            }
+
+            _customerService.ApproveCustomer(approval);
 
             return Ok(new
             {

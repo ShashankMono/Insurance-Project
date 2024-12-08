@@ -39,11 +39,11 @@ namespace Insurance_final_project.Services
             }
 
             // Check file extension
-            var validExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+            var validExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp",".pdf" };
             var fileExtension = Path.GetExtension(fileDto.file.FileName).ToLower();
             if (Array.IndexOf(validExtensions, fileExtension) == -1)
             {
-                throw new InvalidImageTypeException("Invalid file format. Only .jpg, .jpeg, .png, .gif, .bmp files are allowed.");
+                throw new InvalidImageTypeException("Invalid file format. Only .jpg, .pdf, .jpeg, .png, .gif, .bmp files are allowed.");
             }
 
             var uploadResult = new ImageUploadResult();

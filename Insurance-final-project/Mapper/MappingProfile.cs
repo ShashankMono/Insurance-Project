@@ -82,6 +82,11 @@ namespace Insurance_final_project.Mapper
             CreateMap<UserDto,UserUpdateDto>().ReverseMap();
             CreateMap<PolicyAccountDocument, PolicyAccountDocumentDto>().ReverseMap();
             CreateMap<Document, DocumentResponseDto>().ReverseMap();
+            CreateMap<Customer, CustomerProfileDto>()
+                .ForMember(dest => dest.City, val => val.MapFrom(src => src.City.CityName))
+                .ForMember(dest=> dest.State,val=>val.MapFrom(src=>src.State.StateName));
+            CreateMap<PolicyAccount, PolicyAccountResponseDto>()
+                .ForMember(dest=>dest.PolicyName,val=>val.MapFrom(src=>src.Policy.Name));
         }
     }
 }
