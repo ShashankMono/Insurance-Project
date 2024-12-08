@@ -4,10 +4,10 @@ namespace Insurance_final_project.Services
 {
     public interface IPolicyAccountService
     {
-        public Task<PolicyAccountDto> GetPolicyAccountById(Guid policyAccountId);
-        public Task<List<PolicyAccountDto>> GetAllPolicyAccounts();
+        public Task<PolicyAccountResponseDto> GetPolicyAccountById(Guid policyAccountId);
+        public Task<List<PolicyAccountResponseDto>> GetAllPolicyAccounts();
         public Task<Guid> CreatePolicyAccount(PolicyAccountDto policyAccountDto);
-        public Task<List<PolicyAccountDto>> GetPolicyAccountsByAgent(Guid agentId);
-        public Task<List<PolicyAccountDto>> GetPoliciesByCustomer(Guid customerId);
+        public Task<List<PolicyAccountResponseDto>> GetPolicyAccountsByAgent(Guid agentId);
+        public Task<List<PolicyAccountResponseDto>> GetPoliciesByCustomer(Guid customerId);
     }
 }

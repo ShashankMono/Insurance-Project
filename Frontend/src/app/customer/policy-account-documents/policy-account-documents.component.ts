@@ -71,9 +71,10 @@ export class PolicyAccountDocumentsComponent implements OnInit{
           const documentData = {
             ...this.addDocumentForm.value,
             documentFileURL: uploadResponse.data.result.url,
-            policyAccountId:this.policyAccountId 
+            policyAccountId:this.policyAccountId ,
+            isVerified:"Pending"
           };
-          
+          console.log(documentData);
   
           this.customerDashboardService.saveDocument(documentData).subscribe(
             (saveResponse) => {

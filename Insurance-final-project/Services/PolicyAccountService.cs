@@ -35,76 +35,62 @@ namespace Insurance_final_project.Services
             _customerRepo = customerRepo;
         }
 
-        public async Task<PolicyAccountDto> GetPolicyAccountById(Guid policyAccountId)
+        public async Task<PolicyAccountResponseDto> GetPolicyAccountById(Guid policyAccountId)
         {
-            return _Mapper.Map<PolicyAccount, PolicyAccountDto>(_PolicyAccountRepo.GetAll()
+            return _Mapper.Map<PolicyAccount, PolicyAccountResponseDto>(_PolicyAccountRepo.GetAll()
                 .Include(p => p.Policy)
                 .FirstOrDefault(p => p.Id == policyAccountId)
                 );
         }
 
-        public async Task<List<PolicyAccountDto>> GetAllPolicyAccounts()
+        public async Task<List<PolicyAccountResponseDto>> GetAllPolicyAccounts()
         {
-            return _Mapper.Map<List<PolicyAccount>, List<PolicyAccountDto>>(_PolicyAccountRepo.GetAll().ToList());
+            return _Mapper.Map<List<PolicyAccount>, List<PolicyAccountResponseDto>>(_PolicyAccountRepo.GetAll().ToList());
         }
 
         public async Task<Guid> CreatePolicyAccount(PolicyAccountDto policyAccountDto)
         {
             var policyAccount = _Mapper.Map<PolicyAccount>(policyAccountDto);
             var customer = _customerRepo.Get(policyAccount.CustomerId);
+            var policy = _policyRepo.Get(policyAccountDto.PolicyId);
+            var age = DateTime.Today.Year - customer.DateOfBirth.Year;
+
             if (customer == null)
             {
                 throw new InvalidGuidException("Customer not found!");
             }
-            //else if(customer.IsApproved == ApprovalType.Pending.ToString())
-            //{
-            //    throw new CustomerNotApprovedException("Customer approval pending!");
-            //}
-            //else if (customer.IsApproved == ApprovalType.Rejected.ToString())
-            //{
-            //    throw new CustomerNotApprovedException("Customer approval Rejected!");
-            //}
-            var policy = _policyRepo.Get(policyAccountDto.PolicyId);
+            else if (customer.IsApproved == ApprovalType.Pending.ToString())
+            {
+                throw new CustomerNotApprovedException("Customer approval pending!");
+            }
+            else if (customer.IsApproved == ApprovalType.Rejected.ToString())
+            {
+                throw new CustomerNotApprovedException("Customer approval Rejected!");
+            }else if ( age > policy.MinimumAgeCriteria && age<policy.MaximumAgeCriteria)
+            {
+                throw new InvalidAgeException("Customer of this age not eligible");
+            }
 
             if (policy == null || !policy.IsActive) {
                 throw new PolicyNotFoundException("Policy not found!");
+            }else if (policy.MinimumInvestmentAmount<policyAccount.InvestmentAmount && policy.MaximumInvestmentAmount < policyAccount.InvestmentAmount)
+            {
+                throw new InvestmentAmountInvalidException("Invalid Investment Amount");
             }
             if (policyAccount.AgentId != null && _agentRepo.Get((Guid)policyAccount.AgentId) == null)
             {
                 throw new InvalidGuidException("Agent not found!");
             }
             policyAccount.StartDate = DateTime.UtcNow;
-            policyAccount.EndDate = DateTime.UtcNow.AddYears(policyAccountDto.PolicyTerm);//years
-
-
+            policyAccount.EndDate = DateTime.UtcNow.AddYears(policyAccountDto.PolicyTerm);
+            policyAccount.CoverageAmount = policyAccount.InvestmentAmount + (policyAccount.InvestmentAmount * (policy.ProfitPercentage * 0.01));
             _PolicyAccountRepo.Add(policyAccount);
-            //AddInstallments(policyId,startDate,years, choice, totalAmount)
-            //_PolicyInstallmentService.AddInstallments(
-            //    policyAccount.Id,
-            //    policyAccount.StartDate,
-            //    policyAccountDto.PolicyTerm,
-            //    policyAccountDto.InstallmentType,
-            //    policyAccountDto.CoverageAmount,
-            //    policyAccountDto.CustomerId
-            //    );
-
-            //if (policyAccount.AgentId != null)
-            //{
-            //    var commission = new CommissionDto()
-            //    {
-            //        PolicyAccountId = policyAccount.Id,
-            //        AgentId = (Guid)policyAccount.AgentId,
-            //        Date = DateTime.UtcNow,
-            //        CommissionType = CommissionType.Regisration.ToString()
-            //    };
-            //    _commissionService.AddCommission(commission, policyAccount.TotalAmountPaid);
-            //}
 
             return policyAccount.Id;
         }
 
 
-        public async Task<List<PolicyAccountDto>> GetPolicyAccountsByAgent(Guid agentId)
+        public async Task<List<PolicyAccountResponseDto>> GetPolicyAccountsByAgent(Guid agentId)
         {
             var agent = _agentRepo.Get(agentId);
             if (agent == null)
@@ -114,15 +100,15 @@ namespace Insurance_final_project.Services
                 .Where(pa => pa.AgentId == agentId)
                 .ToList();
 
-            return _mapper.Map<List<PolicyAccountDto>>(policyAccounts);
+            return _mapper.Map<List<PolicyAccountResponseDto>>(policyAccounts);
         }
 
-        public async Task<List<PolicyAccountDto>> GetPoliciesByCustomer(Guid customerId)
+        public async Task<List<PolicyAccountResponseDto>> GetPoliciesByCustomer(Guid customerId)
         {
             var policies = _PolicyAccountRepo.GetAll()
                 .Where(p => p.CustomerId == customerId)
                 .ToList();
-            return _mapper.Map<List<PolicyAccountDto>>(policies);
+            return _mapper.Map<List<PolicyAccountResponseDto>>(policies);
         }
 
     }

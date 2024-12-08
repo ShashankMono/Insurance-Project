@@ -45,7 +45,7 @@ namespace Insurance_final_project.Models
         public double MaximumInvestmentAmount { get; set; } 
 
         [Range(0, 100, ErrorMessage = "Profit Percentage must be between 0 and 100.")]
-        public double? ProfitPercentage { get; set; } 
+        public double ProfitPercentage { get; set; } 
 
         [Range(0, 100, ErrorMessage = "Commission Percentage must be between 0 and 100.")]
         public double CommissionPercentage { get; set; } 

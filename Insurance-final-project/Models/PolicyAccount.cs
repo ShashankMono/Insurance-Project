@@ -25,13 +25,23 @@ namespace Insurance_final_project.Models
         public double CoverageAmount { get; set; } 
 
         [Range(0, double.MaxValue, ErrorMessage = "Total Amount Paid cannot be negative.")]
-        public double TotalAmountPaid { get; set; } 
+        public double TotalAmountPaid { get; set; }
+
+        [Required(ErrorMessage ="Investment Amount is required")]
+        [Range(0, double.MaxValue, ErrorMessage = "Investment Amount cannot be negative.")]
+        public double InvestmentAmount { get; set; }
+
+        [Required(ErrorMessage = "Policy term is required")]
+        [Range(0, int.MaxValue, ErrorMessage = "Policy term cannot be negative.")]
+        public int PolicyTerm { get; set; }
 
         [Required(ErrorMessage = "Start Date is required.")]
         public DateTime StartDate { get; set; } 
 
         [Required(ErrorMessage = "End Date is required.")]
         public DateTime EndDate { get; set; } 
+
+
 
         [Required(ErrorMessage = "Installment Type is required.")]
         [MaxLength(50, ErrorMessage = "Installment Type cannot exceed 50 characters.")]

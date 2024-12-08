@@ -19,7 +19,7 @@
     </div>
     <div class="mb-3">
       <label for="dateOfBirth" class="form-label">Date of Birth</label>
-      <input type="date" id="dateOfBirth" class="form-control" formControlName="dateOfBirth" required />
+      <input type="date" id="dateOfBirth" class="form-control" formControlName="dateOfBirth" [attr.max]="MaxDate" required />
     </div>
     <div class="mb-3">
       <label for="stateId" class="form-label">State</label>
