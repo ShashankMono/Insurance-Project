@@ -63,6 +63,7 @@ export class AdminDashboardComponent {
   addState(): void {
     this.router.navigate(['/add-state']);
   }
+  
 
   // Policy
   addPolicy(): void {
@@ -99,4 +100,17 @@ export class AdminDashboardComponent {
   //     console.log('User Activity Logs:', data);
     // });
   // }
+  //policy mgmt
+  navigateToPolicyAccountVerification(): void {
+    this.router.navigate(['/admin/policy-account-verification']);
+  }
+  
+  navigateToApproveCustomer(): void {
+    this.router.navigate(['/admin/approve-customer']);
+  }
+
+  
+  navigateToApproveDocument(): void {
+    this.router.navigate(['/admin/approve-document']);
+  }
 }

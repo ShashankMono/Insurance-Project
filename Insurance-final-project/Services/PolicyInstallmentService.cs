@@ -62,26 +62,26 @@ namespace Insurance_final_project.Services
                     Id = Guid.NewGuid(),
                     PolicyAccountId = installmentData.PolicyAccountId,
                     InstallmentDueDate = installmentDueDate,
-                    IsPaid = isFirstInstallment,
+                    IsPaid = false,
                     Amount = installmentAmount,
-                    InstallmentPaidDate = (DateTime)(isFirstInstallment ? installmentData.StartDate : (DateTime?)null)
+                    //InstallmentPaidDate = (DateTime)(isFirstInstallment ? installmentData.StartDate : (DateTime?)null)
                 };
 
                 _installmentRepository.Add(installment);
-                if (isFirstInstallment)
-                {
-                    var transaction = new Transaction
-                    {
-                        Type = TransactionType.Deposit.ToString(),
-                        Amount = installmentAmount,
-                        CustomerId = installmentData.CustomerId,
-                        PolicyAccountId = installmentData.PolicyAccountId,
-                        PolicyInstallmentId = installment.Id,
-                        DateTime = DateTime.UtcNow,
-                        ReferenceNumber = ""
-                    };
-                    _transactionRepository.Add(transaction);
-                }
+                //if (isFirstInstallment)
+                //{
+                //    var transaction = new Transaction
+                //    {
+                //        Type = TransactionType.Deposit.ToString(),
+                //        Amount = installmentAmount,
+                //        CustomerId = installmentData.CustomerId,
+                //        PolicyAccountId = installmentData.PolicyAccountId,
+                //        PolicyInstallmentId = installment.Id,
+                //        DateTime = DateTime.UtcNow,
+                //        ReferenceNumber = ""
+                //    };
+                //    _transactionRepository.Add(transaction);
+                //}
             }
         }
 
@@ -132,7 +132,7 @@ namespace Insurance_final_project.Services
 
         public async Task<List<PolicyInstallmentDto>> GetInstallmentsByPolicyAccountId(Guid PolicyAccountId)
         {
-            return _Mapper.Map<List<PolicyInstallmentDto>>(_installmentRepository.GetAll().Where(i=>i.Id == PolicyAccountId).ToList());
+            return _Mapper.Map<List<PolicyInstallmentDto>>(_installmentRepository.GetAll().Where(i=>i.PolicyAccountId == PolicyAccountId).ToList());
         }
 
     }

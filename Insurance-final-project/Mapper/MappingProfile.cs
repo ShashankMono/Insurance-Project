@@ -28,7 +28,9 @@ namespace Insurance_final_project.Mapper
 
             // Customer
             CreateMap<Customer, CustomerDto>().ReverseMap();
-
+            CreateMap<Customer, CustomerProfileDto>()
+    .ForMember(dest => dest.City, val => val.MapFrom(src => src.City.CityName))
+    .ForMember(dest => dest.State, val => val.MapFrom(src => src.State.StateName));
             // Document
             CreateMap<Document, DocumentDto>().ReverseMap();
 

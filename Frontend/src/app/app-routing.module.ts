@@ -46,6 +46,10 @@ import { PolicyOperationsComponent } from './customer/policy-operations/policy-o
 import { UserRegistrationComponent } from './landing-page/user-registration/user-registration.component';
 import { CustomerDocumentsComponent } from './customer/customer-documents/customer-documents.component';
 import { PolicyAccountDocumentsComponent } from './customer/policy-account-documents/policy-account-documents.component';
+import { UpdatePolicyAccountDocumentComponent } from './customer/update-policy-account-document/update-policy-account-document.component';
+import { PolicyAccountVerificationComponent } from './admin/policy-account-verification/policy-account-verification.component';
+import { ApproveCustomerComponent } from './admin/approve-customer/approve-customer.component';
+import { ApproveDocumentComponent } from './admin/approve-document/approve-document.component';
 const routes: Routes = [
   { 
     path: '',
@@ -199,29 +203,35 @@ const routes: Routes = [
     component: PayInstallmentComponent
   },
   { 
-    path: 'view-profile', 
-    component: ViewProfileComponent
+    path: 'view-profile/:userId', 
+    component: ViewProfileComponent 
   },
-  { path: 'edit-profile', 
+  { 
+    path: 'edit-profile', 
     component: EditProfileComponent
   },
-  { path: 'add-nominee', 
+  { 
+    path: 'add-nominee', 
     component: AddNomineeComponent
   },
-  { path: 'view-nominee', 
+  { 
+    path: 'view-nominee', 
     component: ViewNomineesComponent
   },
   {
     path:'edit-nominee/:id',
     component:EditNomineeComponent
   },
-  { path: 'submit-query',
+  { 
+    path: 'submit-query',
     component: AddQueryComponent
   },
-  { path: 'view-queries', 
+  { 
+    path: 'view-queries', 
     component: ViewQueriesComponent
   },
-  { path: 'transaction-history', 
+  { 
+    path: 'transaction-history', 
     component: TransactionHistoryComponent
   },
   { 
@@ -239,6 +249,22 @@ const routes: Routes = [
   {
     path:'policy-account-documents/:policyAccountId',
     component:PolicyAccountDocumentsComponent
+  },
+  {
+    path: 'policy-account-documents/update/:documentId', 
+    component: UpdatePolicyAccountDocumentComponent   
+  },
+  {
+    path: 'admin/policy-account-verification',
+    component:PolicyAccountVerificationComponent
+  },
+  {
+    path:'admin/approve-customer',
+    component:ApproveCustomerComponent
+  },
+  {
+    path:'admin/approve-document',
+    component:ApproveDocumentComponent
   }
 ];
 

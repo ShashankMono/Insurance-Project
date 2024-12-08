@@ -44,7 +44,7 @@ export class UserRegistrationComponent {
     };
     this.userService.registerUser(userData).subscribe((response) => {
       if (response.success) {
-        localStorage.setItem('userId', response.data.userId); // Save userId for the next step
+        localStorage.setItem('userId', response.data); // Save userId for the next step
         this.router.navigate(['/customer-registration']); 
       } else {
         alert(response.message);

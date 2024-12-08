@@ -1,5 +1,6 @@
 <div class="container mt-5">
     <h1 class="text-center mb-4">Policy Operations</h1>
+    <h4 class="text-center mb-4">All your Policy Accounts can be managed here.</h4>
 
     <!-- Success/Error Alerts -->
     <div *ngIf="successMessage" class="alert alert-success text-center">
@@ -13,7 +14,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Policy ID</th>
+          <th>Policy Plan</th>
           <th>Coverage Amount</th>
           <th>Policy Term</th>
           <th>Installment Type</th>
@@ -23,7 +24,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let policy of policyAccounts">
-          <td>{{ policy.policyId }}</td>
+          <td>{{ policy.name }}</td>
           <td>{{ policy.coverageAmount }}</td>
           <td>{{ policy.policyTerm }}</td>
           <td>{{ policy.installmentType }}</td>

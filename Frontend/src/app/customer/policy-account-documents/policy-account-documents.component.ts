@@ -8,17 +8,17 @@ import { CustomerDashboardService } from 'src/app/services/customer-dashboard.se
   templateUrl: './policy-account-documents.component.html',
   styleUrls: ['./policy-account-documents.component.css']
 })
-export class PolicyAccountDocumentsComponent implements OnInit{
+export class PolicyAccountDocumentsComponent implements OnInit {
   documents: any[] = [];
   successMessage: string | null = null;
   errorMessage: string | null = null;
   selectedDocumentUrl: string | null = null;
   isAddDocumentModalOpen: boolean = false;
-
+  
   policyAccountId: string = '';
   addDocumentForm!: FormGroup;
-  selectedFile!: File; // To store the selected file
-
+  selectedFile!: File;
+  fileError: string | null = null;
   constructor(
     private customerDashboardService: CustomerDashboardService,
     private router: Router,
@@ -50,55 +50,52 @@ export class PolicyAccountDocumentsComponent implements OnInit{
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
-      this.addDocumentForm.patchValue({ documentFile: input.files[0] });
-      this.addDocumentForm.get('documentFile')?.updateValueAndValidity();
-      console.log('File selected:', input.files[0]);
+      this.selectedFile = input.files[0];
+      if (!['image/jpeg', 'image/png', 'image/gif', 'image/bmp'].includes(this.selectedFile.type)) {
+        this.fileError = 'Invalid file type. Only images are allowed.';
+        this.selectedFile = null!;
+      } else {
+        this.fileError = null;
+        this.addDocumentForm.patchValue({ documentFile: input.files[0] });
+        this.addDocumentForm.get('documentFile')?.updateValueAndValidity();
+      }
     }
   }
 
   onSubmit(): void {
-    console.log('Form submitted:', this.addDocumentForm.value);
-    
     if (this.addDocumentForm.valid) {
       const file = this.addDocumentForm.get('documentFile')?.value;
-  
+
       const formData = new FormData();
       formData.append('file', file);
-  
+
       this.customerDashboardService.uploadFile(formData).subscribe(
         (uploadResponse) => {
-          console.log(uploadResponse);
           const documentData = {
             ...this.addDocumentForm.value,
             documentFileURL: uploadResponse.data.result.url,
-            policyAccountId:this.policyAccountId 
+            policyAccountId: this.policyAccountId,
           };
-          
-  
+
           this.customerDashboardService.saveDocument(documentData).subscribe(
-            (saveResponse) => {
+            () => {
               this.successMessage = 'Document added successfully.';
               this.fetchDocuments();
               this.closeAddDocumentModal();
             },
-            
-            (error) => {
-              console.error('Error saving document', error);
+            () => {
               this.errorMessage = 'Failed to save document.';
             }
           );
         },
-        (error) => {
-          console.error('Error uploading file', error);
+        () => {
           this.errorMessage = 'Failed to upload file.';
         }
       );
     } else {
-      console.error('Form is invalid');
       this.errorMessage = 'Please fill in all required fields.';
     }
   }
-  
 
   openAddDocumentModal(): void {
     this.isAddDocumentModalOpen = true;
@@ -115,17 +112,25 @@ export class PolicyAccountDocumentsComponent implements OnInit{
   }
 
   deleteDocument(documentId: string): void {
-    this.customerDashboardService.deletePolicyAccountDocument(documentId).subscribe(
-      (response) => {
-        this.successMessage = response.message;
-        this.fetchDocuments();
-      },
-      (error) => {
-        this.errorMessage = 'Failed to delete the document.';
-      }
-    );
+    const confirmation = confirm('Do you really wish to delete this document?');
+    if (confirmation) {
+      this.customerDashboardService.deletePolicyAccountDocument(documentId).subscribe(
+        (response) => {
+          this.successMessage = response.message;
+          this.fetchDocuments(); // Fetch updated list after deletion
+        },
+        () => {
+          this.errorMessage = 'Failed to delete the document.';
+        }
+      );
+    }
   }
+
   viewDocument(url: string): void {
     this.selectedDocumentUrl = url;
+  }
+
+  openUpdateDocumentModal(documentId: string): void {
+    this.router.navigate(['/policy-account-documents/update', documentId]);
   }
 }

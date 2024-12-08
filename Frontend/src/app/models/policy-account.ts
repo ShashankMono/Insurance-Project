@@ -1,10 +1,11 @@
-export interface PolicyAccount {
+import { Policy } from "./policy";
+
+export interface PolicyAccount extends Policy{
   id: string;
-  policy: {
-    name: string;
-  };
+  name:string;
   policyTerm: number;
   coverageAmount: number;
   installmentType: string;
   status: string;
+  policy: Policy;
 }

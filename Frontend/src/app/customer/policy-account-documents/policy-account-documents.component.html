@@ -18,7 +18,6 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Document ID</th>
           <th>Document Type</th>
           <th>Document Name</th>
           <th>Status</th>
@@ -27,13 +26,14 @@
       </thead>
       <tbody>
         <tr *ngFor="let document of documents">
-          <td>{{ document.documentId }}</td>
+          
           <td>{{ document.documentType }}</td>
           <td>{{ document.documentName }}</td>
           <td>{{ document.isVerified }}</td>
           <td>
             <button class="btn btn-info" (click)="viewDocument(document.documentFileURL)">View</button>
             <button class="btn btn-danger" (click)="deleteDocument(document.documentId)">Delete</button>
+            <button class="btn btn-primary" (click)="openUpdateDocumentModal(document.documentId)">Update</button>
           </td>
         </tr>
       </tbody>
@@ -49,51 +49,50 @@
           <button type="button" class="btn-close" (click)="closeAddDocumentModal()"></button>
         </div>
         <div class="modal-body">
-            <form [formGroup]="addDocumentForm" (ngSubmit)="onSubmit()">
-              <div class="mb-3">
-                <label for="documentType" class="form-label">Document Type<span style="color: red;">*</span></label>
-                <input
-                  type="text"
-                  id="documentType"
-                  class="form-control"
-                  formControlName="documentType"
-                  placeholder="Enter document type"
-                />
+          <form [formGroup]="addDocumentForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="documentType" class="form-label">Document Type<span style="color: red;">*</span></label>
+              <input
+                type="text"
+                id="documentType"
+                class="form-control"
+                formControlName="documentType"
+                placeholder="Enter document type"
+              />
+              <div *ngIf="addDocumentForm.get('documentType')?.invalid && addDocumentForm.get('documentType')?.touched" class="text-danger">
+                Document Type is required.
               </div>
-              <div class="mb-3">
-                <label for="documentName" class="form-label">Document Name<span style="color: red;">*</span></label>
-                <input
-                  type="text"
-                  id="documentName"
-                  class="form-control"
-                  formControlName="documentName"
-                  placeholder="Enter document name"
-                />
+            </div>
+            <div class="mb-3">
+              <label for="documentName" class="form-label">Document Name<span style="color: red;">*</span></label>
+              <input
+                type="text"
+                id="documentName"
+                class="form-control"
+                formControlName="documentName"
+                placeholder="Enter document name"
+              />
+              <div *ngIf="addDocumentForm.get('documentName')?.invalid && addDocumentForm.get('documentName')?.touched" class="text-danger">
+                Document Name is required.
               </div>
-              <div class="mb-3">
-                <label for="documentFile" class="form-label">Upload Document<span style="color: red;">*</span></label>
-                <input
-                  type="file"
-                  id="documentFile"
-                  class="form-control"
-                  (change)="onFileSelected($event)"
-                />
+            </div>
+            <div class="mb-3">
+              <label for="documentFile" class="form-label">Upload Document<span style="color: red;">*</span></label>
+              <input
+                type="file"
+                id="documentFile"
+                class="form-control"
+                (change)="onFileSelected($event)"
+              />
+              <div *ngIf="addDocumentForm.get('documentFile')?.invalid && addDocumentForm.get('documentFile')?.touched" class="text-danger">
+                Document File is required.
               </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Add Document</button>
-                <button type="button" class="btn btn-secondary" (click)="closeAddDocumentModal()">Cancel</button>
-              </div>
-            </form>
-          </div>
-        <div class="modal-footer">
-          <button
-            type="submit"
-            class="btn btn-primary"
-           
-          >
-            Add Document
-          </button>
-          <!-- <button type="button" class="btn btn-secondary" (click)="closeAddDocumentModal()">Cancel</button> -->
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Add Document</button>
+              <button type="button" class="btn btn-secondary" (click)="closeAddDocumentModal()">Cancel</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -113,3 +112,4 @@
       </div>
     </div>
 </div>
+  

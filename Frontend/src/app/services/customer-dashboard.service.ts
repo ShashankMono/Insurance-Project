@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Policy } from '../models/policy';
+import { PolicyAccount } from '../models/policy-account';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,7 @@ export class CustomerDashboardService {
     return this.http.post(`${this.url}/PolicyAccount`, policyAccount);
   }
   getPolicyAccounts(): Observable<any> {
-    return this.http.get<any>(`${this.url}/PolicyAccount`);
+    return this.http.get<any >(`${this.url}/PolicyAccount`);
   }
   uploadFile(fileData: FormData) {
     return this.http.post<any>(`${this.url}/FileUpload`, fileData);
@@ -38,8 +39,7 @@ export class CustomerDashboardService {
   saveDocument(documentData: any) {
     return this.http.post<any>(`${this.url}/PolicyAccountDocument`, documentData);
   }
-  
-  
+
 
   cancelPolicyAccount(policyAccountId: string): Observable<any> {
     return this.http.put<any>(
@@ -63,12 +63,12 @@ export class CustomerDashboardService {
   }
 
   // Profile
-  getProfile(customerId: string): Observable<any> {
-    return this.http.get(`${this.url}/Customer/${customerId}`);
+  getCustomerDetails(userId: string): Observable<any> {
+    return this.http.get(`${this.url}/Customer/User/${userId}`);
   }
 
-  updateProfile(customerId: string, profileData: any): Observable<any> {
-    return this.http.put(`${this.url}/Customer/${customerId}`, profileData);
+  updateCustomerDetails(customer: any): Observable<any> {
+    return this.http.put(`${this.url}/Customer`, customer);
   }
 
   submitQuery(queryText: string): Observable<any> {
@@ -99,9 +99,13 @@ export class CustomerDashboardService {
     return this.http.get<any>(`${this.url}/PolicyAccountDocument/${policyAccountId}`);
   }
   
-  updatePolicyAccountDocument(document: any) {
-    return this.http.put<any>(`${this.url}/PolicyAccountDocument`, document);
+  updatePolicyAccountDocument(documentId: any, documentData: any): Observable<any> {
+    return this.http.put<any>(`${this.url}/PolicyAccountDocument`, {
+      documentId: documentId,
+      ...documentData,
+    });
   }
+  
   
   deletePolicyAccountDocument(documentId: string) {
     return this.http.delete<any>(`${this.url}/PolicyAccountDocument/${documentId}`);
@@ -119,5 +123,17 @@ export class CustomerDashboardService {
   }
   registerCustomer(customerData: any): Observable<any> {
     return this.http.post<any>(`${this.url}/Customer`, customerData);
+  }
+
+  getAllCustomers(): Observable<any> {
+    return this.http.get(`${this.url}/Customer`);
+  }
+
+  getDocumentsByCustomer(customerId: any): Observable<any> {
+    return this.http.get<any>(`${this.url}/Document?customerId=${customerId}`);
+  }
+
+  updateDocumentStatus(documentId: any, isVerified: string): Observable<any> {
+    return this.http.put<any>(`${this.url}/Document/${documentId}`, { isVerified });
   }
 }

@@ -96,5 +96,16 @@ export class AdminDashboardService {
   addRole(role: any): Observable<any> {
     return this.http.post(`${this.url}/Role`, role);
   }
+
+  getPendingPolicyAccounts(): Observable<any> {
+    return this.http.get<any>(`${this.url}/PolicyAccount`);
+  }
+  
+  approveDocument(documentApproval: { id: any; isVerified: string; customerId: any }): Observable<any> {
+    return this.http.post<any>(`${this.url}/Document/approve`, documentApproval);
+  }
+  getCustomerById(customerId: any): Observable<any> {
+    return this.http.get<any>(`${this.url}/Customer/${customerId}`);
+  }
   
 }
