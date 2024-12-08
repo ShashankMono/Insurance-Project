@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -64,6 +64,10 @@ import { ViewProfileComponent } from './customer/view-profile/view-profile.compo
 import { ViewQueriesComponent } from './customer/view-queries/view-queries.component';
 import { ViewNomineesComponent } from './customer/view-nominees/view-nominees.component';
 import { PolicyOperationsComponent } from './customer/policy-operations/policy-operations.component';
+import { UserRegistrationComponent } from './landing-page/user-registration/user-registration.component';
+import { DocumentComponent } from './customer/document/document.component';
+import { CustomerDocumentsComponent } from './customer/customer-documents/customer-documents.component';
+import { PolicyAccountDocumentsComponent } from './customer/policy-account-documents/policy-account-documents.component';
 
 
 
@@ -122,7 +126,11 @@ import { PolicyOperationsComponent } from './customer/policy-operations/policy-o
     ViewProfileComponent,
     ViewQueriesComponent,
     ViewNomineesComponent,
-    PolicyOperationsComponent
+    PolicyOperationsComponent,
+    UserRegistrationComponent,
+    DocumentComponent,
+    CustomerDocumentsComponent,
+    PolicyAccountDocumentsComponent
     
   ],
   imports: [
@@ -131,7 +139,8 @@ import { PolicyOperationsComponent } from './customer/policy-operations/policy-o
     ReactiveFormsModule,
     NgbModule,
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     

@@ -1,9 +1,7 @@
-<!-- policy-account.component.html -->
 
 <div class="container mt-5">
     <h1 class="text-center mb-4">Create Policy Account</h1>
   
-    <!-- Alert for Success or Error Messages -->
     <div *ngIf="successMessage" class="alert alert-success text-center">
       {{ successMessage }}
     </div>
@@ -11,16 +9,15 @@
       {{ errorMessage }}
     </div>
   
-    <!-- Reactive Form -->
     <form [formGroup]="policyAccountForm" (ngSubmit)="onSubmit()">
       <div class="mb-3">
-        <label for="policyId" class="form-label">Policy</label>
+        <label for="policyId" class="form-label">Policy<span class="text-danger">*</span></label>
         <select
           id="policyId"
           class="form-control"
           formControlName="policyId"
         >
-          <option value="">-- Select Policy --</option>
+          <option value="">-- Select Policy --<span class="text-danger">*</span></option>
           <option *ngFor="let policy of policies" [value]="policy.id">
             {{ policy.name }}
           </option>
@@ -31,7 +28,7 @@
       </div>
   
       <div class="mb-3">
-        <label for="customerId" class="form-label">Customer ID</label>
+        <label for="customerId" class="form-label">Customer ID<span class="text-danger">*</span></label>
         <input
           type="text"
           id="customerId"
@@ -45,7 +42,7 @@
       </div>
   
       <div class="mb-3">
-        <label for="coverageAmount" class="form-label">Coverage Amount</label>
+        <label for="coverageAmount" class="form-label">Coverage Amount<span class="text-danger">*</span></label>
         <input
           type="number"
           id="coverageAmount"
@@ -59,7 +56,7 @@
       </div>
   
       <div class="mb-3">
-        <label for="policyTerm" class="form-label">Policy Term (in years)</label>
+        <label for="policyTerm" class="form-label">Policy Term (in years)<span class="text-danger">*</span></label>
         <input
           type="number"
           id="policyTerm"
@@ -73,7 +70,7 @@
       </div>
   
       <div class="mb-3">
-        <label for="installmentType" class="form-label">Installment Type</label>
+        <label for="installmentType" class="form-label">Installment Type<span class="text-danger">*</span></label>
         <select
           id="installmentType"
           class="form-control"
@@ -88,7 +85,23 @@
           Installment Type is required.
         </div>
       </div>
-  
+      <!--input file-img
+      submit
+      policyaccountid retrieve
+      fileupload endpoint
+      file sent
+      document endpoint add-viewdocuments comp on doc button-->
+      <div class="mb-3">
+      <label for="fileInput" class="form-label">Upload Document</label>
+      <input
+        type="file"
+        id="fileInput"
+        class="form-control"
+        (change)="onFileSelect($event)"
+        accept=".jpg,.jpeg,.png,.gif,.bmp"
+      />
+      <div *ngIf="fileError" class="text-danger">{{ fileError }}</div>
+    </div>
       <button
         type="submit"
         class="btn btn-primary w-100 mt-3"

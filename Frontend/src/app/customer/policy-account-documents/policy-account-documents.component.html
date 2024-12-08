@@ -1,0 +1,115 @@
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Policy Account Documents</h1>
+  
+    <!-- Success/Error Alerts -->
+    <div *ngIf="successMessage" class="alert alert-success text-center">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger text-center">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Add New Document Button -->
+    <div class="text-end mb-3">
+      <button class="btn btn-success" (click)="openAddDocumentModal()">Add New Document</button>
+    </div>
+  
+    <!-- Documents Table -->
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Document ID</th>
+          <th>Document Type</th>
+          <th>Document Name</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let document of documents">
+          <td>{{ document.documentId }}</td>
+          <td>{{ document.documentType }}</td>
+          <td>{{ document.documentName }}</td>
+          <td>{{ document.isVerified }}</td>
+          <td>
+            <button class="btn btn-info" (click)="viewDocument(document.documentFileURL)">View</button>
+            <button class="btn btn-danger" (click)="deleteDocument(document.documentId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Add Document Modal -->
+  <div *ngIf="isAddDocumentModalOpen" class="modal show" style="display: block;" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add New Document</h5>
+          <button type="button" class="btn-close" (click)="closeAddDocumentModal()"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="addDocumentForm" (ngSubmit)="onSubmit()">
+              <div class="mb-3">
+                <label for="documentType" class="form-label">Document Type<span style="color: red;">*</span></label>
+                <input
+                  type="text"
+                  id="documentType"
+                  class="form-control"
+                  formControlName="documentType"
+                  placeholder="Enter document type"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="documentName" class="form-label">Document Name<span style="color: red;">*</span></label>
+                <input
+                  type="text"
+                  id="documentName"
+                  class="form-control"
+                  formControlName="documentName"
+                  placeholder="Enter document name"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="documentFile" class="form-label">Upload Document<span style="color: red;">*</span></label>
+                <input
+                  type="file"
+                  id="documentFile"
+                  class="form-control"
+                  (change)="onFileSelected($event)"
+                />
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Add Document</button>
+                <button type="button" class="btn btn-secondary" (click)="closeAddDocumentModal()">Cancel</button>
+              </div>
+            </form>
+          </div>
+        <div class="modal-footer">
+          <button
+            type="submit"
+            class="btn btn-primary"
+           
+          >
+            Add Document
+          </button>
+          <!-- <button type="button" class="btn btn-secondary" (click)="closeAddDocumentModal()">Cancel</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Document View Modal -->
+  <div *ngIf="selectedDocumentUrl" class="modal show" style="display: block;" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">View Document</h5>
+          <button type="button" class="btn-close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img [src]="selectedDocumentUrl" alt="Document" class="img-fluid" />
+        </div>
+      </div>
+    </div>
+</div>

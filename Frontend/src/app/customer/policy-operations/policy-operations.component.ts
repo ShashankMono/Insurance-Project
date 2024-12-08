@@ -24,7 +24,7 @@ export class PolicyOperationsComponent {
   fetchPolicyAccounts(): void {
     this.customerDashboardService.getPolicyAccounts().subscribe(
       (response) => {
-        this.policyAccounts = response.data; // Assuming the data contains the policy accounts
+        this.policyAccounts = response.data;
       },
       (error) => {
         console.error('Error fetching policy accounts', error);
@@ -33,18 +33,19 @@ export class PolicyOperationsComponent {
     );
   }
 
-  // Redirect to pay installment page
+ 
   payInstallment(policyAccountId: string): void {
     this.router.navigate(['/pay-installment', policyAccountId]);
   }
 
-  // Redirect to cancel policy page
   cancelPolicy(policyAccountId: string): void {
     this.router.navigate(['/cancel-policy', policyAccountId]);
   }
 
-  // Redirect to claim policy page
   claimPolicy(policyAccountId: string): void {
     this.router.navigate(['/claim-policy', policyAccountId]);
+  }
+  manageDocuments(policyAccountId: string): void {
+    this.router.navigate(['/policy-account-documents', policyAccountId]);
   }
 }
