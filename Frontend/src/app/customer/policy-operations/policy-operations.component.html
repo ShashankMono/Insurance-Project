@@ -13,25 +13,29 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Policy ID</th>
+          <th>Policy name</th>
           <th>Coverage Amount</th>
           <th>Policy Term</th>
           <th>Installment Type</th>
+          <th>Start date</th>
+          <th>End date</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let policy of policyAccounts">
-          <td>{{ policy.policyId }}</td>
+          <td>{{ policy.policyName }}</td>
           <td>{{ policy.coverageAmount }}</td>
           <td>{{ policy.policyTerm }}</td>
           <td>{{ policy.installmentType }}</td>
+          <td>{{policy.startDate | date}}</td>
+          <td>{{policy.endDate | date}}</td>
           <td>{{ policy.status }}</td>
           <td>
             <button
               class="btn btn-primary"
-              (click)="payInstallment(policy.id)"
+              (click)="payInstallment(policy.id,policy.policyName)"
               [disabled]="policy.status === 'Closed'"
             >
               Pay Installment

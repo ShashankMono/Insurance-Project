@@ -13,11 +13,20 @@ export class PayInstallmentComponent implements OnInit {
   errorMessage: string | null = null;
   policyAccountId:any=""
   installments:any=""
+  policyName:any=""
 
   constructor(private dashboardService: CustomerDashboardService, private router:ActivatedRoute) {
-    this.policyAccountId=router.snapshot.paramMap.get('id');
+    this.policyAccountId=history.state.policyAccountId;
+    this.policyName = history.state.policyName;
+    // console.log(this.policyAccountId);
+    this.getInstallments();
   }
 
+  isDueDatePassed(dueDate:string ):boolean{
+    const today = new Date();
+    const due = new Date(dueDate)
+    return due<today;
+  }
   ngOnInit(): void {
     this.fetchPolicyAccounts();
   }
@@ -77,22 +86,24 @@ export class PayInstallmentComponent implements OnInit {
     );
   }
 
-  payInstallment(installmentId: any): void {
-    const customerId = localStorage.getItem('customerId');
-    if (!customerId) {
-      alert('Customer ID not found');
-      return;
+  payInstallment(Amount:any): void {
+    var obj = {
+      policyName:this.policyName,
+      amount:Amount,
+      sccessUrl:"http://localhost:4200/Success",
+      cancelUrl:"http://localhost:4200/Cancel"
     }
 
-    this.dashboardService.payInstallment(installmentId, customerId).subscribe(
-      (response) => {
-        alert('Installment paid successfully');
-        this.fetchPolicyAccounts();
+    this.dashboardService.getPaymentSession(obj).subscribe({
+      next:(response)=>{
+        var resData = response;
+        console.log(resData);
       },
-      (error) => {
-        alert('Error paying installment');
-        console.error(error);
+      error:(err:HttpErrorResponse)=>{
+        
+        console.log(err);
+        alert(err.error);
       }
-    );
+    })
   }
 }

@@ -6,6 +6,6 @@ namespace Insurance_final_project.Services
     {
         public void AddInstallments(PolicyInstallmentDto installmentData);
         public Task<bool> PayInstallment(Guid installmentId, Guid customerId);
-        public Task<List<PolicyInstallmentDto>> GetInstallmentsByPolicyAccountId(Guid PolicyAccountId);
+        public Task<List<PolicyInstallmentResponsDto>> GetInstallmentsByPolicyAccountId(Guid PolicyAccountId);
     }
 }

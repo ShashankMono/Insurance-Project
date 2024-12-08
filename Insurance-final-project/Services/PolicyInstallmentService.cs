@@ -131,13 +131,13 @@ namespace Insurance_final_project.Services
             return true;
         }
 
-        public async Task<List<PolicyInstallmentDto>> GetInstallmentsByPolicyAccountId(Guid PolicyAccountId)
+        public async Task<List<PolicyInstallmentResponsDto>> GetInstallmentsByPolicyAccountId(Guid PolicyAccountId)
         {
             if(_policyAccountRepo.Get(PolicyAccountId) == null)
             {
                 throw new InvalidGuidException("Account not found!");
             }
-            return _Mapper.Map<List<PolicyInstallmentDto>>(_installmentRepository.GetAll().Where(i=>i.PolicyAccountId == PolicyAccountId).ToList());
+            return _Mapper.Map<List<PolicyInstallmentResponsDto>>(_installmentRepository.GetAll().Where(i=>i.PolicyAccountId == PolicyAccountId).OrderBy(i=>i.InstallmentDueDate).ToList());
         }
 
     }

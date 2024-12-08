@@ -46,6 +46,8 @@ import { PolicyOperationsComponent } from './customer/policy-operations/policy-o
 import { UserRegistrationComponent } from './landing-page/user-registration/user-registration.component';
 import { CustomerDocumentsComponent } from './customer/customer-documents/customer-documents.component';
 import { PolicyAccountDocumentsComponent } from './customer/policy-account-documents/policy-account-documents.component';
+import { SuccessComponent } from './PaymentAck/success/success.component';
+import { CancelComponent } from './PaymentAck/cancel/cancel.component';
 
 const routes: Routes = [
   { 
@@ -56,6 +58,14 @@ const routes: Routes = [
   { 
     path: 'landing-page', 
     component: LandingPageComponent 
+  },
+  {
+    path:'Success',
+    component: SuccessComponent
+  },
+  {
+    path:'Cancel',
+    component: CancelComponent
   },
   { 
     path: 'login-dashboard', 

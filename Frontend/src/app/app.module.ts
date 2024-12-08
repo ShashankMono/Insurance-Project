@@ -68,6 +68,8 @@ import { UserRegistrationComponent } from './landing-page/user-registration/user
 import { DocumentComponent } from './customer/document/document.component';
 import { CustomerDocumentsComponent } from './customer/customer-documents/customer-documents.component';
 import { PolicyAccountDocumentsComponent } from './customer/policy-account-documents/policy-account-documents.component';
+import { SuccessComponent } from './PaymentAck/success/success.component';
+import { CancelComponent } from './PaymentAck/cancel/cancel.component';
 
 
 
@@ -132,6 +134,8 @@ import { PolicyAccountDocumentsComponent } from './customer/policy-account-docum
     DocumentComponent,
     CustomerDocumentsComponent,
     PolicyAccountDocumentsComponent,
+    SuccessComponent,
+    CancelComponent,
     
   ],
   imports: [
