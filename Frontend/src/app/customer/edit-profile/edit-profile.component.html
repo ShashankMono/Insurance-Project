@@ -1,1 +1,67 @@
-<p>edit-profile works!</p>
+<div class="container mt-5">
+    <h2>Edit Profile</h2>
+    <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="firstName" class="form-label">First Name<span class="text-danger">*</span></label>
+        <input id="firstName" type="text" class="form-control" formControlName="firstName" required>
+        <div *ngIf="editProfileForm.get('firstName')?.invalid && editProfileForm.get('firstName')?.touched" class="text-danger">
+          First Name is required.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="lastName" class="form-label">Last Name<span class="text-danger">*</span></label>
+        <input id="lastName" type="text" class="form-control" formControlName="lastName" required>
+        <div *ngIf="editProfileForm.get('lastName')?.invalid && editProfileForm.get('lastName')?.touched" class="text-danger">
+          Last Name is required.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="emailId" class="form-label">Email<span class="text-danger">*</span></label>
+        <input id="emailId" type="email" class="form-control" formControlName="emailId" required>
+        <div *ngIf="editProfileForm.get('emailId')?.invalid && editProfileForm.get('emailId')?.touched" class="text-danger">
+          A valid email is required.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="mobileNo" class="form-label">Mobile Number<span class="text-danger">*</span></label>
+        <input id="mobileNo" type="text" class="form-control" formControlName="mobileNo" required>
+        <div *ngIf="editProfileForm.get('mobileNo')?.invalid && editProfileForm.get('mobileNo')?.touched" class="text-danger">
+          Mobile Number is required.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="dateOfBirth" class="form-label">Date of Birth<span class="text-danger">*</span></label>
+        <input id="dateOfBirth" type="date" class="form-control" formControlName="dateOfBirth" required>
+        <div *ngIf="editProfileForm.get('dateOfBirth')?.invalid && editProfileForm.get('dateOfBirth')?.touched" class="text-danger">
+          Date of Birth is required.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="stateId" class="form-label">State<span class="text-danger">*</span></label>
+        <select id="stateId" class="form-control" formControlName="stateId" required>
+          <option *ngFor="let state of states" [value]="state.stateId">{{ state.stateName }}</option>
+        </select>
+        <div *ngIf="editProfileForm.get('stateId')?.invalid && editProfileForm.get('stateId')?.touched" class="text-danger">
+          State selection is required.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="cityId" class="form-label">City<span class="text-danger">*</span></label>
+        <select id="cityId" class="form-control" formControlName="cityId" required>
+          <option *ngFor="let city of cities" [value]="city.cityId">{{ city.cityName }}</option>
+        </select>
+        <div *ngIf="editProfileForm.get('cityId')?.invalid && editProfileForm.get('cityId')?.touched" class="text-danger">
+          City selection is required.
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="editProfileForm.invalid">Save Changes</button>
+    </form>
+</div>
+  

@@ -72,19 +72,19 @@ export class PayInstallmentComponent implements OnInit {
     );
   }
 
-  claimPolicy(policyAccountId: string): void {
-    const claimData = { reason: 'Sample Reason', amount: 1000 }; // Replace with actual data
-    this.dashboardService.claimPolicy(policyAccountId, claimData).subscribe(
-      (response) => {
-        alert('Policy claim submitted');
-        this.fetchPolicyAccounts();
-      },
-      (error) => {
-        alert('Error submitting claim');
-        console.error(error);
-      }
-    );
-  }
+  // claimPolicy(policyAccountId: string): void {
+  //   const claimData = { reason: 'Sample Reason', amount: 1000 }; // Replace with actual data
+  //   this.dashboardService.claimPolicy(policyAccountId, claimData).subscribe(
+  //     (response) => {
+  //       alert('Policy claim submitted');
+  //       this.fetchPolicyAccounts();
+  //     },
+  //     (error) => {
+  //       alert('Error submitting claim');
+  //       console.error(error);
+  //     }
+  //   );
+  // }
 
   payInstallment(Amount:any,id:any): void {
     var obj = {

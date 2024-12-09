@@ -1,105 +1,132 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
+import { CustomerDocumentsService } from 'src/app/services/customer-documents.service';
 
 @Component({
   selector: 'app-customer-documents',
   templateUrl: './customer-documents.component.html',
   styleUrls: ['./customer-documents.component.css']
 })
-export class CustomerDocumentsComponent {
-  // policyAccountId: string = '';
-  // documents: any[] = [];
-  // showPopup: boolean = false;
-  // isUpdateMode: boolean = false;
-  // documentForm!: FormGroup;
-  // selectedDocumentId: string | null = null;
+export class CustomerDocumentsComponent implements OnInit {
+  documents: any[] = [];
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+  selectedDocumentUrl: string | null = null;
+  isAddDocumentModalOpen: boolean = false;
 
-  // constructor(
-  //   private route: ActivatedRoute,
-  //   private customerDashboardService: CustomerDashboardService
-  // ) {}
+  customerId: string = '';
+  addDocumentForm!: FormGroup;
+  selectedFile!: File;
 
-  // ngOnInit(): void {
-  //   this.route.params.subscribe(params => {
-  //     this.policyAccountId = params['policyId'];
-  //     this.fetchDocuments();
-  //   });
+  constructor(
+    private customerService: CustomerDocumentsService,
+    private route: ActivatedRoute
+  ) {}
 
-  //   this.documentForm = new FormGroup({
-  //     documentName: new FormControl('', Validators.required),
-  //     documentFileURL: new FormControl('', !this.isUpdateMode ? Validators.required : null),
-  //     documentType: new FormControl('', Validators.required),
-  //     isVerified: new FormControl('', Validators.required),
-  //   });
-  // }
+  ngOnInit(): void {
+    this.customerId = this.route.snapshot.params['customerId'];
+    this.fetchDocuments();
 
-  // fetchDocuments(): void {
-  //   this.customerDashboardService.getPolicyAccountDocuments(this.policyAccountId).subscribe(
-  //     (response) => {
-  //       this.documents = response.data;
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching documents', error);
-  //     }
-  //   );
-  // }
+    this.addDocumentForm = new FormGroup({
+      documentType: new FormControl('', Validators.required),
+      documentName: new FormControl('', Validators.required),
+      documentFile: new FormControl(null, Validators.required),
+    });
+  }
 
-  // openAddDocumentPopup(): void {
-  //   this.showPopup = true;
-  //   this.isUpdateMode = false;
-  //   this.documentForm.reset();
-  // }
+  fetchDocuments(): void {
+    this.customerService.getCustomerDocuments(this.customerId).subscribe(
+      (response) => {
+        this.documents = response.data;
+      },
+      (error) => {
+        this.errorMessage = 'Failed to fetch documents.';
+      }
+    );
+  }
 
-  // openUpdateDocumentPopup(document: any): void {
-  //   this.showPopup = true;
-  //   this.isUpdateMode = true;
-  //   this.selectedDocumentId = document.documentId;
-  //   this.documentForm.patchValue({
-  //     documentName: document.documentName,
-  //     documentType: document.documentType,
-  //     isVerified: document.isVerified,
-  //   });
-  // }
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.addDocumentForm.patchValue({ documentFile: input.files[0] });
+      this.addDocumentForm.get('documentFile')?.updateValueAndValidity();
+      console.log('File selected:', input.files[0]);
+    }
+  }
 
-  // closePopup(): void {
-  //   this.showPopup = false;
-  //   this.documentForm.reset();
-  //   this.selectedDocumentId = null;
-  // }
+  onSubmit(): void {
+    console.log('Form submitted:', this.addDocumentForm.value);
+    if (this.addDocumentForm.valid) {
+      const file = this.addDocumentForm.get('documentFile')?.value;
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      this.customerService.uploadFile(formData).subscribe(
+        (uploadResponse) => {
+          if (uploadResponse?.data?.result?.url) {
+            const documentData = {
+              documentType: this.addDocumentForm.get('documentType')?.value,
+              documentName: this.addDocumentForm.get('documentName')?.value,
+              documentFileURL: uploadResponse.data.result.url,
+              customerId: this.customerId
+            };
+  
+            this.customerService.addCustomerDocument(documentData).subscribe(
+              (saveResponse) => {
+                this.successMessage = 'Document added successfully.';
+                this.fetchDocuments();
+                this.closeAddDocumentModal();
+              },
+              (error) => {
+                this.errorMessage = 'Failed to save document.';
+              }
+            );
+          } else {
+            this.errorMessage = 'File upload failed: No file URL returned.';
+          }
+        },
+        (error) => {
+          this.errorMessage = 'Failed to upload file.';
+        }
+      );
+    } else {
+      this.errorMessage = 'Please fill in all required fields.';
+    }
+  }
+  
 
-  // onSubmit(): void {
-  //   if (this.documentForm.valid) {
-  //     const documentData = { ...this.documentForm.value, policyAccountId: this.policyAccountId };
+  openAddDocumentModal(): void {
+    this.isAddDocumentModalOpen = true;
+  }
 
-  //     if (this.isUpdateMode && this.selectedDocumentId) {
-  //       this.customerDashboardService.updateDocument(this.selectedDocumentId, documentData).subscribe(
-  //         () => {
-  //           this.fetchDocuments();
-  //           this.closePopup();
-  //         },
-  //         (error) => console.error('Error updating document', error)
-  //       );
-  //     } else {
-  //       this.customerDashboardService.addDocument(documentData).subscribe(
-  //         () => {
-  //           this.fetchDocuments();
-  //           this.closePopup();
-  //         },
-  //         (error) => console.error('Error adding document', error)
-  //       );
-  //     }
-  //   }
-  // }
+  closeAddDocumentModal(): void {
+    this.isAddDocumentModalOpen = false;
+    this.addDocumentForm.reset();
+    this.selectedFile = undefined!;
+  }
 
-  // deleteDocument(documentId: string): void {
-  //   this.customerDashboardService.deleteDocument(documentId).subscribe(
-  //     () => {
-  //       this.fetchDocuments();
-  //     },
-  //     (error) => console.error('Error deleting document', error)
-  //   );
-  // }
+  closeModal(): void {
+    this.selectedDocumentUrl = null;
+  }
+
+  deleteDocument(documentId: string): void {
+    if (confirm('Do you really wish to delete this document?')) {
+      this.customerService.deleteCustomerDocument(documentId).subscribe(
+        (response) => {
+          this.successMessage = 'Document deleted successfully.';
+          this.fetchDocuments();
+        },
+        (error) => {
+          this.errorMessage = 'Failed to delete the document.';
+        }
+      );
+    }
+  }
+
+  viewDocument(url: string): void {
+    this.selectedDocumentUrl = url;
+  }
+  
 }
-

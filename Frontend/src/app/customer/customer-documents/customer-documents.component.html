@@ -1,53 +1,84 @@
-<!-- <div class="container mt-5">
-    <h2 class="text-center">Customer Documents</h2>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Customer Documents</h1>
+  
+    <div *ngIf="successMessage" class="alert alert-success text-center">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger text-center">
+      {{ errorMessage }}
+    </div>
   
     <div class="text-end mb-3">
-      <button class="btn btn-primary" (click)="openAddDocumentPopup()">Add New Document</button>
+      <button class="btn btn-success" (click)="openAddDocumentModal()">Add New Document</button>
     </div>
-    <div class="row">
-      <div class="col-md-4" *ngFor="let document of documents">
-        <div class="card">
-          <img [src]="document.documentFileURL" class="card-img-top" alt="Document Image">
-          <div class="card-body">
-            <h5 class="card-title">{{ document.documentName }}</h5>
-            <p><strong>Type:</strong> {{ document.documentType }}</p>
-            <p><strong>Status:</strong> {{ document.isVerified }}</p>
-            <div class="d-flex justify-content-between">
-              <button class="btn btn-success btn-sm" (click)="openUpdateDocumentPopup(document)">Update</button>
-              <button class="btn btn-danger btn-sm" (click)="deleteDocument(document.documentId)">Delete</button>
+  
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Document ID</th>
+          <th>Document Type</th>
+          <th>Document Name</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let document of documents">
+          <td>{{ document.documentId }}</td>
+          <td>{{ document.documentType }}</td>
+          <td>{{ document.documentName }}</td>
+          <td>{{ document.isVerified }}</td>
+          <td>
+            <button class="btn btn-info" (click)="viewDocument(document.documentFileURL)">View</button>
+            <button class="btn btn-danger" (click)="deleteDocument(document.documentId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div *ngIf="isAddDocumentModalOpen" class="modal show" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add New Document</h5>
+          <button type="button" class="btn-close" (click)="closeAddDocumentModal()"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="addDocumentForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="documentType">Document Type</label>
+              <input type="text" id="documentType" class="form-control" formControlName="documentType" />
             </div>
-          </div>
+            <div class="mb-3">
+              <label for="documentName">Document Name</label>
+              <input type="text" id="documentName" class="form-control" formControlName="documentName" />
+            </div>
+            <div class="mb-3">
+              <label for="documentFile">Upload File</label>
+              <input type="file" id="documentFile" class="form-control" (change)="onFileSelected($event)" />
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Add Document</button>
+              <button type="button" class="btn btn-secondary" (click)="closeAddDocumentModal()">Cancel</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
+  </div>
   
-    <div *ngIf="showPopup" class="popup">
-      <div class="popup-content">
-        <h4 *ngIf="!isUpdateMode">Add New Document</h4>
-        <h4 *ngIf="isUpdateMode">Update Document</h4>
-        <form [formGroup]="documentForm" (ngSubmit)="onSubmit()">
-          <div class="mb-3">
-            <label class="form-label">Document Name</label>
-            <input type="text" class="form-control" formControlName="documentName" placeholder="Enter Document Name">
-          </div>
-          <div *ngIf="!isUpdateMode" class="mb-3">
-            <label class="form-label">Document URL</label>
-            <input type="text" class="form-control" formControlName="documentFileURL" placeholder="Enter Document URL">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Document Type</label>
-            <input type="text" class="form-control" formControlName="documentType" placeholder="Enter Document Type">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Verification Status</label>
-            <input type="text" class="form-control" formControlName="isVerified" placeholder="Verification Status">
-          </div>
-          <button type="submit" class="btn btn-primary w-100">
-            {{ isUpdateMode ? 'Update Document' : 'Add Document' }}
-          </button>
-        </form>
-        <button class="btn btn-secondary w-100 mt-2" (click)="closePopup()">Cancel</button>
+  <div *ngIf="selectedDocumentUrl" class="modal show" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">View Document</h5>
+          <button type="button" class="btn-close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img [src]="selectedDocumentUrl" alt="Document" class="img-fluid" />
+        </div>
       </div>
     </div>
 </div>
-   -->
+  

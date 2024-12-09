@@ -11,6 +11,7 @@ export class CustomerDashboardComponent{
   successMessage: string | null = null;
   errorMessage: string | null = null;
   customerDashboardService: any;
+
   
   constructor(private customerService: CustomerDashboardService, private router: Router) {}
 
@@ -39,7 +40,12 @@ export class CustomerDashboardComponent{
   }
 
   viewProfile(): void {
-    this.router.navigate(['/view-profile']);
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      this.router.navigate(['/view-profile', userId]);
+    } else {
+      console.error('User ID not found in local storage.');
+    }
   }
 
   editProfile(): void {

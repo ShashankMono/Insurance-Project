@@ -1,1 +1,20 @@
-<p>approve-customer works!</p>
+<div class="container mt-5">
+    <h2>Approve Customers</h2>
+    <div *ngFor="let customer of customers" class="card mt-3">
+      <div class="card-body">
+        <h4>{{ customer.firstName }} {{ customer.lastName }}</h4>
+        <p>
+          <strong>Email:</strong> {{ customer.emailId }}<br />
+          <strong>Status:</strong> {{ customer.isApproved }}
+        </p>
+        <a
+          routerLink="/approve-documents"
+          [queryParams]="{ customerId: customer.customerId }"
+          class="btn btn-primary"
+        >
+          View Documents
+        </a>
+      </div>
+    </div>
+</div>
+  

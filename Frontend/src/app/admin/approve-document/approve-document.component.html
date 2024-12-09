@@ -1,0 +1,39 @@
+<div class="container mt-5">
+    <h2>Approve Documents</h2>
+    <div *ngIf="documents.length > 0; else noDocuments">
+      <div *ngFor="let document of documents" class="card mt-3">
+        <div class="card-body">
+          <h4>{{ document.documentType }}</h4>
+          <p>
+            <strong>Document Name:</strong> {{ document.documentName }}<br />
+            <strong>Status:</strong> {{ document.isVerified }}
+          </p>
+          <a
+            [href]="document.documentFileURL"
+            target="_blank"
+            class="btn btn-secondary"
+          >
+            View Document
+          </a>
+          <button
+            class="btn btn-success mx-2"
+            (click)="updateStatus(document.documentId, 'Verified')"
+            [disabled]="document.isVerified === 'Verified'"
+          >
+            Approve
+          </button>
+          <button
+            class="btn btn-danger"
+            (click)="updateStatus(document.documentId, 'Rejected')"
+            [disabled]="document.isVerified === 'Rejected'"
+          >
+            Reject
+          </button>
+        </div>
+      </div>
+    </div>
+    <ng-template #noDocuments>
+      <p class="text-center">No documents available for this customer.</p>
+    </ng-template>
+</div>
+  

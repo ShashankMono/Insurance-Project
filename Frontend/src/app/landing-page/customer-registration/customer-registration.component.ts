@@ -35,6 +35,7 @@ export class CustomerRegistrationComponent implements OnInit {
       dateOfBirth: new FormControl('', Validators.required),
       stateId: new FormControl('', Validators.required),
       cityId: new FormControl('', Validators.required)
+      
     });
   }
 

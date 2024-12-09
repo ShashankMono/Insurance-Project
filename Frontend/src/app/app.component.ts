@@ -18,7 +18,13 @@ export class AppComponent {
         '/landing-page',
         '/customer-registration',
         '/create-policy-account',
-        '/policy-operations'
+        '/policy-operations',
+        '/view-policies',
+        '/customer-documents',
+        '/add-nominee',
+        '/view-nominee',
+        // '/view-profile/${userId}'
+
       ];
       this.showHeader = !noHeaderRoutes.includes(this.router.url);
     });

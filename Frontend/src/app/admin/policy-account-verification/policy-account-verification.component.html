@@ -1,0 +1,53 @@
+<!-- <div class="container mt-5">
+    <h1 class="text-center mb-4">Verify Policy Accounts</h1>
+  
+    <div *ngIf="successMessage" class="alert alert-success text-center">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger text-center">
+      {{ errorMessage }}
+    </div>
+  
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Policy ID</th>
+          <th>Coverage Amount</th>
+          <th>Policy Term</th>
+          <th>Installment Type</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let policy of pendingPolicies">
+          <td>{{ policy.id }}</td>
+          <td>{{ policy.coverageAmount }}</td>
+          <td>{{ policy.policyTerm }}</td>
+          <td>{{ policy.installmentType }}</td>
+          <td>{{ policy.status }}</td>
+          <td>
+            <button
+              class="btn btn-primary"
+              (click)="viewDocuments(policy.id)"
+            >
+              View Documents
+            </button>
+            <button
+              class="btn btn-success"
+              (click)="approvePolicy(policy.id)"
+            >
+              Approve
+            </button>
+            <button
+              class="btn btn-danger"
+              (click)="rejectPolicy(policy.id)"
+            >
+              Reject
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+   -->
