@@ -12,8 +12,6 @@ namespace Insurance_final_project.Dto
         [ForeignKey("PolicyAccount")]
         public Guid PolicyAccountId { get; set; }
 
-        public PolicyAccount PolicyAccount { get; set; }
-
         public DateTime? InstallmentPaidDate { get; set; }
 
         [Required(ErrorMessage = "Installment Due Date is required.")]

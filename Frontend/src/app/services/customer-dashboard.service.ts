@@ -70,6 +70,10 @@ export class CustomerDashboardService {
     return this.http.get<any>(`${this.url}/PolicyInstallment/policyaccount/${accountId}`);
   }
 
+  postTransaction(id:any):Observable<any>{
+    return this.http.get(`${this.url}/PolicyInstallment/pay/${id}`);
+  }
+
   // Profile
   getProfile(customerId: string): Observable<any> {
     return this.http.get(`${this.url}/Customer/${customerId}`);

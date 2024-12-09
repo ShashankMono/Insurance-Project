@@ -86,18 +86,20 @@ export class PayInstallmentComponent implements OnInit {
     );
   }
 
-  payInstallment(Amount:any): void {
+  payInstallment(Amount:any,id:any): void {
     var obj = {
       policyName:this.policyName,
       amount:Amount,
-      sccessUrl:"http://localhost:4200/Success",
+      successUrl:"http://localhost:4200/Success?id="+id,
       cancelUrl:"http://localhost:4200/Cancel"
     }
 
     this.dashboardService.getPaymentSession(obj).subscribe({
       next:(response)=>{
         var resData = response;
-        console.log(resData);
+        if(resData.success){
+          open(resData.sessionUrl)
+        }
       },
       error:(err:HttpErrorResponse)=>{
         

@@ -31,6 +31,21 @@ namespace Insurance_final_project.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPolicyType([FromBody] PolicyTypeDto policyType)
         {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                return BadRequest(new
+                {
+                    Success = false,
+                    Data = (object)null,
+                    Message = "Validation failed.",
+                    Errors = errors
+                });
+            }
             var policyTypeId = await _policyTypeService.AddPolicyType(policyType);
             return Ok(new
             {
@@ -43,6 +58,21 @@ namespace Insurance_final_project.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdatePolicyType([FromBody] PolicyTypeDto policyType)
         {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                return BadRequest(new
+                {
+                    Success = false,
+                    Data = (object)null,
+                    Message = "Validation failed.",
+                    Errors = errors
+                });
+            }
             var updatedPolicyTypeId = await _policyTypeService.UpdatePolicyType(policyType);
             return Ok(new
             {

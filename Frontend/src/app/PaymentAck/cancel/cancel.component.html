@@ -1,1 +1,16 @@
-<p>cancel works!</p>
+<div class="container text-center mt-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <i class="bi bi-x-circle-fill text-danger" style="font-size: 5rem;"></i>
+        <h1 class="mt-3">Payment Canceled</h1>
+        <p class="lead">{{cancelMessage}}</p>
+  
+        <div class="mt-4">
+          <a routerLink="/payment" class="btn btn-primary">Try Again</a>
+          
+          <a routerLink="/policy-operations" class="btn btn-secondary">Go to Back</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  

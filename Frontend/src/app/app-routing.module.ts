@@ -206,7 +206,7 @@ const routes: Routes = [
     component: AddClaimComponent
   },
   { 
-    path: 'pay-installment/:policyAccountId', 
+    path: 'pay-installment', 
     component: PayInstallmentComponent
   },
   { 

@@ -37,7 +37,7 @@ export class PolicyOperationsComponent {
 
  
   payInstallment(policyAccountId: string, policyName:string): void {
-    this.router.navigate(['/pay-installment', {state:{policyAccountId,policyName}}]);
+    this.router.navigate(['/pay-installment'], {state:{policyAccountId,policyName}});
   }
 
   cancelPolicy(policyAccountId: string): void {
