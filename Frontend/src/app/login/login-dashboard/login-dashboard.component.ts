@@ -38,6 +38,7 @@ export class LoginDashboardComponent {
         localStorage.setItem('token', this.myToken);
   
         this.userData = response.body;
+        localStorage.setItem('userId',this.userData.data.userId);
   
         if (this.userData && this.userData.data) {
           localStorage.setItem('role', this.userData.data.roleName);

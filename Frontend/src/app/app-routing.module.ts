@@ -254,7 +254,7 @@ const routes: Routes = [
     component:PolicyOperationsComponent
   },
   {
-    path:'customer-documents',
+    path:'customer-documents/:customerId',
     component:CustomerDocumentsComponent
   },
   {

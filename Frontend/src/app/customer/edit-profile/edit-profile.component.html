@@ -34,8 +34,8 @@
       </div>
   
       <div class="mb-3">
-        <label for="dateOfBirth" class="form-label">Date of Birth<span class="text-danger">*</span></label>
-        <input id="dateOfBirth" type="date" class="form-control" formControlName="dateOfBirth" required>
+        <label for="dateOfBirth" class="form-label">Date of Birth<span class="text-danger">*</span><span>(Should be 18 years old)</span></label>
+        <input id="dateOfBirth" type="date" class="form-control" formControlName="dateOfBirth" [max]="MaxDate" required>
         <div *ngIf="editProfileForm.get('dateOfBirth')?.invalid && editProfileForm.get('dateOfBirth')?.touched" class="text-danger">
           Date of Birth is required.
         </div>

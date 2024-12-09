@@ -48,17 +48,26 @@ namespace Insurance_final_project.Services
             return _DocumentRepo.Update(Document).DocumentId;
         }
 
-        public async Task<Guid> UpdateDocument(DocumentDto document)
+        public async Task<Guid> UpdateDocument(UpdateDocumentDto documentDto)
         {
-            if (_DocumentRepo.GetAll().AsNoTracking().FirstOrDefault(d => d.DocumentId == document.DocumentId) == null)
+            var document = _DocumentRepo.GetAll().AsNoTracking().FirstOrDefault(d => d.DocumentId == documentDto.DocumentId);
+            if ( document== null)
             {
                 throw new InvalidGuidException("Invalid Document!");
             }
-            if (_customerRepo.Get(document.CustomerId) == null)
+            document.DocumentFileURL = documentDto.DocumentFileURL;
+            return _DocumentRepo.Update(document).DocumentId;
+        }
+
+        public async Task<bool> DeleteDocument(Guid documentId)
+        {
+            var document = _DocumentRepo.GetAll().AsNoTracking().FirstOrDefault(d => d.DocumentId == documentId);
+            if ( document== null)
             {
-                throw new InvalidGuidException("Customer not found!");
+                throw new InvalidGuidException("Invalid Document!");
             }
-            return _DocumentRepo.Update(_Mapper.Map<DocumentDto, Document>(document)).DocumentId;
+            _DocumentRepo.Delete(document);
+            return true;
         }
 
         public async Task<List<DocumentResponseDto>> GetDocument()

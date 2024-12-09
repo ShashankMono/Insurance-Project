@@ -11,9 +11,24 @@ export class CustomerDashboardComponent{
   successMessage: string | null = null;
   errorMessage: string | null = null;
   customerDashboardService: any;
-
+  customerDets:any=""
   
-  constructor(private customerService: CustomerDashboardService, private router: Router) {}
+  constructor(private customerService: CustomerDashboardService, private router: Router) {
+    var userid =  localStorage.getItem('userId');
+    if (userid!=null) {
+      this.customerService.getCustomerDetails(userid).subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.customerDets = response.data;
+          }
+        },
+        error: (err) => {
+          alert("User not found!");
+          console.error('Error fetching customer details', err);
+        }
+      });
+    }
+  }
 
   viewPolicies(): void {
     this.router.navigate(['/view-policies']);
@@ -28,7 +43,7 @@ export class CustomerDashboardComponent{
   }
 
   document(){
-    this.router.navigate(['/customer-documents'])
+    this.router.navigate(['/customer-documents',this.customerDets.customerId])
   }
 
   claimPolicy(): void {

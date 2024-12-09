@@ -17,6 +17,7 @@ export class LoginHeaderComponent {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('userId');
     this.router.navigateByUrl('/login-dashboard');
   }
 

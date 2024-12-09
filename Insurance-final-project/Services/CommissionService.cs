@@ -48,7 +48,7 @@ namespace Insurance_final_project.Services
                                                 .FirstOrDefault(pa => pa.Id == commission.PolicyAccountId)
                                                 .Policy
                                                 .CommissionPercentage;
-            var commissionAmount = amountPaid * commissionPercentage;   
+            var commissionAmount = amountPaid * (commissionPercentage/100);   
             commission.Amount = commissionAmount;
             
             //updating agent 

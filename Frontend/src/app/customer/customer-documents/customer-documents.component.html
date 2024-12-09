@@ -15,7 +15,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Document ID</th>
+          <th>Sr no.</th>
           <th>Document Type</th>
           <th>Document Name</th>
           <th>Status</th>
@@ -23,14 +23,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let document of documents">
-          <td>{{ document.documentId }}</td>
+        <tr *ngFor="let document of documents; let i=index">
+          <td>{{i+1}}</td>
           <td>{{ document.documentType }}</td>
           <td>{{ document.documentName }}</td>
           <td>{{ document.isVerified }}</td>
           <td>
             <button class="btn btn-info" (click)="viewDocument(document.documentFileURL)">View</button>
             <button class="btn btn-danger" (click)="deleteDocument(document.documentId)">Delete</button>
+            <button class="btn btn-warning" (click)="updateDocument(document)">Update</button>
           </td>
         </tr>
       </tbody>
@@ -82,3 +83,41 @@
     </div>
 </div>
   
+
+<!-- Update Document Modal -->
+<div *ngIf="isUpdateDocumentModalOpen" class="modal show" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Document</h5>
+        <button type="button" class="btn-close" (click)="closeUpdateDocumentModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateDocumentForm" (ngSubmit)="onUpdateSubmit()">
+          <div class="mb-3">
+            <label for="updateDocumentFile">Upload File</label>
+            <input
+              type="file"
+              id="updateDocumentFile"
+              class="form-control"
+              (change)="onUpdateFileSelected($event)"
+            />
+            <div
+              *ngIf="
+                updateDocumentForm.get('documentFile')?.invalid &&
+                updateDocumentForm.get('documentFile')?.touched
+              "
+              class="text-danger"
+            >
+              File is required.
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Update Document</button>
+            <button type="button" class="btn btn-secondary" (click)="closeUpdateDocumentModal()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

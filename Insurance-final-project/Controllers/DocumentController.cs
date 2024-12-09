@@ -79,7 +79,7 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateDoc([FromBody] DocumentDto document)
+        public async Task<IActionResult> UpdateDoc([FromBody] UpdateDocumentDto document)
         {
 
             if (!ModelState.IsValid)
@@ -118,6 +118,19 @@ namespace Insurance_final_project.Controllers
                 Success = true,
                 Data = documents,
                 Message = "Documents retrieved successfully."
+            });
+        }
+
+        [HttpDelete("{DocumentId}")]
+        public async Task<IActionResult> DeleteDocuments(Guid DocumentId)
+        {
+            var documents = await _documentService.DeleteDocument(DocumentId);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = documents,
+                Message = "Documents Deleted successfully."
             });
         }
     }
