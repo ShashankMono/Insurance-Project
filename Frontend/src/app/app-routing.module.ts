@@ -128,10 +128,7 @@ const routes: Routes = [
         path:'view-policy-types',
         component:ViewPolicyTypesComponent
       },
-      {
-        path:'view-policies',
-        component:ViewAllPoliciesComponent
-      },
+      
       { 
         path: 'add-policy-types', 
         component: AddPolicyTypeComponent
@@ -154,7 +151,7 @@ const routes: Routes = [
       },
       { 
         path: 'view-policies', 
-        component: DisplayPolicyComponent
+        component: ViewPoliciesComponent
       }
       
     ]
@@ -189,7 +186,10 @@ const routes: Routes = [
     path:'user-registration',
     component:UserRegistrationComponent
   },
-  
+  {
+    path:'view-policies',
+    component:ViewAllPoliciesComponent
+  },
   {
     path: 'customer-registration', 
     component: CustomerRegistrationComponent 
