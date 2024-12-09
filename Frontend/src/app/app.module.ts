@@ -65,10 +65,13 @@ import { ViewQueriesComponent } from './customer/view-queries/view-queries.compo
 import { ViewNomineesComponent } from './customer/view-nominees/view-nominees.component';
 import { PolicyOperationsComponent } from './customer/policy-operations/policy-operations.component';
 import { UserRegistrationComponent } from './landing-page/user-registration/user-registration.component';
-import { DocumentComponent } from './customer/document/document.component';
 import { CustomerDocumentsComponent } from './customer/customer-documents/customer-documents.component';
 import { PolicyAccountDocumentsComponent } from './customer/policy-account-documents/policy-account-documents.component';
 import { UpdatePolicyAccountDocumentComponent } from './customer/update-policy-account-document/update-policy-account-document.component';
+
+
+import { SuccessComponent } from './PaymentAck/success/success.component';
+import { CancelComponent } from './PaymentAck/cancel/cancel.component';
 import { PolicyAccountVerificationComponent } from './employee/policy-account-verification/policy-account-verification.component';
 import { ApproveDocumentComponent } from './employee/approve-document/approve-document.component';
 import { AgentReportComponent } from './admin/agent-report/agent-report.component';
@@ -134,14 +137,16 @@ import { AdminViewComponent } from './admin/admin-view/admin-view.component';
     ViewNomineesComponent,
     PolicyOperationsComponent,
     UserRegistrationComponent,
-    DocumentComponent,
     CustomerDocumentsComponent,
     PolicyAccountDocumentsComponent,
     UpdatePolicyAccountDocumentComponent,
     PolicyAccountVerificationComponent,
-    ApproveDocumentComponent,
+    
     AgentReportComponent,
     AdminViewComponent
+    ApproveDocumentComponent,
+    SuccessComponent,
+    CancelComponent,
     
   ],
   imports: [

@@ -1,0 +1,9 @@
+.badge-success {
+    background-color: #28a745;
+    color: white;
+  }
+  
+.badge-danger {
+    background-color: #dc3545;
+    color: white;
+  }

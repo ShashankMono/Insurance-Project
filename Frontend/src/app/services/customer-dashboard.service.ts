@@ -62,8 +62,16 @@ export class CustomerDashboardService {
     );
   }
 
+  getPaymentSession(sessionData:any){
+    return this.http.post<any>(`${this.url}/Payment/create-session`,sessionData)
+  }
+
   getInstallment(accountId:any):Observable<any>{
     return this.http.get<any>(`${this.url}/PolicyInstallment/policyaccount/${accountId}`);
+  }
+
+  postTransaction(id:any):Observable<any>{
+    return this.http.get(`${this.url}/PolicyInstallment/pay/${id}`);
   }
 
   // Profile
@@ -103,10 +111,9 @@ export class CustomerDashboardService {
     return this.http.get<any>(`${this.url}/PolicyAccountDocument/${policyAccountId}`);
   }
   
-  updatePolicyAccountDocument(documentId: any, documentData: any): Observable<any> {
+  updatePolicyAccountDocument(documentData:any): Observable<any> {
     return this.http.put<any>(`${this.url}/PolicyAccountDocument`, {
-      documentId: documentId,
-      ...documentData,
+      documentData
     });
   }
   

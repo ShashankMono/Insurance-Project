@@ -20,6 +20,10 @@ export class CustomerDocumentsComponent implements OnInit {
   addDocumentForm!: FormGroup;
   selectedFile!: File;
 
+  isUpdateDocumentModalOpen: boolean = false;
+  updateDocumentForm!: FormGroup;
+  updatingDocumentId!: any;
+
   constructor(
     private customerService: CustomerDocumentsService,
     private route: ActivatedRoute
@@ -27,6 +31,7 @@ export class CustomerDocumentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerId = this.route.snapshot.params['customerId'];
+    console.log(this.customerId);
     this.fetchDocuments();
 
     this.addDocumentForm = new FormGroup({
@@ -34,6 +39,18 @@ export class CustomerDocumentsComponent implements OnInit {
       documentName: new FormControl('', Validators.required),
       documentFile: new FormControl(null, Validators.required),
     });
+
+    this.updateDocumentForm = new FormGroup({
+      documentFile: new FormControl(null, Validators.required),
+    });
+    
+  }
+
+  setErrorMessage(message: string): void {
+    this.errorMessage = message;
+    setTimeout(() => {
+      this.errorMessage = null;
+    }, 5000); 
   }
 
   fetchDocuments(): void {
@@ -42,7 +59,7 @@ export class CustomerDocumentsComponent implements OnInit {
         this.documents = response.data;
       },
       (error) => {
-        this.errorMessage = 'Failed to fetch documents.';
+        this.setErrorMessage( 'Failed to fetch documents.');
       }
     );
   }
@@ -80,19 +97,20 @@ export class CustomerDocumentsComponent implements OnInit {
                 this.closeAddDocumentModal();
               },
               (error) => {
-                this.errorMessage = 'Failed to save document.';
+                this. setErrorMessage( 'Failed to save document.');
+                console.log(error);
               }
             );
           } else {
-            this.errorMessage = 'File upload failed: No file URL returned.';
+            this. setErrorMessage( 'File upload failed: No file URL returned.');
           }
         },
         (error) => {
-          this.errorMessage = 'Failed to upload file.';
+          this. setErrorMessage( 'Failed to upload file.');
         }
       );
     } else {
-      this.errorMessage = 'Please fill in all required fields.';
+      this. setErrorMessage( 'Please fill in all required fields.');
     }
   }
   
@@ -111,7 +129,7 @@ export class CustomerDocumentsComponent implements OnInit {
     this.selectedDocumentUrl = null;
   }
 
-  deleteDocument(documentId: string): void {
+  deleteDocument(documentId: any): void {
     if (confirm('Do you really wish to delete this document?')) {
       this.customerService.deleteCustomerDocument(documentId).subscribe(
         (response) => {
@@ -119,7 +137,7 @@ export class CustomerDocumentsComponent implements OnInit {
           this.fetchDocuments();
         },
         (error) => {
-          this.errorMessage = 'Failed to delete the document.';
+          this. setErrorMessage( 'Failed to delete the document.');
         }
       );
     }
@@ -129,4 +147,61 @@ export class CustomerDocumentsComponent implements OnInit {
     this.selectedDocumentUrl = url;
   }
   
+
+  updateDocument(document: any): void {
+    this.updatingDocumentId = document.documentId;
+    this.isUpdateDocumentModalOpen = true;
+  }
+  
+  onUpdateFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.updateDocumentForm.patchValue({ documentFile: input.files[0] });
+      this.updateDocumentForm.get('documentFile')?.updateValueAndValidity();
+    }
+  }
+
+  onUpdateSubmit(): void {
+    if (this.updateDocumentForm.valid) {
+      const file = this.updateDocumentForm.get('documentFile')?.value;
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      this.customerService.uploadFile(formData).subscribe(
+        (uploadResponse) => {
+          if (uploadResponse?.data?.result?.url) {
+            const updatedData = {
+              documentId:this.updatingDocumentId,
+              documentFileURL: uploadResponse.data.result.url,
+            };
+  
+            this.customerService.updateCustomerDocument(updatedData).subscribe(
+              () => {
+                this.successMessage = 'Document updated successfully.';
+                this.fetchDocuments();
+                this.closeUpdateDocumentModal();
+              },
+              () => {
+                this. setErrorMessage( 'Failed to update document.');
+              }
+            );
+          } else {
+            this. setErrorMessage( 'File upload failed: No file URL returned.');
+          }
+        },
+        () => {
+          this. setErrorMessage( 'Failed to upload file.');
+        }
+      );
+    } else {
+      this. setErrorMessage( 'Please select a file to upload.');
+    }
+  }
+
+  closeUpdateDocumentModal(): void {
+    this.isUpdateDocumentModalOpen = false;
+    this.updateDocumentForm.reset();
+  }
+  
+
 }

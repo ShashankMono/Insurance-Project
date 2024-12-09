@@ -47,6 +47,11 @@ import { UserRegistrationComponent } from './landing-page/user-registration/user
 import { CustomerDocumentsComponent } from './customer/customer-documents/customer-documents.component';
 import { PolicyAccountDocumentsComponent } from './customer/policy-account-documents/policy-account-documents.component';
 import { UpdatePolicyAccountDocumentComponent } from './customer/update-policy-account-document/update-policy-account-document.component';
+
+
+import { SuccessComponent } from './PaymentAck/success/success.component';
+import { CancelComponent } from './PaymentAck/cancel/cancel.component';
+
 import { PolicyAccountVerificationComponent } from './employee/policy-account-verification/policy-account-verification.component';
 import { ApproveCustomerComponent } from './employee/approve-customer/approve-customer.component';
 import { ApproveDocumentComponent } from './employee/approve-document/approve-document.component';
@@ -61,6 +66,14 @@ const routes: Routes = [
   { 
     path: 'landing-page', 
     component: LandingPageComponent 
+  },
+  {
+    path:'Success',
+    component: SuccessComponent
+  },
+  {
+    path:'Cancel',
+    component: CancelComponent
   },
   { 
     path: 'login-dashboard', 
@@ -213,7 +226,7 @@ const routes: Routes = [
     component: AddClaimComponent
   },
   { 
-    path: 'pay-installment/:policyAccountId', 
+    path: 'pay-installment', 
     component: PayInstallmentComponent
   },
   { 
@@ -257,7 +270,7 @@ const routes: Routes = [
     component:PolicyOperationsComponent
   },
   {
-    path:'customer-documents',
+    path:'customer-documents/:customerId',
     component:CustomerDocumentsComponent
   },
   {

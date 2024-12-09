@@ -33,7 +33,7 @@
           <td>
             <button class="btn btn-info" (click)="viewDocument(document.documentFileURL)">View</button>
             <button class="btn btn-danger" (click)="deleteDocument(document.documentId)">Delete</button>
-            <button class="btn btn-primary" (click)="openUpdateDocumentModal(document.documentId)">Update</button>
+            <button class="btn btn-warning" (click)="openUpdateDocumentModal(document.documentId)">Update</button>
           </td>
         </tr>
       </tbody>
@@ -112,4 +112,37 @@
       </div>
     </div>
 </div>
+
+<!-- Update Document Modal -->
+<div *ngIf="isUpdateDocumentModalOpen" class="modal show" style="display: block;" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Document</h5>
+        <button type="button" class="btn-close" (click)="closeUpdateDocumentModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateDocumentForm" (ngSubmit)="onUpdateSubmit()">
+          <div class="mb-3">
+            <label for="updateDocumentFile" class="form-label">Upload New Document File<span style="color: red;">*</span></label>
+            <input
+              type="file"
+              id="updateDocumentFile"
+              class="form-control"
+              (change)="onUpdateFileSelected($event)"
+            />
+            <div *ngIf="updateDocumentForm.get('documentFile')?.invalid && updateDocumentForm.get('documentFile')?.touched" class="text-danger">
+              Document File is required.
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Update Document</button>
+            <button type="button" class="btn btn-secondary" (click)="closeUpdateDocumentModal()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
   

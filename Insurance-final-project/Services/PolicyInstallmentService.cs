@@ -69,32 +69,18 @@ namespace Insurance_final_project.Services
                 };
 
                 var installResponse = _installmentRepository.Add(installment);
-                //if (isFirstInstallment)
-                //{
-                //    var transaction = new Transaction
-                //    {
-                //        Type = TransactionType.Deposit.ToString(),
-                //        Amount = installmentAmount,
-                //        CustomerId = installmentData.CustomerId,
-                //        PolicyAccountId = installmentData.PolicyAccountId,
-                //        PolicyInstallmentId = installment.Id,
-                //        DateTime = DateTime.UtcNow,
-                //        ReferenceNumber = ""
-                //    };
-                //    _transactionRepository.Add(transaction);
-                //}
             }
         }
 
-        public async Task<bool> PayInstallment(Guid installmentId, Guid customerId)
+        public async Task<bool> PayInstallment(Guid installmentId)
         {
             var installment = _installmentRepository.GetAll().AsNoTracking().FirstOrDefault(i=>i.Id==installmentId);
-
+            
             if (installment == null || installment.IsPaid)
             {
                 throw new InValidRequestException("Invalid request!");
             }
-
+            var policyAccount = _policyAccountRepo.Get(installment.PolicyAccountId);
             installment.IsPaid = true;
             installment.InstallmentPaidDate = DateTime.UtcNow;
 
@@ -105,17 +91,17 @@ namespace Insurance_final_project.Services
             {
                 Type = TransactionType.Deposit.ToString(),
                 Amount = installment.Amount,
-                CustomerId = customerId,
+                CustomerId = policyAccount.CustomerId,
                 PolicyAccountId = installment.PolicyAccountId,
                 PolicyInstallmentId = installment.Id,
                 DateTime = DateTime.UtcNow,
-                ReferenceNumber = ""
-            };
+                ReferenceNumber = Guid.NewGuid(),
+            }; ;
 
             _transactionRepository.Add(transaction);
 
             //Adding commission
-            var policyAccount = _policyAccountRepo.Get(installment.PolicyAccountId);
+
             if(policyAccount.AgentId != null)
             {
                 var commission = new CommissionDto()
@@ -131,13 +117,13 @@ namespace Insurance_final_project.Services
             return true;
         }
 
-        public async Task<List<PolicyInstallmentDto>> GetInstallmentsByPolicyAccountId(Guid PolicyAccountId)
+        public async Task<List<PolicyInstallmentResponsDto>> GetInstallmentsByPolicyAccountId(Guid PolicyAccountId)
         {
             if(_policyAccountRepo.Get(PolicyAccountId) == null)
             {
                 throw new InvalidGuidException("Account not found!");
             }
-            return _Mapper.Map<List<PolicyInstallmentDto>>(_installmentRepository.GetAll().Where(i=>i.PolicyAccountId == PolicyAccountId).ToList());
+            return _Mapper.Map<List<PolicyInstallmentResponsDto>>(_installmentRepository.GetAll().Where(i=>i.PolicyAccountId == PolicyAccountId).OrderBy(i=>i.InstallmentDueDate).ToList());
         }
 
     }

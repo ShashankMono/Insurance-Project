@@ -20,6 +20,22 @@ namespace Insurance_final_project.Controllers
         [HttpPost]
         public IActionResult AddInstallments(PolicyInstallmentDto installmentData)
         {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                return BadRequest(new
+                {
+                    Success = false,
+                    Data = (object)null,
+                    Message = "Validation failed.",
+                    Errors = errors
+                });
+            }
+
             _policyInstallmentService.AddInstallments(installmentData);
 
             return Ok(new
@@ -31,10 +47,26 @@ namespace Insurance_final_project.Controllers
         }
 
         // Pay an Installment
-        [HttpPost("pay/{installmentId}")]
-        public async Task<IActionResult> PayInstallment(Guid installmentId, Guid customerId)
+        [HttpGet("pay/{InstallmentId}")]
+        public async Task<IActionResult> PayInstallment(Guid InstallmentId)
         {
-            var result = await _policyInstallmentService.PayInstallment(installmentId, customerId);
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                return BadRequest(new
+                {
+                    Success = false,
+                    Data = (object)null,
+                    Message = "Validation failed.",
+                    Errors = errors
+                });
+            }
+
+            var result = await _policyInstallmentService.PayInstallment(InstallmentId);
 
             return Ok(new
             {

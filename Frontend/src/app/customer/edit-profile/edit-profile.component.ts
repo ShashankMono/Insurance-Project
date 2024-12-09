@@ -15,6 +15,7 @@ export class EditProfileComponent implements OnInit {
   states: any[] = [];
   cities: any[] = [];
   userId: string | null = null;
+  MaxDate:any="";
 
   constructor(
     private customerService: CustomerDashboardService,
@@ -34,6 +35,12 @@ export class EditProfileComponent implements OnInit {
       userId: new FormControl(''),
       isApproved: new FormControl('')
     });
+    const today = new Date();
+    const MaxDate = new Date(
+      today.getFullYear() - 18,
+      today.getMonth(),
+      today.getDate())
+      this.MaxDate = MaxDate.toISOString().split('T')[0]; 
   }
 
   ngOnInit(): void {
