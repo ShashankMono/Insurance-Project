@@ -31,7 +31,7 @@ import { CustomerRegistrationComponent } from './landing-page/customer-registrat
 import { AddAgentComponent } from './admin/add-agent/add-agent.component';
 import { AddEmployeeComponent } from './admin/add-employee/add-employee.component';
 import { AddPolicyComponent } from './admin/add-policy/add-policy.component';
-import { ApproveCustomerComponent } from './admin/approve-customer/approve-customer.component';
+import { ApproveCustomerComponent } from './employee/approve-customer/approve-customer.component';
 import { AddCityComponent } from './admin/add-city/add-city.component';
 import { AddStateComponent } from './admin/add-state/add-state.component';
 import { LoginHeaderComponent } from './login/login-header/login-header.component';
@@ -68,8 +68,8 @@ import { UserRegistrationComponent } from './landing-page/user-registration/user
 import { CustomerDocumentsComponent } from './customer/customer-documents/customer-documents.component';
 import { PolicyAccountDocumentsComponent } from './customer/policy-account-documents/policy-account-documents.component';
 import { UpdatePolicyAccountDocumentComponent } from './customer/update-policy-account-document/update-policy-account-document.component';
-import { PolicyAccountVerificationComponent } from './admin/policy-account-verification/policy-account-verification.component';
-import { ApproveDocumentComponent } from './admin/approve-document/approve-document.component';
+import { PolicyAccountVerificationComponent } from './employee/policy-account-verification/policy-account-verification.component';
+import { ApproveDocumentComponent } from './employee/approve-document/approve-document.component';
 import { SuccessComponent } from './PaymentAck/success/success.component';
 import { CancelComponent } from './PaymentAck/cancel/cancel.component';
 
