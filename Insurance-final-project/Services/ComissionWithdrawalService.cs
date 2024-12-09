@@ -45,7 +45,7 @@ namespace Insurance_final_project.Services
             {
                 throw new AgendNotFoundException("Agent not found!");
             }
-            return _Mapper.Map<List<CommissionWithdrawalDto>>(_CommissionWithdrawalRepo.GetAll().Where(c=>c.Id == agendId).ToList());
+            return _Mapper.Map<List<CommissionWithdrawalDto>>(_CommissionWithdrawalRepo.GetAll().Where(c=>c.AgentId == agendId).ToList());
         }
     }
 }

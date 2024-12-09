@@ -22,6 +22,5 @@ namespace Insurance_final_project.Models
 
         public Customer Customer { get; set; }
 
-        public bool IsActive = false;
     }
 }

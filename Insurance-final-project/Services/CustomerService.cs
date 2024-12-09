@@ -101,9 +101,6 @@ namespace Insurance_final_project.Services
         public async Task<List<CustomerDto>> GetCustomerAccounts()
         {
             return _mapper.Map<List<Customer>, List<CustomerDto>>(_customerRepository.GetAll()
-                .Include(c => c.Transactions)
-                .Include(c => c.PolicyAccounts)
-                .Include(c => c.Queries)
                 .ToList());
         }
         public CustomerProfileDto GetCustomerByUserId(Guid UserId)

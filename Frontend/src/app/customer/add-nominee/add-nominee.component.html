@@ -1,32 +1,39 @@
-<form [formGroup]="nomineeForm" (ngSubmit)="submitNominee()">
-    <div class="form-group">
-      <label for="nomineeName">Nominee Name</label>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Add Nominee</h1>
+
+  <form [formGroup]="nomineeForm" (ngSubmit)="submitNominee()">
+    <div class="mb-3">
+      <label for="nomineeName" class="form-label">
+        Nominee Name <span class="text-danger">*</span>
+      </label>
       <input
+        type="text"
         id="nomineeName"
         class="form-control"
         formControlName="nomineeName"
-        placeholder="Enter nominee name"
-        required
       />
       <div *ngIf="nomineeForm.get('nomineeName')?.touched && nomineeForm.get('nomineeName')?.invalid" class="text-danger">
-        Name is required.
+        Nominee name is required.
       </div>
     </div>
-  
-    <div class="form-group">
-      <label for="nomineeRelation">Nominee Relation</label>
+
+    <div class="mb-3">
+      <label for="nomineeRelation" class="form-label">
+        Nominee Relation <span class="text-danger">*</span>
+      </label>
       <input
+        type="text"
         id="nomineeRelation"
         class="form-control"
         formControlName="nomineeRelation"
-        placeholder="Enter relation with nominee"
-        required
       />
       <div *ngIf="nomineeForm.get('nomineeRelation')?.touched && nomineeForm.get('nomineeRelation')?.invalid" class="text-danger">
-        Relation is required.
+        Nominee relation is required.
       </div>
     </div>
-  
-    <button type="submit" class="btn btn-success mt-3" [disabled]="nomineeForm.invalid">Add Nominee</button>
-</form>
-  
+
+    <button type="submit" class="btn btn-primary" [disabled]="nomineeForm.invalid">
+      Submit
+    </button>
+  </form>
+</div>

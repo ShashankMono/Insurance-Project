@@ -61,7 +61,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("{customerId}")]
+        [HttpGet("customer/{customerId}")]
         public async Task<IActionResult> GetNominees(Guid customerId)
         {
             if (!ModelState.IsValid)

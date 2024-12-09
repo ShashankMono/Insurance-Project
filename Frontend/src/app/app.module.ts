@@ -54,7 +54,6 @@ import { AddClaimComponent } from './customer/add-claim/add-claim.component';
 import { WithdrawClaimComponent } from './customer/withdraw-claim/withdraw-claim.component';
 import { TransactionHistoryComponent } from './customer/transaction-history/transaction-history.component';
 import { AddNomineeComponent } from './customer/add-nominee/add-nominee.component';
-import { EditNomineeComponent } from './customer/edit-nominee/edit-nominee.component';
 import { DeleteNomineeComponent } from './customer/delete-nominee/delete-nominee.component';
 import { AddQueryComponent } from './customer/add-query/add-query.component';
 import { PayInstallmentComponent } from './customer/pay-installment/pay-installment.component';
@@ -68,7 +67,7 @@ import { UserRegistrationComponent } from './landing-page/user-registration/user
 import { CustomerDocumentsComponent } from './customer/customer-documents/customer-documents.component';
 import { PolicyAccountDocumentsComponent } from './customer/policy-account-documents/policy-account-documents.component';
 import { UpdatePolicyAccountDocumentComponent } from './customer/update-policy-account-document/update-policy-account-document.component';
-import { PolicyAccountVerificationComponent } from './employee/policy-account-verification/policy-account-verification.component';
+import { PolicyAccountVerificationComponent } from './admin/policy-account-verification/policy-account-verification.component';
 import { ApproveDocumentComponent } from './employee/approve-document/approve-document.component';
 import { SuccessComponent } from './PaymentAck/success/success.component';
 import { CancelComponent } from './PaymentAck/cancel/cancel.component';
@@ -122,7 +121,6 @@ import { CancelComponent } from './PaymentAck/cancel/cancel.component';
     WithdrawClaimComponent,
     TransactionHistoryComponent,
     AddNomineeComponent,
-    EditNomineeComponent,
     DeleteNomineeComponent,
     AddQueryComponent,
     PayInstallmentComponent,
