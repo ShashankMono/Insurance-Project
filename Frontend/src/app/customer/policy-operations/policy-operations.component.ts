@@ -18,6 +18,7 @@ export class PolicyOperationsComponent {
 
   ngOnInit(): void {
     this.fetchPolicyAccounts();
+    
   }
 
   // Fetch all policy accounts from the backend
@@ -25,6 +26,7 @@ export class PolicyOperationsComponent {
     this.customerDashboardService.getPolicyAccounts().subscribe(
       (response) => {
         this.policyAccounts = response.data;
+        console.log(this.policyAccounts);
       },
       (error) => {
         console.error('Error fetching policy accounts', error);
@@ -34,8 +36,8 @@ export class PolicyOperationsComponent {
   }
 
  
-  payInstallment(policyAccountId: string): void {
-    this.router.navigate(['/pay-installment', policyAccountId]);
+  payInstallment(policyAccountId: string, policyName:string): void {
+    this.router.navigate(['/pay-installment'], {state:{policyAccountId,policyName}});
   }
 
   cancelPolicy(policyAccountId: string): void {

@@ -50,6 +50,9 @@ import { UpdatePolicyAccountDocumentComponent } from './customer/update-policy-a
 import { PolicyAccountVerificationComponent } from './admin/policy-account-verification/policy-account-verification.component';
 import { ApproveCustomerComponent } from './admin/approve-customer/approve-customer.component';
 import { ApproveDocumentComponent } from './admin/approve-document/approve-document.component';
+import { SuccessComponent } from './PaymentAck/success/success.component';
+import { CancelComponent } from './PaymentAck/cancel/cancel.component';
+
 const routes: Routes = [
   { 
     path: '',
@@ -59,6 +62,14 @@ const routes: Routes = [
   { 
     path: 'landing-page', 
     component: LandingPageComponent 
+  },
+  {
+    path:'Success',
+    component: SuccessComponent
+  },
+  {
+    path:'Cancel',
+    component: CancelComponent
   },
   { 
     path: 'login-dashboard', 
@@ -199,7 +210,7 @@ const routes: Routes = [
     component: AddClaimComponent
   },
   { 
-    path: 'pay-installment/:policyAccountId', 
+    path: 'pay-installment', 
     component: PayInstallmentComponent
   },
   { 

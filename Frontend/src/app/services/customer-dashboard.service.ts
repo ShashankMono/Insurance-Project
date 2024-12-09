@@ -62,8 +62,16 @@ export class CustomerDashboardService {
     );
   }
 
+  getPaymentSession(sessionData:any){
+    return this.http.post<any>(`${this.url}/Payment/create-session`,sessionData)
+  }
+
   getInstallment(accountId:any):Observable<any>{
     return this.http.get<any>(`${this.url}/PolicyInstallment/policyaccount/${accountId}`);
+  }
+
+  postTransaction(id:any):Observable<any>{
+    return this.http.get(`${this.url}/PolicyInstallment/pay/${id}`);
   }
 
   // Profile

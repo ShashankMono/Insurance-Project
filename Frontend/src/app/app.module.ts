@@ -71,6 +71,8 @@ import { PolicyAccountDocumentsComponent } from './customer/policy-account-docum
 import { UpdatePolicyAccountDocumentComponent } from './customer/update-policy-account-document/update-policy-account-document.component';
 import { PolicyAccountVerificationComponent } from './admin/policy-account-verification/policy-account-verification.component';
 import { ApproveDocumentComponent } from './admin/approve-document/approve-document.component';
+import { SuccessComponent } from './PaymentAck/success/success.component';
+import { CancelComponent } from './PaymentAck/cancel/cancel.component';
 
 
 
@@ -138,6 +140,8 @@ import { ApproveDocumentComponent } from './admin/approve-document/approve-docum
     UpdatePolicyAccountDocumentComponent,
     PolicyAccountVerificationComponent,
     ApproveDocumentComponent
+    SuccessComponent,
+    CancelComponent,
     
   ],
   imports: [

@@ -25,9 +25,6 @@ namespace Insurance_final_project.Dto
         [RegularExpression("^(Monthly|Quarterly|Yearly|HalfYearly)$", ErrorMessage = "Installment Type must be 'Monthly', 'Quarterly', or 'Yearly'.")]
         public string InstallmentType { get; set; } 
 
-        [Required(ErrorMessage = "Customer is required.")]
-        public Guid CustomerId { get; set; }
-
         [Range(0, double.MaxValue, ErrorMessage = "Amount cannot be negative.")]
         public double Amount { get; set; }
 

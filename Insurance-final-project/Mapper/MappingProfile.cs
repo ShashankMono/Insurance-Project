@@ -87,6 +87,7 @@ namespace Insurance_final_project.Mapper
                 .ForMember(dest=> dest.State,val=>val.MapFrom(src=>src.State.StateName));
             CreateMap<PolicyAccount, PolicyAccountResponseDto>()
                 .ForMember(dest=>dest.PolicyName,val=>val.MapFrom(src=>src.Policy.Name));
+            CreateMap<PolicyInstallment, PolicyInstallmentResponsDto>().ReverseMap();
         }
     }
 }
