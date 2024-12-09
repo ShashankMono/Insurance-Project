@@ -1,0 +1,41 @@
+<div class="container mt-3">
+    <h2>Agent Report</h2>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <div *ngIf="agent">
+      <table class="table table-bordered">
+        <tr>
+          <th>First Name</th>
+          <td>{{ agent.firstName }}</td>
+        </tr>
+        <tr>
+          <th>Last Name</th>
+          <td>{{ agent.lastName }}</td>
+        </tr>
+        <tr>
+          <th>Qualification</th>
+          <td>{{ agent.qualification }}</td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td>{{ agent.email }}</td>
+        </tr>
+        <tr>
+          <th>Mobile No</th>
+          <td>{{ agent.mobileNo }}</td>
+        </tr>
+        <tr>
+          <th>Commission Earned</th>
+          <td>{{ agent.commissionEarned }}</td>
+        </tr>
+        <tr>
+          <th>Total Commission</th>
+          <td>{{ agent.totalCommission }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  

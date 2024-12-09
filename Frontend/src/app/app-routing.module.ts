@@ -47,9 +47,11 @@ import { UserRegistrationComponent } from './landing-page/user-registration/user
 import { CustomerDocumentsComponent } from './customer/customer-documents/customer-documents.component';
 import { PolicyAccountDocumentsComponent } from './customer/policy-account-documents/policy-account-documents.component';
 import { UpdatePolicyAccountDocumentComponent } from './customer/update-policy-account-document/update-policy-account-document.component';
-import { PolicyAccountVerificationComponent } from './admin/policy-account-verification/policy-account-verification.component';
-import { ApproveCustomerComponent } from './admin/approve-customer/approve-customer.component';
-import { ApproveDocumentComponent } from './admin/approve-document/approve-document.component';
+import { PolicyAccountVerificationComponent } from './employee/policy-account-verification/policy-account-verification.component';
+import { ApproveCustomerComponent } from './employee/approve-customer/approve-customer.component';
+import { ApproveDocumentComponent } from './employee/approve-document/approve-document.component';
+import { AgentReportComponent } from './admin/agent-report/agent-report.component';
+import { AdminViewComponent } from './admin/admin-view/admin-view.component';
 const routes: Routes = [
   { 
     path: '',
@@ -73,13 +75,91 @@ const routes: Routes = [
     component: PasswordComponent 
   },
   {
-    path:'admin-dashboard',
-    component:AdminDashboardComponent,
-    canActivate:[AuthGuard],
-    data:{
-      role:'Admin'
-    }
+    path: 'admin-view',
+    component: AdminViewComponent,
+    canActivate: [AuthGuard],
+    data: {
+      role: 'Admin'
+    },
+    children: [
+      {
+        path: '',
+        component:AdminDashboardComponent,
+        pathMatch: 'full',
+      },
+      
+      {
+        path: 'add-agent', 
+        component: AddAgentComponent
+      },
+      { 
+        path: 'add-policy', 
+        component: AddPolicyComponent
+      },
+      { 
+        path: 'add-city', 
+        component: AddCityComponent
+      },
+      { 
+        path: 'add-state', 
+        component:AddStateComponent
+      },
+      {
+        path:'view-cities',
+        component:ViewCitiesComponent
+      },
+      {
+        path:'view-states',
+        component:ViewStatesComponent
+      },
+      {
+        path: 'add-employee', 
+        component: AddEmployeeComponent
+      },
+      {
+        path:'view-agents',
+        component:ViewAgentsComponent
+      },
+      {
+        path:'view-employees',
+        component:ViewEmployeesComponent
+      },
+      {
+        path:'view-policy-types',
+        component:ViewPolicyTypesComponent
+      },
+      {
+        path:'view-policies',
+        component:ViewAllPoliciesComponent
+      },
+      { 
+        path: 'add-policy-types', 
+        component: AddPolicyTypeComponent
+      },
+      {
+        path: 'view-users',
+        component: ViewUsersComponent 
+      },
+      {
+        path: 'add-users',
+        component: AddUserComponent
+      },
+      {
+        path: 'add-role',
+        component: AddRoleComponent
+      },
+      {
+        path: 'view-roles',
+        component: ViewRolesComponent
+      },
+      { 
+        path: 'view-policies', 
+        component: DisplayPolicyComponent
+      }
+      
+    ]
   },
+  
   {
     path: 'agent-dashboard',
     component: AgentDashboardComponent,
@@ -114,74 +194,8 @@ const routes: Routes = [
     path: 'customer-registration', 
     component: CustomerRegistrationComponent 
   },
-  { 
-    path: 'add-agent', 
-    component: AddAgentComponent
-  },
-  { 
-    path: 'add-employee', 
-    component: AddEmployeeComponent 
-  },
-  { 
-    path: 'add-policy', 
-    component: AddPolicyComponent
-  },
-  { 
-    path: 'add-city', 
-    component: AddCityComponent
-  },
-  { 
-    path: 'add-state', 
-    component:AddStateComponent
-  },
-  {
-    path:'view-cities',
-    component:ViewCitiesComponent
-  },
-  {
-    path:'view-states',
-    component:ViewStatesComponent
-  },
-  {
-    path:'view-agents',
-    component:ViewAgentsComponent
-  },
-  {
-    path:'view-employees',
-    component:ViewEmployeesComponent
-  },
-  {
-    path:'view-policy-types',
-    component:ViewPolicyTypesComponent
-  },
-  {
-    path:'view-policies',
-    component:ViewAllPoliciesComponent
-  },
-  { 
-    path: 'add-policy-types', 
-    component: AddPolicyTypeComponent
-  },
-  {
-    path: 'view-users',
-    component: ViewUsersComponent 
-  },
-  {
-    path: 'add-users',
-    component: AddUserComponent
-  },
-  {
-    path: 'add-role',
-    component: AddRoleComponent
-  },
-  {
-    path: 'view-roles',
-    component: ViewRolesComponent
-  },
-  { 
-    path: 'view-policies', 
-    component: DisplayPolicyComponent
-  },
+  
+  
   { 
     path: 'create-policy-account/:policyId', 
     component: PolicyAccountComponent 
@@ -255,16 +269,20 @@ const routes: Routes = [
     component: UpdatePolicyAccountDocumentComponent   
   },
   {
-    path: 'admin/policy-account-verification',
+    path: 'policy-account-verification',
     component:PolicyAccountVerificationComponent
   },
   {
-    path:'admin/approve-customer',
+    path:'approve-customer',
     component:ApproveCustomerComponent
   },
   {
-    path:'admin/approve-document',
+    path:'approve-document',
     component:ApproveDocumentComponent
+  },
+  {
+    path: 'agent-report/:id', 
+    component: AgentReportComponent 
   }
 ];
 

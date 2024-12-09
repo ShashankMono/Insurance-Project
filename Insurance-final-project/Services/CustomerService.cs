@@ -118,18 +118,18 @@ namespace Insurance_final_project.Services
                 .Include(c => c.Queries)
                 .ToList());
         }
-        public CustomerProfileDto GetCustomerByUserId(Guid UserId)
-        {
-            var customer = _customerRepository.GetAll()
-                .Include(c => c.PolicyAccounts)
-                .Include(c => c.City)
-                .Include(c => c.State)
-                .FirstOrDefault(c => c.UserId == UserId);
+        //public CustomerProfileDto GetCustomerByUserId(Guid UserId)
+        //{
+        //    var customer = _customerRepository.GetAll()
+        //        .Include(c => c.PolicyAccounts)
+        //        .Include(c => c.City)
+        //        .Include(c => c.State)
+        //        .FirstOrDefault(c => c.UserId == UserId);
 
-            if (customer == null)
-                throw new CustomerNotFoundException("User not found");
+        //    if (customer == null)
+        //        throw new CustomerNotFoundException("User not found");
 
-            return _mapper.Map<CustomerProfileDto>(customer);
-        }
+        //    return _mapper.Map<CustomerProfileDto>(customer);
+        //}
     }
 }

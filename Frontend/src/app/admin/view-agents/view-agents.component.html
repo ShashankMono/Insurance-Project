@@ -5,16 +5,17 @@
           <tr>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Qualification</th>
-            <th>Email</th>
+            
+            <th>Report</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let agent of agents">
             <td>{{ agent.firstName }}</td>
             <td>{{ agent.lastName }}</td>
-            <td>{{ agent.qualification }}</td>
-            <td>{{ agent.email }}</td>
+            <td>
+              <button (click)="getReport(agent.agentId)" class="btn btn-primary">Get Report</button>
+            </td>
           </tr>
         </tbody>
     </table>

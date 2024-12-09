@@ -44,7 +44,7 @@ export class LoginDashboardComponent {
   
           switch (this.userData.data.roleName) {
             case 'Admin':
-              this.router.navigate(['/admin-dashboard']);
+              this.router.navigate(['/admin-view']);
               break;
             case 'Customer':
               this.router.navigate(['/customer-dashboard']);

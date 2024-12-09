@@ -17,6 +17,9 @@ export class PayInstallmentComponent implements OnInit {
   constructor(private dashboardService: CustomerDashboardService, private router:ActivatedRoute) {
     this.policyAccountId=router.snapshot.paramMap.get('id');
   }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
 
   // ngOnInit(): void {
   //   this.fetchPolicyAccounts();
@@ -94,5 +97,5 @@ export class PayInstallmentComponent implements OnInit {
   //       console.error(error);
   //     }
   //   );
-  // }
+  }
 }

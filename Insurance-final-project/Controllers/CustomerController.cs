@@ -146,17 +146,17 @@ namespace Insurance_final_project.Controllers
                 Message = "Customers and their accounts retrieved successfully."
             });
         }
-        [HttpGet("User/{UserId}")]
-        public IActionResult GetCustomerByUserId(Guid UserId)
-        {
-            var customer = _customerService.GetCustomerByUserId(UserId);
+        //[HttpGet("User/{UserId}")]
+        //public IActionResult GetCustomerByUserId(Guid UserId)
+        //{
+        //    var customer = _customerService.GetCustomerByUserId(UserId);
 
-            return Ok(new
-            {
-                Success = true,
-                Data = customer,
-                Message = "Customer retrieved successfully."
-            });
-        }
+        //    return Ok(new
+        //    {
+        //        Success = true,
+        //        Data = customer,
+        //        Message = "Customer retrieved successfully."
+        //    });
+        //}
     }
 }

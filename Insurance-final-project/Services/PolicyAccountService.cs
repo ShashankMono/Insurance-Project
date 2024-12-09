@@ -14,7 +14,7 @@ namespace Insurance_final_project.Services
         private readonly IMapper _Mapper;
         private readonly IPolicyInstallmentService _PolicyInstallmentService;
         private readonly ICommissionService _commissionService;
-        private readonly IMapper _mapper;
+       
         private readonly IRepository<Agent> _agentRepo;
         private readonly IRepository<Policy> _policyRepo;
         private readonly IRepository<Customer> _customerRepo;
@@ -100,7 +100,7 @@ namespace Insurance_final_project.Services
                 .Where(pa => pa.AgentId == agentId)
                 .ToList();
 
-            return _mapper.Map<List<PolicyAccountResponseDto>>(policyAccounts);
+            return _Mapper.Map<List<PolicyAccountResponseDto>>(policyAccounts);
         }
 
         public async Task<List<PolicyAccountResponseDto>> GetPoliciesByCustomer(Guid customerId)
@@ -108,7 +108,7 @@ namespace Insurance_final_project.Services
             var policies = _PolicyAccountRepo.GetAll()
                 .Where(p => p.CustomerId == customerId)
                 .ToList();
-            return _mapper.Map<List<PolicyAccountResponseDto>>(policies);
+            return _Mapper.Map<List<PolicyAccountResponseDto>>(policies);
         }
 
     }

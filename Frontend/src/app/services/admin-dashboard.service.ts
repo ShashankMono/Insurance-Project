@@ -17,6 +17,9 @@ export class AdminDashboardService {
   getAgents(): Observable<{ data: any[] }> {
     return this.http.get<{ data: any[] }>(`${this.url}/Agent`);
   }
+  getAgentReport(agentId: any): Observable<any> {
+    return this.http.get(`${this.url}/Agent/${agentId}`);
+  }
 
   
   addEmployee(employee: any): Observable<any> {
@@ -62,9 +65,7 @@ export class AdminDashboardService {
     return this.http.get<{ success: boolean; data: any[]; message: string }>(`${this.url}/Policy`);
   }
   
-  getAgentReport(): Observable<any> {
-    return this.http.get(`${this.url}/Agent`);
-  }
+  
 
   // getClaimAccounts(): Observable<any> {
   //   return this.http.get(`${this.url}/get-claim-accounts`);
