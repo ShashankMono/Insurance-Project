@@ -1,12 +1,18 @@
-<table *ngIf="states.length > 0" class="table table-striped mt-3">
-    <thead>
-      <tr>
-        <th>State Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let state of states">
-        <td>{{ state.stateName }}</td>
-      </tr>
-    </tbody>
-</table>
+<div class="container py-3">
+  <h1 class="text-center">States</h1>
+
+  <table *ngIf="states.length > 0" class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th>Sr. no.</th>
+          <th>State Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let state of states;let i=index;">
+          <td>{{ i + 1 }}</td>
+          <td>{{ state.stateName }}</td>
+        </tr>
+      </tbody>
+  </table>
+</div>

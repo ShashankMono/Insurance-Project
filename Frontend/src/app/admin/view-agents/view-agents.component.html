@@ -1,8 +1,9 @@
-<div class="container">
-    <h2>Agents</h2>
+<div class="container mt-4">
+    <h1 class="text-center">Agents</h1>
     <table *ngIf="agents.length > 0" class="table table-striped mt-3">
         <thead>
           <tr>
+            <th>Sr. no.</th>
             <th>First Name</th>
             <th>Last Name</th>
             
@@ -10,11 +11,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let agent of agents">
+          <tr *ngFor="let agent of agents;let i=index;">
+            <td>{{ i + 1 }}</td>
             <td>{{ agent.firstName }}</td>
             <td>{{ agent.lastName }}</td>
             <td>
-              <button (click)="getReport(agent.agentId)" class="btn btn-primary">Get Report</button>
+              <button (click)="getReport(agent.agentId)" class="btn btn-primary">DETAILS</button>
             </td>
           </tr>
         </tbody>

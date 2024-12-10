@@ -8,7 +8,9 @@ import { AdminDashboardService } from 'src/app/services/admin-dashboard.service'
 })
 export class ViewUsersComponent {
   users: any[] = [];
+  filteredUsers: any[] = []; // For displaying filtered users
   roles: any[] = [];
+  selectedRole: string = 'All'; // Default to "All"
 
   constructor(private adminService: AdminDashboardService) {}
 
@@ -29,6 +31,7 @@ export class ViewUsersComponent {
                   ...user,
                   roleName: this.getRoleName(user.roleId),
                 }));
+                this.filteredUsers = [...this.users]; // Initialize with all users
               }
             },
             error: (err) => console.error('Error fetching users:', err),
@@ -42,5 +45,13 @@ export class ViewUsersComponent {
   getRoleName(roleId: string): string {
     const role = this.roles.find((r: any) => r.roleId === roleId);
     return role ? role.roleName : 'Unknown';
+  }
+
+  filterUsersByRole(): void {
+    if (this.selectedRole === 'All') {
+      this.filteredUsers = [...this.users];
+    } else {
+      this.filteredUsers = this.users.filter(user => user.roleName === this.selectedRole);
+    }
   }
 }

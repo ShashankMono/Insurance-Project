@@ -13,7 +13,7 @@ import { City } from 'src/app/models/city';
 export class AddCityComponent implements OnInit {
   addCityForm = new FormGroup({
     cityName: new FormControl('', Validators.required),
-    stateId: new FormControl('', Validators.required)
+    stateName: new FormControl('', Validators.required)
   });
 
   states: any[] = [];

@@ -66,14 +66,14 @@ namespace Insurance_final_project.Services
         {
             var customer = _mapper.Map<Customer>(customerDto);
             check(customerDto);
-            var existingCustomer = _customerRepository.GetAll().AsNoTracking().FirstOrDefault(c=>c.CustomerId ==customer.CustomerId);
+            var existingCustomer = _customerRepository.GetAll().AsNoTracking().FirstOrDefault(c => c.CustomerId == customer.CustomerId);
             if (existingCustomer == null)
             {
                 throw new CustomerNotFoundException("Customer not found!");
             }
-            customer.UserId = existingCustomer.UserId;  
+            customer.UserId = existingCustomer.UserId;
             _customerRepository.Update(customer);
-             return true;
+            return true;
         }
         public void check(CustomerDto customerDto)
         {
@@ -101,23 +101,21 @@ namespace Insurance_final_project.Services
         public async Task<List<CustomerDto>> GetCustomerAccounts()
         {
             return _mapper.Map<List<Customer>, List<CustomerDto>>(_customerRepository.GetAll()
-                .Include(c => c.Transactions)
-                .Include(c => c.PolicyAccounts)
-                .Include(c => c.Queries)
+                
                 .ToList());
         }
-        //public CustomerProfileDto GetCustomerByUserId(Guid UserId)
-        //{
-        //    var customer = _customerRepository.GetAll()
-        //        .Include(c => c.PolicyAccounts)
-        //        .Include(c => c.City)
-        //        .Include(c => c.State)
-        //        .FirstOrDefault(c => c.UserId == UserId);
+        public CustomerProfileDto GetCustomerByUserId(Guid UserId)
+        {
+            var customer = _customerRepository.GetAll()
+                .Include(c => c.PolicyAccounts)
+                .Include(c => c.City)
+                .Include(c => c.State)
+                .FirstOrDefault(c => c.UserId == UserId);
 
-        //    if (customer == null)
-        //        throw new CustomerNotFoundException("User not found");
+            if (customer == null)
+                throw new CustomerNotFoundException("User not found");
 
-        //    return _mapper.Map<CustomerProfileDto>(customer);
-        //}
+            return _mapper.Map<CustomerProfileDto>(customer);
+        }
     }
 }

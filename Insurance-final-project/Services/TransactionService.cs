@@ -16,10 +16,10 @@ namespace Insurance_final_project.Services
         private readonly IRepository<PolicyAccount> _policyAccountRepo;
         private readonly IRepository<PolicyInstallment> _installmentRepo;
         public TransactionService(IRepository<Transaction> repo
-            ,IRepository<Customer> cutomer
+            , IRepository<Customer> cutomer
             , IMapper mapper,
             IRepository<PolicyAccount> policyAccountRepo
-            ,IRepository<PolicyInstallment> installmentRepo)
+            , IRepository<PolicyInstallment> installmentRepo)
         {
             _TransactionRepo = repo;
             _Mapper = mapper;
@@ -30,10 +30,11 @@ namespace Insurance_final_project.Services
 
         public async Task<Guid> AddTransaction(TransactionDto transactionDto)
         {
-            if(_customerRepo.GetAll().AsNoTracking().FirstOrDefault(c=>c.CustomerId == transactionDto.CustomerId) == null)
+            if (_customerRepo.GetAll().AsNoTracking().FirstOrDefault(c => c.CustomerId == transactionDto.CustomerId) == null)
             {
                 throw new InvalidGuidException("Customer not found!");
-            }else if(_policyAccountRepo.Get(transactionDto.PolicyAccountId) == null)
+            }
+            else if (_policyAccountRepo.Get(transactionDto.PolicyAccountId) == null)
             {
                 throw new InvalidGuidException("Account not found!");
             }
@@ -46,11 +47,11 @@ namespace Insurance_final_project.Services
 
         public async Task<List<TransactionDto>> GetTransactionByCustomerId(Guid customerId)
         {
-            if(_customerRepo.Get(customerId) == null)
+            if (_customerRepo.Get(customerId) == null)
             {
                 throw new CustomerNotFoundException("Customer Not found!");
             }
-            return _Mapper.Map<List<TransactionDto>>(_TransactionRepo.GetAll().Where(t=>t.CustomerId == customerId).ToList());
+            return _Mapper.Map<List<TransactionDto>>(_TransactionRepo.GetAll().Where(t => t.CustomerId == customerId).ToList());
         }
 
         public async Task<List<TransactionDto>> GetTransactions()

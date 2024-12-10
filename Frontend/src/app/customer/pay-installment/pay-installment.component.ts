@@ -21,9 +21,6 @@ export class PayInstallmentComponent implements OnInit {
     // console.log(this.policyAccountId);
     this.getInstallments();
   }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
 
   isDueDatePassed(dueDate:string ):boolean{
     const today = new Date();

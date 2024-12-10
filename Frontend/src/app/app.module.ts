@@ -143,7 +143,7 @@ import { AdminViewComponent } from './admin/admin-view/admin-view.component';
     PolicyAccountVerificationComponent,
     
     AgentReportComponent,
-    AdminViewComponent
+    AdminViewComponent,
     ApproveDocumentComponent,
     SuccessComponent,
     CancelComponent,

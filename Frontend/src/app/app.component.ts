@@ -17,16 +17,22 @@ export class AppComponent {
         '/login-dashboard', 
         '/landing-page',
         '/customer-registration',
-        '/create-policy-account',
         '/policy-operations',
-        '/view-policies',
-        '/customer-documents',
-        '/add-nominee',
-        '/view-nominee',
+        '/user-registration'
+        
+        
+        
         // '/view-profile/${userId}'
+        
 
       ];
-      this.showHeader = !noHeaderRoutes.includes(this.router.url);
+      const isAgentView = this.router.url.startsWith('/admin-view/');
+      const isAgentReport=this.router.url.startsWith('/agent-report/');
+      this.showHeader = !(
+        noHeaderRoutes.includes(this.router.url) 
+        || isAgentView
+        || isAgentReport
+      );
     });
   }
 }

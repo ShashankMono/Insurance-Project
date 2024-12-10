@@ -1,9 +1,13 @@
-<div class="container">
-    <h2>Add State</h2>
+<div class="container py-3">
+    <h1 class="text-center">Add State</h1>
     <form [formGroup]="addStateForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="stateName">State Name:</label>
+        <label for="stateName">State Name:<span class="text-danger">*</span></label>
         <input type="text" id="stateName" class="form-control" formControlName="stateName" />
+        <br>
+        <div *ngIf="addStateForm.get('stateName')?.invalid && addStateForm.get('stateName')?.touched" class="text-danger">
+          State Name is required.
+       </div>
       </div>
       <button type="submit" class="btn btn-primary" [disabled]="addStateForm.invalid">Add State</button>
     </form>

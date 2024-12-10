@@ -1,17 +1,18 @@
 <div class="container py-5">
-    <h2 class="text-center mb-4">View Policy Types</h2>
+    <h2 class="text-center mb-4">Policy Plans View</h2>
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>Sr. No.</th>
           <th>Type</th>
-          <th>Status</th>
+          <!-- <th>Status</th> -->
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let policyType of policyTypes">
-          
+        <tr *ngFor="let policyType of policyTypes;let i=index;">
+          <td>{{i+1}}</td>
           <td>{{ policyType.type }}</td>
-          <td>{{ policyType.isActive ? 'Active' : 'Inactive' }}</td>
+          <!-- <td>{{ policyType.isActive ? 'Active' : 'Inactive' }}</td> -->
         </tr>
       </tbody>
     </table>

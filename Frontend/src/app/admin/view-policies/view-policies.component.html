@@ -1,22 +1,23 @@
 <div class="container py-5">
-    <h2 class="text-center mb-4">View Policies</h2>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Policy Type</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let policy of policies">
-          <td>{{ policy.name }}</td>
-          <td>{{ policy.description }}</td>
-          <td>{{ policy.policyTypeId }}</td>
-          <td>{{ policy.isActive ? 'Active' : 'Inactive' }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <h2 class="text-center mb-4">Policy Schemes View</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Sr. No.</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Policy Type</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let policy of policies; let i = index;">
+        <td>{{ i + 1 }}</td>
+        <td>{{ policy.name }}</td>
+        <td>{{ policy.description }}</td>
+        <td>{{ policy.policyTypeName }}</td>
+        <td>{{ policy.isActive ? 'Active' : 'Inactive' }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-  

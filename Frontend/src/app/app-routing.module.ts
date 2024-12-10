@@ -165,6 +165,10 @@ const routes: Routes = [
       { 
         path: 'view-policies', 
         component: ViewPoliciesComponent
+      },
+      {
+        path:'transaction-history',
+        component:TransactionHistoryComponent
       }
       
     ]

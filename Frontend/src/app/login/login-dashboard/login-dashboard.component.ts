@@ -13,7 +13,7 @@ export class LoginDashboardComponent {
   loginForm = new FormGroup({
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
-    
+    captcha:new FormControl('', Validators.required)
   });
   captcha: { question: string; answer: number } = { question: '', answer: 0 };
   captchaAnswer: string = '';
@@ -31,14 +31,42 @@ export class LoginDashboardComponent {
     const num2 = Math.floor(Math.random() * 10) + 1;
     this.captcha = { question: `${num1} + ${num2}`, answer: num1 + num2 };
   }
-  logIn() {
+  logIn(captchaInput: HTMLInputElement) {
+    const form = this.loginForm;
+    const captchaValue = captchaInput.value.trim();
+
+  
+    const missingFields = [];
+    if (!form.get('username')?.value) {
+      missingFields.push('username');
+    }
+    if (!form.get('password')?.value) {
+      missingFields.push('password');
+    }
+    if (!captchaValue) {
+      missingFields.push('CAPTCHA');
+    }
+
+  
+    if (missingFields.length > 0) {
+      alert(`Please enter the following: ${missingFields.join(', ')}`);
+      return;
+    }
+
+    
+    if (+captchaValue !== this.captcha.answer) {
+      alert('CAPTCHA is incorrect. Please try again.');
+      this.generateCaptcha();
+      return;
+    }
+  
     this.loginService.signIn(this.loginForm.value).subscribe({
       next: (response) => {
         this.myToken = response.headers.get('Jwt');
         localStorage.setItem('token', this.myToken);
   
         this.userData = response.body;
-        localStorage.setItem('userId',this.userData.data.userId);
+        localStorage.setItem('userId', this.userData.data.userId);
   
         if (this.userData && this.userData.data) {
           localStorage.setItem('role', this.userData.data.roleName);
