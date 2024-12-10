@@ -71,7 +71,7 @@ import { UpdatePolicyAccountDocumentComponent } from './customer/update-policy-a
 
 import { SuccessComponent } from './PaymentAck/success/success.component';
 import { CancelComponent } from './PaymentAck/cancel/cancel.component';
-import { PolicyAccountVerificationComponent } from './employee/policy-account-verification/policy-account-verification.component';
+import { PolicyAccountVerificationComponent } from './admin/policy-account-verification/policy-account-verification.component';
 import { ApproveDocumentComponent } from './employee/approve-document/approve-document.component';
 import { AgentReportComponent } from './admin/agent-report/agent-report.component';
 import { AdminViewComponent } from './admin/admin-view/admin-view.component';

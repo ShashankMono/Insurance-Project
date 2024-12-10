@@ -46,13 +46,11 @@ import { UserRegistrationComponent } from './landing-page/user-registration/user
 import { CustomerDocumentsComponent } from './customer/customer-documents/customer-documents.component';
 import { PolicyAccountDocumentsComponent } from './customer/policy-account-documents/policy-account-documents.component';
 import { UpdatePolicyAccountDocumentComponent } from './customer/update-policy-account-document/update-policy-account-document.component';
-import { PolicyAccountVerificationComponent } from './employee/policy-account-verification/policy-account-verification.component';
-import { ApproveCustomerComponent } from './employee/approve-customer/approve-customer.component';
-import { ApproveDocumentComponent } from './employee/approve-document/approve-document.component';
+
 import { SuccessComponent } from './PaymentAck/success/success.component';
 import { CancelComponent } from './PaymentAck/cancel/cancel.component';
 
-import { PolicyAccountVerificationComponent } from './employee/policy-account-verification/policy-account-verification.component';
+import { PolicyAccountVerificationComponent } from './admin/policy-account-verification/policy-account-verification.component';
 import { ApproveCustomerComponent } from './employee/approve-customer/approve-customer.component';
 import { ApproveDocumentComponent } from './employee/approve-document/approve-document.component';
 import { AgentReportComponent } from './admin/agent-report/agent-report.component';
