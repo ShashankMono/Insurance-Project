@@ -75,15 +75,19 @@ namespace Insurance_final_project.Services
         public async Task<bool> PayInstallment(Guid installmentId)
         {
             var installment = _installmentRepository.GetAll().AsNoTracking().FirstOrDefault(i=>i.Id==installmentId);
-            
+            var policyAccount = _policyAccountRepo.GetAll().AsNoTracking().FirstOrDefault(pa=>pa.Id==installment.PolicyAccountId);
             if (installment == null || installment.IsPaid)
             {
                 throw new InValidRequestException("Invalid request!");
             }
-            var policyAccount = _policyAccountRepo.Get(installment.PolicyAccountId);
+            if(policyAccount == null)
+            {
+                throw new InvalidGuidException("Invalid PolicyAccount");
+            }
+            policyAccount.TotalAmountPaid += installment.Amount;
             installment.IsPaid = true;
             installment.InstallmentPaidDate = DateTime.UtcNow;
-
+            _policyAccountRepo.Update(policyAccount);
             _installmentRepository.Update(installment);
 
             //adding transaction

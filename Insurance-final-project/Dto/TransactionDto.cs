@@ -28,7 +28,7 @@ namespace Insurance_final_project.Dto
 
         [Required(ErrorMessage = "Reference Number is required.")]
         [MaxLength(50, ErrorMessage = "Reference Number cannot exceed 50 characters.")]
-        public string ReferenceNumber { get; set; }
+        public Guid ReferenceNumber { get; set; }
 
     }
 }

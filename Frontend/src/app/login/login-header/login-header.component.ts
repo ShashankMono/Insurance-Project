@@ -7,11 +7,25 @@ import { Router } from '@angular/router';
 })
 export class LoginHeaderComponent {
   userRole: string | null = null;
-
+  dashboardLink:string | null = '';
   constructor(private router: Router) {}
 
   ngOnInit() {
     this.userRole = localStorage.getItem('role');
+    this.dashboardLink = this.getDashboard();
+  }
+
+  getDashboard():string{
+    switch(this.userRole){
+      case 'Admin':
+        return '/admin-dashboard';
+      case 'Agent':
+        return '/agent-dashboard'
+      case 'Customer':
+        return '/customer-dashboard'
+      default :
+        return '/login-dashboard'
+    }
   }
 
   logout() {

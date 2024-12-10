@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Policy } from 'src/app/models/policy';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-view-all-policies',
   templateUrl: './view-all-policies.component.html',
@@ -13,13 +13,16 @@ export class ViewAllPoliciesComponent implements OnInit {
   selectedPolicyId: number | null = null; 
   investmentAmount: number = 0; 
   calculatedAmount: number = 0; 
+  customerId:any=""
 
   constructor(
     private customerService: CustomerDashboardService,
-    private router: Router
+    private router: Router,
+    private route:ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.customerId=history.state.customerId;
     this.loadPolicies();
   }
 
@@ -36,7 +39,13 @@ export class ViewAllPoliciesComponent implements OnInit {
   }
 
   buyPolicy(policyId: string): void {
-    this.router.navigate(['/create-policy-account', policyId]);
+    if(localStorage.getItem('userId') != null){
+      this.router.navigate(['/create-policy-account', policyId],{state:{customerId:this.customerId}});
+    }else{
+      alert("Please login to buy policy");
+      this.router.navigate(['/']);
+    }
+    
   }
 
   calculateInvestment(policy: any): void {

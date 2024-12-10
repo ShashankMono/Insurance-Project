@@ -40,12 +40,12 @@ export class CustomerDashboardService {
     return this.http.post<any>(`${this.url}/PolicyAccountDocument`, documentData);
   }
 
+  addCancelPolicyAccount(policyAccountId:any):Observable<any>{
+    return this.http.get(`${this.url}/PolicyCancel/${policyAccountId}`);
+  }
 
-  cancelPolicyAccount(policyAccountId: string): Observable<any> {
-    return this.http.put<any>(
-      `${this.url}/PolicyAccount/cancel/${policyAccountId}`,
-      {}
-    );
+  cancelPolicyAccount(customerId:any): Observable<any> {
+    return this.http.get<any>(`${this.url}/PolicyCancel/${customerId}`);
   }
 
   claimPolicy(policyAccountId: string, claimData: any): Observable<any> {

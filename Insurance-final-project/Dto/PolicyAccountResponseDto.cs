@@ -56,6 +56,6 @@ namespace Insurance_final_project.Dto
 
         [Required(ErrorMessage = "Approval status is required")]
 
-        public string IsApproved { get; set; } = ApprovalType.Pending.ToString();
+        public string IsApproved { get; set; }
     }
 }

@@ -13,31 +13,18 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Policy ID</th>
+          <th>Policy name</th>
           <th>Coverage Amount</th>
-          <th>Policy Term</th>
-          <th>Installment Type</th>
+          <th>Date</th>
           <th>Status</th>
-          <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let policy of policyAccounts">
-          <td>{{ policy.policyId }}</td>
-          <td>{{ policy.coverageAmount }}</td>
-          <td>{{ policy.policyTerm }}</td>
-          <td>{{ policy.installmentType }}</td>
-          <td>{{ policy.status }}</td>
-          <td>
-            <!-- Cancel button is disabled if the status is 'Closed' -->
-            <button
-              class="btn btn-danger"
-              (click)="cancelPolicy(policy.id)"
-              [disabled]="policy.status === 'Closed'"
-            >
-              Cancel
-            </button>
-          </td>
+        <tr *ngFor="let policy of policyCancelAccounts">
+          <td>{{ policy.policyName }}</td>
+          <td>{{ policy.amount }}</td>
+          <td>{{ policy.dateAndTime | date }}</td>
+          <td>{{ policy.isApproved }}</td>
         </tr>
       </tbody>
     </table>

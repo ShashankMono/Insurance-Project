@@ -83,6 +83,7 @@ namespace Insurance_final_project.Services
             policyAccount.StartDate = DateTime.UtcNow;
             policyAccount.EndDate = DateTime.UtcNow.AddYears(policyAccountDto.PolicyTerm);
             policyAccount.CoverageAmount = policyAccount.InvestmentAmount + (policyAccount.InvestmentAmount * (policy.ProfitPercentage * 0.01));
+            policyAccount.Status = PolicyAccountStatus.Open.ToString();
             _PolicyAccountRepo.Add(policyAccount);
 
             return policyAccount.Id;

@@ -16,7 +16,7 @@ namespace Insurance_final_project.Controllers
             _policyCancelService = policyCancelService;
         }
 
-        [HttpPost("cancel/{policyAccountId}")]
+        [HttpGet("{policyAccountId}")]
         public async Task<IActionResult> CancelPolicy(Guid policyAccountId)
         {
             var result = await _policyCancelService.CancelPolicy(policyAccountId);
@@ -69,10 +69,10 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> GetPolicyCancels()
+        [HttpGet("customer/{customerId}")]
+        public async Task<IActionResult> GetPolicyCancels(Guid customerId)
         {
-            var policyCancels = await _policyCancelService.GetPolicyCancels();
+            var policyCancels = await _policyCancelService.GetPolicyCancels(customerId);
 
             return Ok(new
             {

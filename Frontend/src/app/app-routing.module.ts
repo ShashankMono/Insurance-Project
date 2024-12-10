@@ -201,11 +201,11 @@ const routes: Routes = [
     component:PolicyAccountComponent
   },
   { 
-    path: 'cancel-policy/:policyAccountId', 
+    path: 'cancel-policy/:customerId', 
     component: CancelPolicyComponent
   },
   { 
-    path: 'claim-policy/:policyAccountId', 
+    path: 'claim-policy/:customerId', 
     component: AddClaimComponent
   },
   { 

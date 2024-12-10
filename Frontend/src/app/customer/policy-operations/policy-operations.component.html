@@ -21,6 +21,7 @@
           <th>Start date</th>
           <th>End date</th>
           <th>Status</th>
+          <th>Approval</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -33,11 +34,12 @@
           <td>{{policy.startDate | date}}</td>
           <td>{{policy.endDate | date}}</td>
           <td>{{ policy.status }}</td>
+          <td>{{policy.isApproved}}</td>
           <td>
             <button
               class="btn btn-primary"
               (click)="payInstallment(policy.id,policy.policyName)"
-              [disabled]="policy.status === 'Closed'"
+              [disabled]="isDisable(policy)"
             >
               Pay Installment
             </button>
@@ -45,7 +47,7 @@
             <button
               class="btn btn-danger"
               (click)="cancelPolicy(policy.id)"
-              [disabled]="policy.status === 'Closed'"
+              [disabled]="isDisable(policy)"
             >
               Cancel Policy
             </button>
@@ -53,7 +55,7 @@
             <button
               class="btn btn-warning"
               (click)="claimPolicy(policy.id)"
-              [disabled]="policy.status === 'Closed'"
+              [disabled]="isDisable(policy)"
             >
               Claim Policy
             </button>

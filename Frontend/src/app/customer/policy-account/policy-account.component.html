@@ -27,7 +27,7 @@
         </div>
       </div>
   
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <label for="customerId" class="form-label">Customer ID<span class="text-danger">*</span></label>
         <input
           type="text"
@@ -39,19 +39,19 @@
         <div *ngIf="policyAccountForm.get('customerId')?.invalid && policyAccountForm.get('customerId')?.touched" class="text-danger">
           Customer ID is required.
         </div>
-      </div>
+      </div> -->
   
       <div class="mb-3">
-        <label for="coverageAmount" class="form-label">Coverage Amount<span class="text-danger">*</span></label>
+        <label for="coverageAmount" class="form-label">Investment Amount<span class="text-danger">*</span></label>
         <input
           type="number"
-          id="coverageAmount"
+          id="investmentAmount"
           class="form-control"
-          formControlName="coverageAmount"
-          placeholder="Enter Coverage Amount"
+          formControlName="investmentAmount"
+          placeholder="Enter investment Amount"
         />
-        <div *ngIf="policyAccountForm.get('coverageAmount')?.invalid && policyAccountForm.get('coverageAmount')?.touched" class="text-danger">
-          Coverage Amount must be a positive value.
+        <div *ngIf="policyAccountForm.get('investmentAmount')?.invalid && policyAccountForm.get('investmentAmount')?.touched" class="text-danger">
+          Investment Amount must be a positive value.
         </div>
       </div>
   
@@ -92,7 +92,7 @@
       file sent
       document endpoint add-viewdocuments comp on doc button-->
       <div class="mb-3">
-      <label for="fileInput" class="form-label">Upload Document</label>
+      <label for="fileInput" class="form-label">Upload Document<span class="text-danger">*</span></label>
       <input
         type="file"
         id="fileInput"
@@ -105,7 +105,7 @@
       <button
         type="submit"
         class="btn btn-primary w-100 mt-3"
-        [disabled]="policyAccountForm.invalid"
+        [disabled]="isDiable(policyAccountForm.invalid)"
       >
         Create Policy Account
       </button>

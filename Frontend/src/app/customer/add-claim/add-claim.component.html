@@ -1,1 +1,23 @@
-<p>add-claim works!</p>
+<div class="container mt-5">
+    <h2 class="text-center">Claim Form</h2>
+  
+    <form [formGroup]="claimForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="claimDescription">Claim Description</label>
+        <textarea
+          id="claimDescription"
+          class="form-control"
+          rows="4"
+          formControlName="claimDescription"
+          placeholder="Enter claim description"
+        ></textarea>
+        <div *ngIf="claimDescription?.invalid && claimDescription?.touched" class="text-danger">
+          <small *ngIf="claimDescription?.errors?.['required']">Claim description is required.</small><br>
+          <small *ngIf="claimDescription?.errors?.['maxlength']">Claim description cannot exceed 500 characters.</small>
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="claimForm.invalid">Submit</button>
+    </form>
+  </div>
+  

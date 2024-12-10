@@ -42,7 +42,7 @@ export class CustomerDashboardComponent{
   }
 
   cancelPolicy(): void {
-    this.router.navigate(['/cancel-policy'],{state:{customerId:this.customerId}});
+    this.router.navigate(['/cancel-policy',this.customerId]);
   }
 
   document(){
@@ -50,7 +50,7 @@ export class CustomerDashboardComponent{
   }
 
   claimPolicy(): void {
-    this.router.navigate(['/claim-policy'],{state:{customerId:this.customerId}});
+    this.router.navigate(['/claim-policy',this.customerId]);
   }
 
   payInstallment(): void {

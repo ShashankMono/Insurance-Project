@@ -15,14 +15,17 @@ export class PolicyAccountComponent implements OnInit{
   errorMessage: string | null = null;
   fileError: string | null = null;
   selectedFile: File | null = null;
+  customerId: any | null = "";
+  fileUploaded:boolean= false;
 
   constructor(private customerDashboardService: CustomerDashboardService) {}
 
   ngOnInit(): void {
+    this.customerId=history.state.customerId
+    console.log(this.customerId);
     this.policyAccountForm = new FormGroup({
       policyId: new FormControl('', Validators.required),
-      customerId: new FormControl('', Validators.required),
-      coverageAmount: new FormControl(0, [Validators.min(0)]),
+      investmentAmount: new FormControl(0, [Validators.min(0)]),
       policyTerm: new FormControl(0, [Validators.required, Validators.min(1)]),
       installmentType: new FormControl('', Validators.required),
     });
@@ -66,7 +69,14 @@ export class PolicyAccountComponent implements OnInit{
 
   onSubmit(): void {
     if (this.policyAccountForm.valid && this.selectedFile) {
-      const policyAccountData = this.policyAccountForm.value;
+      // this.policyAccountForm.value.customerId = this.customerId;
+      // const policyAccountData = this.policyAccountForm.value;
+      // console.log(policyAccountData);
+      const policyAccountData = {
+        customerId: this.customerId,
+        ...this.policyAccountForm.value
+      }
+      console.log("Data",policyAccountData);
 
       // Create Policy Account
       this.customerDashboardService.createPolicyAccount(policyAccountData).subscribe(
@@ -100,6 +110,7 @@ export class PolicyAccountComponent implements OnInit{
         (response) => {
           const fileUrl = response.data.result.url;
           this.saveDocument(policyAccountId, fileUrl);
+          this.fileUploaded = true;
         },
         (error) => {
           this.errorMessage = 'Error uploading file. Please try again.';
@@ -132,5 +143,9 @@ export class PolicyAccountComponent implements OnInit{
         console.error(error);
       }
     );
+
+  }
+  isDiable(form:any):Boolean{
+    return form.isValid && this.fileUploaded;
   }
 }
