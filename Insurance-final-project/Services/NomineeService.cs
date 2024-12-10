@@ -20,13 +20,18 @@ namespace Insurance_final_project.Services
         }
         public async Task<Guid> AddNominee(NomineeDto nominee)
         {
-            check(nominee);
+            check(nominee.CustomerId);
+            if (_nomineeRepo.GetAll().AsNoTracking()
+                .Where(n => n.CustomerId == nominee.CustomerId && n.NomineeName == nominee.NomineeName && n.NomineeRelation == nominee.NomineeRelation).FirstOrDefault() != null)
+            {
+                throw new NomineeAlreadyExistException("Nominee already exist!");
+            }
             return _nomineeRepo.Add(_mapper.Map<Nominee>(nominee)).Id;
         }
 
-        public void check(NomineeDto nominee)
+        public void check(Guid customerId)
         {
-            if (_customerRepo.Get(nominee.CustomerId) == null)
+            if (_customerRepo.Get(customerId) == null)
                 throw new InvalidGuidException("Customer not found!");
         }
         public async Task<NomineeDto> GetNominee(Guid nomineeId)
@@ -40,7 +45,8 @@ namespace Insurance_final_project.Services
 
         public async Task<List<NomineeDto>> GetNominees(Guid customerId)
         {
-            var nominees = _nomineeRepo.GetAll().Where(n=>n.CustomerId == customerId).ToList();
+            check(customerId);
+            var nominees = _nomineeRepo.GetAll().AsNoTracking().Where(n=>n.CustomerId == customerId).ToList();
             if (nominees.Count ==0)
             {
                 throw new NoNomineePresentException("No Nominee found!");
@@ -50,7 +56,7 @@ namespace Insurance_final_project.Services
 
         public async Task<Guid> UpdateNominee(NomineeDto nominee)
         {
-             check(nominee);
+             check(nominee.CustomerId);
             if (_nomineeRepo.GetAll().AsNoTracking().FirstOrDefault(n=> n.Id ==nominee.Id) == null)
             {
                 throw new InvalidGuidException("Invalid Nominee!");
@@ -65,8 +71,7 @@ namespace Insurance_final_project.Services
             {
                 throw new InvalidGuidException("Invalid Nominee!");
             }
-            nominee.IsActive = false;
-            _nomineeRepo.Update(nominee);
+            _nomineeRepo.Delete(nominee);
             return true;
         }
     }

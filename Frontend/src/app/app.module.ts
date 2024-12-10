@@ -54,7 +54,6 @@ import { AddClaimComponent } from './customer/add-claim/add-claim.component';
 import { WithdrawClaimComponent } from './customer/withdraw-claim/withdraw-claim.component';
 import { TransactionHistoryComponent } from './customer/transaction-history/transaction-history.component';
 import { AddNomineeComponent } from './customer/add-nominee/add-nominee.component';
-import { EditNomineeComponent } from './customer/edit-nominee/edit-nominee.component';
 import { DeleteNomineeComponent } from './customer/delete-nominee/delete-nominee.component';
 import { AddQueryComponent } from './customer/add-query/add-query.component';
 import { PayInstallmentComponent } from './customer/pay-installment/pay-installment.component';
@@ -126,7 +125,6 @@ import { AdminViewComponent } from './admin/admin-view/admin-view.component';
     WithdrawClaimComponent,
     TransactionHistoryComponent,
     AddNomineeComponent,
-    EditNomineeComponent,
     DeleteNomineeComponent,
     AddQueryComponent,
     PayInstallmentComponent,

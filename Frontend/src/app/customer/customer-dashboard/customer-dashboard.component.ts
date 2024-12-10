@@ -12,6 +12,7 @@ export class CustomerDashboardComponent{
   errorMessage: string | null = null;
   customerDashboardService: any;
   customerDets:any=""
+  customerId:any=""
   
   constructor(private customerService: CustomerDashboardService, private router: Router) {
     var userid =  localStorage.getItem('userId');
@@ -20,6 +21,8 @@ export class CustomerDashboardComponent{
         next: (response) => {
           if (response.success) {
             this.customerDets = response.data;
+            this.customerId=this.customerDets.customerId
+            console.log(this.customerId);
           }
         },
         error: (err) => {
@@ -31,27 +34,27 @@ export class CustomerDashboardComponent{
   }
 
   viewPolicies(): void {
-    this.router.navigate(['/view-policies']);
+    this.router.navigate(['/view-policies'],{state:{customerId:this.customerId}});
   }
 
   createPolicyAccount(): void {
-    this.router.navigate(['/create-policy-account']);
+    this.router.navigate(['/create-policy-account'],{state:{customerId:this.customerId}});
   }
 
   cancelPolicy(): void {
-    this.router.navigate(['/cancel-policy']);
+    this.router.navigate(['/cancel-policy'],{state:{customerId:this.customerId}});
   }
 
   document(){
-    this.router.navigate(['/customer-documents',this.customerDets.customerId])
+    this.router.navigate(['/customer-documents',this.customerId])
   }
 
   claimPolicy(): void {
-    this.router.navigate(['/claim-policy']);
+    this.router.navigate(['/claim-policy'],{state:{customerId:this.customerId}});
   }
 
   payInstallment(): void {
-    this.router.navigate(['/pay-installment']);
+    this.router.navigate(['/pay-installment'],{state:{customerId:this.customerId}});
   }
 
   viewProfile(): void {
@@ -64,15 +67,15 @@ export class CustomerDashboardComponent{
   }
 
   editProfile(): void {
-    this.router.navigate(['/edit-profile']);
+    this.router.navigate(['/edit-profile'],{state:{customerId:this.customerId}});
   }
 
   addNominee(): void {
-    this.router.navigate(['/add-nominee']);
+    this.router.navigate(['/add-nominee',this.customerId]);
   }
 
   viewNominee(): void {
-    this.router.navigate(['/view-nominee']);
+    this.router.navigate(['/view-nominee',this.customerId]);
   }
 
   deleteNominee(nomineeId: string): void {
@@ -87,16 +90,15 @@ export class CustomerDashboardComponent{
   }
 
   submitQuery(): void {
-    this.router.navigate(['/submit-query']);
+    this.router.navigate(['/submit-query'],{state:{customerId:this.customerId}});
   }
 
   viewQueries(): void {
-    this.router.navigate(['/view-queries']);
+    this.router.navigate(['/view-queries'],{state:{customerId:this.customerId}});
   }
-
   
   navigateToPolicyOperations(): void {
-    this.router.navigate(['/policy-operations']);
+    this.router.navigate(['/policy-operations'],{state:{customerId:this.customerId}});
   }
 
   // displayPolicies(): void {
@@ -111,10 +113,10 @@ export class CustomerDashboardComponent{
   // }
 
   getTransactionHistory(): void {
-    this.router.navigate(['/transaction-history']);
+    this.router.navigate(['/transaction-history'],{state:{customerId:this.customerId}});
   }
 
   withdrawClaim(policyAccountId: string): void {
-    this.router.navigate(['/withdraw-claim', { policyAccountId }]);
+    this.router.navigate(['/withdraw-claim', { policyAccountId }],{state:{customerId:this.customerId}});
   }
 }

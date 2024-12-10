@@ -1,36 +1,95 @@
 <div class="container mt-5">
-    <h1 class="text-center">Nominees</h1>
-    <div *ngIf="nominees.length === 0" class="text-center mt-4">
+  <h1 class="text-center">Nominees</h1>
+  <div *ngIf="nomineeData.data.length === 0" class="text-center mt-4">
       <p>No nominees found.</p>
-      <button class="btn btn-primary" routerLink="/add-nominee">Add Nominee</button>
-    </div>
-  
-    <div *ngIf="nominees.length > 0" class="mt-4">
+      <button class="btn btn-primary" (click)="addNominee()">Add Nominee</button>
+  </div>
+
+  <div *ngIf="nomineeData.data.length > 0" class="mt-4">
       <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nominee Name</th>
-            <th>Relation</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let nominee of nominees; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>{{ nominee.nomineeName }}</td>
-            <td>{{ nominee.nomineeRelation }}</td>
-            <td>
-              <button class="btn btn-warning btn-sm" (click)="editNominee(nominee.id)">
-                Edit
-              </button>
-              <button class="btn btn-danger btn-sm" (click)="deleteNominee(nominee.id)">
-                Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
+          <thead>
+              <tr>
+                  <th>Sr no.</th>
+                  <th>Nominee Name</th>
+                  <th>Relation</th>
+                  <th>Actions</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let nominee of nomineeData.data; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ nominee.nomineeName }}</td>
+                  <td>{{ nominee.nomineeRelation }}</td>
+                  <td>
+                      <button
+                          class="btn btn-warning btn-sm"
+                          style="margin-right: 5px;"
+                          (click)="editNominee(nominee)"
+                      >
+                          Edit
+                      </button>
+                      <button class="btn btn-danger btn-sm" (click)="deleteNominee(nominee.id)">
+                          Delete
+                      </button>
+                  </td>
+              </tr>
+          </tbody>
       </table>
-    </div>
+  </div>
 </div>
-  
+
+<!-- Edit Nominee Modal -->
+<div *ngIf="isEditModalOpen" class="modal show" style="display: block;">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Edit Nominee</h5>
+              <button type="button" class="btn-close" (click)="closeEditModal()"></button>
+          </div>
+          <div class="modal-body">
+              <form [formGroup]="editNomineeForm" (ngSubmit)="onEditSubmit()">
+                  <div class="mb-3">
+                      <label for="nomineeName" class="form-label">
+                          Nominee Name <span class="text-danger">*</span>
+                      </label>
+                      <input
+                          type="text"
+                          id="nomineeName"
+                          class="form-control"
+                          formControlName="nomineeName"
+                      />
+                      <div
+                          *ngIf="editNomineeForm.get('nomineeName')?.invalid && editNomineeForm.get('nomineeName')?.touched"
+                          class="text-danger"
+                      >
+                          Nominee Name is required.
+                      </div>
+                  </div>
+                  <div class="mb-3">
+                      <label for="nomineeRelation" class="form-label">
+                          Nominee Relation <span class="text-danger">*</span>
+                      </label>
+                      <input
+                          type="text"
+                          id="nomineeRelation"
+                          class="form-control"
+                          formControlName="nomineeRelation"
+                      />
+                      <div
+                          *ngIf="editNomineeForm.get('nomineeRelation')?.invalid && editNomineeForm.get('nomineeRelation')?.touched"
+                          class="text-danger"
+                      >
+                          Nominee Relation is required.
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary" [disabled]="editNomineeForm.invalid">
+                          Save Changes
+                      </button>
+                      <button type="button" class="btn btn-secondary" (click)="closeEditModal()">Cancel</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
