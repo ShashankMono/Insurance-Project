@@ -1,21 +1,33 @@
 <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="card p-4 shadow-sm" style="width: 100%; max-width: 400px;">
       <h1 class="text-center mb-4">Login</h1>
-      <form [formGroup]="loginForm" (ngSubmit)="logIn()">
+      <form [formGroup]="loginForm" (ngSubmit)="logIn(captchaInput)">
         
         <div class="mb-3">
           <label for="username" class="form-label">Username<span class="text-danger">*</span></label>
           <input type="text" id="username" class="form-control" formControlName="username" placeholder="Enter Username">
+          <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" class="text-danger">
+            UserName is required.
+         </div>
         </div>
   
         <div class="mb-3">
           <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
           <input type="password" id="password" class="form-control" formControlName="password" placeholder="Enter Password">
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+            Password is required.
+         </div>
         </div>
-        <div class="mb-3 captcha-container">
-          <label class="form-label">Solve the CAPTCHA<span class="text-danger">*</span>: {{ captcha.question }}</label>
-          <input type="text" id="captcha" class="form-control" [(ngModel)]="captchaAnswer" placeholder="Enter CAPTCHA answer" required>
+        <div class="mb-3">
+          <label for= "captcha" class="form-label">Solve the CAPTCHA<span class="text-danger">*</span>: 
+            <strong class="text-primary" style="background-color: black;">{{ captcha.question }}</strong></label>
+          <input type="text" id="captcha" class="form-control" formControlName="captcha" placeholder="Enter CAPTCHA answer" #captchaInput
+          >
+          <div *ngIf="loginForm.get('captcha')?.invalid && loginForm.get('captcha')?.touched" class="text-danger">
+            CAPTCHA is required.
+         </div>
         </div>
+        
   
         <div class="mb-3 text-end">
             <a routerLink="/update-password" class="text-decoration-none">
@@ -23,8 +35,8 @@
             </a>
         </div>
   
-        <button type="submit" class="btn btn-primary w-100">Submit</button>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
       </form>
     </div>
-  </div>
+</div>
   

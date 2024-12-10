@@ -16,70 +16,69 @@ export class AdminDashboardComponent {
 
 
   viewAllUsers(): void {
-    this.router.navigate(['/view-users']);
+    this.router.navigate(['/admin-view/view-users'], { relativeTo: this.router.routerState.root });
   }
 
   addUser(): void {
-    this.router.navigate(['/add-users']);
+    this.router.navigate(['/admin-view/add-users'], { relativeTo: this.router.routerState.root });
   }
 
   addRole(): void {
-    this.router.navigate(['/add-role']);
+    this.router.navigate(['/admin-view/add-role'], { relativeTo: this.router.routerState.root });
   }
 
   viewAllRoles(): void {
-    this.router.navigate(['/view-roles']);
+    this.router.navigate(['/admin-view/view-roles'], { relativeTo: this.router.routerState.root });
   }
 
 
   // Agent and Employee Management
   addAgent(): void {
-    this.router.navigate(['/add-agent']);
+    this.router.navigate(['/admin-view/add-agent'], { relativeTo: this.router.routerState.root });
   }
-
   viewAllAgents(): void {
-    this.router.navigate(['/view-agents']);
+    this.router.navigate(['/admin-view/view-agents'], { relativeTo: this.router.routerState.root });
   }
 
   addEmployee(): void {
-    this.router.navigate(['/add-employee']);
+    this.router.navigate(['/admin-view/add-employee'], { relativeTo: this.router.routerState.root });
   }
   viewAllEmployee(){
-    this.router.navigate(['/view-employees'])
+    this.router.navigate(['/admin-view/view-employees'], { relativeTo: this.router.routerState.root })
   }
 
   // City and State Management
   getCities(){
-    this.router.navigate(['/view-cities'])
+    this.router.navigate(['/admin-view/view-cities'], { relativeTo: this.router.routerState.root })
   }
 
   getStates(){
-    this.router.navigate(['/view-states'])
+    this.router.navigate(['/admin-view/view-states'], { relativeTo: this.router.routerState.root })
   }
   addCity(): void {
-    this.router.navigate(['/add-city']);
+    this.router.navigate(['/admin-view/add-city'], { relativeTo: this.router.routerState.root });
   }
 
   addState(): void {
-    this.router.navigate(['/add-state']);
+    this.router.navigate(['/admin-view/add-state'], { relativeTo: this.router.routerState.root });
   }
   
 
   // Policy
   addPolicy(): void {
-    this.router.navigate(['/add-policy']);
+    this.router.navigate(['/admin-view/add-policy'], { relativeTo: this.router.routerState.root });
   }
 
   viewPolicies(): void {
-    this.router.navigate(['/view-policies']);
+    this.router.navigate(['/admin-view/view-policies'], { relativeTo: this.router.routerState.root });
   }
 
   addPolicyType(): void {
-    this.router.navigate(['/add-policy-types']);
+    this.router.navigate(['/admin-view/add-policy-types'], { relativeTo: this.router.routerState.root });
   }
   
   viewPolicyTypes(): void {
-    this.router.navigate(['/view-policy-types']);
+    this.router.navigate(['/admin-view/view-policy-types'], { relativeTo: this.router.routerState.root });
   }
 
   // Reports
@@ -112,5 +111,8 @@ export class AdminDashboardComponent {
   
   navigateToApproveDocument(): void {
     this.router.navigate(['/admin/approve-document']);
+  }
+  getReport(){
+    this.router.navigate(['/admin-view/agent-report'], { relativeTo: this.router.routerState.root });
   }
 }

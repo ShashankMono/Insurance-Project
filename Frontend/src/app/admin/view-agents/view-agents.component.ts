@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminDashboardService } from 'src/app/services/admin-dashboard.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { AdminDashboardService } from 'src/app/services/admin-dashboard.service'
 export class ViewAgentsComponent {
   agents: any[] = [];
 
-  constructor(private adminService: AdminDashboardService) {}
+  constructor(private adminService: AdminDashboardService, private router:Router) {}
 
   ngOnInit(): void {
     this.loadAgents();
@@ -20,11 +21,14 @@ export class ViewAgentsComponent {
       next: (response) => {
         console.log('Agents loaded:', response);
         this.agents = response.data;  // response.data will now be an array
+        
       },
       error: (error) => {
         console.error('Error loading agents:', error);
       },
     });
   }
-  
+  getReport(agentId: any): void {
+    this.router.navigate(['/agent-report', agentId]);
+  }
 }

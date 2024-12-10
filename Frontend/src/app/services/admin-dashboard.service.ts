@@ -17,6 +17,20 @@ export class AdminDashboardService {
   getAgents(): Observable<{ data: any[] }> {
     return this.http.get<{ data: any[] }>(`${this.url}/Agent`);
   }
+  getAgentReport(agentId: any): Observable<any> {
+    return this.http.get(`${this.url}/Agent/${agentId}`);
+  }
+  getPolicyAccountReport(agentId: any): Observable<any> {
+    return this.http.get(`${this.url}/PolicyAccount/agent/${agentId}`);
+  }
+  
+  getAgentCommissionReport(agentId: any): Observable<any> {
+    return this.http.get(`${this.url}/Commission/${agentId}`);
+  }
+  
+  getCommissionWithdrawals(agentId: any): Observable<any> {
+    return this.http.get(`${this.url}/CommissionWithdrawal/${agentId}`);
+  }
 
   
   addEmployee(employee: any): Observable<any> {
@@ -25,6 +39,7 @@ export class AdminDashboardService {
   getEmployees(): Observable<{ data: any[] }> {
     return this.http.get<{ data: any[] }>(`${this.url}/Employee`);
   }
+  
   
   addCity(city: any): Observable<any> {
     return this.http.post(`${this.url}/City`, city);
@@ -57,14 +72,15 @@ export class AdminDashboardService {
   getPolicyType(): Observable<{ data: any[] }> {
     return this.http.get<{ data: any[] }>(`${this.url}/PolicyType`);
   }
+  getPolicyTypes(): Observable<{ success: boolean; data: any[]; message: string }> {
+    return this.http.get<{ success: boolean; data: any[]; message: string }>(`${this.url}/PolicyType`);
+  }
   
   getPolicy(): Observable<{ success: boolean; data: any[]; message: string }> {
     return this.http.get<{ success: boolean; data: any[]; message: string }>(`${this.url}/Policy`);
   }
   
-  getAgentReport(): Observable<any> {
-    return this.http.get(`${this.url}/Agent`);
-  }
+  
 
   // getClaimAccounts(): Observable<any> {
   //   return this.http.get(`${this.url}/get-claim-accounts`);

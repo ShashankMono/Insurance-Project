@@ -3,11 +3,13 @@
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>Sr. no.</th>
           <th>Role Name</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let role of roles">
+        <tr *ngFor="let role of roles; let i=index;">
+          <td>{{ i + 1 }}</td>
           <td>{{ role.roleName }}</td>
         </tr>
       </tbody>

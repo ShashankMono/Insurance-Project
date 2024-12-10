@@ -66,14 +66,14 @@ namespace Insurance_final_project.Services
         {
             var customer = _mapper.Map<Customer>(customerDto);
             check(customerDto);
-            var existingCustomer = _customerRepository.GetAll().AsNoTracking().FirstOrDefault(c=>c.CustomerId ==customer.CustomerId);
+            var existingCustomer = _customerRepository.GetAll().AsNoTracking().FirstOrDefault(c => c.CustomerId == customer.CustomerId);
             if (existingCustomer == null)
             {
                 throw new CustomerNotFoundException("Customer not found!");
             }
-            customer.UserId = existingCustomer.UserId;  
+            customer.UserId = existingCustomer.UserId;
             _customerRepository.Update(customer);
-             return true;
+            return true;
         }
         public void check(CustomerDto customerDto)
         {

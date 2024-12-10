@@ -9,22 +9,41 @@ import { AdminDashboardService } from 'src/app/services/admin-dashboard.service'
 export class ViewPoliciesComponent implements OnInit{
 
   policies: any[] = [];
+  policyTypes: any[] = [];
 
   constructor(private adminService: AdminDashboardService) {}
 
   ngOnInit(): void {
-    this.getPolicies();
+    this.getPolicyTypesAndPolicies();
   }
 
-  getPolicies(): void {
-    this.adminService.getPolicy().subscribe({
-      next: (response: { success: boolean; data: any[]; message: string }) => {
-        console.log('Fetched policies:', response); 
-        this.policies = response.data;  
+  getPolicyTypesAndPolicies(): void {
+    // Fetch policy types
+    this.adminService.getPolicyTypes().subscribe({
+      next: (typeResponse: { success: boolean; data: any[]; message: string }) => {
+        if (typeResponse.success) {
+          this.policyTypes = typeResponse.data;
+
+          // Fetch policies after policy types
+          this.adminService.getPolicy().subscribe({
+            next: (policyResponse: { success: boolean; data: any[]; message: string }) => {
+              if (policyResponse.success) {
+                this.policies = policyResponse.data.map((policy) => ({
+                  ...policy,
+                  policyTypeName: this.getPolicyTypeName(policy.policyTypeId),
+                }));
+              }
+            },
+            error: (err) => console.error('Error fetching policies:', err),
+          });
+        }
       },
-      error: (error: any) => {
-        console.error('Error fetching policies:', error);
-      }
+      error: (err) => console.error('Error fetching policy types:', err),
     });
+  }
+
+  getPolicyTypeName(policyTypeId: string): string {
+    const type = this.policyTypes.find((t: any) => t.id === policyTypeId);
+    return type ? type.type : 'Unknown';
   }
 }
