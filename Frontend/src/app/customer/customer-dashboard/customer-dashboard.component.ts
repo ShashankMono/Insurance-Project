@@ -90,13 +90,15 @@ export class CustomerDashboardComponent{
   }
 
   submitQuery(): void {
-    this.router.navigate(['/submit-query'],{state:{customerId:this.customerId}});
+    this.router.navigate(['/add-query',this.customerId]);
   }
 
   viewQueries(): void {
-    this.router.navigate(['/view-queries'],{state:{customerId:this.customerId}});
+    this.router.navigate(['/view-queries', this.customerId]);
   }
-  
+  editQuery(){
+    this.router.navigate(['/edit-queries'])
+  }
   navigateToPolicyOperations(): void {
     this.router.navigate(['/policy-operations'],{state:{customerId:this.customerId}});
   }

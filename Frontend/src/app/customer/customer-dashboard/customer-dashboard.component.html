@@ -48,10 +48,10 @@
           <i class="bi bi-cash"></i>
           <span>Policy Operations</span>
         </button>
-        <!-- <button class="btn btn-success dashboard-btn" (click)="navigateToTransactionHistory()" >
+        <button class="btn btn-success dashboard-btn"  >
           <i class="bi bi-credit-card"></i>
           <span>Transactions</span>
-        </button> -->
+        </button>
       </div>
     </div>
 
@@ -83,6 +83,22 @@
           <i class="bi bi-people"></i>
           <span>View Nominees</span>
         </button>
+      </div>
+    </div>
+    <!-- Queries Section -->
+    <div class="dashboard-section mt-5">
+      <h2>Queries</h2>
+      <div class="d-flex justify-content-center flex-wrap">
+        
+        <button class="btn btn-success dashboard-btn" (click)="submitQuery()">
+          <i class="bi bi-pencil-square"></i>
+          <span>Submit Query</span>
+        </button>
+        <button class="btn btn-info dashboard-btn" (click)="viewQueries()">
+          <i class="bi bi-eye"></i>
+          <span>View Queries</span>
+        </button>
+        
       </div>
     </div>
 

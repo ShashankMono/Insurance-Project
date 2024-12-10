@@ -55,12 +55,12 @@ import { WithdrawClaimComponent } from './customer/withdraw-claim/withdraw-claim
 import { TransactionHistoryComponent } from './customer/transaction-history/transaction-history.component';
 import { AddNomineeComponent } from './customer/add-nominee/add-nominee.component';
 import { DeleteNomineeComponent } from './customer/delete-nominee/delete-nominee.component';
-import { AddQueryComponent } from './customer/add-query/add-query.component';
+
 import { PayInstallmentComponent } from './customer/pay-installment/pay-installment.component';
 import { CancelPolicyComponent } from './customer/cancel-policy/cancel-policy.component';
 import { EditProfileComponent } from './customer/edit-profile/edit-profile.component';
 import { ViewProfileComponent } from './customer/view-profile/view-profile.component';
-import { ViewQueriesComponent } from './customer/view-queries/view-queries.component';
+
 import { ViewNomineesComponent } from './customer/view-nominees/view-nominees.component';
 import { PolicyOperationsComponent } from './customer/policy-operations/policy-operations.component';
 import { UserRegistrationComponent } from './landing-page/user-registration/user-registration.component';
@@ -75,6 +75,21 @@ import { PolicyAccountVerificationComponent } from './admin/policy-account-verif
 import { ApproveDocumentComponent } from './employee/approve-document/approve-document.component';
 import { AgentReportComponent } from './admin/agent-report/agent-report.component';
 import { AdminViewComponent } from './admin/admin-view/admin-view.component';
+import { ViewQueryComponent } from './customer/view-query/view-query.component';
+import { EditQueryComponent } from './customer/edit-query/edit-query.component';
+import { AddQueryComponent } from './customer/add-query/add-query.component';
+import { MarketingComponent } from './agent/marketing/marketing.component';
+
+import { CommissionsComponent } from './agent/commissions/commissions.component';
+import { WithdrawalHistoryComponent } from './agent/withdrawal-history/withdrawal-history.component';
+import { PolicySchemesComponent } from './agent/policy-schemes/policy-schemes.component';
+import { AgentViewComponent } from './agent/agent-view/agent-view.component';
+import { WithdrawCommissionComponent } from './agent/withdraw-commission/withdraw-commission.component';
+import { PolicyAccountsViewComponent } from './agent/policy-accounts-view/policy-accounts-view.component';
+import { ViewAgentProfileComponent } from './agent/view-agent-profile/view-agent-profile.component';
+import { EditAgentProfileComponent } from './agent/edit-agent-profile/edit-agent-profile.component';
+
+
 
 
 
@@ -126,12 +141,10 @@ import { AdminViewComponent } from './admin/admin-view/admin-view.component';
     TransactionHistoryComponent,
     AddNomineeComponent,
     DeleteNomineeComponent,
-    AddQueryComponent,
     PayInstallmentComponent,
     CancelPolicyComponent,
     EditProfileComponent,
     ViewProfileComponent,
-    ViewQueriesComponent,
     ViewNomineesComponent,
     PolicyOperationsComponent,
     UserRegistrationComponent,
@@ -139,12 +152,23 @@ import { AdminViewComponent } from './admin/admin-view/admin-view.component';
     PolicyAccountDocumentsComponent,
     UpdatePolicyAccountDocumentComponent,
     PolicyAccountVerificationComponent,
-    
     AgentReportComponent,
     AdminViewComponent,
     ApproveDocumentComponent,
     SuccessComponent,
     CancelComponent,
+    ViewQueryComponent,
+    EditQueryComponent,
+    AddQueryComponent,
+    MarketingComponent,
+    CommissionsComponent,
+    WithdrawalHistoryComponent,
+    PolicySchemesComponent,
+    AgentViewComponent,
+    WithdrawCommissionComponent,
+    PolicyAccountsViewComponent,
+    ViewAgentProfileComponent,
+    EditAgentProfileComponent,
     
   ],
   imports: [

@@ -83,13 +83,7 @@ export class CustomerDashboardService {
     return this.http.put(`${this.url}/Customer`, customer);
   }
 
-  submitQuery(queryText: string): Observable<any> {
-    return this.http.post(`${this.url}/query`, { text: queryText });
-  }
   
-  getQueries(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.url}/query`);
-  }
   
   addNominee(nominee: any): Observable<any> {
     return this.http.post(`${this.url}/Nominee`, nominee);
