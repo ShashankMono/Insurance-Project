@@ -16,6 +16,17 @@ export class CustomerDocumentsComponent implements OnInit {
   selectedDocumentUrl: string | null = null;
   isAddDocumentModalOpen: boolean = false;
 
+  documentTypes: string[] = [
+    'Passport',
+    'Aadhaar_card',
+    'Voter_ID',
+    'PAN_card',
+    'Ration_card',
+    'Driving_license',
+    'Bank_account_passbook',
+    'Photo_ID_card',
+  ];
+
   customerId: string = '';
   addDocumentForm!: FormGroup;
   selectedFile!: File;

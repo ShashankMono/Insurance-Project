@@ -94,7 +94,7 @@ namespace Insurance_final_project.Services
             var transaction = new Transaction
             {
                 Type = TransactionType.Deposit.ToString(),
-                Amount = installment.Amount,
+                Amount = Math.Round(installment.Amount),
                 CustomerId = policyAccount.CustomerId,
                 PolicyAccountId = installment.PolicyAccountId,
                 PolicyInstallmentId = installment.Id,

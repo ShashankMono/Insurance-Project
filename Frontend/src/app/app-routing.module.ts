@@ -66,6 +66,8 @@ import { PolicyAccountsViewComponent } from './agent/policy-accounts-view/policy
 import { WithdrawCommissionComponent } from './agent/withdraw-commission/withdraw-commission.component';
 import { ViewAgentProfileComponent } from './agent/view-agent-profile/view-agent-profile.component';
 import { EditAgentProfileComponent } from './agent/edit-agent-profile/edit-agent-profile.component';
+import { ReferCustomerComponent } from './agent/refer-customer/refer-customer.component';
+import { BuyPolicyAgentComponent } from './customer/buy-policy-agent/buy-policy-agent.component';
 
 const routes: Routes = [
   { 
@@ -202,6 +204,10 @@ const routes: Routes = [
         component:CommissionsComponent
       },
       {
+        path:'refer-customer',
+        component:ReferCustomerComponent
+      },
+      {
         path:'marketing',
         component:MarketingComponent
       },
@@ -238,7 +244,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       role: 'Customer',
-    }
+    },
+    children:[
+      {
+        path:'policy-agent',
+        component:BuyPolicyAgentComponent
+      }
+    ]
   },
   
   {

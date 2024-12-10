@@ -52,7 +52,7 @@ namespace Insurance_final_project.Services
                             {
                                 Name = paymentDto.PolicyName,
                             },
-                            UnitAmount = paymentDto.Amount * 100,
+                            UnitAmount = (int)Math.Round(paymentDto.Amount * 100),
                         },
                         Quantity = 1
                     },

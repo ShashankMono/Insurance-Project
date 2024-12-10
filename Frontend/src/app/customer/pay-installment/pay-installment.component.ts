@@ -65,6 +65,7 @@ export class PayInstallmentComponent implements OnInit {
       cancelUrl:"http://localhost:4200/Cancel"
     }
 
+    //console.log(obj);
     this.dashboardService.getPaymentSession(obj).subscribe({
       next:(response)=>{
         var resData = response;

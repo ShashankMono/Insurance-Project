@@ -88,6 +88,8 @@ import { WithdrawCommissionComponent } from './agent/withdraw-commission/withdra
 import { PolicyAccountsViewComponent } from './agent/policy-accounts-view/policy-accounts-view.component';
 import { ViewAgentProfileComponent } from './agent/view-agent-profile/view-agent-profile.component';
 import { EditAgentProfileComponent } from './agent/edit-agent-profile/edit-agent-profile.component';
+import { ReferCustomerComponent } from './agent/refer-customer/refer-customer.component';
+import { BuyPolicyAgentComponent } from './customer/buy-policy-agent/buy-policy-agent.component';
 
 
 
@@ -169,6 +171,8 @@ import { EditAgentProfileComponent } from './agent/edit-agent-profile/edit-agent
     PolicyAccountsViewComponent,
     ViewAgentProfileComponent,
     EditAgentProfileComponent,
+    ReferCustomerComponent,
+    BuyPolicyAgentComponent,
     
   ],
   imports: [

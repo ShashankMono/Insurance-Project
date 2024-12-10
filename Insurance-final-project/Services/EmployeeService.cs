@@ -26,16 +26,17 @@ namespace Insurance_final_project.Services
             _EmployeeRepo = employeeRepo;
             _emailService = emailService;
             _Mapper = mapper;
+            _userService = userService;
         }
         public async Task<UserDto> AddEmployee(EmployeeDto newEmployee)
         {
             Employee employee = _Mapper.Map<EmployeeDto, Employee>(newEmployee);
-            var RoleId = _RoleRepo.GetAll().FirstOrDefault(r => r.RoleName == "Employee").RoleId;
-            if (RoleId == null)
+            var Role = _RoleRepo.GetAll().FirstOrDefault(r => r.RoleName.ToLower() == "Employee".ToLower());
+            if (Role.RoleId == null)
             {
                 throw new RoleNotFoundException("Role not found! Please add role \"Employee\"");
             }
-            UserDto user = _userService.AddNewUser(RoleId);
+            UserDto user = _userService.AddNewUser(Role.RoleId);
             employee.UserId = user.UserId;
             Employee employeeAdded = _EmployeeRepo.Add(employee);
             _emailService.SendUserDetailthroughEmail(employeeAdded.EmailId,"Employee username and password",user);

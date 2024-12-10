@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Policy } from 'src/app/models/policy';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
-import { Router } from '@angular/router';
 import { PolicyTypeService } from 'src/app/services/policy-type.service';
 import { PolicyType } from 'src/app/models/policy-type';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PolicyService } from 'src/app/services/policy.service';
 @Component({
   selector: 'app-view-all-policies',
   templateUrl: './view-all-policies.component.html',
@@ -23,9 +23,9 @@ export class ViewAllPoliciesComponent implements OnInit {
   constructor(
     private customerService: CustomerDashboardService,
     private policyTypeService:PolicyTypeService,
-    private router: Router
     private router: Router,
-    private route:ActivatedRoute
+    private route:ActivatedRoute,
+    private policyService : PolicyService
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +35,7 @@ export class ViewAllPoliciesComponent implements OnInit {
   }
 
   loadPolicies(): void {
-    this.customerService.getPolicies().subscribe(
+    this.policyService.getPolicies().subscribe(
       (response) => {
         this.policies = response;
         this.filteredPolicies = response; // Initially, show all policies

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
+import { PolicyService } from 'src/app/services/policy.service';
 
 @Component({
   selector: 'app-policy-account',
@@ -18,7 +19,10 @@ export class PolicyAccountComponent implements OnInit{
   customerId: any | null = "";
   fileUploaded:boolean= false;
 
-  constructor(private customerDashboardService: CustomerDashboardService) {}
+  constructor(
+    private customerDashboardService: CustomerDashboardService
+    ,private policyService:PolicyService
+) {}
 
   ngOnInit(): void {
     this.customerId=history.state.customerId
@@ -35,7 +39,7 @@ export class PolicyAccountComponent implements OnInit{
   }
 
   fetchPolicies(): void {
-    this.customerDashboardService.getPolicies().subscribe(
+    this.policyService.getPolicies().subscribe(
       (policies) => {
         this.policies = policies;
       },

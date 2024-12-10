@@ -49,7 +49,10 @@
           <form [formGroup]="addDocumentForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
               <label for="documentType">Document Type</label>
-              <input type="text" id="documentType" class="form-control" formControlName="documentType" />
+              <select id="documentType" class="form-control" formControlName="documentType">
+                <option value="" disabled selected>Select a Document Type</option>
+                <option *ngFor="let type of documentTypes" [value]="type">{{ type }}</option>
+              </select>
             </div>
             <div class="mb-3">
               <label for="documentName">Document Name</label>

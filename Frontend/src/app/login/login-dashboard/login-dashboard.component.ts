@@ -67,6 +67,7 @@ export class LoginDashboardComponent {
   
         this.userData = response.body;
         localStorage.setItem('userId', this.userData.data.userId);
+        console.log(this.userData);
   
         if (this.userData && this.userData.data) {
           localStorage.setItem('role', this.userData.data.roleName);
@@ -94,7 +95,7 @@ export class LoginDashboardComponent {
       },
       error: (err: HttpErrorResponse) => {
         console.error('Error signing in:', err);
-        alert('Login failed. Please check your credentials and try again.');
+        alert('Login failed. Please check your credentials and try again or user is Deactivated');
       },
     });
   }

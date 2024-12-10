@@ -38,6 +38,14 @@ namespace Insurance_final_project.Services
             return _Mapper.Map<AgentResponseDto>(agent);
         }
 
+        public async Task<AgentResponseDto> GetAgentByUserId(Guid UserId)
+        {
+            var agent = _agentRepository.GetAll().AsNoTracking().FirstOrDefault(a=>a.UserId == UserId);
+            if (agent == null)
+                throw new InvalidGuidException("Agent not found!");
+            return _Mapper.Map<AgentResponseDto>(agent);
+        }
+
 
         public double ViewTotalCommission(Guid agentId)
         {
@@ -50,7 +58,7 @@ namespace Insurance_final_project.Services
         public async Task<UserDto> AddAgent(AgentInputDto newAgent)
         {
             Agent agent = _Mapper.Map<AgentInputDto, Agent>(newAgent);
-            var RoleId = _RoleRepo.GetAll().FirstOrDefault(r => r.RoleName == "Agent").RoleId;
+            var RoleId = _RoleRepo.GetAll().FirstOrDefault(r => r.RoleName.ToLower() == "Agent".ToLower()).RoleId;
             if (RoleId == null)
             {
                 throw new RoleNotFoundException("Role not found! Please add role \"Agent\"");
@@ -80,5 +88,7 @@ namespace Insurance_final_project.Services
             agent.TotalCommission = ExistingAgent.TotalCommission;
             return _agentRepository.Update(_Mapper.Map<Agent>(agent)).AgentId;
         }
+
+
     }
 }

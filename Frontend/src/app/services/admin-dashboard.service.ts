@@ -31,14 +31,6 @@ export class AdminDashboardService {
   getCommissionWithdrawals(agentId: any): Observable<any> {
     return this.http.get(`${this.url}/CommissionWithdrawal/${agentId}`);
   }
-
-  
-  addEmployee(employee: any): Observable<any> {
-    return this.http.post(`${this.url}/Employee`, employee);
-  }
-  getEmployees(): Observable<{ data: any[] }> {
-    return this.http.get<{ data: any[] }>(`${this.url}/Employee`);
-  }
   
   
   addCity(city: any): Observable<any> {
@@ -90,9 +82,7 @@ export class AdminDashboardService {
   //   return this.http.get(`${this.url}/get-commissions`);
   // }
 
-  // getCustomerAccounts(): Observable<any> {
-  //   return this.http.get(`${this.url}/get-customer-accounts`);
-  // }
+ 
 
   // getPolicyAccount(): Observable<any> {
   //   return this.http.get(`${this.url}/get-policy-account`);

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminDashboardService } from 'src/app/services/admin-dashboard.service';
+import { EmployeeService } from 'src/app/services/employee.service';
 @Component({
   selector: 'app-add-employee',
   templateUrl: './add-employee.component.html',
@@ -17,7 +18,7 @@ export class AddEmployeeComponent {
     salary: new FormControl('', [Validators.required])
   })
 
-  constructor(private addEmployeeService: AdminDashboardService,
+  constructor(private addEmployeeService: EmployeeService,
     private router: Router
   ) {
     
@@ -29,7 +30,7 @@ export class AddEmployeeComponent {
     if (this.addEmployeeForm.valid) {
       this.addEmployeeService.addEmployee(this.addEmployeeForm.value).subscribe({
         next: () => {
-          alert('Employee added successfully!');
+          alert('Employee added successfully! check email for login credential\'s.');
           this.router.navigate(['/admin-dashboard']);
         },
         error: (error) => {

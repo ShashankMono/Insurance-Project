@@ -37,7 +37,7 @@ export class AddAgentComponent{
       this.addAgentService.addAgent(agentData).subscribe({
         next: (response) => {
           console.log('Agent added successfully:', response);
-          alert('Agent added successfully!');
+          alert('Agent added successfully! check email for credential\'s.');
           this.router.navigate(['/admin-dashboard']);
         },
         error: (error) => {

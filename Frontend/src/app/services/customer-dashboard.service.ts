@@ -12,12 +12,6 @@ export class CustomerDashboardService {
   
   constructor(private http: HttpClient) {}
 
-  getPolicies(): Observable<any[]> {
-    return this.http.get<{ data: any[] }>(`${this.url}/Policy`).pipe(
-      map((response) => response.data)
-    );
-  }
-
   getInstallmentTypes(): Observable<string[]> {
     return this.http.get<{ success: boolean; data: string[] }>(
       `${this.url}/CommonFeatures/installment_types`
@@ -63,7 +57,7 @@ export class CustomerDashboardService {
   }
 
   getPaymentSession(sessionData:any){
-    return this.http.post<any>(`${this.url}/Payment/create-session`,sessionData)
+    return this.http.post<any>(`${this.url}/Payment/create-session`,sessionData);
   }
 
   getInstallment(accountId:any):Observable<any>{
@@ -83,7 +77,9 @@ export class CustomerDashboardService {
     return this.http.put(`${this.url}/Customer`, customer);
   }
 
-  
+  getCustomerAccounts(): Observable<any> {
+    return this.http.get(`${this.url}/Customer`);
+  }
   
   addNominee(nominee: any): Observable<any> {
     return this.http.post(`${this.url}/Nominee`, nominee);
