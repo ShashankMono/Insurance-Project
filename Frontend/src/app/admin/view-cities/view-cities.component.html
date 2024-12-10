@@ -1,14 +1,32 @@
-<table *ngIf="cities.length > 0" class="table table-striped mt-3">
+<div class="container py-5">
+  <h2 class="text-center mb-4">View Cities</h2>
+
+  <!-- State Selection Dropdown -->
+  <div class="mb-4">
+    <label for="stateSelect" class="form-label">Filter by State:</label>
+    <select 
+      id="stateSelect" 
+      class="form-select" 
+      [(ngModel)]="selectedState" 
+      (change)="filterCitiesByState()">
+      <option value="All">All States</option>
+      <option *ngFor="let state of states" [value]="state.stateId">{{ state.stateName }}</option>
+    </select>
+  </div>
+
+  <!-- City Table -->
+  <table *ngIf="filteredCities.length > 0" class="table table-striped mt-3">
     <thead>
       <tr>
+        <th>Sr. no.</th>
         <th>City Name</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let city of cities">
+      <tr *ngFor="let city of filteredCities; let i = index;">
+        <td>{{ i + 1 }}</td>
         <td>{{ city.cityName }}</td>
-        
       </tr>
     </tbody>
   </table>
-  
+</div>

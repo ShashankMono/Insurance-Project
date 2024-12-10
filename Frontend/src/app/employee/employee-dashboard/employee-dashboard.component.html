@@ -1,1 +1,31 @@
-<p>employee-dashboard works!</p>
+<div class="container mt-4">
+    <h2 class="text-center">Employee Dashboard</h2>
+  
+    <div class="row mt-5">
+      <!-- Account Verification and Approvals Section -->
+      <div class="col-md-6 offset-md-3">
+        <div class="card">
+          <div class="card-header bg-primary text-white text-center">
+            <h4>Account Verification and Approvals</h4>
+          </div>
+          <div class="card-body">
+            <div class="d-grid gap-3">
+              <!-- Approve Customer Button -->
+              <button class="btn btn-success" (click)="approveCustomer()">
+                Approve Customer
+              </button>
+              <!-- Approve Document Button -->
+              <button class="btn btn-warning" (click)="approveDocument()">
+                Approve Document
+              </button>
+              <!-- Policy Account Verification Button -->
+              <button class="btn btn-info" (click)="policyAccountVerification()">
+                Policy Account Verification
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+  

@@ -4,6 +4,9 @@
       <div class="form-group mb-3">
         <label for="roleName">Role Name <span class="text-danger">*</span>:</label>
         <input type="text" id="roleName" class="form-control" formControlName="roleName" />
+        <div *ngIf="addRoleForm.get('roleName')?.invalid && addRoleForm.get('roleName')?.touched" class="text-danger">
+          Role Name is required.
+       </div>
       </div>
       <button class="btn btn-primary w-100" type="submit" [disabled]="addRoleForm.invalid">Add Role</button>
     </form>

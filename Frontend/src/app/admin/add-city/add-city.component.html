@@ -1,8 +1,8 @@
 <div class="container">
-    <h2>Add City</h2>
+    <h1 class="text-center py-3">Add City</h1>
     <form [formGroup]="addCityForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="cityName">City Name:</label>
+        <label for="cityName">City Name:<span class="text-danger">*</span></label>
         <input
           type="text"
           id="cityName"
@@ -10,19 +10,26 @@
           formControlName="cityName"
           placeholder="Enter city name"
         />
+        <div *ngIf="addCityForm.get('cityName')?.invalid && addCityForm.get('cityName')?.touched" class="text-danger">
+          City Name is required.
+       </div>
       </div>
       <div class="form-group">
-        <label for="stateId">State:</label>
+        <label for="stateName">State:<span class="text-danger">*</span></label>
         <select
-            id="stateId"
+            id="stateName"
             class="form-control"
-            formControlName="stateId"
+            formControlName="stateName"
         >
             <option value="" disabled selected>Select a state</option>
             <option *ngFor="let state of states" [value]="state.stateId">
                 {{ state.stateName }}
             </option>
+            
         </select>
+        <div *ngIf="addCityForm.get('stateName')?.invalid && addCityForm.get('stateName')?.touched" class="text-danger">
+          State selection is required.
+       </div>
 
       </div>
       <button

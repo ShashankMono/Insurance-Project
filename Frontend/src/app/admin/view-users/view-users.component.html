@@ -1,20 +1,36 @@
 <div class="container py-5">
-    <h2 class="text-center mb-4">View All Users</h2>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Role</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{ user.username }}</td>
-          <td>{{ user.roleName }}</td>
-          <td>{{ user.isActive ? 'Active' : 'Inactive' }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <h2 class="text-center mb-4">View All Users</h2>
+
+  <!-- Role Selection Dropdown -->
+  <div class="mb-4">
+    <label for="roleSelect" class="form-label">Filter by Role:</label>
+    <select 
+      id="roleSelect" 
+      class="form-select" 
+      [(ngModel)]="selectedRole" 
+      (change)="filterUsersByRole()">
+      <option value="All">All Roles</option>
+      <option *ngFor="let role of roles" [value]="role.roleName">{{ role.roleName }}</option>
+    </select>
   </div>
-  
+
+  <!-- User Table -->
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Sr. no.</th>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers; let i = index;">
+        <td>{{ i + 1 }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.roleName }}</td>
+        <td>{{ user.isActive ? 'Active' : 'Inactive' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
