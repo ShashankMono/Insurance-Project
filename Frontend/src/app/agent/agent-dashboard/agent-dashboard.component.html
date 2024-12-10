@@ -1,1 +1,102 @@
-<p>agent-dashboard works!</p>
+<div class="container-fluid mt-4">
+    <div class="row">
+      <!-- Marketing Section -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-primary">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-house-door me-2"></i>Marketing</h5>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-outline-primary w-100 mb-2" (click)="goToMarketing()">
+              <i class="bi bi-graph-up me-2"></i>View Campaigns
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Policy Accounts Section -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-primary">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-file-earmark-lock me-2"></i>Policy Accounts</h5>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-outline-primary w-100 mb-2" (click)="viewPolicyAccounts()">
+              <i class="bi bi-eye me-2"></i>View Policy Accounts
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Commissions Section -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-primary">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-cash me-2"></i>Commissions</h5>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-outline-primary w-100 mb-2" (click)="viewCommissions()">
+              <i class="bi bi-eye me-2"></i>View Commissions
+            </button>
+            <button class="btn btn-outline-success w-100 mb-2" (click)="withdrawCommission()">
+              <i class="bi bi-wallet2 me-2"></i>Withdraw Commission
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Withdrawal History Section -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-primary">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-clock-history me-2"></i>Withdrawal History</h5>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-outline-primary w-100 mb-2" (click)="viewWithdrawalHistory()">
+              <i class="bi bi-history me-2"></i>View Withdrawal History
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm border-primary">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-person-fill me-2"></i>Agent Profile</h5>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-outline-info w-100 mb-2" (click)="viewProfile()">
+              <i class="bi bi-eye me-2"></i>View Profile
+            </button>
+            <button class="btn btn-outline-warning w-100" (click)="editProfile()">
+              <i class="bi bi-pencil me-2"></i>Edit Profile
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm border-primary">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-shield-lock me-2"></i>Policy Schemes</h5>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-outline-info w-100" (click)="viewPolicySchemes()">
+              <i class="bi bi-file-earmark-text me-2"></i>View Policy Schemes
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+    <!-- </div>
+  
+    <div class="row">
+     
+      
+  
+      
+      
+    </div>
+</div> -->
+  

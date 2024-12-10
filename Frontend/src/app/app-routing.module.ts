@@ -31,7 +31,6 @@ import { PolicyAccountComponent } from './customer/policy-account/policy-account
 import { DisplayPolicyComponent } from './customer/display-policy/display-policy.component';
 import { WithdrawClaimComponent } from './customer/withdraw-claim/withdraw-claim.component';
 import { TransactionHistoryComponent } from './customer/transaction-history/transaction-history.component';
-import { AddQueryComponent } from './customer/add-query/add-query.component';
 import { AddNomineeComponent } from './customer/add-nominee/add-nominee.component';
 import { ViewAllPoliciesComponent } from './customer/view-all-policies/view-all-policies.component';
 import { PayInstallmentComponent } from './customer/pay-installment/pay-installment.component';
@@ -39,7 +38,7 @@ import { AddClaimComponent } from './customer/add-claim/add-claim.component';
 import { CancelPolicyComponent } from './customer/cancel-policy/cancel-policy.component';
 import { EditProfileComponent } from './customer/edit-profile/edit-profile.component';
 import { ViewProfileComponent } from './customer/view-profile/view-profile.component';
-import { ViewQueriesComponent } from './customer/view-queries/view-queries.component';
+
 import { ViewNomineesComponent } from './customer/view-nominees/view-nominees.component';
 import { PolicyOperationsComponent } from './customer/policy-operations/policy-operations.component';
 import { UserRegistrationComponent } from './landing-page/user-registration/user-registration.component';
@@ -55,6 +54,19 @@ import { ApproveCustomerComponent } from './employee/approve-customer/approve-cu
 import { ApproveDocumentComponent } from './employee/approve-document/approve-document.component';
 import { AgentReportComponent } from './admin/agent-report/agent-report.component';
 import { AdminViewComponent } from './admin/admin-view/admin-view.component';
+import { ViewQueryComponent } from './customer/view-query/view-query.component';
+import { EditQueryComponent } from './customer/edit-query/edit-query.component';
+import { AddQueryComponent } from './customer/add-query/add-query.component';
+import { AgentViewComponent } from './agent/agent-view/agent-view.component';
+import { CommissionsComponent } from './agent/commissions/commissions.component';
+import { MarketingComponent } from './agent/marketing/marketing.component';
+import { PolicySchemesComponent } from './agent/policy-schemes/policy-schemes.component';
+import { WithdrawalHistoryComponent } from './agent/withdrawal-history/withdrawal-history.component';
+import { PolicyAccountsViewComponent } from './agent/policy-accounts-view/policy-accounts-view.component';
+import { WithdrawCommissionComponent } from './agent/withdraw-commission/withdraw-commission.component';
+import { ViewAgentProfileComponent } from './agent/view-agent-profile/view-agent-profile.component';
+import { EditAgentProfileComponent } from './agent/edit-agent-profile/edit-agent-profile.component';
+
 const routes: Routes = [
   { 
     path: '',
@@ -173,12 +185,52 @@ const routes: Routes = [
   },
   
   {
-    path: 'agent-dashboard',
-    component: AgentDashboardComponent,
+    path: 'agent-view',
+    component: AgentViewComponent,
     canActivate: [AuthGuard],
     data: {
       role: 'Agent',
-    }
+    },
+    children:[
+      {
+        path:'',
+        component:AgentDashboardComponent,
+        pathMatch:'full'
+      },
+      {
+        path:'commissions',
+        component:CommissionsComponent
+      },
+      {
+        path:'marketing',
+        component:MarketingComponent
+      },
+      {
+        path:'policy-accounts-view',
+        component:PolicyAccountsViewComponent
+      },
+      
+      {
+        path:'view-agent-profile',
+        component:ViewAgentProfileComponent
+      },
+      {
+        path:'edit-agent-profile',
+        component:EditAgentProfileComponent
+      },
+      {
+        path:'withdrawal-history',
+        component:WithdrawalHistoryComponent
+      },
+      {
+        path:'withdraw-commission',
+        component:WithdrawCommissionComponent
+      },
+      {
+        path:'policy-schemes',
+        component:PolicySchemesComponent
+      }
+    ]
   },
   {
     path: 'customer-dashboard',
@@ -247,14 +299,9 @@ const routes: Routes = [
     path: 'view-nominee/:customerId', 
     component: ViewNomineesComponent
   },
-  { 
-    path: 'submit-query',
-    component: AddQueryComponent
-  },
-  { 
-    path: 'view-queries', 
-    component: ViewQueriesComponent
-  },
+  { path: 'add-query/:customerId', component: AddQueryComponent },
+  { path: 'view-queries/:customerId', component: ViewQueryComponent },
+  
   { 
     path: 'transaction-history', 
     component: TransactionHistoryComponent

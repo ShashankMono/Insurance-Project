@@ -1,13 +1,27 @@
 <div class="container mt-5">
-  <h1 class="text-center mb-4">Available Policies</h1>
+  <h1 class="text-center mb-4">Available Policy Schemes</h1>
 
   <!-- Alert for Error Message -->
   <div *ngIf="errorMessage" class="alert alert-danger text-center">
     {{ errorMessage }}
   </div>
 
+  <!-- Dropdown for Policy Type -->
+  <div class="mb-4">
+    <label for="policyType" class="form-label">Filter by Policy Plans</label>
+    <select 
+      id="policyType" 
+      class="form-select" 
+      [(ngModel)]="selectedPolicyTypeId" 
+      (change)="filterPolicies()">
+      <option value="" selected>All Policy Plans</option>
+      <option *ngFor="let type of policyTypes" [value]="type.id">{{ type.type }}</option>
+    </select>
+  </div>
+
+  <!-- Policies -->
   <div class="row">
-    <div *ngFor="let policy of policies" class="col-md-6 col-lg-4 mb-4">
+    <div *ngFor="let policy of filteredPolicies" class="col-md-6 col-lg-4 mb-4">
       <div class="card h-100 shadow-sm">
         <div class="card-body">
           <h5 class="card-title text-center">{{ policy.name }}</h5>
@@ -37,7 +51,7 @@
           <div class="mt-3">
             <button class="btn btn-primary" (click)="buyPolicy(policy.id)">
               Buy Policy
-            </button>
+            </button> 
           </div>
 
           <!-- Calculate Form -->
@@ -67,9 +81,7 @@
                 readonly
               >
             </div>
-          </div>
-        </div>
-      </div>
+div>
     </div>
   </div>
 </div>

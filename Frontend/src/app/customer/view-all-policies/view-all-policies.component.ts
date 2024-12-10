@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Policy } from 'src/app/models/policy';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
+import { Router } from '@angular/router';
+import { PolicyTypeService } from 'src/app/services/policy-type.service';
+import { PolicyType } from 'src/app/models/policy-type';
 import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-view-all-policies',
@@ -9,14 +12,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ViewAllPoliciesComponent implements OnInit {
   policies: Policy[] = [];
+  filteredPolicies: Policy[] = [];
+  policyTypes: PolicyType[] = [];
   errorMessage: string = '';
-  selectedPolicyId: number | null = null; 
+  selectedPolicyTypeId: any = ''; // For filtering policies
   investmentAmount: number = 0; 
   calculatedAmount: number = 0; 
   customerId:any=""
 
   constructor(
     private customerService: CustomerDashboardService,
+    private policyTypeService:PolicyTypeService,
+    private router: Router
     private router: Router,
     private route:ActivatedRoute
   ) {}
@@ -24,18 +31,42 @@ export class ViewAllPoliciesComponent implements OnInit {
   ngOnInit(): void {
     this.customerId=history.state.customerId;
     this.loadPolicies();
+    this.loadPolicyTypes(); // Load policy types
   }
 
   loadPolicies(): void {
     this.customerService.getPolicies().subscribe(
       (response) => {
         this.policies = response;
+        this.filteredPolicies = response; // Initially, show all policies
       },
       (error) => {
         this.errorMessage = 'Failed to load policies. Please try again later.';
         console.error('Error fetching policies:', error);
       }
     );
+  }
+
+  loadPolicyTypes(): void {
+    this.policyTypeService.getPolicyTypes().subscribe(
+      (response: PolicyType[]) => {
+        this.policyTypes = response;
+      },
+      (error) => {
+        this.errorMessage = 'Failed to load policy types.';
+        console.error('Error fetching policy types:', error);
+      }
+    );
+  }
+
+  filterPolicies(): void {
+    if (this.selectedPolicyTypeId) {
+      this.filteredPolicies = this.policies.filter(
+        (policy) => policy.policyTypeId === this.selectedPolicyTypeId
+      );
+    } else {
+      this.filteredPolicies = [...this.policies]; // Show all if no type is selected
+    }
   }
 
   buyPolicy(policyId: string): void {
@@ -60,4 +91,5 @@ export class ViewAllPoliciesComponent implements OnInit {
 
     this.calculatedAmount = this.investmentAmount + profitAmount;
   }
+
 }
