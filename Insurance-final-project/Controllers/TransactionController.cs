@@ -48,20 +48,14 @@ namespace Insurance_final_project.Controllers
         [HttpGet("customer/{customerId}")]
         public async Task<IActionResult> GetTransactionByCustomerId(Guid customerId)
         {
-            try
+            var transactions = await _transactionService.GetTransactionByCustomerId(customerId);
+            return Ok(new
             {
-                var transactions = await _transactionService.GetTransactionByCustomerId(customerId);
-                return Ok(new
-                {
-                    Success = true,
-                    Data = transactions,
-                    Message = "Transactions retrieved successfully."
-                });
-            }
-            catch (CustomerNotFoundException ex)
-            {
-                return NotFound(new { Success = false, Message = ex.Message });
-            }
+                Success = true,
+                Data = transactions,
+                Message = "Transactions retrieved successfully."
+            });
+            
         }
 
         [HttpGet]

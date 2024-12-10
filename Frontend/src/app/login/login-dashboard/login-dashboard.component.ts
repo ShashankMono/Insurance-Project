@@ -82,7 +82,7 @@ export class LoginDashboardComponent {
               this.router.navigate(['/employee-dashboard']);
               break;
             case 'Agent':
-              this.router.navigate(['/agent-dashboard']);
+              this.router.navigate(['/agent-view']);
               break;
             default:
               alert('Login failed. Role not recognized.');
