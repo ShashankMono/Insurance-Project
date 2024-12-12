@@ -12,12 +12,6 @@ export class CustomerDashboardService {
   
   constructor(private http: HttpClient) {}
 
-  getPolicies(): Observable<any[]> {
-    return this.http.get<{ data: any[] }>(`${this.url}/Policy`).pipe(
-      map((response) => response.data)
-    );
-  }
-
   getInstallmentTypes(): Observable<string[]> {
     return this.http.get<{ success: boolean; data: string[] }>(
       `${this.url}/CommonFeatures/installment_types`
@@ -29,9 +23,7 @@ export class CustomerDashboardService {
   createPolicyAccount(policyAccount: any): Observable<any> {
     return this.http.post(`${this.url}/PolicyAccount`, policyAccount);
   }
-  getPolicyAccounts(): Observable<any> {
-    return this.http.get<any >(`${this.url}/PolicyAccount`);
-  }
+
   uploadFile(fileData: FormData) {
     return this.http.post<any>(`${this.url}/FileUpload`, fileData);
   }
@@ -40,12 +32,12 @@ export class CustomerDashboardService {
     return this.http.post<any>(`${this.url}/PolicyAccountDocument`, documentData);
   }
 
+  addCancelPolicyAccount(policyAccountId:any):Observable<any>{
+    return this.http.get(`${this.url}/PolicyCancel/${policyAccountId}`);
+  }
 
-  cancelPolicyAccount(policyAccountId: string): Observable<any> {
-    return this.http.put<any>(
-      `${this.url}/PolicyAccount/cancel/${policyAccountId}`,
-      {}
-    );
+  cancelPolicyAccount(customerId:any): Observable<any> {
+    return this.http.get<any>(`${this.url}/PolicyCancel/${customerId}`);
   }
 
   claimPolicy(policyAccountId: string, claimData: any): Observable<any> {
@@ -63,7 +55,7 @@ export class CustomerDashboardService {
   }
 
   getPaymentSession(sessionData:any){
-    return this.http.post<any>(`${this.url}/Payment/create-session`,sessionData)
+    return this.http.post<any>(`${this.url}/Payment/create-session`,sessionData);
   }
 
   getInstallment(accountId:any):Observable<any>{
@@ -74,7 +66,10 @@ export class CustomerDashboardService {
     return this.http.get(`${this.url}/PolicyInstallment/pay/${id}`);
   }
 
-  // Profile
+  getCutomerByCustomerId(cutomerId:any):Observable<any>{
+    return this.http.get(`${this.url}/Customer/${cutomerId}`);
+  }
+
   getCustomerDetails(userId: string): Observable<any> {
     return this.http.get(`${this.url}/Customer/User/${userId}`);
   }
@@ -83,7 +78,9 @@ export class CustomerDashboardService {
     return this.http.put(`${this.url}/Customer`, customer);
   }
 
-  
+  getCustomerAccounts(): Observable<any> {
+    return this.http.get(`${this.url}/Customer`);
+  }
   
   addNominee(nominee: any): Observable<any> {
     return this.http.post(`${this.url}/Nominee`, nominee);
@@ -102,9 +99,6 @@ export class CustomerDashboardService {
   addPolicyAccountDocument(document: any) {
     return this.http.post<any>(`${this.url}/PolicyAccountDocument`, document);
   }
-  getPolicyAccountDocuments(policyAccountId: string) {
-    return this.http.get<any>(`${this.url}/PolicyAccountDocument/${policyAccountId}`);
-  }
   
   updatePolicyAccountDocument(documentData:any): Observable<any> {
     return this.http.put<any>(`${this.url}/PolicyAccountDocument`, {
@@ -112,18 +106,18 @@ export class CustomerDashboardService {
     });
   }
   
-  
   deletePolicyAccountDocument(documentId: string) {
     return this.http.delete<any>(`${this.url}/PolicyAccountDocument/${documentId}`);
   }
-  
 
-  // Transaction History
+  updateCustomerStatus(data:any):Observable<any>{
+    return this.http.post<any>(`${this.url}/Cutomer/approve`,data);
+  }
+
   getTransactionHistory(customerId: string): Observable<any> {
     return this.http.get(`${this.url}/Transaction/${customerId}`);
   }
 
-  // Withdraw Claim
   withdrawClaim(policyAccountId: string): Observable<any> {
     return this.http.delete(`${this.url}/Claim/${policyAccountId}`);
   }
@@ -133,13 +127,5 @@ export class CustomerDashboardService {
 
   getAllCustomers(): Observable<any> {
     return this.http.get(`${this.url}/Customer`);
-  }
-
-  getDocumentsByCustomer(customerId: any): Observable<any> {
-    return this.http.get<any>(`${this.url}/Document?customerId=${customerId}`);
-  }
-
-  updateDocumentStatus(documentId: any, isVerified: string): Observable<any> {
-    return this.http.put<any>(`${this.url}/Document/${documentId}`, { isVerified });
   }
 }

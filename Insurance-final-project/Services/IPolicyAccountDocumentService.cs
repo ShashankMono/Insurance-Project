@@ -8,5 +8,7 @@ namespace Insurance_final_project.Services
         public Task<bool> DeleteDocument(Guid guid);
         public Task<List<PolicyAccountDocumentDto>> GetDocuments(Guid PolicyAccountId);
         public Task<Guid> UpdateDocument(UpdateDocumentDto updateDoc);
+        public Task<List<PolicyAccountDocumentDto>> GetDocumentByAccountId(Guid AccountId);
+        public Task<Guid> ChangeApproveStatus(VerificationDto document);
     }
 }

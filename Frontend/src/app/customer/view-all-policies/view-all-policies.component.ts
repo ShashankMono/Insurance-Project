@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Policy } from 'src/app/models/policy';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
-import { Router } from '@angular/router';
 import { PolicyTypeService } from 'src/app/services/policy-type.service';
 import { PolicyType } from 'src/app/models/policy-type';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PolicyService } from 'src/app/services/policy.service';
 @Component({
   selector: 'app-view-all-policies',
   templateUrl: './view-all-policies.component.html',
@@ -14,30 +15,50 @@ export class ViewAllPoliciesComponent implements OnInit {
   filteredPolicies: Policy[] = [];
   policyTypes: PolicyType[] = [];
   errorMessage: string = '';
-  selectedPolicyTypeId: any = ''; // For filtering policies
+  selectedPolicyTypeId: any = ''; 
   investmentAmount: number = 0; 
+  policyTerm:number = 0;
   calculatedAmount: number = 0; 
+  customerId: any = "";
+  installmentTypes: any ="";
+  installment:string = "";
+  InstallemtnAmount:number=0;
 
   constructor(
-    private customerService: CustomerDashboardService,
+    private cutomerService:CustomerDashboardService,
     private policyTypeService:PolicyTypeService,
-    private router: Router
+    private router: Router,
+    private policyService : PolicyService
   ) {}
 
   ngOnInit(): void {
+    this.customerId=history.state.customerId;
+    console.log("cus",this.customerId);
     this.loadPolicies();
-    this.loadPolicyTypes(); // Load policy types
+    this.loadPolicyTypes(); 
+    this.fetchInstallmentTypes();
   }
 
   loadPolicies(): void {
-    this.customerService.getPolicies().subscribe(
+    this.policyService.getPolicies().subscribe(
       (response) => {
         this.policies = response;
-        this.filteredPolicies = response; // Initially, show all policies
+        this.filteredPolicies = response; 
       },
       (error) => {
         this.errorMessage = 'Failed to load policies. Please try again later.';
         console.error('Error fetching policies:', error);
+      }
+    );
+  }
+
+  fetchInstallmentTypes(): void {
+    this.cutomerService.getInstallmentTypes().subscribe(
+      (installmentTypes) => {
+        this.installmentTypes = installmentTypes;
+      },
+      (error) => {
+        console.error('Error fetching installment types', error);
       }
     );
   }
@@ -64,10 +85,20 @@ export class ViewAllPoliciesComponent implements OnInit {
     }
   }
 
-  buyPolicy(policyId: string): void {
-    const customerId = 'yourCustomerId';
-    localStorage.setItem('customerId', customerId);
-    this.router.navigate(['/create-policy-account', policyId]);
+  buyPolicy(policy: any): void {
+    if(localStorage.getItem('userId') != null){
+      this.router.navigate(['/create-policy-account'],{state:
+        {customerId:this.customerId,
+        PolicyData:policy,
+        PolicyTerm:this.policyTerm,
+        installmentType:this.installment,
+        investmentAmount:this.investmentAmount
+      }});
+    }else{
+      alert("Please login to buy policy");
+      this.router.navigate(['/']);
+    }
+    
   }
 
   calculateInvestment(policy: any): void {
@@ -76,11 +107,24 @@ export class ViewAllPoliciesComponent implements OnInit {
       return;
     }
 
-    // Example calculation: Profit + Commission
     const profitAmount = (this.investmentAmount * policy.profitPercentage) / 100;
-    const commissionAmount = (this.investmentAmount * policy.commissionPercentage) / 100;
-
+    this.InstallemtnAmount = Math.round(this.investmentAmount/ (this.policyTerm*this.getInstallmentCountInYear(this.installment)))
     this.calculatedAmount = this.investmentAmount + profitAmount;
+  }
+
+  getInstallmentCountInYear(type:string):number{
+    switch(type){
+      case 'Monthly':
+        return 12;
+      case 'Quarterly':
+        return 4;
+      case 'HalfYearly':
+        return 2;
+      case 'Yearly':
+        return 1;
+      default :
+        return 1;
+    }
   }
 
 }

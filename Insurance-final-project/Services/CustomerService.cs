@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Insurance_final_project.Data;
 using Insurance_final_project.Constant;
 using Insurance_final_project.Exceptions;
+using System.Reflection.Metadata;
 
 namespace Insurance_final_project.Services
 {
@@ -18,22 +19,25 @@ namespace Insurance_final_project.Services
         private readonly IRepository<State> _stateRepo;
         private readonly IRepository<City> _cityRepo;
         private readonly IMapper _mapper;
+        private readonly IEmailService _emailService;
 
         public CustomerService(
             IRepository<Customer> customerRepository,
             IMapper mapper
             , IRepository<City> city
             , IRepository<State> stateRepo
-            , IRepository<User> userRepo)
+            , IRepository<User> userRepo
+            , IEmailService emailService)
         {
             _customerRepository = customerRepository;
             _mapper = mapper;
             _cityRepo = city;
             _stateRepo = stateRepo;
             _userRepo = userRepo;
+            _emailService = emailService;
         }
 
-        public CustomerDto GetCustomerById(Guid customerId)
+        public CustomerProfileDto GetCustomerById(Guid customerId)
         {
             var customer = _customerRepository.GetAll()
                 .Include(c => c.PolicyAccounts)
@@ -44,7 +48,7 @@ namespace Insurance_final_project.Services
             if (customer == null)
                 throw new CustomerNotFoundException("Customer not found");
 
-            return _mapper.Map<CustomerDto>(customer);
+            return _mapper.Map<CustomerProfileDto>(customer);
         }
 
 
@@ -56,7 +60,14 @@ namespace Insurance_final_project.Services
             {
                 throw new CustomerNotFoundException("Customer not found!");
             }
-            existingCustomer.IsApproved = approval.IsApproved;
+
+            existingCustomer.IsApproved = approval.IsApproved.ToLower()=="Approved".ToLower() || approval.IsApproved == "Approve".ToLower()
+                                                            ?ApprovalType.Approved.ToString():ApprovalType.Rejected.ToString();
+            if (approval.IsApproved.ToLower() == VerificationType.Rejected.ToString().ToLower())
+            {
+                _emailService.RejectionMail(approval.Id, approval.Reason,
+                    $"{existingCustomer.FirstName+" "+existingCustomer.LastName} Kyc rejected");
+            }
             _customerRepository.Update(existingCustomer);
             return true;
         }
@@ -98,9 +109,11 @@ namespace Insurance_final_project.Services
             return _mapper.Map<CustomerDto>(customer);
         }
 
-        public async Task<List<CustomerDto>> GetCustomerAccounts()
+        public async Task<List<CustomerProfileDto>> GetCustomerAccounts()
         {
-            return _mapper.Map<List<Customer>, List<CustomerDto>>(_customerRepository.GetAll()
+            return _mapper.Map<List<Customer>, List<CustomerProfileDto>>(_customerRepository.GetAll()
+                .Include(c => c.City)
+                .Include(c => c.State)
                 .ToList());
         }
         public CustomerProfileDto GetCustomerByUserId(Guid UserId)

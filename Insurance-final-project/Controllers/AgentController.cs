@@ -30,6 +30,19 @@ namespace Insurance_final_project.Controllers
             });
         }
 
+        [HttpGet("User/{id}")]
+        public IActionResult GetAgentByUserId(Guid id)
+        {
+            var agent = _agentService.GetAgentByUserId(id);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = agent,
+                Message = "Agent retrieved successfully."
+            });
+        }
+
         [HttpGet("{id}/commission")]
         public IActionResult ViewTotalCommission(Guid id)
         {

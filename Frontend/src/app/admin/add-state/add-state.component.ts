@@ -25,6 +25,9 @@ export class AddStateComponent {
           this.router.navigate(['/admin-dashboard']);
         },
         error: (error) => {
+          if(error.error.exceptionMessage){
+            alert(error.error.exceptionMessage);
+          }
           console.error('Error adding state:', error);
         },
       });

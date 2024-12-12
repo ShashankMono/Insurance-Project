@@ -29,6 +29,9 @@ namespace Insurance_final_project.Services
         public async Task<Guid> ClaimApproval(ApprovalDto claim)
         {
             var claimAccount = _ClaimRepo.GetAll().AsNoTracking().FirstOrDefault(c => c.ClaimId == claim.Id);
+            if (claimAccount == null) {
+                throw new InvalidClaimRequestException("Claim not found");
+            }
             claimAccount.ApprovedStatus = claim.IsApproved;
             claimAccount.AcknowledgementDate = DateTime.UtcNow;
             return _ClaimRepo.Update(claimAccount).ClaimId;
@@ -44,7 +47,6 @@ namespace Insurance_final_project.Services
             claim.PolicyAccountId = policyAccountId;
             claim.DateAndTime = DateTime.UtcNow;
             claim.ApprovedStatus = ApprovalType.Pending.ToString();
-
             
             return _ClaimRepo.Add(claim).ClaimId;
         }

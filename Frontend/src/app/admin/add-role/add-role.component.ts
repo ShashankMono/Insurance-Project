@@ -20,7 +20,11 @@ export class AddRoleComponent {
     if (this.addRoleForm.valid) {
       this.adminService.addRole(this.addRoleForm.value).subscribe({
         next: (response) => alert('Role added successfully!'),
-        error: (err) => console.error('Error adding role:', err),
+        error: (err) => {
+          if(err.error.exceptionMessage){
+            alert(err.error.exceptionMessage);
+          }
+          console.error('Error adding role:', err)},
       });
     }
   }

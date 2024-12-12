@@ -1,0 +1,97 @@
+<div class="container mt-5">
+    <h2>Customer Report</h2>
+    <div *ngIf="customer">
+      <h4>Customer Details</h4>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <strong>Full Name:</strong> {{ customer.firstName }} {{ customer.lastName }}
+        </li>
+        <li class="list-group-item">
+          <strong>Email:</strong> {{ customer.emailId }}
+        </li>
+        <li class="list-group-item">
+          <strong>Mobile No:</strong> {{ customer.mobileNo }}
+        </li>
+        <li class="list-group-item">
+          <strong>Date of Birth:</strong> {{ customer.dateOfBirth | date:'mediumDate' }}
+        </li>
+        <li class="list-group-item">
+          <strong>State:</strong> {{ customer.state }}
+        </li>
+        <li class="list-group-item">
+          <strong>City:</strong> {{ customer.city }}
+        </li>
+        <li class="list-group-item">
+          <strong>Approval Status:</strong> {{ customer.isApproved }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="mt-4">
+      <h4>Policy Scheme Accounts</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Sr. No.</th>
+            <th>Policy Name</th>
+            <th>Investment Amount</th>
+            <th>Claim Amount</th>
+            <th>Total Paid Amount</th>
+            <th>Installment Type</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Policy Term</th>
+            <th>Is Approved</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let account of policyAccounts; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ account.policyName }}</td>
+            <td>{{ account.investmentAmount | currency:'INR' }}</td>
+            <td>{{ account.coverageAmount | currency:'INR' }}</td>
+            <td>{{ account.totalAmountPaid | currency:'INR' }}</td>
+            <td>{{ account.installmentType }}</td>
+            <td>{{ account.startDate | date:'mediumDate' }}</td>
+            <td>{{ account.endDate | date:'mediumDate' }}</td>
+            <td>{{ account.policyTerm }} years</td>
+            <td>{{ account.isApproved }}</td>
+            <td>{{ account.status }}</td>
+            <td>
+              <button 
+              class="btn btn-primary btn-sm"
+              [disabled]="!(account.isApproved=='Approved')"
+              (click)="viewInstallments(account.id)"
+              >View Installments</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div class="mt-4">
+      <h4>Transactions</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Sr. No.</th>
+            <th>Amount</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Reference Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let transaction of transactions; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ transaction.amount | currency:'INR' }}</td>
+            <td>{{ transaction.type }}</td>
+            <td>{{ transaction.dateTime | date:'mediumDate' }}</td>
+            <td>{{ transaction.referenceNumber }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

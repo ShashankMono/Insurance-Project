@@ -23,7 +23,7 @@ namespace Insurance_final_project.Services
         }
         public void checkCityname(CityDto city)
         {
-            if(_CityRepo.GetAll().AsNoTracking().Where(c=>c.StateId == city.StateId).FirstOrDefault(c=>c.CityName.ToLower() == city.CityName.ToLower()) != null)
+            if(_CityRepo.GetAll().AsNoTracking().FirstOrDefault(c=>c.StateId == city.StateId && c.CityName.ToLower() == city.CityName.ToLower()) != null)
             {
                 throw new DataAlreadyPresnetException("City already present in that state!");
             }

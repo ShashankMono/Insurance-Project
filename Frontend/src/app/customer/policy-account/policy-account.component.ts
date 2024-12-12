@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
+import { PolicyService } from 'src/app/services/policy.service';
 
 @Component({
   selector: 'app-policy-account',
@@ -15,31 +16,62 @@ export class PolicyAccountComponent implements OnInit{
   errorMessage: string | null = null;
   fileError: string | null = null;
   selectedFile: File | null = null;
+  customerId: any | null = "";
+  fileUploaded:boolean= false;
+  policy:any="";
 
-  constructor(private customerDashboardService: CustomerDashboardService) {}
+  constructor(
+    private customerDashboardService: CustomerDashboardService) {}
 
   ngOnInit(): void {
+    this.customerId=history.state.customerId
+    this.policy = history.state.PolicyData
+    //console.log(this.customerId," ",this.policy);
     this.policyAccountForm = new FormGroup({
       policyId: new FormControl('', Validators.required),
-      customerId: new FormControl('', Validators.required),
-      coverageAmount: new FormControl(0, [Validators.min(0)]),
+      investmentAmount: new FormControl(0, [Validators.min(0),Validators.required]),
       policyTerm: new FormControl(0, [Validators.required, Validators.min(1)]),
       installmentType: new FormControl('', Validators.required),
     });
 
-    this.fetchPolicies();
     this.fetchInstallmentTypes();
+
+    this.setFormValue();
+    if(this.policy != null){
+      this.setValidators(this.policy);
+    }
   }
 
-  fetchPolicies(): void {
-    this.customerDashboardService.getPolicies().subscribe(
-      (policies) => {
-        this.policies = policies;
-      },
-      (error) => {
-        console.error('Error fetching policies', error);
-      }
-    );
+  setValidators(policy:any){
+    const investmentAmountControl = this.policyAccountForm.get('investmentAmount');
+    const policyTermControl = this.policyAccountForm.get('policyTerm');
+    if (investmentAmountControl) {
+      investmentAmountControl.setValidators([
+        Validators.min(policy.minimumInvestmentAmount),
+        Validators.max(policy.maximumInvestmentAmount),
+        Validators.required
+      ]);
+
+      investmentAmountControl.updateValueAndValidity();
+    }
+    if(policyTermControl){
+      policyTermControl.setValidators([
+        Validators.min(policy.minimumPolicyTerm),
+        Validators.max(policy.maximumPolicyTerm),
+        Validators.required,
+      ])
+      policyTermControl.updateValueAndValidity();
+    }
+  }
+
+
+  setFormValue(){
+    this.policyAccountForm.setValue({
+      policyId:this.policy.name,
+      policyTerm:history.state.PolicyTerm,
+      installmentType:history.state.installmentType,
+      investmentAmount:history.state.investmentAmount
+    })
   }
 
   fetchInstallmentTypes(): void {
@@ -58,6 +90,7 @@ export class PolicyAccountComponent implements OnInit{
     if (file && ['image/jpeg', 'image/png', 'image/gif', 'image/bmp'].includes(file.type)) {
       this.selectedFile = file;
       this.fileError = null;
+      this.fileUploaded = true;
     } else {
       this.fileError = 'Invalid file type. Only images are allowed.';
       this.selectedFile = null;
@@ -66,9 +99,15 @@ export class PolicyAccountComponent implements OnInit{
 
   onSubmit(): void {
     if (this.policyAccountForm.valid && this.selectedFile) {
-      const policyAccountData = this.policyAccountForm.value;
+      const policyAccountData = {
+        customerId: this.customerId,
+        policyId:this.policy.id,
+        policyTerm:this.policyAccountForm.value.policyTerm,
+        investmentAmount:this.policyAccountForm.value.investmentAmount,
+        installmentType:this.policyAccountForm.value.installmentType,
+      }
+      console.log("Data",policyAccountData);
 
-      // Create Policy Account
       this.customerDashboardService.createPolicyAccount(policyAccountData).subscribe(
         (response) => {
           console.log(response); 
@@ -95,7 +134,6 @@ export class PolicyAccountComponent implements OnInit{
       const formData = new FormData();
       formData.append('file', this.selectedFile);
 
-      // Upload File
       this.customerDashboardService.uploadFile(formData).subscribe(
         (response) => {
           const fileUrl = response.data.result.url;
@@ -132,5 +170,9 @@ export class PolicyAccountComponent implements OnInit{
         console.error(error);
       }
     );
+
+  }
+  isDiable(form:boolean):Boolean{;
+    return !form && this.fileUploaded;
   }
 }

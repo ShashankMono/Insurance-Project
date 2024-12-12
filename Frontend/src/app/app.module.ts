@@ -71,7 +71,7 @@ import { UpdatePolicyAccountDocumentComponent } from './customer/update-policy-a
 
 import { SuccessComponent } from './PaymentAck/success/success.component';
 import { CancelComponent } from './PaymentAck/cancel/cancel.component';
-import { PolicyAccountVerificationComponent } from './admin/policy-account-verification/policy-account-verification.component';
+import { PolicyAccountVerificationComponent } from './employee/policy-account-verification/policy-account-verification.component';
 import { ApproveDocumentComponent } from './employee/approve-document/approve-document.component';
 import { AgentReportComponent } from './admin/agent-report/agent-report.component';
 import { AdminViewComponent } from './admin/admin-view/admin-view.component';
@@ -88,6 +88,15 @@ import { WithdrawCommissionComponent } from './agent/withdraw-commission/withdra
 import { PolicyAccountsViewComponent } from './agent/policy-accounts-view/policy-accounts-view.component';
 import { ViewAgentProfileComponent } from './agent/view-agent-profile/view-agent-profile.component';
 import { EditAgentProfileComponent } from './agent/edit-agent-profile/edit-agent-profile.component';
+import { ReferCustomerComponent } from './agent/refer-customer/refer-customer.component';
+import { BuyPolicyAgentComponent } from './customer/buy-policy-agent/buy-policy-agent.component';
+import { CustomerViewComponent } from './customer/customer-view/customer-view.component';
+import { EmployeeViewComponent } from './employee/employee-view/employee-view.component';
+import { QueryResponseComponent } from './employee/query-response/query-response.component';
+import { ApprovePolicyAccountDocumentComponent } from './employee/approve-policy-account-document/approve-policy-account-document.component';
+import { CustomersReportComponent } from './employee/customers-report/customers-report.component';
+import { ViewReportComponent } from './employee/view-report/view-report.component';
+import { ViewPolicyInstallmentComponent } from './employee/view-policy-installment/view-policy-installment.component';
 
 
 
@@ -169,6 +178,15 @@ import { EditAgentProfileComponent } from './agent/edit-agent-profile/edit-agent
     PolicyAccountsViewComponent,
     ViewAgentProfileComponent,
     EditAgentProfileComponent,
+    ReferCustomerComponent,
+    BuyPolicyAgentComponent,
+    CustomerViewComponent,
+    EmployeeViewComponent,
+    QueryResponseComponent,
+    ApprovePolicyAccountDocumentComponent,
+    CustomersReportComponent,
+    ViewReportComponent,
+    ViewPolicyInstallmentComponent,
     
   ],
   imports: [

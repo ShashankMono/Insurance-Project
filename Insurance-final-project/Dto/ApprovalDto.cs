@@ -9,5 +9,6 @@ namespace Insurance_final_project.Dto
         [Required(ErrorMessage = "Approval status is required.")]
         [RegularExpression("^(Approved|Pending|Rejected)$", ErrorMessage = "Approval status must be 'Approved', 'Pending', or 'Rejected'.")]
         public string IsApproved { get; set; }
+        public string Reason { get; set; }
     }
 }

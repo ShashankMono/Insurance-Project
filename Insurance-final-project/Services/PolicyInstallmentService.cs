@@ -28,11 +28,23 @@ namespace Insurance_final_project.Services
             _CommissionService = commissionService;
             _policyAccountRepo = policyAccount;
         }
-        public void AddInstallments(PolicyInstallmentDto installmentData)
+        public void AddInstallments(Guid PolicyAccountId)
         {
+            var policyAccount = _policyAccountRepo.Get(PolicyAccountId);
+            var count = _installmentRepository.GetAll().AsNoTracking().Where(i => i.PolicyAccountId == PolicyAccountId).ToList().Count();
+            if (policyAccount == null)
+            {
+                throw new PolicyAccountNotFountException("Account not found!");
+            }else if (policyAccount.IsApproved != "Approved")
+            {
+                throw new NotApprovedException("Account approval pendding or is rejected");
+            }else if( count != 0)
+            {
+                throw new InstallmentAlreadyExistException("Installment already exist");
+            }
             int installmentsPerYear = 0;
 
-            switch (installmentData.InstallmentType)
+            switch (policyAccount.InstallmentType)
             {
                 case "Quarterly":
                     installmentsPerYear = 4;
@@ -50,19 +62,18 @@ namespace Insurance_final_project.Services
                     throw new ArgumentException("Invalid choice");
             }
 
-            int totalInstallments = installmentsPerYear * installmentData.PolicyTerm;
+            int totalInstallments = installmentsPerYear * policyAccount.PolicyTerm;
             int intervalInMonths = 12 / installmentsPerYear;
 
-            double installmentAmount = installmentData.Amount / totalInstallments;
+            double installmentAmount = policyAccount.InvestmentAmount / totalInstallments;
 
             for (int i = 0; i < totalInstallments; i++)
             {
-                DateTime installmentDueDate = installmentData.StartDate.AddMonths(i * intervalInMonths);
-                bool isFirstInstallment = (i == 0);//check for first entry during creation of accountPolicy
+                DateTime installmentDueDate = policyAccount.StartDate.AddMonths(i * intervalInMonths);
                 var installment = new PolicyInstallment
                 {
                     Id = Guid.NewGuid(),
-                    PolicyAccountId = installmentData.PolicyAccountId,
+                    PolicyAccountId = policyAccount.Id,
                     InstallmentDueDate = installmentDueDate,
                     IsPaid = false,
                     Amount = installmentAmount,
@@ -75,22 +86,26 @@ namespace Insurance_final_project.Services
         public async Task<bool> PayInstallment(Guid installmentId)
         {
             var installment = _installmentRepository.GetAll().AsNoTracking().FirstOrDefault(i=>i.Id==installmentId);
-            
+            var policyAccount = _policyAccountRepo.GetAll().AsNoTracking().FirstOrDefault(pa=>pa.Id==installment.PolicyAccountId);
             if (installment == null || installment.IsPaid)
             {
                 throw new InValidRequestException("Invalid request!");
             }
-            var policyAccount = _policyAccountRepo.Get(installment.PolicyAccountId);
+            if(policyAccount == null)
+            {
+                throw new InvalidGuidException("Invalid PolicyAccount");
+            }
+            policyAccount.TotalAmountPaid += installment.Amount;
             installment.IsPaid = true;
             installment.InstallmentPaidDate = DateTime.UtcNow;
-
+            _policyAccountRepo.Update(policyAccount);
             _installmentRepository.Update(installment);
 
             //adding transaction
             var transaction = new Transaction
             {
                 Type = TransactionType.Deposit.ToString(),
-                Amount = installment.Amount,
+                Amount = Math.Round(installment.Amount),
                 CustomerId = policyAccount.CustomerId,
                 PolicyAccountId = installment.PolicyAccountId,
                 PolicyInstallmentId = installment.Id,

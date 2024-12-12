@@ -49,7 +49,7 @@ import { UpdatePolicyAccountDocumentComponent } from './customer/update-policy-a
 import { SuccessComponent } from './PaymentAck/success/success.component';
 import { CancelComponent } from './PaymentAck/cancel/cancel.component';
 
-import { PolicyAccountVerificationComponent } from './admin/policy-account-verification/policy-account-verification.component';
+import { PolicyAccountVerificationComponent } from './employee/policy-account-verification/policy-account-verification.component';
 import { ApproveCustomerComponent } from './employee/approve-customer/approve-customer.component';
 import { ApproveDocumentComponent } from './employee/approve-document/approve-document.component';
 import { AgentReportComponent } from './admin/agent-report/agent-report.component';
@@ -66,6 +66,16 @@ import { PolicyAccountsViewComponent } from './agent/policy-accounts-view/policy
 import { WithdrawCommissionComponent } from './agent/withdraw-commission/withdraw-commission.component';
 import { ViewAgentProfileComponent } from './agent/view-agent-profile/view-agent-profile.component';
 import { EditAgentProfileComponent } from './agent/edit-agent-profile/edit-agent-profile.component';
+import { ReferCustomerComponent } from './agent/refer-customer/refer-customer.component';
+import { BuyPolicyAgentComponent } from './customer/buy-policy-agent/buy-policy-agent.component';
+import { CustomerViewComponent } from './customer/customer-view/customer-view.component';
+import { EmployeeViewComponent } from './employee/employee-view/employee-view.component';
+import { ApprovePolicyAccountDocumentComponent } from './employee/approve-policy-account-document/approve-policy-account-document.component';
+import { QueryResponseComponent } from './employee/query-response/query-response.component';
+import { viewport } from '@popperjs/core';
+import { ViewReportComponent } from './employee/view-report/view-report.component';
+import { CustomersReportComponent } from './employee/customers-report/customers-report.component';
+import { ViewPolicyInstallmentComponent } from './employee/view-policy-installment/view-policy-installment.component';
 
 const routes: Routes = [
   { 
@@ -202,6 +212,10 @@ const routes: Routes = [
         component:CommissionsComponent
       },
       {
+        path:'refer-customer',
+        component:ReferCustomerComponent
+      },
+      {
         path:'marketing',
         component:MarketingComponent
       },
@@ -237,20 +251,68 @@ const routes: Routes = [
   
   {
     path: 'customer-dashboard',
-    component: CustomerDashboardComponent,
+    component: CustomerViewComponent,
     canActivate: [AuthGuard],
     data: {
       role: 'Customer',
-    }
+    },
+    children:[
+      {
+        path:'',
+        component:CustomerDashboardComponent
+      },
+      {
+        path:'policy-agent',
+        component:BuyPolicyAgentComponent
+      }
+    ]
   },
   
   {
     path:'employee-dashboard',
-    component:EmployeeDashboardComponent,
+    component:EmployeeViewComponent,
     canActivate:[AuthGuard],
     data:{
       role:'Employee'
-    }
+    },
+    children:[
+      {
+        path:'',
+        component:EmployeeDashboardComponent
+      },
+      {
+        path:'approve-customer',
+        component:ApproveCustomerComponent
+      },
+      {
+        path:'approve-document',
+        component:ApproveDocumentComponent
+      },
+      {
+        path: 'policy-account-verification',
+        component:PolicyAccountVerificationComponent
+      },
+      {
+        path:'approve-policy-account-document',
+        component:ApprovePolicyAccountDocumentComponent
+      },
+      {
+        path:'customer-report',
+        component:CustomersReportComponent
+      },
+      {
+        path:'query-response',
+        component:QueryResponseComponent
+      },
+      {
+        path:'view-report',
+        component:ViewReportComponent
+      },
+      {
+        path:'view-policy-installment',
+        component:ViewPolicyInstallmentComponent
+      }
+    ]
   },
   {
     path:'user-registration',
@@ -329,18 +391,7 @@ const routes: Routes = [
     path: 'policy-account-documents/update/:documentId', 
     component: UpdatePolicyAccountDocumentComponent   
   },
-  {
-    path: 'policy-account-verification',
-    component:PolicyAccountVerificationComponent
-  },
-  {
-    path:'approve-customer',
-    component:ApproveCustomerComponent
-  },
-  {
-    path:'approve-document',
-    component:ApproveDocumentComponent
-  },
+
   {
     path: 'agent-report/:id', 
     component: AgentReportComponent 

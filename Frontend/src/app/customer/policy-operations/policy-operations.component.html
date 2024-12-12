@@ -16,11 +16,13 @@
         <tr>
           <th>Policy Plan</th>
           <th>Coverage Amount</th>
+          <th>Total Amount paid</th>
           <th>Policy Term</th>
           <th>Installment Type</th>
           <th>Start date</th>
           <th>End date</th>
           <th>Status</th>
+          <th>Approval</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -28,16 +30,18 @@
         <tr *ngFor="let policy of policyAccounts">
           <td>{{ policy.policyName }}</td>
           <td>{{ policy.coverageAmount }}</td>
+          <td>{{ policy.totalAmountPaid }}</td>
           <td>{{ policy.policyTerm }}</td>
           <td>{{ policy.installmentType }}</td>
           <td>{{policy.startDate | date}}</td>
           <td>{{policy.endDate | date}}</td>
           <td>{{ policy.status }}</td>
+          <td>{{policy.isApproved}}</td>
           <td>
             <button
               class="btn btn-primary"
               (click)="payInstallment(policy.id,policy.policyName)"
-              [disabled]="policy.status === 'Closed'"
+              [disabled]="isDisable(policy)"
             >
               Pay Installment
             </button>
@@ -45,7 +49,7 @@
             <button
               class="btn btn-danger"
               (click)="cancelPolicy(policy.id)"
-              [disabled]="policy.status === 'Closed'"
+              [disabled]="isDisable(policy)"
             >
               Cancel Policy
             </button>
@@ -53,7 +57,7 @@
             <button
               class="btn btn-warning"
               (click)="claimPolicy(policy.id)"
-              [disabled]="policy.status === 'Closed'"
+              [disabled]="isDisable(policy)"
             >
               Claim Policy
             </button>

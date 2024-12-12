@@ -26,7 +26,7 @@ namespace Insurance_final_project.Services
         {
             if (_StateRepo.GetAll().FirstOrDefault(p => p.StateName.ToLower() == state.StateName.ToLower()) != null)
             {
-                throw new DataAlreadyPresnetException("Type of policy already exist!");
+                throw new DataAlreadyPresnetException("Type of state already exist!");
             }
         }
         public async Task<Guid> UpdateState(StateDto state)

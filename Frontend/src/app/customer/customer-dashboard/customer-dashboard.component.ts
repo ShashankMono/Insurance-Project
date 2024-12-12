@@ -22,7 +22,8 @@ export class CustomerDashboardComponent{
           if (response.success) {
             this.customerDets = response.data;
             this.customerId=this.customerDets.customerId
-            console.log(this.customerId);
+            console.log(this.customerDets);
+            localStorage.setItem('customerId',this.customerId);
           }
         },
         error: (err) => {
@@ -42,7 +43,7 @@ export class CustomerDashboardComponent{
   }
 
   cancelPolicy(): void {
-    this.router.navigate(['/cancel-policy'],{state:{customerId:this.customerId}});
+    this.router.navigate(['/cancel-policy',this.customerId]);
   }
 
   document(){
@@ -50,7 +51,7 @@ export class CustomerDashboardComponent{
   }
 
   claimPolicy(): void {
-    this.router.navigate(['/claim-policy'],{state:{customerId:this.customerId}});
+    this.router.navigate(['/claim-policy',this.customerId]);
   }
 
   payInstallment(): void {

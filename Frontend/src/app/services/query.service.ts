@@ -20,4 +20,8 @@ export class QueryService {
     return this.http.put(`${this.url}`, query);
   }
 
+  getAllQuery():Observable<any>{
+    return this.http.get<any>(this.url);
+  }
+
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
+import { UpdatePolicyAccountDocumentService } from 'src/app/services/policy-account-document.service';
 
 @Component({
   selector: 'app-policy-account-documents',
@@ -26,7 +27,8 @@ export class PolicyAccountDocumentsComponent implements OnInit {
   constructor(
     private customerDashboardService: CustomerDashboardService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private policyAccountDocument:UpdatePolicyAccountDocumentService
   ) {}
 
   ngOnInit(): void {
@@ -45,7 +47,7 @@ export class PolicyAccountDocumentsComponent implements OnInit {
   }
 
   fetchDocuments(): void {
-    this.customerDashboardService.getPolicyAccountDocuments(this.policyAccountId).subscribe(
+    this.policyAccountDocument.getPolicyAccountDocuments(this.policyAccountId).subscribe(
       (response) => {
         this.documents = response.data;
       },

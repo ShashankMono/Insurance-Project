@@ -88,7 +88,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPost("Withdrawal")]
         public async Task<IActionResult> ClaimWithdrawal([FromBody] ClaimDto claimDto)
         {
             if (!ModelState.IsValid)

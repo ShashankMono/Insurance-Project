@@ -16,7 +16,6 @@ namespace Insurance_final_project.Controllers
             _policyAccountService = policyAccountService;
         }
 
-        // Get Policy Account By ID
         [HttpGet("{policyAccountId}")]
         public async Task<IActionResult> GetPolicyAccountById(Guid policyAccountId)
         {
@@ -30,7 +29,6 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        // Get All Policy Accounts
         [HttpGet]
         public async Task<IActionResult> GetAllPolicyAccounts()
         {
@@ -47,7 +45,6 @@ namespace Insurance_final_project.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePolicyAccount([FromBody] PolicyAccountDto policyAccountDto)
         {
-            // Validate model state
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values
@@ -74,7 +71,6 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        // Get Policy Accounts By Agent ID
         [HttpGet("agent/{agentId}")]
         public async Task<IActionResult> GetPolicyAccountsByAgent(Guid agentId)
         {
@@ -88,7 +84,6 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        // Get Policies By Customer ID
         [HttpGet("customer/{customerId}")]
         public async Task<IActionResult> GetPoliciesByCustomer(Guid customerId)
         {
@@ -99,6 +94,36 @@ namespace Insurance_final_project.Controllers
                 Success = true,
                 Data = policies,
                 Message = "Policies for the customer retrieved successfully."
+            });
+        }
+
+        [HttpPost("approve")]
+        public IActionResult ApproveAccount([FromBody] ApprovalDto approval)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                return BadRequest(new
+                {
+                    Success = false,
+                    Data = (object)null,
+                    Message = "Validation failed.",
+                    Errors = errors
+                });
+            }
+
+            var response = _policyAccountService.ApproveAccount(approval);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = response,
+                Message = "Policy scheme account updated successfully."
             });
         }
     }

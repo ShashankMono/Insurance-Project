@@ -1,0 +1,100 @@
+<div class="container mt-5">
+    <h1 class="text-center">Queries</h1>
+
+    <div *ngIf="queryData.data.length > 0" class="mt-4">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Sr No.</th>
+            <th>Question</th>
+            <th>Response</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let query of queryData.data; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>
+              <textarea
+                class="form-control"
+                rows="3"
+                [value]="query.question"
+                readonly
+              ></textarea>
+            </td>
+            <td>
+              <textarea
+                class="form-control"
+                rows="3"
+                [value]="query.response"
+                readonly
+              ></textarea>
+            </td>
+            <td>
+                <button 
+
+                class="btn btn-warning"
+                (click)="editQuery(query)"
+                >Respond</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div *ngIf="isEditModalOpen" class="modal show" style="display: block;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Respond to Query</h5>
+            <button
+              type="button"
+              class="btn-close"
+              (click)="closeEditModal()"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="editQueryForm" (ngSubmit)="onEditSubmit()">
+              <div class="mb-3">
+                <label for="question" class="form-label">
+                  Question <span class="text-danger">*</span>
+                </label>
+                <textarea
+                  id="question"
+                  class="form-control"
+                  formControlName="question"
+                  rows="5"
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="response" class="form-label">Response</label>
+                <textarea
+                  id="response"
+                  class="form-control"
+                  formControlName="response"
+                  rows="5"
+                ></textarea>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  [disabled]="editQueryForm.invalid"
+                >
+                  Save Changes
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  (click)="closeEditModal()"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

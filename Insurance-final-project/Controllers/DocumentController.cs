@@ -2,6 +2,7 @@
 using Insurance_final_project.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Insurance_final_project.Controllers
 {
@@ -75,6 +76,19 @@ namespace Insurance_final_project.Controllers
                 Success = true,
                 Data = documentId,
                 Message = "Document approval status updated successfully."
+            });
+        }
+
+        [HttpGet("customer/{customerId}")]
+        public async Task<IActionResult> GetDocumentsByCustomerId(Guid customerId)
+        {
+            var documents = await _documentService.GetDocumentByCustomerId(customerId);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = documents,
+                Message = "Document retrived successfully."
             });
         }
 

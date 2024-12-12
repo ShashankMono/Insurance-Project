@@ -60,13 +60,20 @@ export class AddCityComponent implements OnInit {
   
   onSubmit(): void {
     if (this.addCityForm.valid) {
-      this.addCityService.addCity(this.addCityForm.value).subscribe({
+      var obj = {
+        cityName:this.addCityForm.value.cityName,
+        stateId:this.addCityForm.value.stateName
+      }
+      this.addCityService.addCity(obj).subscribe({
         next: () => {
           alert('City added successfully!');
           this.router.navigate(['/admin-dashboard']);
         },
         error: (error) => {
           console.error('Error adding city:', error);
+          if(error.error.exceptionMessage){
+            alert(error.error.exceptionMessage);
+          }
           alert('Failed to add city. Please try again.');
         }
       });

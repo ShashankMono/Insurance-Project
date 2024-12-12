@@ -12,20 +12,19 @@ namespace Insurance_final_project.Dto
         [Required(ErrorMessage = "Policy Account ID is required.")]
         public Guid PolicyAccountId { get; set; }
 
-        [Required(ErrorMessage = "Document is required.")]
+        
         public Guid DocumentId { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "Amount to be claimed cannot be negative.")]
         public double AmountToBeClaimed { get; set; }
 
+        [Required(ErrorMessage = "Claim description is required.")]
         [MaxLength(500, ErrorMessage = "Claim description cannot exceed 500 characters.")]
         public string ClaimDescription { get; set; }
 
-        [Required(ErrorMessage = "Approved status is required.")]
         [MaxLength(50, ErrorMessage = "Approved status cannot exceed 50 characters.")]
         public string ApprovedStatus { get; set; } = ApprovalType.Pending.ToString();
 
-        [Required(ErrorMessage = "Date and time is required.")]
         public DateTime DateAndTime { get; set; }
 
         public DateTime? AcknowledgementDate { get; set; }

@@ -1,1 +1,47 @@
-<p>marketing works!</p>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Available Policy Schemes</h1>
+  
+    <!-- Alert for Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-danger text-center">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Dropdown for Policy Type -->
+    <div class="mb-4">
+      <label for="policyType" class="form-label">Filter by Policy Plans</label>
+      <select 
+        id="policyType" 
+        class="form-select" 
+        [(ngModel)]="selectedPolicyTypeId" 
+        (change)="filterPolicies()">
+        <option value="" selected>All Policy Plans</option>
+        <option *ngFor="let type of policyTypes" [value]="type.id">{{ type.type }}</option>
+      </select>
+    </div>
+      
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Sr No.</th>
+                <th>Policy Name</th>
+                <th>Refer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let policy of filteredPolicies; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ policy.name }}</td>
+                <td>
+                    <button 
+                        class="btn btn-primary" 
+                        (click)="referPolicy(policy)">
+                        Refer
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+  </div>
+  

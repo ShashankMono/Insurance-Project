@@ -11,6 +11,7 @@ namespace Insurance_final_project.Services
         public Task<List<AgentResponseDto>> GetAllAgents();
         public double ViewTotalCommission(Guid agentId);
         public Task<Guid> UpdateAgent(AgentInputDto agent);
+        public Task<AgentResponseDto> GetAgentByUserId(Guid UserId);
 
 
     }

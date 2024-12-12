@@ -16,11 +16,22 @@ namespace Insurance_final_project.Controllers
             _queryService = queryService;
         }
 
-        // Get queries by customer ID
         [HttpGet("customer/{customerId}")]
         public async Task<IActionResult> GetQueryByCustomerId(Guid customerId)
         {
             var queries = await _queryService.GetQueryByCustomerId(customerId);
+            return Ok(new
+            {
+                Success = true,
+                Data = queries,
+                Message = "Queries retrieved successfully."
+            });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllQuery()
+        {
+            var queries = await _queryService.GetAllQuery();
             return Ok(new
             {
                 Success = true,

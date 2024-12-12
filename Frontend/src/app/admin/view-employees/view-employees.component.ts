@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { AdminDashboardService } from 'src/app/services/admin-dashboard.service';
+import { EmployeeService } from 'src/app/services/employee.service';
 @Component({
   selector: 'app-view-employees',
   templateUrl: './view-employees.component.html',
@@ -8,14 +9,16 @@ import { AdminDashboardService } from 'src/app/services/admin-dashboard.service'
 export class ViewEmployeesComponent {
   employees: any[] = [];
 
-  constructor(private adminService: AdminDashboardService) {}
+  constructor(private adminService: AdminDashboardService,
+    private employeeService :EmployeeService,
+  ) {}
 
   ngOnInit(): void {
     this.loadEmployees();
   }
 
   loadEmployees(): void {
-    this.adminService.getEmployees().subscribe({
+    this.employeeService.getEmployees().subscribe({
       next: (response) => {
         console.log('Employees loaded:', response);
         this.employees = response.data;  // Correctly assign data from the API

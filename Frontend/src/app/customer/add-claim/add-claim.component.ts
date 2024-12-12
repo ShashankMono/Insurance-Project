@@ -1,3 +1,4 @@
+import { HttpBackend, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -13,13 +14,16 @@ export class AddClaimComponent {
   successMessage: string | null = null;
   errorMessage: string | null = null;
   claimForm = new FormGroup({
-    amountToBeClaimed: new FormControl('', [Validators.required, Validators.min(0)]),
     claimDescription: new FormControl('', [Validators.required, Validators.maxLength(500)])
   });
   constructor(
     private route: ActivatedRoute,
     private customerDashboardService: CustomerDashboardService
   ) {
+  }
+
+  get claimDescription() {
+    return this.claimForm.get('claimDescription');
   }
 
   ngOnInit(): void {
@@ -37,13 +41,16 @@ export class AddClaimComponent {
     };
 
     this.customerDashboardService.claimPolicy(this.policyAccountId,claimData).subscribe(
-      response => {
-        this.successMessage = 'Claim submitted successfully!';
-        this.errorMessage = null;
-      },
-      error => {
-        this.errorMessage = 'Error submitting claim. Please try again.';
-        this.successMessage = null;
+      {
+        next:(response)=>{
+          if(response.success){
+            alert("Claim Request send");
+          }
+          console.log(response);
+        },
+        error:(err:HttpErrorResponse)=>{
+          alert(err.error.errorMessage);
+        }
       }
     );
   }

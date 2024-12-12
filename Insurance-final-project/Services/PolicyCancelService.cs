@@ -13,22 +13,23 @@ namespace Insurance_final_project.Services
         private readonly IRepository<PolicyAccount> _policyAccountRepository;
         private readonly IMapper _Mapper;
         private readonly IRepository<PolicyCancel> _policyCancelRepository;
-        public PolicyCancelService(IRepository<PolicyAccount> repo, IMapper mapper, IRepository<PolicyCancel> policyCancelRepository)
+        private readonly IRepository<Customer> _cutomerRepo;
+        public PolicyCancelService(IRepository<PolicyAccount> repo, IRepository<Customer> cutomerRepo, IMapper mapper, IRepository<PolicyCancel> policyCancelRepository)
         {
             _policyAccountRepository = repo;
             _Mapper = mapper;
             _policyCancelRepository = policyCancelRepository;
+            _cutomerRepo= cutomerRepo;
         }
         public async Task<bool> CancelPolicy(Guid policyAccountId)
         {
             var policyAccount = _policyAccountRepository.GetAll().AsNoTracking().FirstOrDefault(pa=>pa.Id ==policyAccountId);
             if (policyAccount == null || policyAccount.Status == "Closed")
                 throw new AlreadyCancelledPolicyException("PolcyAccount has been closed!");
-
-            if (policyAccount.EndDate <= DateTime.UtcNow)
+            if(_policyCancelRepository.GetAll().AsNoTracking().FirstOrDefault(pc=>pc.PolicyAccountId == policyAccountId) != null)
             {
-                policyAccount.Status = "Closed";
-                _policyAccountRepository.Update(policyAccount);
+                throw new AlreadyCancelledPolicyException("Already request send!");
+            }
 
                 var policyCancel = new PolicyCancel
                 {
@@ -39,10 +40,9 @@ namespace Insurance_final_project.Services
                 };
 
                 _policyCancelRepository.Add(policyCancel);
-                return true;
-            }
 
-            return false;
+
+            return true;
         }
 
         public async Task<Guid> ApprovePolicyCancelation(ApprovalDto policyCancel)
@@ -65,9 +65,13 @@ namespace Insurance_final_project.Services
             return updatedPolicyCancel.PolicyCancelId;
         }
 
-        public async Task<List<PolicyCancelDto>> GetPolicyCancels()
+        public async Task<List<PolicyCancelReponseDto>> GetPolicyCancels(Guid customerId)
         {
-            return _Mapper.Map<List<PolicyCancel>, List<PolicyCancelDto>>(_policyCancelRepository.GetAll().ToList());
+            if(_cutomerRepo.Get(customerId) == null)
+            {
+                throw new CustomerNotFoundException("Customer not found");
+            }
+            return _Mapper.Map<List<PolicyCancel>, List<PolicyCancelReponseDto>>(_policyCancelRepository.GetAll().Where(pc=>pc.PolicyAccount.CustomerId == customerId).Include(pc=>pc.PolicyAccount).ThenInclude(pa=>pa.Policy).ToList());
         }
     }
 }

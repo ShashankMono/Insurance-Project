@@ -1,0 +1,42 @@
+<div class="container mt-5">
+    <h2>Approve Customers</h2>
+  
+    <div *ngIf="customers.length > 0; else noCustomers">
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Sr. No.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Date of Birth</th>
+                    <th scope="col">Mobile Number</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let customer of customers; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ customer.firstName }} {{ customer.lastName }}</td>
+                    <td>{{ customer.dateOfBirth | date}}</td>
+                    <td>{{ customer.mobileNo }}</td>
+                    <td>{{ customer.emailId }}</td>
+                    <td>{{ customer.state }}</td>
+                    <td>
+                        <button
+                            class="btn btn-success btn-sm mx-2"
+                            (click)="viewReport(customer.customerId)"
+                        >
+                            View report
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  
+    <ng-template #noCustomers>
+        <p class="text-center">No customers available.</p>
+    </ng-template>
+  </div>
+    

@@ -20,7 +20,7 @@ export class ViewNomineesComponent {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    // Initialize the form group with required form controls
+
     this.editNomineeForm = new FormGroup({
       nomineeName: new FormControl('', Validators.required),
       nomineeRelation: new FormControl('', Validators.required),

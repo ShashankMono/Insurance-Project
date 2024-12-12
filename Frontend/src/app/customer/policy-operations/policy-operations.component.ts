@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { PolicyAccountService } from 'src/app/services/policy-account.service';
 @Component({
   selector: 'app-policy-operations',
   templateUrl: './policy-operations.component.html',
@@ -10,22 +12,25 @@ export class PolicyOperationsComponent {
   policyAccounts: any[] = [];
   successMessage: string | null = null;
   errorMessage: string | null = null;
+  customerId:any = "";
 
   constructor(
     private customerDashboardService: CustomerDashboardService,
-    private router: Router
+    private router: Router,
+    private policyAccountService:PolicyAccountService
   ) {}
 
   ngOnInit(): void {
+    this.customerId=history.state.customerId
     this.fetchPolicyAccounts();
     
   }
 
-  // Fetch all policy accounts from the backend
   fetchPolicyAccounts(): void {
-    this.customerDashboardService.getPolicyAccounts().subscribe(
+    this.policyAccountService.getPolicyAccountsByCustomerId(this.customerId).subscribe(
       (response) => {
         this.policyAccounts = response.data;
+        this.policyAccounts = this.policyAccounts.filter(pa=>pa.status!="Closed")
         console.log(this.policyAccounts);
       },
       (error) => {
@@ -35,13 +40,26 @@ export class PolicyOperationsComponent {
     );
   }
 
+  isDisable(policy:any):boolean{
+    return policy.isApproved != 'Approved' ||  policy.status == 'Closed'
+  }
  
   payInstallment(policyAccountId: string, policyName:string): void {
     this.router.navigate(['/pay-installment'], {state:{policyAccountId,policyName}});
   }
 
   cancelPolicy(policyAccountId: string): void {
-    this.router.navigate(['/cancel-policy', policyAccountId]);
+    this.customerDashboardService.addCancelPolicyAccount(policyAccountId).subscribe({
+      next:(response)=>{
+        if(response.data){
+          alert("Policy Cancelled");
+        }
+      },
+      error:(err:HttpErrorResponse)=>{
+        console.log(err);
+        alert(err.error.errorMessage);
+      }
+    })
   }
 
   claimPolicy(policyAccountId: string): void {

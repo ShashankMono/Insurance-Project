@@ -33,7 +33,6 @@ namespace Insurance_final_project.Controllers
         [HttpPost]
         public async Task<IActionResult> AddWithdrawalRequest([FromBody] CommissionWithdrawalDto withdrawRequest)
         {
-            // Validate model state
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values

@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
+import { PolicyAccountService } from 'src/app/services/policy-account.service';
 
 @Component({
   selector: 'app-pay-installment',
@@ -15,7 +16,7 @@ export class PayInstallmentComponent implements OnInit {
   installments:any=""
   policyName:any=""
 
-  constructor(private dashboardService: CustomerDashboardService, private router:ActivatedRoute) {
+  constructor(private dashboardService: CustomerDashboardService, private PolicyAccountService:PolicyAccountService ) {
     this.policyAccountId=history.state.policyAccountId;
     this.policyName = history.state.policyName;
     // console.log(this.policyAccountId);
@@ -47,7 +48,7 @@ export class PayInstallmentComponent implements OnInit {
   }
 
   fetchPolicyAccounts(): void {
-    this.dashboardService.getPolicyAccounts().subscribe(
+    this.PolicyAccountService.getPolicyAccounts().subscribe(
       (data) => {
         this.policyAccounts = data;
       },
@@ -57,35 +58,6 @@ export class PayInstallmentComponent implements OnInit {
     );
   }
 
-
-
-  cancelPolicy(policyAccountId: string): void {
-    this.dashboardService.cancelPolicyAccount(policyAccountId).subscribe(
-      (response) => {
-        alert('Policy canceled successfully');
-        this.fetchPolicyAccounts();
-      },
-      (error) => {
-        alert('Error canceling policy');
-        console.error(error);
-      }
-    );
-  }
-
-  // claimPolicy(policyAccountId: string): void {
-  //   const claimData = { reason: 'Sample Reason', amount: 1000 }; // Replace with actual data
-  //   this.dashboardService.claimPolicy(policyAccountId, claimData).subscribe(
-  //     (response) => {
-  //       alert('Policy claim submitted');
-  //       this.fetchPolicyAccounts();
-  //     },
-  //     (error) => {
-  //       alert('Error submitting claim');
-  //       console.error(error);
-  //     }
-  //   );
-  // }
-
   payInstallment(Amount:any,id:any): void {
     var obj = {
       policyName:this.policyName,
@@ -94,6 +66,7 @@ export class PayInstallmentComponent implements OnInit {
       cancelUrl:"http://localhost:4200/Cancel"
     }
 
+    //console.log(obj);
     this.dashboardService.getPaymentSession(obj).subscribe({
       next:(response)=>{
         var resData = response;

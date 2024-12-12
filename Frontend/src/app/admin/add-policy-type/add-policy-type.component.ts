@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 export class AddPolicyTypeComponent {
   addPolicyTypeForm = new FormGroup({
     type: new FormControl('', Validators.required),
-    isActive: new FormControl(true),
   });
 
   constructor(private addPolicyTypeService: AdminDashboardService, private router: Router) {}
@@ -19,7 +18,7 @@ export class AddPolicyTypeComponent {
     if (this.addPolicyTypeForm.valid) {
       const policyTypeData = {
         type: this.addPolicyTypeForm.value.type,
-        isActive: this.addPolicyTypeForm.value.isActive,
+        isActive: true,
       };
 
       this.addPolicyTypeService.addPolicyType(policyTypeData).subscribe({
