@@ -210,14 +210,7 @@ const routes: Routes = [
         component:PolicyAccountsViewComponent
       },
       
-      {
-        path:'view-agent-profile',
-        component:ViewAgentProfileComponent
-      },
-      {
-        path:'edit-agent-profile',
-        component:EditAgentProfileComponent
-      },
+      
       {
         path:'withdrawal-history',
         component:WithdrawalHistoryComponent
@@ -229,9 +222,19 @@ const routes: Routes = [
       {
         path:'policy-schemes',
         component:PolicySchemesComponent
-      }
+      },
+      {
+        path: 'view-agent-profile', 
+        component:ViewAgentProfileComponent
+      },
+      {
+        path:'edit-agent-profile',
+        component:EditAgentProfileComponent
+      },
     ]
   },
+
+  
   {
     path: 'customer-dashboard',
     component: CustomerDashboardComponent,

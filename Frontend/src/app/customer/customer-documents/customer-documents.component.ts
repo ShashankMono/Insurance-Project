@@ -11,6 +11,16 @@ import { CustomerDocumentsService } from 'src/app/services/customer-documents.se
 })
 export class CustomerDocumentsComponent implements OnInit {
   documents: any[] = [];
+  documentTypes: string[] = [
+    'Passport',
+    'Aadhaar_card',
+    'Voter_ID',
+    'PAN_card',
+    'Ration_card',
+    'Driving_license',
+    'Bank_account_passbook',
+    'Photo_ID_card',
+  ];
   successMessage: string | null = null;
   errorMessage: string | null = null;
   selectedDocumentUrl: string | null = null;

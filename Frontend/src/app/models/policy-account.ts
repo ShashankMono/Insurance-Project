@@ -1,6 +1,6 @@
 import { Policy } from "./policy";
 
-export interface PolicyAccount extends Policy{
+export interface PolicyAccount{
   id: string;
   name:string;
   policyTerm: number;

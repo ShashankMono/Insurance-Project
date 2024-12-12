@@ -6,20 +6,31 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AgentDashboardService {
-  private url='https://localhost:7258/api'
+  private url = 'https://localhost:7258/api';
+
   constructor(private http: HttpClient) {}
-  getAgentReport(agentId: any): Observable<any> {
-    return this.http.get(`${this.url}/Agent/${agentId}`);
+
+  getAgentDetails(id: any) {
+    return this.http.get(`${this.url}/Agent/${id}`);
   }
-  getPolicyAccountReport(agentId: any): Observable<any> {
+
+  updateAgentDetails(agent: any): Observable<any> {
+    return this.http.put(`${this.url}/Agent`, agent);
+  }
+
+  getPolicyAccounts(agentId: any): Observable<any> {
     return this.http.get(`${this.url}/PolicyAccount/agent/${agentId}`);
   }
-  
-  getAgentCommissionReport(agentId: any): Observable<any> {
+
+  getCommissions(agentId: any): Observable<any> {
     return this.http.get(`${this.url}/Commission/${agentId}`);
   }
-  
-  getCommissionWithdrawals(agentId: any): Observable<any> {
+
+  getWithdrawalHistory(agentId: any): Observable<any> {
     return this.http.get(`${this.url}/CommissionWithdrawal/${agentId}`);
+  }
+
+  postCommissionWithdrawal(data: any): Observable<any> {
+    return this.http.post(`${this.url}/CommissionWithdrawal`, data);
   }
 }

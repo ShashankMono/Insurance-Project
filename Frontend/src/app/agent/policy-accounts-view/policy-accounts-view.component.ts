@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./policy-accounts-view.component.css']
 })
 export class PolicyAccountsViewComponent {
-
+  
+  policyAccounts: any[] = [];
 }

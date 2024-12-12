@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./agent-dashboard.component.css']
 })
 export class AgentDashboardComponent {
+  agentId:any
+  
   constructor(private router: Router) {}
 
   goToMarketing() {
@@ -29,12 +31,12 @@ export class AgentDashboardComponent {
     this.router.navigate(['/agent-view/withdrawal-history'], { relativeTo: this.router.routerState.root });
   }
 
-  viewProfile() {
-    this.router.navigate(['/agent-view/view-agent-profile'], { relativeTo: this.router.routerState.root });
+  viewProfile(){
+    this.router.navigate(['/agent-view/view-agent-profile']);
   }
 
-  editProfile() {
-    this.router.navigate(['/agent-view/edit-agent-profile'], { relativeTo: this.router.routerState.root });
+  editProfile(): void {
+    this.router.navigate(['/agent-view/edit-profile'],{ relativeTo: this.router.routerState.root });
   }
 
   viewPolicySchemes() {

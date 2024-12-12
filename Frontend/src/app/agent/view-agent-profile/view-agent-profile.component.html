@@ -1,106 +1,25 @@
-<div class="container mt-3">
-    <h2>Agent Report</h2>
-  <hr style="width: 25%;">
-  <hr style="width: 25%;">
-    <div *ngIf="errorMessage" class="alert alert-danger">
-      {{ errorMessage }}
-      <hr>
-    </div>
-  
-    <!-- Agent Details -->
-    <div *ngIf="agent">
-      <h3>Agent Details</h3>
-      <table class="table table-bordered">
-        <tr><th>First Name</th><td>{{ agent.firstName }}</td></tr>
-        <tr><th>Last Name</th><td>{{ agent.lastName }}</td></tr>
-        <tr><th>Qualification</th><td>{{ agent.qualification }}</td></tr>
-        <tr><th>Email</th><td>{{ agent.email }}</td></tr>
-        <tr><th>Mobile No</th><td>{{ agent.mobileNo }}</td></tr>
-        <tr><th>Commission Earned</th><td>{{ agent.commissionEarned }}</td></tr>
+
+<div class="container mt-5">
+  <div *ngIf="agentDetails; else loading">
+    <h2>Agent Profile</h2>
+    <div class="card mt-3">
+      <h4 class="card-title">Details</h4>
+      <table class="table table-bordered mt-2">
+        <tr><th>First Name</th><td>{{ agentDetails.firstName }}</td></tr>
+        <tr><th>Last Name</th><td>{{ agentDetails.lastName }}</td></tr>
+        <tr><th>Qualification</th><td>{{ agentDetails.qualification }}</td></tr>
+        <tr><th>Email</th><td>{{ agentDetails.email }}</td></tr>
+        <tr><th>Mobile No</th><td>{{ agentDetails.mobileNo }}</td></tr>
+        <tr><th>Commission Earned</th><td>{{ agentDetails.commissionEarned }}</td></tr>
       </table>
     </div>
-  <hr>
-    <!-- Policy Accounts -->
-    <h3>Policy Accounts</h3>
-    <div *ngIf="policyAccounts.length == 0">
-        <h5>No Policy Accounts sold by {{agent.firstName}} {{agent.lastName}}</h5>
+  </div>
+
+  <ng-template #loading>
+    <div class="text-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
     </div>
-    <div *ngIf="policyAccounts.length > 0">
-      
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Sr. no.</th>
-            <th>Coverage Amount</th>
-            <th>Total Paid</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let account of policyAccounts;let i=index;">
-            <td>{{ i + 1 }}</td>
-            <td>{{ account.coverageAmount }}</td>
-            <td>{{ account.totalAmountPaid }}</td>
-            <td>{{ account.startDate | date }}</td>
-            <td>{{ account.endDate | date }}</td>
-            <td>{{ account.status }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  <hr>
-    <!-- Agent Commissions -->
-    <h3>Commissions</h3>
-    <div *ngIf="commissions.length == 0">
-        <h5>No commissions done by Agent yet.</h5>
-    </div>
-    <div *ngIf="commissions.length > 0">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Sr. no.</th>
-            <th>Type</th>
-            <th>Amount</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let commission of commissions;let i=index;">
-            <td>{{ i + 1 }}</td>
-            <td>{{ commission.commissionType }}</td>
-            <td>{{ commission.amount }}</td>
-            <td>{{ commission.date | date }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  <hr>
-    <!-- Commission Withdrawals -->
-    <h3>Commission Withdrawals</h3>
-    <div *ngIf="commissions.length == 0">
-        No commission withrawals done by {{agent.firstName}} {{agent.lastName}}
-    </div>
-    <div *ngIf="commissions.length > 0">
-      
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Sr. no.</th>
-            <th>Amount</th>
-            <th>Transaction Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let withdrawal of commissionWithdrawals;let i=index;">
-            <td>{{ i + 1 }}</td>
-            <td>{{ withdrawal.amount }}</td>
-            <td>{{ withdrawal.transactionDate | date }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <hr><hr>
+  </ng-template>
 </div>
-  

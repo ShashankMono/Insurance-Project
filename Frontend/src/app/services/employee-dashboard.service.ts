@@ -8,6 +8,6 @@ import { Observable } from 'rxjs';
 export class EmployeeService {
   private url = 'https://localhost:7258/api';
   constructor(private http:HttpClient) { }
-
+  
   
 }
