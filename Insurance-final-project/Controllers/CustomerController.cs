@@ -74,7 +74,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost("/approve")]
+        [HttpPost("approve")]
         public IActionResult ApproveCustomer([FromBody] ApprovalDto approval)
         {
 
@@ -94,12 +94,12 @@ namespace Insurance_final_project.Controllers
                 });
             }
 
-            _customerService.ApproveCustomer(approval);
+            var response = _customerService.ApproveCustomer(approval);
 
             return Ok(new
             {
                 Success = true,
-                Data = (object)null,
+                Data = response,
                 Message = "Customer profile updated successfully."
             });
         }

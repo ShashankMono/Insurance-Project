@@ -18,6 +18,7 @@ namespace Insurance_final_project.Dto
         [Required(ErrorMessage = "Customer ID is required.")]
         [ForeignKey("Customer")]
         public Guid CustomerId { get; set; }
+        public string CustomerName { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "Coverage Amount cannot be negative.")]
         public double CoverageAmount { get; set; }
@@ -45,6 +46,7 @@ namespace Insurance_final_project.Dto
 
         [ForeignKey("Agent")]
         public Guid? AgentId { get; set; }
+        public string AgentName { get; set; }
 
         [Required(ErrorMessage = "Status is required.")]
         [MaxLength(20, ErrorMessage = "Status cannot exceed 20 characters.")]

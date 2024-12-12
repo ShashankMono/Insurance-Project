@@ -2,7 +2,6 @@
     <h2 class="text-center mb-4">Employee Dashboard</h2>
 
     <div class="row g-4">
-        <!-- Account Verification and Approvals Section -->
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white text-center">
@@ -10,15 +9,9 @@
                 </div>
                 <div class="card-body">
                     <div class="d-grid gap-3">
-                        <!-- Approve Customer Button -->
                         <button class="btn btn-success" (click)="approveCustomer()">
                             <i class="fas fa-user-plus me-2"></i>Approve Customer
                         </button>
-                        <!-- Approve Document Button -->
-                        <button class="btn btn-warning" (click)="approveDocument()">
-                            <i class="fas fa-file-alt me-2"></i>Approve Document
-                        </button>
-                        <!-- Policy Account Verification Button -->
                         <button class="btn btn-info text-white" (click)="policyAccountVerification()">
                             <i class="fas fa-clipboard-check me-2"></i>Policy Account Verification
                         </button>
@@ -27,7 +20,7 @@
             </div>
         </div>
 
-        <!-- Customer Management Section -->
+
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-header bg-secondary text-white text-center">
@@ -35,13 +28,11 @@
                 </div>
                 <div class="card-body">
                     <div class="d-grid gap-3">
-                        <!-- Query Response Button -->
-                        <button class="btn btn-primary" >
+                        <button class="btn btn-primary" (click)="queryResponse()">
                             <i class="fas fa-comment-dots me-2"></i>Query Response
                         </button>
-                        <!-- View Customer Details Button -->
-                        <button class="btn btn-dark">
-                            <i class="fas fa-id-card me-2"></i>Customer Details
+                        <button class="btn btn-dark" (click)="customerReport()">
+                            <i class="fas fa-id-card me-2"></i>Customers report
                         </button>
                     </div>
                 </div>

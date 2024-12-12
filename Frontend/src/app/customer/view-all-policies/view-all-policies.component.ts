@@ -15,34 +15,50 @@ export class ViewAllPoliciesComponent implements OnInit {
   filteredPolicies: Policy[] = [];
   policyTypes: PolicyType[] = [];
   errorMessage: string = '';
-  selectedPolicyTypeId: any = ''; // For filtering policies
+  selectedPolicyTypeId: any = ''; 
   investmentAmount: number = 0; 
+  policyTerm:number = 0;
   calculatedAmount: number = 0; 
-  customerId:any=""
+  customerId: any = "";
+  installmentTypes: any ="";
+  installment:string = "";
+  InstallemtnAmount:number=0;
 
   constructor(
-    private customerService: CustomerDashboardService,
+    private cutomerService:CustomerDashboardService,
     private policyTypeService:PolicyTypeService,
     private router: Router,
-    private route:ActivatedRoute,
     private policyService : PolicyService
   ) {}
 
   ngOnInit(): void {
     this.customerId=history.state.customerId;
+    console.log("cus",this.customerId);
     this.loadPolicies();
-    this.loadPolicyTypes(); // Load policy types
+    this.loadPolicyTypes(); 
+    this.fetchInstallmentTypes();
   }
 
   loadPolicies(): void {
     this.policyService.getPolicies().subscribe(
       (response) => {
         this.policies = response;
-        this.filteredPolicies = response; // Initially, show all policies
+        this.filteredPolicies = response; 
       },
       (error) => {
         this.errorMessage = 'Failed to load policies. Please try again later.';
         console.error('Error fetching policies:', error);
+      }
+    );
+  }
+
+  fetchInstallmentTypes(): void {
+    this.cutomerService.getInstallmentTypes().subscribe(
+      (installmentTypes) => {
+        this.installmentTypes = installmentTypes;
+      },
+      (error) => {
+        console.error('Error fetching installment types', error);
       }
     );
   }
@@ -69,9 +85,15 @@ export class ViewAllPoliciesComponent implements OnInit {
     }
   }
 
-  buyPolicy(policyId: string): void {
+  buyPolicy(policy: any): void {
     if(localStorage.getItem('userId') != null){
-      this.router.navigate(['/create-policy-account', policyId],{state:{customerId:this.customerId}});
+      this.router.navigate(['/create-policy-account'],{state:
+        {customerId:this.customerId,
+        PolicyData:policy,
+        PolicyTerm:this.policyTerm,
+        installmentType:this.installment,
+        investmentAmount:this.investmentAmount
+      }});
     }else{
       alert("Please login to buy policy");
       this.router.navigate(['/']);
@@ -85,11 +107,24 @@ export class ViewAllPoliciesComponent implements OnInit {
       return;
     }
 
-    // Example calculation: Profit + Commission
     const profitAmount = (this.investmentAmount * policy.profitPercentage) / 100;
-    const commissionAmount = (this.investmentAmount * policy.commissionPercentage) / 100;
-
+    this.InstallemtnAmount = Math.round(this.investmentAmount/ (this.policyTerm*this.getInstallmentCountInYear(this.installment)))
     this.calculatedAmount = this.investmentAmount + profitAmount;
+  }
+
+  getInstallmentCountInYear(type:string):number{
+    switch(type){
+      case 'Monthly':
+        return 12;
+      case 'Quarterly':
+        return 4;
+      case 'HalfYearly':
+        return 2;
+      case 'Yearly':
+        return 1;
+      default :
+        return 1;
+    }
   }
 
 }

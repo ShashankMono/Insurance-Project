@@ -1,1 +1,116 @@
-<p>buy-policy-agent works!</p>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Create Policy Account</h1>
+  
+    <div *ngIf="successMessage" class="alert alert-success text-center">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger text-center">
+      {{ errorMessage }}
+    </div>
+  
+    <form [formGroup]="policyAccountForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="policyId" class="form-label">Policy Name<span class="text-danger">*</span></label>
+        
+        <input
+          type="text"
+          readonly
+          id="policyName"
+          class="form-control"
+          [value]="policy?.name"
+          placeholder="Policy name"
+          [readOnly]="true"
+        />
+      </div>
+  
+      <div class="mb-3">
+        <label for="investmentAmount" class="form-label">Investment Amount<span class="text-danger">*</span></label>
+        <input
+          type="number"
+          id="investmentAmount"
+          class="form-control"
+          formControlName="investmentAmount"
+          placeholder="Enter investment Amount"
+        />
+        <div *ngIf="policyAccountForm.get('investmentAmount')?.invalid && policyAccountForm.get('investmentAmount')?.touched" class="text-danger">
+          Investment Amount must be a in range {{policy?.minimumInvestmentAmount}}-{{policy?.maximumInvestmentAmount}} value.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="policyTerm" class="form-label">Policy Term (in years)<span class="text-danger">*</span></label>
+        <input
+          type="number"
+          id="policyTerm"
+          class="form-control"
+          formControlName="policyTerm"
+          placeholder="Enter Policy Term"
+        />
+        <div *ngIf="policyAccountForm.get('policyTerm')?.invalid && policyAccountForm.get('policyTerm')?.touched" class="text-danger">
+            Policy Term must be a in range {{policy?.minimumPolicyTerm}} - {{policy?.maximumPolicyTerm}} value.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="installmentType" class="form-label">Installment Type<span class="text-danger">*</span></label>
+        <select
+          id="installmentType"
+          class="form-control"
+          formControlName="installmentType"
+        >
+          <option value="">-- Select Installment Type --</option>
+          <option *ngFor="let type of installmentTypes" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+        <div *ngIf="policyAccountForm.get('installmentType')?.invalid && policyAccountForm.get('installmentType')?.touched" class="text-danger">
+          Installment Type is required.
+        </div>
+      </div>
+      <!--input file-img
+      submit
+      policyaccountid retrieve
+      fileupload endpoint
+      file sent
+      document endpoint add-viewdocuments comp on doc button-->
+      <div class="mb-3">
+      <label for="fileInput" class="form-label">Upload Document<span class="text-danger">*</span></label>
+      <input
+        type="file"
+        id="fileInput"
+        class="form-control"
+        (change)="onFileSelect($event)"
+        accept=".jpg,.jpeg,.png,.gif,.bmp"
+      />
+      <div *ngIf="fileError" class="text-danger">{{ fileError }}</div>
+      <div *ngIf="policyAccountForm.get('uploadDocument')?.invalid && policyAccountForm.get('uploadDocument')?.touched" class="text-danger">
+        Document is required.
+      </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="policyTerm" class="form-label">Agent Name</label>
+        <input
+          type="text"
+          id="agentName"
+          class="form-control"
+          [value]="agentName"
+          placeholder="Enter Policy Term"
+          readonly
+        />
+    </div>
+
+    <div class="mb-3">
+        <button
+            type="submit"
+            class="btn btn-primary w-100 mt-3"
+            [disabled]="!isDiable(policyAccountForm.invalid)"
+        >
+            Create Policy Account
+        </button>
+    </div>
+      
+    </form>
+</div>
+  

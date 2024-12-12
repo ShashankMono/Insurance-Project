@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
+import { PolicyAccountService } from 'src/app/services/policy-account.service';
 
 @Component({
   selector: 'app-pay-installment',
@@ -15,7 +16,7 @@ export class PayInstallmentComponent implements OnInit {
   installments:any=""
   policyName:any=""
 
-  constructor(private dashboardService: CustomerDashboardService, private router:ActivatedRoute) {
+  constructor(private dashboardService: CustomerDashboardService, private PolicyAccountService:PolicyAccountService ) {
     this.policyAccountId=history.state.policyAccountId;
     this.policyName = history.state.policyName;
     // console.log(this.policyAccountId);
@@ -47,7 +48,7 @@ export class PayInstallmentComponent implements OnInit {
   }
 
   fetchPolicyAccounts(): void {
-    this.dashboardService.getPolicyAccounts().subscribe(
+    this.PolicyAccountService.getPolicyAccounts().subscribe(
       (data) => {
         this.policyAccounts = data;
       },

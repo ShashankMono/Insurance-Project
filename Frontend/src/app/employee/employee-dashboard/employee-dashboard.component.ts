@@ -10,15 +10,18 @@ export class EmployeeDashboardComponent {
   constructor(private router: Router) {}
 
   approveCustomer(): void {
-    this.router.navigate(['/approve-customer']);
-  }
-
-  // Approve Document
-  approveDocument(): void {
-    this.router.navigate(['/approve-document']);
+    this.router.navigate(['/employee-dashboard/approve-customer']);
   }
 
   policyAccountVerification(): void {
-    this.router.navigate(['/policy-account-verification']);
+    this.router.navigate(['/employee-dashboard/policy-account-verification']);
+  }
+
+  customerReport():void{
+    this.router.navigate(['/employee-dashboard/customer-report'])
+  }
+
+  queryResponse():void{
+    this.router.navigate(['/employee-dashboard/query-response'])
   }
 }

@@ -21,7 +21,16 @@ namespace Insurance_final_project.Services
 
         public async Task<List<QueryDto>> GetQueryByCustomerId(Guid customerId)
         {
+            if(_customerRepo.Get(customerId) == null)
+            {
+                throw new CustomerNotFoundException("Customer not found!");
+            }
             return _Mapper.Map<List<QueryDto>>(_QueryRepo.GetAll().Where(q=>q.CustomerId == customerId).ToList());
+        }
+
+        public async Task<List<QueryDto>> GetAllQuery()
+        {
+            return _Mapper.Map<List<QueryDto>>(_QueryRepo.GetAll().ToList());
         }
 
         public async Task<Guid> ResponseToQuery(QueryDto queryDto)

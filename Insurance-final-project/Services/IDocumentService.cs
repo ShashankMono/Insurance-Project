@@ -9,5 +9,6 @@ namespace Insurance_final_project.Services
         public Task<Guid> AddDocument(DocumentDto document);
         public Task<Guid> UpdateDocument(UpdateDocumentDto document);
         public Task<bool> DeleteDocument(Guid documentId);
+        public Task<List<DocumentResponseDto>> GetDocumentByCustomerId(Guid customerId);
     }
 }

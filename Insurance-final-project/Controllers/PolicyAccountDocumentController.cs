@@ -74,5 +74,48 @@ namespace Insurance_final_project.Controllers
             var documentId = await _service.UpdateDocument(updateDoc);
             return Ok(new { Success = true, Data = documentId, Message = "Document updated successfully." });
         }
+
+        [HttpGet("customer/{accountId}")]
+        public async Task<IActionResult> GetDocumentsByCustomerId(Guid accountId)
+        {
+            var documents = await _service.GetDocumentByAccountId(accountId);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = documents,
+                Message = "Document retrived successfully."
+            });
+        }
+
+        [HttpPut("approve")]
+        public async Task<IActionResult> ChangeApproveStatus([FromBody] VerificationDto verifyInfo)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                return BadRequest(new
+                {
+                    Success = false,
+                    Data = (object)null,
+                    Message = "Validation failed.",
+                    Errors = errors
+                });
+            }
+
+            var documentId = await _service.ChangeApproveStatus(verifyInfo);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = documentId,
+                Message = "Document approval status updated successfully."
+            });
+        }
     }
 }

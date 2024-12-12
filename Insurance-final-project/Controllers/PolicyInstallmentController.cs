@@ -16,9 +16,8 @@ namespace Insurance_final_project.Controllers
             _policyInstallmentService = policyInstallmentService;
         }
 
-        // Add Installments
-        [HttpPost]
-        public IActionResult AddInstallments(PolicyInstallmentDto installmentData)
+        [HttpGet("add/{policyAccountId}")]
+        public IActionResult AddInstallments(Guid policyAccountId)
         {
             if (!ModelState.IsValid)
             {
@@ -36,7 +35,7 @@ namespace Insurance_final_project.Controllers
                 });
             }
 
-            _policyInstallmentService.AddInstallments(installmentData);
+            _policyInstallmentService.AddInstallments(policyAccountId);
 
             return Ok(new
             {
@@ -46,7 +45,6 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        // Pay an Installment
         [HttpGet("pay/{InstallmentId}")]
         public async Task<IActionResult> PayInstallment(Guid InstallmentId)
         {

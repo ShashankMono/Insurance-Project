@@ -15,14 +15,15 @@ export class CustomerDashboardComponent{
   customerId:any=""
   
   constructor(private customerService: CustomerDashboardService, private router: Router) {
-    var userid =  sessionStorage.getItem('userId');
+    var userid =  localStorage.getItem('userId');
     if (userid!=null) {
       this.customerService.getCustomerDetails(userid).subscribe({
         next: (response) => {
           if (response.success) {
             this.customerDets = response.data;
             this.customerId=this.customerDets.customerId
-            sessionStorage.setItem('customerId',this.customerId);
+            console.log(this.customerDets);
+            localStorage.setItem('customerId',this.customerId);
           }
         },
         error: (err) => {

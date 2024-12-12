@@ -5,6 +5,7 @@ using System.Text;
 using Insurance_final_project.Repositories;
 using Insurance_final_project.Models;
 using Insurance_final_project.Exceptions;
+using CloudinaryDotNet.Actions;
 
 namespace Insurance_final_project.Services
 {
@@ -75,6 +76,29 @@ namespace Insurance_final_project.Services
 
             client.Send(mailMessage);
 
+        }
+        public void RejectionMail(Guid customerId,string reason,string subject)
+        {
+            var customer = _customerRepo.Get(customerId);
+            if (customer == null)
+            {
+                throw new InvalidGuidException("Customer not found");
+            }
+
+            var client = CreateClient();
+
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress(_configuration.GetValue<string>("EmailSetting:Email"));
+            mailMessage.To.Add(customer.EmailId);
+            mailMessage.Subject = $"{subject}";
+            mailMessage.IsBodyHtml = true;
+            StringBuilder mailBody = new StringBuilder();
+            mailBody.AppendFormat($"<h1>{reason}</h1>");
+            mailBody.AppendFormat("<br />");
+            mailBody.AppendFormat("<p>Thank you</p>");
+            mailMessage.Body = mailBody.ToString();
+
+            client.Send(mailMessage);
         }
     }
 }

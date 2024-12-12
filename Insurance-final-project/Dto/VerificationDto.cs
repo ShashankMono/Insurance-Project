@@ -12,6 +12,8 @@ namespace Insurance_final_project.Dto
         public string IsVerified { get; set; }
 
         [Required(ErrorMessage = "Customer ID is required.")]
-        public Guid CustomerId { get; set; }
+        public Guid AccountId { get; set; }
+
+        public string Reason { get; set; }
     }
 }

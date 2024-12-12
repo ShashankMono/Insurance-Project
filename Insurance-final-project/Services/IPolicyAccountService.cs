@@ -9,5 +9,6 @@ namespace Insurance_final_project.Services
         public Task<Guid> CreatePolicyAccount(PolicyAccountDto policyAccountDto);
         public Task<List<PolicyAccountResponseDto>> GetPolicyAccountsByAgent(Guid agentId);
         public Task<List<PolicyAccountResponseDto>> GetPoliciesByCustomer(Guid customerId);
+        public Task<bool> ApproveAccount(ApprovalDto approval);
     }
 }

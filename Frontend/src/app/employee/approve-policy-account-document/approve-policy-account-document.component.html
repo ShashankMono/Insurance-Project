@@ -1,0 +1,92 @@
+<div class="container mt-5">
+    <h2>Customer Documents</h2>
+  
+    <div *ngIf="customer" class="mb-4">
+      <p><strong>Name:</strong> {{ customer.firstName + " "+customer.lastName }}</p>
+      <p><strong>Email:</strong> {{ customer.emailId }}</p>
+      <p><strong>Mobile:</strong> {{ customer.mobileNo }}</p>
+    </div>
+  
+    <div *ngIf="documents.length > 0; else noDocuments">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Sr. no.</th>
+            <th>Document Type</th>
+            <th>Document Name</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let document of documents; let i=index">
+            <td>{{i+1}}</td>
+            <td>{{ document.documentType }}</td>
+            <td>
+              {{ document.documentName }}
+            </td>
+            <td>{{ document.isVerified }}</td>
+            <td>
+              <a
+              [href]="document.documentFileURL"
+              target="_blank"
+              class="btn btn-secondary"
+            >
+              View Document
+            </a>
+              <button
+                class="btn btn-success mx-2"
+                (click)="updateStatus(document.documentId, 'Verified','')"
+                [disabled]="document.isVerified === 'Verified'"
+              >
+                Approve
+              </button>
+              <button
+                class="btn btn-danger"
+                (click)="openRejectionModal(document.documentId)"
+                [disabled]="document.isVerified === 'Rejected'"
+              >
+                Reject
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <ng-template #noDocuments>
+      <p class="text-center">No documents available for this customer.</p>
+    </ng-template>
+  
+    <div *ngIf="isRejectionModalOpen" class="modal show" style="display: block;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Rejection Reason</h5>
+            <button type="button" class="btn-close" (click)="closeRejectionModal()"></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="rejectionForm" (ngSubmit)="submitRejectionReason()">
+              <div class="mb-3">
+                <label for="rejectionReason" class="form-label">Reason</label>
+                <textarea
+                  id="rejectionReason"
+                  class="form-control"
+                  formControlName="reason"
+                  rows="4"
+                  placeholder="Enter rejection reason"
+                ></textarea>
+                <div *ngIf="rejectionForm.get('reason')?.invalid && rejectionForm.get('reason')?.touched" class="text-danger">
+                  Rejection reason is required.
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-danger" [disabled]="rejectionForm.invalid">Submit</button>
+                <button type="button" class="btn btn-secondary" (click)="closeRejectionModal()">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -22,7 +22,7 @@ namespace Insurance_final_project.Dto
 
         [Required(ErrorMessage = "Verification status is required.")]
         [MaxLength(20, ErrorMessage = "Verification status cannot exceed 20 characters.")]
-        public string IsVerified { get; set; } = VerificationType.Pending.ToString();
+        public string IsVerified { get; set; } 
 
         [Required(ErrorMessage = "Customer ID is required.")]
         [ForeignKey("Customer")]

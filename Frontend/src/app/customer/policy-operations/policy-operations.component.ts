@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PolicyAccountService } from 'src/app/services/policy-account.service';
 @Component({
   selector: 'app-policy-operations',
   templateUrl: './policy-operations.component.html',
@@ -11,20 +12,22 @@ export class PolicyOperationsComponent {
   policyAccounts: any[] = [];
   successMessage: string | null = null;
   errorMessage: string | null = null;
+  customerId:any = "";
 
   constructor(
     private customerDashboardService: CustomerDashboardService,
-    private router: Router
+    private router: Router,
+    private policyAccountService:PolicyAccountService
   ) {}
 
   ngOnInit(): void {
+    this.customerId=history.state.customerId
     this.fetchPolicyAccounts();
     
   }
 
-  // Fetch all policy accounts from the backend
   fetchPolicyAccounts(): void {
-    this.customerDashboardService.getPolicyAccounts().subscribe(
+    this.policyAccountService.getPolicyAccountsByCustomerId(this.customerId).subscribe(
       (response) => {
         this.policyAccounts = response.data;
         this.policyAccounts = this.policyAccounts.filter(pa=>pa.status!="Closed")
