@@ -60,6 +60,7 @@ namespace Insurance_final_project.Models
         [Range(0, double.MaxValue, ErrorMessage = "Agent Commission cannot be negative.")]
         public double? AgentCommission { get; set; } = 0;
         public List<PolicyAccountDocument>? AccountDocuments { get; set; }
+        //public List<Nominee>? Nominees  { get; set; }
 
         [Required(ErrorMessage = "Approval status is required")]
 

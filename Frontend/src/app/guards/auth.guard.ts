@@ -19,14 +19,13 @@ export class AuthGuard implements CanActivate {
 
         console.log('User Role:', userRole, 'Required Role:', requiredRole);
 
+        if (Array.isArray(requiredRole)) {
+          return requiredRole.includes(userRole);
+        }
+
         if (userRole === requiredRole) {
           return true;
         } 
-        // else if(!token || !userRole || userRole !== requiredRole) {
-        //     alert('You are not authorized! Redirecting to login page.');
-        //     this.router.navigateByUrl('/login-dashboard');
-        //     return false;
-        // }
         else {
           alert('Access Denied: You do not have the required permissions.');
           this.router.navigate(['/']);

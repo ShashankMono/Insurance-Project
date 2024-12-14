@@ -1,1 +1,33 @@
-<p>commissions works!</p>
+<div class="container mt-5">
+    <h2>Commission Details</h2>
+    
+    <div *ngIf="comissions.length > 0; else noData">
+      <table class="table table-bordered table-striped mt-3">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Sr. No.</th>
+            <th scope="col">Policy Name</th>
+            <th scope="col">Agent Name</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Installment Type</th>
+            <th scope="col">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let commission of comissions; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ commission.policyName }}</td>
+            <td>{{ commission.agentName }}</td>
+            <td>{{ commission.amount | currency:'INR' }}</td>
+            <td>{{ commission.commissionType }}</td>
+            <td>{{ commission.date | date:'medium' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noData>
+      <p class="text-center text-danger">No commission details available.</p>
+    </ng-template>
+  </div>
+  

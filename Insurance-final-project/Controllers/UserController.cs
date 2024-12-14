@@ -69,7 +69,7 @@ namespace Insurance_final_project.Controllers
             return Ok(new { Success = true, Data = dataObj.userData, Message = "User logged in successfully." });
         }
 
-        [HttpPut("UpdateUsernam")]
+        [HttpPut("update-username")]
         public async Task<IActionResult> UpdateUser([FromBody] UserUpdateDto updatedUser)
         {
             if (!ModelState.IsValid)
@@ -99,7 +99,7 @@ namespace Insurance_final_project.Controllers
             return Ok(new { Success = true, Data = userProfile, Message = "User profile retrieved successfully." });
         }
 
-        [HttpPost("change-password")]
+        [HttpPut("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
         {
             if (!ModelState.IsValid)

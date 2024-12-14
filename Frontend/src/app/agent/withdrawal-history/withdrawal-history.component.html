@@ -1,1 +1,25 @@
-<p>withdrawal-history works!</p>
+<div class="container mt-4">
+    <h2>Commission Withdrawal History</h2>
+    <div *ngIf="commissionHistory?.length > 0; else noHistory">
+      <table class="table table-bordered table-striped mt-3">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Sr. No.</th>
+            <th scope="col">Date & Time</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let history of commissionHistory; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ history.transactionDate | date: 'medium' }}</td>
+            <td>{{ history.amount | currency: 'INR' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noHistory>
+      <p class="text-center text-muted">No withdrawal history available.</p>
+    </ng-template>
+  </div>
+  

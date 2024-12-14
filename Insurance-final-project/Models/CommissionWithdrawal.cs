@@ -18,6 +18,6 @@ namespace Insurance_final_project.Models
         public Guid AgentId { get; set; } 
         public Agent Agent { get; set; } 
 
-        public DateTime TransactionDate { get; set; }= DateTime.Now;
+        public DateTime TransactionDate { get; set; }
     }
 }

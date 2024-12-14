@@ -47,7 +47,7 @@ namespace Insurance_final_project.Services
         }
 
 
-        public double ViewTotalCommission(Guid agentId)
+        public double ViewEarnedCommission(Guid agentId)
         {
             var agent = _agentRepository.Get(agentId);
             if (agent == null)

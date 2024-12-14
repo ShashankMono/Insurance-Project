@@ -1,1 +1,35 @@
-<p>policy-accounts-view works!</p>
+<div class="container mt-5">
+    <h2>Policy Accounts</h2>
+  
+    <div *ngIf="policies.length > 0; else noPolicies">
+      <table class="table table-bordered table-striped mt-3">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Sr. No.</th>
+            <th scope="col">Policy Name</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Claim Amount</th>
+            <th scope="col">Commission</th>
+            <th scope="col">Term (in years)</th>
+            <th scope="col">Status</th>
+            <th scope="col">Approval</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let policy of policies; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ policy.policyName }}</td>
+            <td>{{ policy.customerName }}</td>
+            <td>{{ policy.coverageAmount | currency: 'INR'}}</td>
+            <td>{{ policy.agentCommission | currency:'INR' }}</td>
+            <td>{{ policy.policyTerm }}</td>
+            <td>{{ policy.status }}</td>
+            <td>{{ policy.isApproved }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <ng-template #noPolicies>
+      <p class="text-center">No policies available.</p>
+    </ng-template>

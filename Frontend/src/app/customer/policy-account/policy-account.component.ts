@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
+import { FileUploadService } from 'src/app/services/file-upload.service';
 import { PolicyService } from 'src/app/services/policy.service';
 
 @Component({
@@ -21,7 +22,9 @@ export class PolicyAccountComponent implements OnInit{
   policy:any="";
 
   constructor(
-    private customerDashboardService: CustomerDashboardService) {}
+    private customerDashboardService: CustomerDashboardService,
+    private fileService:FileUploadService
+  ) {}
 
   ngOnInit(): void {
     this.customerId=history.state.customerId
@@ -134,7 +137,7 @@ export class PolicyAccountComponent implements OnInit{
       const formData = new FormData();
       formData.append('file', this.selectedFile);
 
-      this.customerDashboardService.uploadFile(formData).subscribe(
+      this.fileService.uploadFile(formData).subscribe(
         (response) => {
           const fileUrl = response.data.result.url;
           this.saveDocument(policyAccountId, fileUrl);

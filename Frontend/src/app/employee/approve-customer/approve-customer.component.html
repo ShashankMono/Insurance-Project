@@ -33,14 +33,14 @@
                       <button
                           class="btn btn-success btn-sm mx-2"
                           (click)="updateStatus(customer.customerId, 'Approved','')"
-                          [disabled]="customer.isApproved === 'Approved'"
+                          [disabled]="customer.isApproved === 'Approved' || customer.isApproved === 'Rejected'"
                       >
                           Approve
                       </button>
                       <button
                           class="btn btn-danger btn-sm"
                           (click)="openRejectionModal(customer.customerId)"
-                          [disabled]="customer.isApproved === 'Rejected'"
+                          [disabled]="customer.isApproved === 'Rejected' || customer.isApproved === 'Approved'"
                       >
                           Reject
                       </button>

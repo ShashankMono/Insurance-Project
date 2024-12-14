@@ -35,7 +35,7 @@ export class CustomerDashboardComponent{
   }
 
   viewPolicies(): void {
-    this.router.navigate(['/view-policies'],{state:{customerId:this.customerId}});
+    this.router.navigate(['/view-policies'],{state:{customerId:this.customerId,customer:this.customerDets}});
   }
 
   createPolicyAccount(): void {
@@ -103,17 +103,6 @@ export class CustomerDashboardComponent{
   navigateToPolicyOperations(): void {
     this.router.navigate(['/policy-operations'],{state:{customerId:this.customerId}});
   }
-
-  // displayPolicies(): void {
-  //   this.customerService.getPolicies().subscribe(
-  //     (response) => {
-  //       console.log('Policies retrieved successfully:', response);
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching policies:', error);
-  //     }
-  //   );
-  // }
 
   getTransactionHistory(): void {
     this.router.navigate(['/transaction-history'],{state:{customerId:this.customerId}});

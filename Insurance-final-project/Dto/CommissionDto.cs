@@ -14,6 +14,7 @@ namespace Insurance_final_project.Dto
 
         [Required(ErrorMessage = "Agent ID is required.")]
         public Guid AgentId { get; set; }
+        public string AgentName { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "Amount cannot be negative.")]
         public double Amount { get; set; }
@@ -23,5 +24,6 @@ namespace Insurance_final_project.Dto
 
         [Required(ErrorMessage = "Policy Account ID is required.")]
         public Guid PolicyAccountId { get; set; }
+        public string policyName { get;set; }
     }
 }

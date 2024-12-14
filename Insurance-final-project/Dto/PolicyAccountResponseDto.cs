@@ -56,6 +56,10 @@ namespace Insurance_final_project.Dto
         public double? AgentCommission { get; set; } = 0;
         public List<PolicyAccountDocument>? AccountDocuments { get; set; }
 
+        //[Required(ErrorMessage = "Document is required is required.")]
+        //[MaxLength(100, ErrorMessage = "Document can be of max 100 characters")]
+        //public string RequiredDocuments { get; set; }
+
         [Required(ErrorMessage = "Approval status is required")]
 
         public string IsApproved { get; set; }

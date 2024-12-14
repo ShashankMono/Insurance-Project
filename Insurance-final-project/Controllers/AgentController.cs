@@ -46,7 +46,7 @@ namespace Insurance_final_project.Controllers
         [HttpGet("{id}/commission")]
         public IActionResult ViewTotalCommission(Guid id)
         {
-            var commission = _agentService.ViewTotalCommission(id);
+            var commission = _agentService.ViewEarnedCommission(id);
 
             return Ok(new
             {

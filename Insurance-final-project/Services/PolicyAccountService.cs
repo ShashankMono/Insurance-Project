@@ -41,6 +41,7 @@ namespace Insurance_final_project.Services
         {
             return _Mapper.Map<PolicyAccount, PolicyAccountResponseDto>(_PolicyAccountRepo.GetAll()
                 .Include(p => p.Policy)
+                .Include(pa => pa.Customer)
                 .FirstOrDefault(p => p.Id == policyAccountId)
                 );
         }

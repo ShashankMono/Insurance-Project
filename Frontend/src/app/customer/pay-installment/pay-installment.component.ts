@@ -15,6 +15,7 @@ export class PayInstallmentComponent implements OnInit {
   policyAccountId:any=""
   installments:any=""
   policyName:any=""
+  customerId:any=""
 
   constructor(private dashboardService: CustomerDashboardService, private PolicyAccountService:PolicyAccountService ) {
     this.policyAccountId=history.state.policyAccountId;
@@ -62,7 +63,7 @@ export class PayInstallmentComponent implements OnInit {
     var obj = {
       policyName:this.policyName,
       amount:Amount,
-      successUrl:"http://localhost:4200/Success?id="+id,
+      successUrl:"http://localhost:4200/Success?id="+id+"&customerId="+this.customerId,
       cancelUrl:"http://localhost:4200/Cancel"
     }
 

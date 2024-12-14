@@ -24,6 +24,7 @@ export class AgentDashboardComponent {
     this.agentService.getAgentByUserId(userId).subscribe({
       next:(response)=>{
         this.agent=response.data.result;
+        console.log(response);
       },
       error:()=>{
         alert("Invalid Agent!");
@@ -33,23 +34,26 @@ export class AgentDashboardComponent {
   }
 
   goToMarketing() {
-    this.router.navigate(['/agent-view/marketing'], { relativeTo: this.router.routerState.root , state:{agentId:this.agent.agentId,agentName:this.agent.firstName}});
+    this.router.navigate(['/agent-view/marketing'], 
+      { relativeTo: this.router.routerState.root ,
+         state:{agentId:this.agent.agentId,
+          agentName:this.agent.firstName}});
   }
 
   viewPolicyAccounts() {
-    this.router.navigate(['/agent-view/policy-accounts-view'], { relativeTo: this.router.routerState.root });
+    this.router.navigate(['/agent-view/policy-accounts-view'], { relativeTo: this.router.routerState.root , state:{agentId:this.agent.agentId}});
   }
 
   viewCommissions() {
-    this.router.navigate(['/agent-view/commissions'], { relativeTo: this.router.routerState.root });
+    this.router.navigate(['/agent-view/commissions'], { relativeTo: this.router.routerState.root ,state:{agentId:this.agent.agentId}});
   }
 
   withdrawCommission() {
-    this.router.navigate(['/agent-view/withdraw-commission'], { relativeTo: this.router.routerState.root });
+    this.router.navigate(['/agent-view/withdraw-commission'], { relativeTo: this.router.routerState.root , state:{agentId:this.agent.agentId}});
   }
 
   viewWithdrawalHistory() {
-    this.router.navigate(['/agent-view/withdrawal-history'], { relativeTo: this.router.routerState.root });
+    this.router.navigate(['/agent-view/withdrawal-history'], { relativeTo: this.router.routerState.root ,  state:{agentId:this.agent.agentId}});
   }
 
   viewProfile() {
@@ -61,6 +65,9 @@ export class AgentDashboardComponent {
   }
 
   viewPolicySchemes() {
-    this.router.navigate(['/agent-view/policy-schemes'], { relativeTo: this.router.routerState.root });
+    this.router.navigate(['/agent-view/policy-schemes'],
+       { relativeTo: this.router.routerState.root ,
+        state:{agent:this.agent}
+       });
   }
 }

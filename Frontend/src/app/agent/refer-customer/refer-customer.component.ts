@@ -14,20 +14,16 @@ export class ReferCustomerComponent {
   filteredCustomers: any[] = [];
   searchTerm: string = '';
   errorMessage: string = '';
-  policyId:any="";
-  agentId:any="";
-  policyName:any="";
-agentName:any="";
+  policy:any="";
+  agent:any="";
 
   constructor(private customerService: CustomerDashboardService,
     private emailService: MailService,
   ) {}
 
   ngOnInit(): void {
-    this.policyId = history.state.policyId;
-    this.agentId = history.state.agentId;
-    this.policyName=history.state.policyName;
-    this.agentName=history.state.agentName;
+    this.policy = history.state.policy;
+    this.agent = history.state.agent;
     this.loadCustomers();
   }
 
@@ -58,9 +54,9 @@ agentName:any="";
 
     var obj={
       customerId:customerId,
-      agentName:this.agentName,
-      policyName:this.policyName,
-      url:`http://localhost:4200/customer-dashboard/policy-agent?policyId=${this.policyId}&agentId=${this.agentId}`
+      agentName:this.agent.firstName + " " + this.agent.lastName ,
+      policyName:this.policy.name,
+      url:`http://localhost:4200/customer-dashboard/policy-agent?policyId=${this.policy.id}&agentId=${this.agent.agentId}`
     }
     console.log(obj);
     this.emailService.sendMarketingMail(obj).subscribe({

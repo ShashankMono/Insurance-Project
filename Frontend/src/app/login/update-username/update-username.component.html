@@ -1,18 +1,59 @@
-<div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card p-4 shadow-sm" style="width: 100%; max-width: 400px;">
-      <h1 class="text-center mb-4">Update Username</h1>
-      <form [formGroup]="updateUsernameForm" (ngSubmit)="updateUsername()">
-        <div>
-          <label for="newUsername">New Username</label>
-          <input id="newUsername" formControlName="newUsername" />
-        </div>
-        <div>
-          <label for="confirmUsername">Confirm Username</label>
-          <input id="confirmUsername" formControlName="confirmUsername" />
-        </div>
-        <button type="submit">Update Username</button>
-      </form>
+<div class="container py-5">
+    <h2 class="text-center mb-4">Welcome, {{ user?.username }}</h2>
+  
+    <div class="card mx-auto" style="max-width: 500px;">
+      <div class="card-body">
+        <h4 class="card-title text-center mb-4">Update Username</h4>
+        <form [formGroup]="updateUsernameForm" (ngSubmit)="onSubmit()">
+          <div class="form-group mb-3">
+            <label for="newUsername">New Username <span class="text-danger">*</span>:</label>
+            <input
+              type="text"
+              id="newUsername"
+              class="form-control"
+              formControlName="newUsername"
+              placeholder="Enter new username"
+            />
+            <div
+              *ngIf="
+                updateUsernameForm.get('newUsername')?.invalid &&
+                updateUsernameForm.get('newUsername')?.touched
+              "
+              class="text-danger"
+            >
+              New username is required and must not exceed 100 characters.
+            </div>
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="oldPassword">current Password <span class="text-danger">*</span>:</label>
+            <input
+              type="password"
+              id="oldPassword"
+              class="form-control"
+              formControlName="oldPassword"
+              placeholder="Enter your current password"
+            />
+            <div
+              *ngIf="
+                updateUsernameForm.get('oldPassword')?.invalid &&
+                updateUsernameForm.get('oldPassword')?.touched
+              "
+              class="text-danger"
+            >
+              Password is required and must be at least 6 characters long.
+            </div>
+          </div>
+  
+          <button
+            type="submit"
+            class="btn btn-primary w-100"
+            [disabled]="updateUsernameForm.invalid"
+          >
+            Update Username
+          </button>
+        </form>
+      </div>
     </div>
-</div>
-
+  </div>
   

@@ -21,7 +21,9 @@ export class AgentDashboardService {
   getAgentCommissionReport(agentId: any): Observable<any> {
     return this.http.get(`${this.url}/Commission/${agentId}`);
   }
-  
+  getAgentEarnedCommissionAmount(agentId:any):Observable<any>{
+    return this.http.get(`${this.url}/agent/${agentId}/commission`);
+  }
   getCommissionWithdrawals(agentId: any): Observable<any> {
     return this.http.get(`${this.url}/CommissionWithdrawal/${agentId}`);
   }

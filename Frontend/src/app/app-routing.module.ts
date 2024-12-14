@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginDashboardComponent } from './login/login-dashboard/login-dashboard.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { UsernameComponent } from './login/update-username/update-username.component';
-import { PasswordComponent } from './login/update-password/update-password.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -76,6 +74,8 @@ import { viewport } from '@popperjs/core';
 import { ViewReportComponent } from './employee/view-report/view-report.component';
 import { CustomersReportComponent } from './employee/customers-report/customers-report.component';
 import { ViewPolicyInstallmentComponent } from './employee/view-policy-installment/view-policy-installment.component';
+import { UpdateUsernameComponent } from './login/update-username/update-username.component';
+import { UpdateUserpasswordComponent } from './login/update-userpassword/update-userpassword.component';
 
 const routes: Routes = [
   { 
@@ -98,14 +98,6 @@ const routes: Routes = [
   { 
     path: 'login-dashboard', 
     component: LoginDashboardComponent 
-  },
-  { 
-    path: 'update-username', 
-    component: UsernameComponent 
-  },
-  { 
-    path: 'update-password', 
-    component: PasswordComponent 
   },
   {
     path: 'admin-view',
@@ -275,11 +267,13 @@ const routes: Routes = [
     children:[
       {
         path:'',
-        component:EmployeeDashboardComponent
+        component:EmployeeDashboardComponent,
+        pathMatch:'full'
       },
       {
         path:'approve-customer',
         component:ApproveCustomerComponent
+        
       },
       {
         path:'approve-document',
@@ -308,8 +302,24 @@ const routes: Routes = [
       {
         path:'view-policy-installment',
         component:ViewPolicyInstallmentComponent
-      }
+      },
     ]
+  },
+  {
+    path:'change-username',
+    component:UpdateUsernameComponent,
+    canActivate:[AuthGuard],
+    data:{
+      role:['Employee','Admin','Customer','Agent']
+    },
+  },
+  {
+    path:'change-password',
+    component:UpdateUserpasswordComponent,
+    canActivate:[AuthGuard],
+    data:{
+      role:['Employee','Admin','Customer','Agent']
+    },
   },
   {
     path:'user-registration',

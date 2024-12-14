@@ -24,9 +24,6 @@ export class CustomerDashboardService {
     return this.http.post(`${this.url}/PolicyAccount`, policyAccount);
   }
 
-  uploadFile(fileData: FormData) {
-    return this.http.post<any>(`${this.url}/FileUpload`, fileData);
-  }
   
   saveDocument(documentData: any) {
     return this.http.post<any>(`${this.url}/PolicyAccountDocument`, documentData);
@@ -111,7 +108,7 @@ export class CustomerDashboardService {
   }
 
   updateCustomerStatus(data:any):Observable<any>{
-    return this.http.post<any>(`${this.url}/Cutomer/approve`,data);
+    return this.http.post<any>(`${this.url}/Customer/approve`,data);
   }
 
   getTransactionHistory(customerId: string): Observable<any> {

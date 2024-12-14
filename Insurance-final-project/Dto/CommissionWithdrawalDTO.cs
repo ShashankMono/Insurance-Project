@@ -14,5 +14,7 @@ namespace Insurance_final_project.Dto
 
         [Required(ErrorMessage = "Agent ID is required.")]
         public Guid AgentId { get; set; }
+
+        public DateTime TransactionDate { get; set; }
     }
 }
