@@ -17,7 +17,6 @@ export class AppComponent {
         '/login-dashboard', 
         '/landing-page',
         '/customer-registration',
-        '/policy-operations',
         '/user-registration'
         
         
@@ -28,12 +27,14 @@ export class AppComponent {
       ];
       const isAdminView = this.router.url.startsWith('/admin-view/');
       const isAgentView=this.router.url.startsWith('/agent-view/');
-      const isAgentReport=this.router.url.startsWith('/agent-report/');
+      const isCustomerView=this.router.url.startsWith('/customer-view/');
+      const isEmployeeView=this.router.url.startsWith('/employee-view/');
       this.showHeader = !(
         noHeaderRoutes.includes(this.router.url) 
         || isAgentView
-        || isAgentReport
         || isAdminView
+        || isCustomerView 
+        || isEmployeeView
       );
     });
   }

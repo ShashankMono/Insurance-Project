@@ -57,7 +57,7 @@ export class AgentDashboardComponent {
   }
 
   editProfile() {
-    this.router.navigate(['/agent-view/edit-agent-profile'], { relativeTo: this.router.routerState.root });
+    this.router.navigate(['/agent-view/edit-agent-profile'], { relativeTo: this.router.routerState.root, state:{agentId:this.agent.agentId} });
   }
 
   viewPolicySchemes() {

@@ -1,25 +1,20 @@
-
-<div class="container mt-5">
-  <div *ngIf="agentDetails; else loading">
-    <h2>Agent Profile</h2>
-    <div class="card mt-3">
-      <h4 class="card-title">Details</h4>
-      <table class="table table-bordered mt-2">
-        <tr><th>First Name</th><td>{{ agentDetails.firstName }}</td></tr>
-        <tr><th>Last Name</th><td>{{ agentDetails.lastName }}</td></tr>
-        <tr><th>Qualification</th><td>{{ agentDetails.qualification }}</td></tr>
-        <tr><th>Email</th><td>{{ agentDetails.email }}</td></tr>
-        <tr><th>Mobile No</th><td>{{ agentDetails.mobileNo }}</td></tr>
-        <tr><th>Commission Earned</th><td>{{ agentDetails.commissionEarned }}</td></tr>
-      </table>
+<div class="container mt-4">
+  <div class="card shadow border-primary">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0"><i class="bi bi-person-fill me-2"></i>Agent Profile</h5>
+    </div>
+    <div class="card-body">
+      <div *ngIf="agent; else noData">
+        <p><strong>First Name:</strong> {{ agent.firstName }}</p>
+        <p><strong>Last Name:</strong> {{ agent.lastName }}</p>
+        <p><strong>Qualification:</strong> {{ agent.qualification }}</p>
+        <p><strong>Email:</strong> {{ agent.email }}</p>
+        <p><strong>Mobile Number:</strong> {{ agent.mobileNo }}</p>
+        <p><strong>Commission Earned:</strong> {{ agent.commissionEarned | currency }}</p>
+      </div>
+      <ng-template #noData>
+        <p>No profile data available.</p>
+      </ng-template>
     </div>
   </div>
-
-  <ng-template #loading>
-    <div class="text-center">
-      <div class="spinner-border text-primary" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div>
-  </ng-template>
 </div>

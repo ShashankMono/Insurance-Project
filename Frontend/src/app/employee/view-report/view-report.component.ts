@@ -79,7 +79,7 @@ export class ViewReportComponent {
   }
 
   viewInstallments(policyAccountId:any){
-    this.router.navigate(['/employee-dashboard/view-policy-installment'],{state:{policyAccountId}})
+    this.router.navigate(['/employee-view/view-policy-installment'],{state:{policyAccountId}})
   }
 
 }

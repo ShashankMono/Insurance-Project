@@ -87,7 +87,7 @@ export class ViewAllPoliciesComponent implements OnInit {
 
   buyPolicy(policy: any): void {
     if(localStorage.getItem('userId') != null){
-      this.router.navigate(['/create-policy-account'],{state:
+      this.router.navigate(['/customer-view/create-policy-account'],{state:
         {customerId:this.customerId,
         PolicyData:policy,
         PolicyTerm:this.policyTerm,

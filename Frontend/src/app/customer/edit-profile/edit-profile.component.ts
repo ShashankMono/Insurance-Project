@@ -78,7 +78,7 @@ export class EditProfileComponent implements OnInit {
       this.customerService.updateCustomerDetails(this.editProfileForm.value).subscribe({
         next: (response) => {
           alert('Profile updated successfully!');
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/customer/view']);
         },
         error: (err) => {
           console.error('Error updating profile', err);

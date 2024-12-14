@@ -45,7 +45,7 @@ export class PolicyOperationsComponent {
   }
  
   payInstallment(policyAccountId: string, policyName:string): void {
-    this.router.navigate(['/pay-installment'], {state:{policyAccountId,policyName}});
+    this.router.navigate(['/customer-view/pay-installment'], {state:{policyAccountId,policyName}});
   }
 
   cancelPolicy(policyAccountId: string): void {
@@ -63,9 +63,9 @@ export class PolicyOperationsComponent {
   }
 
   claimPolicy(policyAccountId: string): void {
-    this.router.navigate(['/claim-policy', policyAccountId]);
+    this.router.navigate(['/customer-view/claim-policy', policyAccountId]);
   }
   manageDocuments(policyAccountId: string): void {
-    this.router.navigate(['/policy-account-documents', policyAccountId]);
+    this.router.navigate(['/customer-view/policy-account-documents', policyAccountId]);
   }
 }

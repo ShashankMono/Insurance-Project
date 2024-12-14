@@ -1,0 +1,10 @@
+
+.navbar-nav .dropdown:hover > .dropdown-menu {
+    display: block;
+    margin-top: 0; 
+}
+  
+.navbar-nav .dropdown-menu {
+    transition: all 0.3s ease-in-out;
+}
+  

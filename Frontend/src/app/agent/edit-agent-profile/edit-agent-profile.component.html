@@ -1,0 +1,52 @@
+<div class="container mt-4">
+    <div class="card shadow border-primary">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="bi bi-pencil-fill me-2"></i>Edit Agent Profile</h5>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="onSubmit()" [formGroup]="agentForm">
+          <div class="mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName" formControlName="firstName">
+            <div *ngIf="agentForm.get('firstName')?.invalid && agentForm.get('firstName')?.touched" class="text-danger">
+              First Name is required.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastName" formControlName="lastName">
+            <div *ngIf="agentForm.get('lastName')?.invalid && agentForm.get('lastName')?.touched" class="text-danger">
+              Last Name is required.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="qualification" class="form-label">Qualification</label>
+            <input type="text" class="form-control" id="qualification" formControlName="qualification">
+            <div *ngIf="agentForm.get('qualification')?.invalid && agentForm.get('qualification')?.touched" class="text-danger">
+              Qualification is required.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" formControlName="email">
+            <div *ngIf="agentForm.get('email')?.invalid && agentForm.get('email')?.touched" class="text-danger">
+              <div *ngIf="agentForm.get('email')?.hasError('required')">Email is required.</div>
+              <div *ngIf="agentForm.get('email')?.hasError('email')">Please enter a valid email.</div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="mobileNo" class="form-label">Mobile Number</label>
+            <input type="text" class="form-control" id="mobileNo" formControlName="mobileNo">
+            <div *ngIf="agentForm.get('mobileNo')?.invalid && agentForm.get('mobileNo')?.touched" class="text-danger">
+              <div *ngIf="agentForm.get('mobileNo')?.hasError('required')">Mobile Number is required.</div>
+              <div *ngIf="agentForm.get('mobileNo')?.hasError('pattern')">Please enter a valid 10-digit mobile number.</div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary w-100" [disabled]="!agentForm.valid">
+            <i class="bi bi-check me-2"></i>Update Profile
+          </button>
+        </form>
+      </div>
+    </div>
+</div>
+  

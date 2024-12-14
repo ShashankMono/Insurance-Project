@@ -186,11 +186,11 @@ const routes: Routes = [
         path: 'view-policies', 
         component: ViewPoliciesComponent
       },
-      {
-        path:'transaction-history',
-        component:TransactionHistoryComponent
-      }
       
+      {
+        path: 'agent-report/:id', 
+        component: AgentReportComponent 
+      },
     ]
   },
   
@@ -248,9 +248,8 @@ const routes: Routes = [
     ]
   },
 
-  
   {
-    path: 'customer-dashboard',
+    path: 'customer-view',
     component: CustomerViewComponent,
     canActivate: [AuthGuard],
     data: {
@@ -259,17 +258,91 @@ const routes: Routes = [
     children:[
       {
         path:'',
-        component:CustomerDashboardComponent
+        component:CustomerDashboardComponent,
+        pathMatch:'full'
       },
       {
         path:'policy-agent',
         component:BuyPolicyAgentComponent
-      }
+      },
+      {
+        path: 'view-policies',
+        component: ViewAllPoliciesComponent
+      },
+      
+      {
+        path: 'create-policy-account',
+        component: PolicyAccountComponent
+      },
+      
+      { 
+        path: 'claim-policy/:customerId', 
+        component: AddClaimComponent
+      },
+      
+      { 
+        path: 'cancel-policy/:customerId', 
+        component: CancelPolicyComponent
+      },
+      {
+        path: 'pay-installment',
+        component: PayInstallmentComponent
+      },
+      { 
+        path: 'view-profile/:userId', 
+        component: ViewProfileComponent 
+      },
+      { 
+        path: 'edit-profile', 
+        component: EditProfileComponent
+      },
+      { 
+        path: 'add-nominee/:customerId', 
+        component: AddNomineeComponent
+      },
+      { 
+        path: 'view-nominee/:customerId', 
+        component: ViewNomineesComponent
+      },
+      { 
+        path: 'add-query/:customerId',
+        component: AddQueryComponent 
+      },
+      { 
+        path: 'view-queries/:customerId', 
+        component: ViewQueryComponent 
+      },
+  
+      {
+        path: 'policy-operations',
+        component: PolicyOperationsComponent
+      },
+      {
+        path: 'transaction-history',
+        component: TransactionHistoryComponent
+      },
+      {
+        path: 'withdraw-claim',
+        component: WithdrawClaimComponent
+      },
+      {
+        path:'customer-documents/:customerId',
+        component:CustomerDocumentsComponent
+      },
+      {
+        path:'policy-account-documents/:policyAccountId',
+        component:PolicyAccountDocumentsComponent
+      },
+      {
+        path: 'policy-account-documents/update/:documentId', 
+        component: UpdatePolicyAccountDocumentComponent   
+      },
+      
     ]
   },
   
   {
-    path:'employee-dashboard',
+    path:'employee-view',
     component:EmployeeViewComponent,
     canActivate:[AuthGuard],
     data:{
@@ -278,7 +351,8 @@ const routes: Routes = [
     children:[
       {
         path:'',
-        component:EmployeeDashboardComponent
+        component:EmployeeDashboardComponent,
+        pathMatch:'full'
       },
       {
         path:'approve-customer',
@@ -312,90 +386,27 @@ const routes: Routes = [
         path:'view-policy-installment',
         component:ViewPolicyInstallmentComponent
       }
+      
     ]
   },
   {
     path:'user-registration',
     component:UserRegistrationComponent
   },
-  {
-    path:'view-policies',
-    component:ViewAllPoliciesComponent
-  },
+  
   {
     path: 'customer-registration', 
     component: CustomerRegistrationComponent 
   },
   
   
-  { 
-    path: 'create-policy-account/:policyId', 
-    component: PolicyAccountComponent 
-  },
-  {
-    path:'create-policy-account',
-    component:PolicyAccountComponent
-  },
-  { 
-    path: 'cancel-policy/:customerId', 
-    component: CancelPolicyComponent
-  },
-  { 
-    path: 'claim-policy/:customerId', 
-    component: AddClaimComponent
-  },
-  { 
-    path: 'pay-installment', 
-    component: PayInstallmentComponent
-  },
-  { 
-    path: 'view-profile/:userId', 
-    component: ViewProfileComponent 
-  },
-  { 
-    path: 'edit-profile', 
-    component: EditProfileComponent
-  },
-  { 
-    path: 'add-nominee/:customerId', 
-    component: AddNomineeComponent
-  },
-  { 
-    path: 'view-nominee/:customerId', 
-    component: ViewNomineesComponent
-  },
-  { path: 'add-query/:customerId', component: AddQueryComponent },
-  { path: 'view-queries/:customerId', component: ViewQueryComponent },
   
-  { 
-    path: 'transaction-history', 
-    component: TransactionHistoryComponent
-  },
-  { 
-    path: 'withdraw-claim', 
-    component: WithdrawClaimComponent 
-  },
-  {
-    path:'policy-operations',
-    component:PolicyOperationsComponent
-  },
-  {
-    path:'customer-documents/:customerId',
-    component:CustomerDocumentsComponent
-  },
-  {
-    path:'policy-account-documents/:policyAccountId',
-    component:PolicyAccountDocumentsComponent
-  },
-  {
-    path: 'policy-account-documents/update/:documentId', 
-    component: UpdatePolicyAccountDocumentComponent   
-  },
 
-  {
-    path: 'agent-report/:id', 
-    component: AgentReportComponent 
-  }
+
+
+  //customer remaining routes
+  
+  
 ];
 
 @NgModule({

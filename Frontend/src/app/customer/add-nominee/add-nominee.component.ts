@@ -41,7 +41,7 @@ export class AddNomineeComponent {
       }
       this.customerService.addNominee(obj).subscribe({
         next:(response) => {
-          this.router.navigate(['/customer-dashboard']);
+          this.router.navigate(['/customer-view']);
         },
         error:(error) => {
           console.error(error);

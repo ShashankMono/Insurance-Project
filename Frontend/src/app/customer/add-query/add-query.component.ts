@@ -35,7 +35,7 @@ export class AddQueryComponent{
   
       this.customerService.addQuery(queryData).subscribe({
         next: (response) => {
-          this.router.navigate(['/customer-dashboard']);
+          this.router.navigate(['/customer-view']);
         },
         error: (error) => {
           console.error(error);
