@@ -6,6 +6,7 @@ using Insurance_final_project.Repositories;
 using Insurance_final_project.Models;
 using Insurance_final_project.Exceptions;
 using CloudinaryDotNet.Actions;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Insurance_final_project.Services
@@ -15,15 +16,19 @@ namespace Insurance_final_project.Services
         private readonly IConfiguration _configuration;
         private readonly IRepository<Customer> _customerRepo;
         private readonly IRepository<Agent> _agentRepo;
+        private readonly IRepository<PolicyAccount> _policyAccountRepo;
         public EmailService(IConfiguration config,
             IRepository<Customer> customerRepo,
-            IRepository<Agent> agentRepo
+            IRepository<Agent> agentRepo,
+            IRepository<PolicyAccount> policyAccountRepo
             )
         {
             _configuration = config;
             _customerRepo = customerRepo;
             _agentRepo = agentRepo;
+            _policyAccountRepo = policyAccountRepo;
         }
+
 
         public SmtpClient CreateClient()
         {
@@ -107,7 +112,7 @@ namespace Insurance_final_project.Services
 
         public void CommissionWithdrawalMail(Guid agentId, double amount)
         { 
-            var agent = _agentRepo.Get(agentId);
+            var agent = _agentRepo.GetAll().AsNoTracking().FirstOrDefault(a=>a.AgentId == agentId);
             if (agent == null)
             {
                 throw new InvalidGuidException("Agent not found");
@@ -129,5 +134,48 @@ namespace Insurance_final_project.Services
             client.Send(mailMessage);
         }
 
+
+        public void ClaimWithdrawalMail(Guid policyAccountId)
+        {
+            var account = _policyAccountRepo.GetAll().AsNoTracking().Include(pa=>pa.Customer).FirstOrDefault(pa=>pa.Id == policyAccountId);
+            if (account == null)
+            {
+                throw new PolicyAccountNotFountException("Account not found!");
+            }
+
+            var client = CreateClient();
+
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress(_configuration.GetValue<string>("EmailSetting:Email"));
+            mailMessage.To.Add(account.Customer.EmailId);
+            mailMessage.Subject = $"Claim Withdrawal successfull";
+            mailMessage.IsBodyHtml = true;
+            StringBuilder mailBody = new StringBuilder();
+            mailBody.AppendFormat($"<h1>Claim amount {account.CoverageAmount} has been withdrwal successfully! and transfered to you account</h1>");
+            mailBody.AppendFormat("<br />");
+            mailBody.AppendFormat("<p>Thank you</p>");
+            mailMessage.Body = mailBody.ToString();
+
+            client.Send(mailMessage);
+        }
+
+        public void ApprovalOrVrifiedMail(string mail,string subject,string message)
+        {
+
+            var client = CreateClient();
+
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress(_configuration.GetValue<string>("EmailSetting:Email"));
+            mailMessage.To.Add(mail);
+            mailMessage.Subject = subject;
+            mailMessage.IsBodyHtml = true;
+            StringBuilder mailBody = new StringBuilder();
+            mailBody.AppendFormat($"<h2>{message}</h2>");
+            mailBody.AppendFormat("<br />");
+            mailBody.AppendFormat("<p>Thank you</p>");
+            mailMessage.Body = mailBody.ToString();
+
+            client.Send(mailMessage);
+        }
     }
 }

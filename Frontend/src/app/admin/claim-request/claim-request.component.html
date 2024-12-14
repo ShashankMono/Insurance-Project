@@ -1,0 +1,88 @@
+<div class="container mt-5">
+    <h2 class="text-center">Claim Requests</h2>
+  
+    <div *ngIf="claimRequests.length > 0; else noClaims">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Sr. No.</th>
+            <th>Policy Name</th>
+            <th>Claim Description</th>
+            <th>Status</th>
+            <th>Request Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let claim of claimRequests; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ claim.policyName }}</td>
+            <td>{{ claim.claimDescription }}</td>
+            <td>{{ claim.approvedStatus }}</td>
+            <td>{{ claim.dateAndTime | date: 'short' }}</td>
+            <td>
+              <button
+                class="btn btn-success btn-sm"
+                (click)="changeClaimStatus({ id: claim.id, status: 'Approved', reason: '' })"
+                [disabled]="claim.approvedStatus === 'Approved' || claim.approvedStatus === 'Rejected'"
+              >
+                Approve
+              </button>
+  
+              <button
+                class="btn btn-danger btn-sm mx-2"
+                (click)="openRejectionModal(claim.id)"
+                [disabled]="claim.approvedStatus === 'Rejected' || claim.approvedStatus === 'Approved'"
+              >
+                Reject
+              </button>
+  
+              <button
+                class="btn btn-primary btn-sm"
+                (click)="viewInstallments(claim.policyAccountId)"
+              >
+                Installments
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <ng-template #noClaims>
+      <p class="text-center text-muted">No claims available.</p>
+    </ng-template>
+  
+    <div *ngIf="isRejectionModalOpen" class="modal show" style="display: block;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Rejection Reason</h5>
+            <button type="button" class="btn-close" (click)="closeRejectionModal()"></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="rejectionForm" (ngSubmit)="submitRejectionReason()">
+              <div class="mb-3">
+                <label for="rejectionReason" class="form-label">Reason</label>
+                <textarea
+                  id="rejectionReason"
+                  class="form-control"
+                  formControlName="reason"
+                  rows="4"
+                  placeholder="Enter rejection reason"
+                ></textarea>
+                <div *ngIf="rejectionForm.get('reason')?.invalid && rejectionForm.get('reason')?.touched" class="text-danger">
+                  Rejection reason is required.
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-danger" [disabled]="rejectionForm.invalid">Submit</button>
+                <button type="button" class="btn btn-secondary" (click)="closeRejectionModal()">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

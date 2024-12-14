@@ -37,13 +37,6 @@ export class CustomerDashboardService {
     return this.http.get<any>(`${this.url}/PolicyCancel/${customerId}`);
   }
 
-  claimPolicy(policyAccountId: string, claimData: any): Observable<any> {
-    return this.http.post<any>(
-      `${this.url}/PolicyAccount/claim/${policyAccountId}`,
-      claimData
-    );
-  }
-
   payInstallment(installmentId: string, customerId: string): Observable<any> {
     return this.http.put<any>(
       `${this.url}/PolicyInstallment/pay/${installmentId}`,

@@ -63,7 +63,11 @@ export class PolicyOperationsComponent {
   }
 
   claimPolicy(policyAccountId: string): void {
-    this.router.navigate(['/claim-policy', policyAccountId]);
+    console.log(policyAccountId);
+    this.router.navigate(['/claim-policy'],
+      {state:{customerId:this.customerId,
+        policyAccountId:policyAccountId
+      }});
   }
   manageDocuments(policyAccountId: string): void {
     this.router.navigate(['/policy-account-documents', policyAccountId]);

@@ -6,7 +6,8 @@ namespace Insurance_final_project.Services
     {
         Task<List<ClaimDto>> GetClaimAccounts();
         Task<Guid> ClaimApproval(ApprovalDto claim);
-        public Task<Guid> AddClaimPolicy(Guid policyAccountId, ClaimDto claimDto);
+        public Task<Guid> AddClaimPolicy( ClaimDto claimDto);
         public Task<Guid> CLaimWithdrawal(ClaimDto claimDto);
+        public Task<List<ClaimDto>> GetClaimByCustomerId(Guid customerId);
     }
 }
