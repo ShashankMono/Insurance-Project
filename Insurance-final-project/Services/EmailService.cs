@@ -7,6 +7,7 @@ using Insurance_final_project.Models;
 using Insurance_final_project.Exceptions;
 using CloudinaryDotNet.Actions;
 
+
 namespace Insurance_final_project.Services
 {
     public class EmailService : IEmailService
@@ -55,8 +56,8 @@ namespace Insurance_final_project.Services
 
         public void SendMarketingMail(MarketingDto info)
         {
-            var customer = _customerRepo.Get(info.CustomerId);
-            if(customer == null)
+            var customer = _customerRepo.GetAll().FirstOrDefault(c => c.CustomerId == info.CustomerId);
+            if (customer == null)
             {
                 throw new InvalidGuidException("Customer not found");
             }
@@ -82,7 +83,7 @@ namespace Insurance_final_project.Services
         }
         public void RejectionMail(Guid customerId,string reason,string subject)
         {
-            var customer = _customerRepo.Get(customerId);
+            var customer = _customerRepo.GetAll().FirstOrDefault(c=>c.CustomerId==customerId);
             if (customer == null)
             {
                 throw new InvalidGuidException("Customer not found");
