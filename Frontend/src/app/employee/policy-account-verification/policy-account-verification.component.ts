@@ -17,6 +17,13 @@ export class PolicyAccountVerificationComponent {
   isRejectionModalOpen: boolean = false;
   rejectionForm!: FormGroup;
   rejectingPolicyId: string | null = null;
+  currentPage: number = 1;
+  pageSize: number = 3; 
+  totalPages: number = 1; 
+  totalRecords: number = 0; 
+  searchText:string = '';
+  private typingTimer: any; 
+  private debounceTime = 1000;
 
   constructor(private policyService: PolicyAccountService
     ,private installmentService: InstallmentService
@@ -31,14 +38,43 @@ export class PolicyAccountVerificationComponent {
   }
 
   loadPolicies(): void {
-    this.policyService.getPolicyAccounts().subscribe({
+
+    this.policyService.getPolicyAccounts(this.currentPage,this.pageSize,this.searchText).subscribe({
       next: (response) => {
         if (response.success) {
-          this.policies = response.data;
+          this.policies = response.data; 
+          this.totalRecords = response.totalItems; 
+          this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
         }
       },
-      error: (err) => console.error('Error loading policies:', err),
+      error: (err) => {
+        if(err.error.exceptionMessage){
+          alert(err.error.exceptionMessage)
+        }else{
+          alert("Error occured while loding the data");
+        }
+        console.error('Error loading policies:', err)}
     });
+  }
+
+  onInput(event: Event): void {
+    clearTimeout(this.typingTimer); // Clear the previous timer
+    const inputValue = (event.target as HTMLInputElement).value;
+
+    this.typingTimer = setTimeout(() => {
+      this.Search(inputValue); // Execute the function after delay
+    }, this.debounceTime);
+  }
+  Search(value:any){
+    this.searchText = value;
+    this.loadPolicies();
+  }
+
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.loadPolicies();
+    }
   }
 
   openRejectionModal(policyId: string): void {

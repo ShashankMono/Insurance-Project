@@ -5,7 +5,7 @@ namespace Insurance_final_project.Services
     public interface IPolicyAccountService
     {
         public Task<PolicyAccountResponseDto> GetPolicyAccountById(Guid policyAccountId);
-        public Task<List<PolicyAccountResponseDto>> GetAllPolicyAccounts();
+        public Task<List<PolicyAccountResponseDto>> GetAllPolicyAccounts(string seachQuery);
         public Task<Guid> CreatePolicyAccount(PolicyAccountDto policyAccountDto);
         public Task<List<PolicyAccountResponseDto>> GetPolicyAccountsByAgent(Guid agentId);
         public Task<List<PolicyAccountResponseDto>> GetPoliciesByCustomer(Guid customerId);

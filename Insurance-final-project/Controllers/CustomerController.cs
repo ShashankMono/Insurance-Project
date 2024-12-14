@@ -1,4 +1,6 @@
 ﻿using Insurance_final_project.Dto;
+using Insurance_final_project.Models;
+using Insurance_final_project.PagingFiles;
 using Insurance_final_project.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -135,14 +137,21 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCustomerAccounts()
+        public async Task<IActionResult> GetCustomerAccounts([FromQuery] PageParameters pageParameter,
+            [FromQuery] string? searchQuery)
         {
-            var customers = await _customerService.GetCustomerAccounts();
+            var customers = await _customerService.GetCustomerAccounts(searchQuery);
+
+            var pagedData = PageList<CustomerProfileDto>.ToPagedList(customers, pageParameter.PageNumber, pageParameter.PageSize);
 
             return Ok(new
             {
                 Success = true,
-                Data = customers,
+                Data = pagedData,
+                totalItems = pagedData.TotalCount,
+                pageNumber = pagedData.CurrentPage,
+                pagesize = pagedData.PageSize,
+                totalPages = pagedData.TotalPages,
                 Message = "Customers and their accounts retrieved successfully."
             });
         }

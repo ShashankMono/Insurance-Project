@@ -8,7 +8,7 @@ namespace Insurance_final_project.Services
         public CustomerProfileDto GetCustomerByUserId(Guid UserId);
         public bool UpdateProfile(CustomerDto customerDto);
         public CustomerDto RegisterCustomer(CustomerDto customerDto);
-        public Task<List<CustomerProfileDto>> GetCustomerAccounts();
+        public Task<List<CustomerProfileDto>> GetCustomerAccounts(string searchQuery);
         public bool ApproveCustomer(ApprovalDto approval);
     }
 

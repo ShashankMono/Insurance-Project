@@ -5,6 +5,7 @@ using Insurance_final_project.Exceptions;
 using Insurance_final_project.Models;
 using Insurance_final_project.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Permissions;
 
 namespace Insurance_final_project.Services
 {
@@ -37,6 +38,8 @@ namespace Insurance_final_project.Services
             _emailService = emailService;
         }
 
+
+
         public async Task<PolicyAccountResponseDto> GetPolicyAccountById(Guid policyAccountId)
         {
             return _Mapper.Map<PolicyAccount, PolicyAccountResponseDto>(_PolicyAccountRepo.GetAll()
@@ -46,13 +49,25 @@ namespace Insurance_final_project.Services
                 );
         }
 
-        public async Task<List<PolicyAccountResponseDto>> GetAllPolicyAccounts()
+        public async Task<List<PolicyAccountResponseDto>> GetAllPolicyAccounts(string searchQuery)
         {
-            return _Mapper.Map<List<PolicyAccount>, List<PolicyAccountResponseDto>>(_PolicyAccountRepo.GetAll()
-                .Include(pa => pa.Policy)
-                .Include(pa => pa.Customer)
-                .Include(pa => pa.Agent)
-                .ToList());
+            var query = _PolicyAccountRepo.GetAll()
+                 .Include(pa => pa.Policy)
+                 .Include(pa => pa.Customer)
+                 .Include(pa => pa.Agent)
+                 .OrderByDescending(p => p.Id)
+                 .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                query = query.Where(pa => pa.Policy.Name.ToLower() == searchQuery.ToLower() ||
+                    (pa.Customer.FirstName + " " + pa.Customer.LastName).ToLower() == searchQuery.ToLower() ||
+                    pa.Status.ToLower() == searchQuery.ToLower() ||
+                    pa.IsApproved.ToLower() == searchQuery.ToLower()
+                     );
+            }
+
+            return _Mapper.Map<List<PolicyAccount>, List<PolicyAccountResponseDto>>(query.ToList());
         }
 
         public async Task<Guid> CreatePolicyAccount(PolicyAccountDto policyAccountDto)
@@ -137,6 +152,7 @@ namespace Insurance_final_project.Services
 
             return _Mapper.Map<List<PolicyAccountResponseDto>>(policyAccounts);
         }
+
 
         public async Task<List<PolicyAccountResponseDto>> GetPoliciesByCustomer(Guid customerId)
         {

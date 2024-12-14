@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -9,8 +9,16 @@ export class PolicyAccountService {
   private url="https://localhost:7258/api/PolicyAccount";
   constructor(private http:HttpClient) { }
 
-  getPolicyAccounts(): Observable<any> {
-    return this.http.get<any >(`${this.url}`);
+  getPolicyAccounts(pageNumber: number, pageSize: number, searchQuery: string): Observable<any> {
+
+    let params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+
+    if (searchQuery) {
+      params = params.set('searchQuery', searchQuery);
+    }
+    return this.http.get<any>(`${this.url}`,{params});
   }
 
   getPolicyAccountsByCustomerId(customerId:any):Observable<any>{

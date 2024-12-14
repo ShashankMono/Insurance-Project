@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Policy } from '../models/policy';
 import { PolicyAccount } from '../models/policy-account';
@@ -122,7 +122,16 @@ export class CustomerDashboardService {
     return this.http.post<any>(`${this.url}/Customer`, customerData);
   }
 
-  getAllCustomers(): Observable<any> {
+  getAllCustomers(pageNumber: number, pageSize: number, searchQuery: string): Observable<any> {
+    console.log(pageSize);
+    let params = new HttpParams()
+          .set('pageNumber', pageNumber.toString())
+          .set('pageSize', pageSize.toString());
+    
+        if (searchQuery) {
+          params = params.set('searchQuery', searchQuery);
+        }
+
     return this.http.get(`${this.url}/Customer`);
   }
 }
