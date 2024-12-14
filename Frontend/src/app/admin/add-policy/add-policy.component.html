@@ -1,111 +1,77 @@
 <div class="container py-5">
-    <h2 class="text-center mb-4">Add Policy Scheme</h2>
-    <form [formGroup]="addPolicyForm" (ngSubmit)="onSubmit()">
-      
-      <div class="form-group mb-3">
-        <label for="name">Policy Scheme <span class="text-danger">*</span>:</label>
-        <input type="text" id="name" class="form-control" formControlName="name" />
-        <div *ngIf="addPolicyForm.get('name')?.invalid && addPolicyForm.get('name')?.touched" class="text-danger">
+  <h2 class="text-center mb-4">Add Policy</h2>
+  <form [formGroup]="addPolicyForm" (ngSubmit)="onSubmit()">
+    <div class="form-group mb-3">
+      <label for="name">Policy Scheme <span class="text-danger">*</span>:</label>
+      <input type="text" id="name" class="form-control" formControlName="name" />
+      <div *ngIf="addPolicyForm.get('name')?.touched">
+        <div *ngIf="addPolicyForm.get('name')?.hasError('required')" class="text-danger">
           Policy Scheme Name is required.
-       </div>
+        </div>
       </div>
-  
-      <div class="form-group mb-3">
-        <label for="description">Scheme Description <span class="text-danger">*</span>:</label>
-        <input type="text" id="description" class="form-control" formControlName="description" />
-        <div *ngIf="addPolicyForm.get('description')?.invalid && addPolicyForm.get('description')?.touched" class="text-danger">
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="description">Scheme Description <span class="text-danger">*</span>:</label>
+      <input type="text" id="description" class="form-control" formControlName="description" />
+      <div *ngIf="addPolicyForm.get('description')?.touched">
+        <div *ngIf="addPolicyForm.get('description')?.hasError('required')" class="text-danger">
           Description is required.
-       </div>
+        </div>
       </div>
-  
-      <div class="form-group mb-3">
-        <label for="imageUrl">Image URL <span class="text-danger">*</span>:</label>
-        <input type="text" id="imageUrl" class="form-control" formControlName="imageUrl" />
-        <div *ngIf="addPolicyForm.get('imageUrl')?.invalid && addPolicyForm.get('imageUrl')?.touched" class="text-danger">
-          Image URL is required.
-       </div>
+    </div>
+
+
+    <div class="mb-3">
+      <label for="fileInput" class="form-label">Upload Document<span class="text-danger">*</span></label>
+      <input
+        type="file"
+        id="fileInput"
+        class="form-control"
+        (change)="onFileSelect($event)"
+        accept=".jpg,.jpeg,.png,.gif,.bmp"
+        formControlName="imageFile"
+      />
+      <div *ngIf="fileError" class="text-danger">{{ fileError }}</div>
+      <div *ngIf="addPolicyForm.get('imageFile')?.touched">
+        <div *ngIf="addPolicyForm.get('imageFile')?.hasError('required')" class="text-danger">
+          Document is required.
+        </div>
       </div>
-  
-      <div class="form-group mb-3">
-        <label for="policyTypeId">Policy Plan <span class="text-danger">*</span>:</label>
-        <select id="policyTypeId" class="form-control" formControlName="policyTypeId">
-          <option *ngFor="let policyType of policyTypes" [value]="policyType.id">{{ policyType.type }}</option>
-        </select>
-        <div *ngIf="addPolicyForm.get('policyTypeId')?.invalid && addPolicyForm.get('policyTypeId')?.touched" class="text-danger">
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="policyTypeId">Policy Plan <span class="text-danger">*</span>:</label>
+      <select id="policyTypeId" class="form-control" formControlName="policyTypeId">
+        <option *ngFor="let policyType of policyTypes" [value]="policyType.id">{{ policyType.type }}</option>
+      </select>
+      <div *ngIf="addPolicyForm.get('policyTypeId')?.touched">
+        <div *ngIf="addPolicyForm.get('policyTypeId')?.hasError('required')" class="text-danger">
           Policy Plan Selection is required.
-       </div>
+        </div>
       </div>
+    </div>
 
-      <div class="form-group mb-3">
-        <label for="minimumAgeCriteria">Minimum Age Criteria <span class="text-danger">*</span>:</label>
-        <input type="number" id="minimumAgeCriteria" class="form-control" formControlName="minimumAgeCriteria" />
-        <div *ngIf="addPolicyForm.get('minimumAgeCriteria')?.invalid && addPolicyForm.get('minimumAgeCriteria')?.touched" class="text-danger">
-          Minimum Age criteria is required.
-       </div>
+    <div class="form-group mb-3" *ngFor="let field of numericFields">
+      <label [for]="field.controlName">
+        {{ field.label }} <span class="text-danger">*</span>:
+      </label>
+      <input
+        type="number"
+        [id]="field.controlName"
+        class="form-control"
+        [formControlName]="field.controlName"
+      />
+      <div *ngIf="addPolicyForm.get(field.controlName)?.touched">
+        <div *ngIf="addPolicyForm.get(field.controlName)?.hasError('required')" class="text-danger">
+          {{ field.label }} is required.
+        </div>
+        <div *ngIf="addPolicyForm.get(field.controlName)?.hasError('pattern')" class="text-danger">
+          {{ field.label }} should be a positive number.
+        </div>
       </div>
+    </div>
 
-      <div class="form-group mb-3">
-        <label for="maximumAgeCriteria">Maximum Age Criteria <span class="text-danger">*</span>:</label>
-        <input type="number" id="maximumAgeCriteria" class="form-control" formControlName="maximumAgeCriteria" />
-        <div *ngIf="addPolicyForm.get('maximumAgeCriteria')?.invalid && addPolicyForm.get('maximumAgeCriteria')?.touched" class="text-danger">
-          Maximum Age criteria is required.
-       </div>
-      </div>
-
-      <div class="form-group mb-3">
-        <label for="minimumInvestmentAmount">Minimum Investment Amount <span class="text-danger">*</span>:</label>
-        <input type="number" id="minimumInvestmentAmount" class="form-control" formControlName="minimumInvestmentAmount" />
-        <div *ngIf="addPolicyForm.get('minimumInvestmentAmount')?.invalid && addPolicyForm.get('minimumInvestmentAmount')?.touched" class="text-danger">
-          Minimum Policy From is required.
-       </div>
-      </div>
-
-      <div class="form-group mb-3">
-        <label for="minimumPolicyTerm">Minimum Policy Term <span class="text-danger">*</span>:</label>
-        <input type="number" id="minimumPolicyTerm" class="form-control" formControlName="minimumPolicyTerm" />
-        <div *ngIf="addPolicyForm.get('minimumPolicyTerm')?.invalid && addPolicyForm.get('minimumPolicyTerm')?.touched" class="text-danger">
-          Add Policy Term is required.
-       </div>
-      </div>
-
-      <div class="form-group mb-3">
-        <label for="maximumPolicyTerm">Maximum Policy Term <span class="text-danger">*</span>:</label>
-        <input type="number" id="maximumPolicyTerm" class="form-control" formControlName="maximumPolicyTerm" />
-        <div *ngIf="addPolicyForm.get('maximumPolicyTerm')?.invalid && addPolicyForm.get('maximumPolicyTerm')?.touched" class="text-danger">
-          Maximum Policy Term is required.
-       </div>
-      </div>
-
-      <div class="form-group mb-3">
-        <label for="maximumInvestmentAmount">Maximum Investment Amount <span class="text-danger">*</span>:</label>
-        <input type="number" id="maximumInvestmentAmount" class="form-control" formControlName="maximumInvestmentAmount" />
-        <div *ngIf="addPolicyForm.get('maximumInvestmentAmount')?.invalid && addPolicyForm.get('maximumInvestmentAmount')?.touched" class="text-danger">
-          Maximum Investment Amount is required.
-       </div>
-      </div>
-
-      <div class="form-group mb-3">
-        <label for="profitPercentage">Profit Percentage <span class="text-danger">*</span>:</label>
-        <input type="number" id="profitPercentage" class="form-control" formControlName="profitPercentage" />
-        <div *ngIf="addPolicyForm.get('profitPercentage')?.invalid && addPolicyForm.get('profitPercentage')?.touched" class="text-danger">
-          Profit Percentage is required.
-       </div>
-      </div>
-
-      <div class="form-group mb-3">
-        <label for="commissionPercentage">Commission Percentage <span class="text-danger">*</span>:</label>
-        <input type="number" id="commissionPercentage" class="form-control" formControlName="commissionPercentage" />
-        <div *ngIf="addPolicyForm.get('commissionPercentage')?.invalid && addPolicyForm.get('commissionPercentage')?.touched" class="text-danger">
-          Commission Percentage is required.
-       </div>
-      </div>
-
-      <div class="form-group mb-3">
-        <label for="isActive">Active:</label>
-        <input type="checkbox" id="isActive" formControlName="isActive" />
-        
-      </div>
-
-      <button class="btn btn-primary w-100" type="submit" [disabled]="addPolicyForm.invalid">Add Policy</button>
-    </form>
+    <button class="btn btn-primary w-100" type="submit" [disabled]="addPolicyForm.invalid">Add Policy</button>
+  </form>
 </div>

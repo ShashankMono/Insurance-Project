@@ -22,6 +22,7 @@
         <th>Username</th>
         <th>Role</th>
         <th>Status</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -30,6 +31,21 @@
         <td>{{ user.username }}</td>
         <td>{{ user.roleName }}</td>
         <td>{{ user.isActive ? 'Active' : 'Inactive' }}</td>
+        <td>
+          <button 
+            class="btn btn-success btn-sm me-2" 
+            [disabled]="user.isActive || user.roleName == 'Admin'" 
+            (click)="updateUserStatus(user.userId,!user.isActive)">
+            Activate
+          </button>
+
+          <button 
+            class="btn btn-danger btn-sm" 
+            [disabled]="!user.isActive || user.roleName == 'Admin'" 
+            (click)="updateUserStatus(user.userId,!user.isActive)">
+            Deactivate
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>

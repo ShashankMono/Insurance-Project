@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
 import { CustomerDocumentsService } from 'src/app/services/customer-documents.service';
+import { DocumentService } from 'src/app/services/document.service';
+import { FileUploadService } from 'src/app/services/file-upload.service';
 
 @Component({
   selector: 'app-customer-documents',
@@ -38,7 +40,9 @@ export class CustomerDocumentsComponent implements OnInit {
 
   constructor(
     private customerService: CustomerDocumentsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private documentService: DocumentService,
+    private fileService : FileUploadService
   ) {}
 
   ngOnInit(): void {
@@ -66,7 +70,7 @@ export class CustomerDocumentsComponent implements OnInit {
   }
 
   fetchDocuments(): void {
-    this.customerService.getCustomerDocuments(this.customerId).subscribe(
+    this.documentService.getDocumentsByCustomer(this.customerId).subscribe(
       (response) => {
         this.documents = response.data;
       },
@@ -92,7 +96,7 @@ export class CustomerDocumentsComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', file);
   
-      this.customerService.uploadFile(formData).subscribe(
+      this.fileService.uploadFile(formData).subscribe(
         (uploadResponse) => {
           if (uploadResponse?.data?.result?.url) {
             const documentData = {
@@ -179,7 +183,7 @@ export class CustomerDocumentsComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', file);
   
-      this.customerService.uploadFile(formData).subscribe(
+      this.fileService.uploadFile(formData).subscribe(
         (uploadResponse) => {
           if (uploadResponse?.data?.result?.url) {
             const updatedData = {

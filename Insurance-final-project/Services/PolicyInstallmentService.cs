@@ -76,7 +76,7 @@ namespace Insurance_final_project.Services
                     PolicyAccountId = policyAccount.Id,
                     InstallmentDueDate = installmentDueDate,
                     IsPaid = false,
-                    Amount = installmentAmount,
+                    Amount = Math.Round(installmentAmount),
                 };
 
                 var installResponse = _installmentRepository.Add(installment);
@@ -86,7 +86,7 @@ namespace Insurance_final_project.Services
         public async Task<bool> PayInstallment(Guid installmentId)
         {
             var installment = _installmentRepository.GetAll().AsNoTracking().FirstOrDefault(i=>i.Id==installmentId);
-            var policyAccount = _policyAccountRepo.GetAll().AsNoTracking().FirstOrDefault(pa=>pa.Id==installment.PolicyAccountId);
+            var policyAccount = _policyAccountRepo.GetAll().AsNoTracking().Include(pa=>pa.Policy).FirstOrDefault(pa=>pa.Id==installment.PolicyAccountId);
             if (installment == null || installment.IsPaid)
             {
                 throw new InValidRequestException("Invalid request!");
@@ -98,8 +98,8 @@ namespace Insurance_final_project.Services
             policyAccount.TotalAmountPaid += installment.Amount;
             installment.IsPaid = true;
             installment.InstallmentPaidDate = DateTime.UtcNow;
-            _policyAccountRepo.Update(policyAccount);
-            _installmentRepository.Update(installment);
+
+
 
             //adding transaction
             var transaction = new Transaction
@@ -113,12 +113,13 @@ namespace Insurance_final_project.Services
                 ReferenceNumber = Guid.NewGuid(),
             }; ;
 
-            _transactionRepository.Add(transaction);
-
             //Adding commission
 
             if(policyAccount.AgentId != null)
             {
+                var commissionPercentage = policyAccount.Policy.CommissionPercentage;
+                var commissionAmount = installment.Amount * (commissionPercentage / 100);
+                policyAccount.AgentCommission += commissionAmount;
                 var commission = new CommissionDto()
                 {
                     PolicyAccountId = installment.PolicyAccountId,
@@ -126,8 +127,11 @@ namespace Insurance_final_project.Services
                     CommissionType = CommissionType.Installment.ToString(),
                     Date = DateTime.UtcNow,
                 };
-                _CommissionService.AddCommission(commission,installment.Amount);
+                _CommissionService.AddCommission(commission,commissionAmount);
             }
+            _transactionRepository.Add(transaction);
+            var update = _policyAccountRepo.Update(policyAccount);
+            var updateInstallment = _installmentRepository.Update(installment);
 
             return true;
         }

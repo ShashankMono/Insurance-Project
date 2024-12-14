@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
-import { Router } from '@angular/router';
+import { Router , ActivatedRoute} from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PolicyAccountService } from 'src/app/services/policy-account.service';
 @Component({
@@ -45,7 +45,7 @@ export class PolicyOperationsComponent {
   }
  
   payInstallment(policyAccountId: string, policyName:string): void {
-    this.router.navigate(['/customer-view/pay-installment'], {state:{policyAccountId,policyName}});
+      this.router.navigate(['/customer-view/pay-installment'], { state: { policyAccountId, policyName, customerId: this.customerId }});
   }
 
   cancelPolicy(policyAccountId: string): void {

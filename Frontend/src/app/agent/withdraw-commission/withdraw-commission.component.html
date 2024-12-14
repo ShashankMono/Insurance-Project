@@ -1,1 +1,50 @@
-<p>withdraw-commission works!</p>
+<div class="container mt-4">
+    <div class="card text-center">
+      <div class="card-header bg-primary text-white">
+        <h4>Wallet</h4>
+      </div>
+      <div *ngIf="withdrawableAmount>0" class="card-body">
+        <h5 class="card-title">Withdrawable Amount</h5>
+        <p class="card-text display-6">₹{{ withdrawableAmount }}</p>
+      </div>
+      <div *ngIf="withdrawableAmount==0" class="card-body">
+        <h5 class="card-title">Withdrawable Amount</h5>
+        <p class="card-text display-6">No commission earned</p>
+      </div>
+    </div>
+  
+    <div class="card mt-4">
+      <div class="card-header bg-secondary text-white">
+        <h5>Withdraw Commission</h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="withdrawalForm" (ngSubmit)="WithdrawCommission()">
+          <div class="mb-3">
+            <label for="amount" class="form-label">Amount to Withdraw</label>
+            <input
+              type="number"
+              id="amount"
+              formControlName="amount"
+              class="form-control"
+              placeholder="Enter amount"
+            />
+            <div *ngIf="withdrawalForm.get('amount')?.invalid && withdrawalForm.get('amount')?.touched" class="text-danger mt-1">
+              <span *ngIf="withdrawalForm.get('amount')?.hasError('required')">Amount is required.</span>
+              <span *ngIf="withdrawalForm.get('amount')?.hasError('min')">Amount must be greater than 0.</span>
+              <span *ngIf="withdrawalForm.get('amount')?.hasError('max')">
+                Amount cannot exceed ₹{{ withdrawableAmount }}.
+              </span>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-success w-100"
+            [disabled]="withdrawalForm.invalid"
+          >
+            Withdraw
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

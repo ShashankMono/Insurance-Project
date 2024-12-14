@@ -23,6 +23,7 @@ export class ViewAllPoliciesComponent implements OnInit {
   installmentTypes: any ="";
   installment:string = "";
   InstallemtnAmount:number=0;
+  customer: any = "";
 
   constructor(
     private cutomerService:CustomerDashboardService,
@@ -33,7 +34,8 @@ export class ViewAllPoliciesComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerId=history.state.customerId;
-    console.log("cus",this.customerId);
+    this.customer=history.state.customer;
+    console.log("cus",this.customer);
     this.loadPolicies();
     this.loadPolicyTypes(); 
     this.fetchInstallmentTypes();
@@ -86,6 +88,10 @@ export class ViewAllPoliciesComponent implements OnInit {
   }
 
   buyPolicy(policy: any): void {
+    if(this.customer.isApproved != "Approved" ){
+      alert("Customer account not approved");
+      return
+    }
     if(localStorage.getItem('userId') != null){
       this.router.navigate(['/customer-view/create-policy-account'],{state:
         {customerId:this.customerId,
@@ -105,6 +111,10 @@ export class ViewAllPoliciesComponent implements OnInit {
     if (this.investmentAmount < policy.minimumInvestmentAmount || this.investmentAmount > policy.maximumInvestmentAmount) {
       alert(`Please enter an amount between ${policy.minimumInvestmentAmount} and ${policy.maximumInvestmentAmount}`);
       return;
+    }else if(this.policyTerm<policy.minimumPolicyTerm || this.policyTerm> policy.maximumPolicyTerm){
+      alert(`Please enter policy term in range ${policy.minimumPolicyTerm} - ${policy.maximumPolicyTerm} years`);
+    }else if(!Number.isInteger(this.policyTerm)){
+      alert("Please enter policy term as whole number in years");
     }
 
     const profitAmount = (this.investmentAmount * policy.profitPercentage) / 100;

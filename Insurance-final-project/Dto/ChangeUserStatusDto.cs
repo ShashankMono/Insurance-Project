@@ -4,9 +4,9 @@ namespace Insurance_final_project.Dto
 {
     public class ChangeUserStatusDto
     {
-        [Required]
+        [Required(ErrorMessage="User is required")]
         public Guid UserId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Status is required")]
         public bool IsActive { get; set; }
     }
 }

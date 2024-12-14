@@ -24,8 +24,6 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { RouterModule } from '@angular/router';
-import { UsernameComponent } from './login/update-username/update-username.component';
-import { PasswordComponent } from './login/update-password/update-password.component';
 import { LandingPageHeaderComponent } from './landing-page/landing-page-header/landing-page-header.component';
 import { CustomerRegistrationComponent } from './landing-page/customer-registration/customer-registration.component';
 import { AddAgentComponent } from './admin/add-agent/add-agent.component';
@@ -97,6 +95,8 @@ import { ApprovePolicyAccountDocumentComponent } from './employee/approve-policy
 import { CustomersReportComponent } from './employee/customers-report/customers-report.component';
 import { ViewReportComponent } from './employee/view-report/view-report.component';
 import { ViewPolicyInstallmentComponent } from './employee/view-policy-installment/view-policy-installment.component';
+import { UpdateUsernameComponent } from './login/update-username/update-username.component';
+import { UpdateUserpasswordComponent } from './login/update-userpassword/update-userpassword.component';
 
 
 
@@ -120,8 +120,6 @@ import { ViewPolicyInstallmentComponent } from './employee/view-policy-installme
     EmployeeFooterComponent,
     LoginDashboardComponent,
     LandingPageComponent,
-    UsernameComponent,
-    PasswordComponent,
     LandingPageHeaderComponent,
     CustomerRegistrationComponent,
     AddAgentComponent,
@@ -187,6 +185,8 @@ import { ViewPolicyInstallmentComponent } from './employee/view-policy-installme
     CustomersReportComponent,
     ViewReportComponent,
     ViewPolicyInstallmentComponent,
+    UpdateUsernameComponent,
+    UpdateUserpasswordComponent,
     
   ],
   imports: [

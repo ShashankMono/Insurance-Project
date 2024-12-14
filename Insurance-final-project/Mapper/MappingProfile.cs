@@ -24,13 +24,16 @@ namespace Insurance_final_project.Mapper
             CreateMap<CommissionWithdrawal, CommissionWithdrawalDto>().ReverseMap();
 
             // Agent Commission
-            CreateMap<Commission, CommissionDto>().ReverseMap();
+            CreateMap<CommissionDto, Commission>();
+            CreateMap<Commission, CommissionDto>()
+                .ForMember(dest=>dest.policyName,val=>val.MapFrom(src=>src.PolicyAccount.Policy.Name))
+                .ForMember(dest=>dest.AgentName,val=>val.MapFrom(src=>src.Agent.FirstName+" "+src.Agent.LastName));
 
             // Customer
             CreateMap<Customer, CustomerDto>().ReverseMap();
             CreateMap<Customer, CustomerProfileDto>()
-    .ForMember(dest => dest.City, val => val.MapFrom(src => src.City.CityName))
-    .ForMember(dest => dest.State, val => val.MapFrom(src => src.State.StateName));
+            .ForMember(dest => dest.City, val => val.MapFrom(src => src.City.CityName))
+            .ForMember(dest => dest.State, val => val.MapFrom(src => src.State.StateName));
             // Document
             CreateMap<Document, DocumentDto>().ReverseMap();
 
@@ -87,11 +90,13 @@ namespace Insurance_final_project.Mapper
                 .ForMember(dest=> dest.State,val=>val.MapFrom(src=>src.State.StateName));
             CreateMap<PolicyAccount, PolicyAccountResponseDto>()
                 .ForMember(dest=>dest.PolicyName,val=>val.MapFrom(src=>src.Policy.Name))
+                //.ForMember(dest=>dest.RequiredDocuments,val=>val.MapFrom(src=>src.Policy.DocumentsRequired))
                 .ForMember(dest=>dest.AgentName,val=>val.MapFrom(src=>src.Agent.FirstName+" "+src.Agent.LastName))
                 .ForMember(dest=>dest.CustomerName,val=>val.MapFrom(src=>src.Customer.FirstName+" "+src.Customer.LastName));
             CreateMap<PolicyInstallment, PolicyInstallmentResponsDto>().ReverseMap();
             CreateMap<PolicyCancel, PolicyCancelReponseDto>()
                 .ForMember(dest => dest.policyName, val => val.MapFrom(src => src.PolicyAccount.Policy.Name));
+            
         }
     }
 }

@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AdminDashboardService } from 'src/app/services/admin-dashboard.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-view-users',
@@ -12,7 +14,9 @@ export class ViewUsersComponent {
   roles: any[] = [];
   selectedRole: string = 'All'; // Default to "All"
 
-  constructor(private adminService: AdminDashboardService) {}
+  constructor(private adminService: AdminDashboardService,
+    private userService : UserService
+  ) {}
 
   ngOnInit(): void {
     this.getRolesAndUsers();
@@ -53,5 +57,27 @@ export class ViewUsersComponent {
     } else {
       this.filteredUsers = this.users.filter(user => user.roleName === this.selectedRole);
     }
+  }
+
+  updateUserStatus(userId:any,updatedStaus:any){
+    var obj = {
+      userId : userId,
+      isActive: updatedStaus
+    }
+    this.userService.changeUserStatus(obj).subscribe({
+      next:(response)=>{
+        if(response.success){
+          this.getRolesAndUsers();
+          alert("user's status updated successfully!");
+        }
+      },
+      error:(err:HttpErrorResponse)=>{
+        if(err.error.exceptionMessage){
+          alert(err.error.exceptionMessage);
+        }else{
+          alert("Error occured while updating user status");
+        }
+      }
+    })
   }
 }

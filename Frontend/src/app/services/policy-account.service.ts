@@ -17,6 +17,10 @@ export class PolicyAccountService {
     return this.http.get<any>(`${this.url}/customer/${customerId}`);
   }
 
+  getPolicyAccountByAgentId(agentId:any):Observable<any>{
+    return this.http.get<any>(`${this.url}/agent/${agentId}`);
+  }
+
   updatePolicyStatus(obj:any):Observable<any>{
     return this.http.post<any>(`${this.url}/approve`,obj);
   }

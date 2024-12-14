@@ -46,6 +46,10 @@ namespace Insurance_final_project.Dto
         [Range(0, 100, ErrorMessage = "Commission Percentage must be between 0 and 100.")]
         public double CommissionPercentage { get; set; }
 
+        [Required(ErrorMessage = "Document is required is required.")]
+        [MaxLength(100, ErrorMessage = "Document can be of max 100 characters")]
+        public string DocumentsRequired { get; set; }
+
         public bool IsActive { get; set; } = true;
     }
 }

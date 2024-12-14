@@ -1,10 +1,14 @@
 <div class="container mt-5">
-    <h2>Customer Documents</h2>
+    <h2>Account Documents</h2>
   
-    <div *ngIf="customer" class="mb-4">
-      <p><strong>Name:</strong> {{ customer.firstName + " "+customer.lastName }}</p>
-      <p><strong>Email:</strong> {{ customer.emailId }}</p>
-      <p><strong>Mobile:</strong> {{ customer.mobileNo }}</p>
+    <div *ngIf="Account" class="mb-4">
+      <p><strong>Name:</strong> {{ Account.policyName }}</p>
+      <p><strong>Customer name:</strong> {{ Account.customerName }}</p>
+      <p><strong>Investment Amount:</strong> {{ Account.investmentAmount | currency: "INR"}}</p>
+      <p><strong>Start date:</strong> {{ Account.startDate | date }}</p>
+      <p><strong>End date:</strong> {{ Account.endDate | date}}</p>
+      <p><strong>Approval status:</strong> {{ Account.isApproved }}</p>
+      
     </div>
   
     <div *ngIf="documents.length > 0; else noDocuments">

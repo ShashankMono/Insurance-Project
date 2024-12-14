@@ -104,17 +104,6 @@ export class CustomerDashboardComponent{
     this.router.navigate(['/customer-view/policy-operations'],{state:{customerId:this.customerId}});
   }
 
-  // displayPolicies(): void {
-  //   this.customerService.getPolicies().subscribe(
-  //     (response) => {
-  //       console.log('Policies retrieved successfully:', response);
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching policies:', error);
-  //     }
-  //   );
-  // }
-
   getTransactionHistory(): void {
     this.router.navigate(['/customer-view/transaction-history'],{state:{customerId:this.customerId}});
   }

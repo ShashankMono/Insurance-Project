@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
+import { FileUploadService } from 'src/app/services/file-upload.service';
 import { UpdatePolicyAccountDocumentService } from 'src/app/services/policy-account-document.service';
 
 @Component({
@@ -28,7 +29,8 @@ export class PolicyAccountDocumentsComponent implements OnInit {
     private customerDashboardService: CustomerDashboardService,
     private router: Router,
     private route: ActivatedRoute,
-    private policyAccountDocument:UpdatePolicyAccountDocumentService
+    private policyAccountDocument:UpdatePolicyAccountDocumentService,
+    private fileService : FileUploadService
   ) {}
 
   ngOnInit(): void {
@@ -79,7 +81,7 @@ export class PolicyAccountDocumentsComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', file);
 
-      this.customerDashboardService.uploadFile(formData).subscribe(
+      this.fileService.uploadFile(formData).subscribe(
         (uploadResponse) => {
           const documentData = {
             ...this.addDocumentForm.value,
@@ -180,7 +182,7 @@ export class PolicyAccountDocumentsComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', file);
 
-      this.customerDashboardService.uploadFile(formData).subscribe(
+      this.fileService.uploadFile(formData).subscribe(
         (uploadResponse) => {
           const updateData = {
             documentId: this.selectedDocumentId,

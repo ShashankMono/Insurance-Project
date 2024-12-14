@@ -94,8 +94,12 @@ export class LoginDashboardComponent {
         }
       },
       error: (err: HttpErrorResponse) => {
+        if(err.error.exceptionMessage){
+          alert("Log in failed, "+err.error.exceptionMessage);
+        }else{
+          alert('Login failed. Please check your credentials and try again or user is Deactivated');
+        }
         console.error('Error signing in:', err);
-        alert('Login failed. Please check your credentials and try again or user is Deactivated');
       },
     });
   }

@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AgentDashboardService } from 'src/app/services/agent-dashboard.service';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
+import { FileUploadService } from 'src/app/services/file-upload.service';
 import { PolicyService } from 'src/app/services/policy.service';
 
 @Component({
@@ -31,6 +32,7 @@ export class BuyPolicyAgentComponent {
     ,private policyService:PolicyService
     ,private agentService:AgentDashboardService
     ,private route:ActivatedRoute
+    ,private fileService:FileUploadService
 ) {}
 
   ngOnInit(): void {
@@ -189,7 +191,7 @@ export class BuyPolicyAgentComponent {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
 
-      this.customerDashboardService.uploadFile(formData).subscribe(
+      this.fileService.uploadFile(formData).subscribe(
         (response) => {
           const fileUrl = response.data.result.url;
           this.saveDocument(policyAccountId, fileUrl);

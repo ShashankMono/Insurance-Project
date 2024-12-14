@@ -24,35 +24,31 @@ namespace Insurance_final_project.Services
         }
         public async Task<List<CommissionDto>> GetCommissions()
         {
-            return _Mapper.Map<List<Commission>, List<CommissionDto>>(_CommissionRepo.GetAll().ToList());
+            return _Mapper.Map<List<Commission>, List<CommissionDto>>(_CommissionRepo.GetAll().AsNoTracking().Include(c => c.PolicyAccount).ThenInclude(pa => pa.Policy).Include(c => c.Agent).ToList());
         }
 
         public async Task<List<CommissionDto>> GetCommissionByAgentId(Guid agentId)
         {
-            return _Mapper.Map<List<CommissionDto>>(_CommissionRepo.GetAll().Where(c => c.AgentId == agentId).ToList());
+            return _Mapper.Map<List<CommissionDto>>(_CommissionRepo.GetAll().AsNoTracking().Include(c=>c.PolicyAccount).ThenInclude(pa=>pa.Policy).Include(c=>c.Agent).Where(c => c.AgentId == agentId).ToList());
         }
 
-        public async Task<Guid> AddCommission(CommissionDto commissionDto,double amountPaid)
+        public async Task<Guid> AddCommission(CommissionDto commissionDto,double commissionAmount)
         {
             var commission = _Mapper.Map<Commission>(commissionDto);
-            if (_PolicyAccountRepo.Get(commission.PolicyAccountId) == null)
+            var agent = _agentRepo.GetAll().AsNoTracking().FirstOrDefault(a => a.AgentId == commission.AgentId);
+            if (_PolicyAccountRepo.GetAll().AsNoTracking().FirstOrDefault(pa=>pa.Id==commission.PolicyAccountId) == null)
             {
                 throw new InvalidGuidException("Account not exist!");
             }
-            else if (_agentRepo.Get(commission.AgentId)==null)
+            else if (agent==null)
             {
                 throw new InvalidGuidException("Agent not found!");
             }
-            var commissionPercentage = _PolicyAccountRepo.GetAll()
-                                                .Include(pa => pa.Policy)
-                                                .FirstOrDefault(pa => pa.Id == commission.PolicyAccountId)
-                                                .Policy
-                                                .CommissionPercentage;
-            var commissionAmount = amountPaid * (commissionPercentage/100);   
-            commission.Amount = commissionAmount;
+               
+            commission.Amount = Math.Round(commissionAmount);
             
             //updating agent 
-            var agent = _agentRepo.GetAll().AsNoTracking().FirstOrDefault(a=>a.AgentId == commission.AgentId);
+            
             agent.CommissionEarned = agent.CommissionEarned + commissionAmount;
             agent.TotalCommission += commissionAmount;
             _agentRepo.Update(agent);

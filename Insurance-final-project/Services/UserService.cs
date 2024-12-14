@@ -67,6 +67,9 @@ namespace Insurance_final_project.Services
             var existingUser = _userRepo.GetAll().AsNoTracking().Include(u=>u.Role).FirstOrDefault(u => u.Username == user.Username);
             if (existingUser == null) {
                 throw new UserInvalidException("Invalid Username!");
+            }else if (!existingUser.IsActive)
+            {
+                throw new UserIsNotActiveException("User deactived contact admin!");
             }
             if (!BCrypt.Net.BCrypt.EnhancedVerify(user.Password, existingUser.Password))
             {
@@ -103,25 +106,32 @@ namespace Insurance_final_project.Services
             if ( existingUser == null)
             {
                 throw new UserInvalidException("Invalid User!");
+            }else if (!BCrypt.Net.BCrypt.EnhancedVerify(userUpdate.Password, existingUser.Password))
+            {
+                throw new PasswordInvalidException("Invalid password!");
             }
-            var checkUsername = _userRepo.GetAll().AsNoTracking().FirstOrDefault(u => u.Username == userUpdate.Username);
+            var checkUsername = _userRepo.GetAll().AsNoTracking().FirstOrDefault(u => u.Username == userUpdate.NewUsername);
             if (checkUsername != null)
             {
                 throw new UsernameAlreadyUsedEException("Username Exist!");
             }
-            existingUser.Username = userUpdate.Username;
+            existingUser.Username = userUpdate.NewUsername;
             _userRepo.Update(existingUser);
             return true;
         }
 
         public async Task<UserDto> GetUserById(Guid id)
         {
-            return _mapper.Map<User, UserDto>(_userRepo.Get(id));
+            var user = _userRepo.Get(id);
+            if (user == null) {
+                throw new UserInvalidException("Invalid user");
+            }
+            return _mapper.Map<User, UserDto>(user);
         }
 
         public async Task<bool> ChangePassword(ChangePasswordDto changePassword)
         {
-            var existingUser = _userRepo.GetAll().AsNoTracking().FirstOrDefault(u=>u.Username==changePassword.Username);
+            var existingUser = _userRepo.GetAll().AsNoTracking().FirstOrDefault(u=>u.UserId==changePassword.UserId);
             if (existingUser == null) {
                 throw new UserInvalidException("Invalid User!");
             }

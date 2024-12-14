@@ -2,8 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { PolicyAccount } from 'src/app/models/policy-account';
-import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
 import { UpdatePolicyAccountDocumentService } from 'src/app/services/policy-account-document.service';
 import { PolicyAccountService } from 'src/app/services/policy-account.service';
 
@@ -15,7 +13,7 @@ import { PolicyAccountService } from 'src/app/services/policy-account.service';
 export class ApprovePolicyAccountDocumentComponent {
   AccountId: string | null = null;
   documents: any[] = [];
-  customer: any = null;
+  Account: any = null;
   isRejectionModalOpen: boolean = false;
   rejectionForm!: FormGroup;
   rejectingDocumentId: string | null = null;
@@ -31,7 +29,7 @@ export class ApprovePolicyAccountDocumentComponent {
     console.log(this.AccountId);
     if (this.AccountId) {
       this.loadDocuments(this.AccountId);
-      this.getCustomerProfileById();
+      this.getPolicyAccountById();
     }
 
     this.rejectionForm = new FormGroup({
@@ -51,10 +49,10 @@ export class ApprovePolicyAccountDocumentComponent {
     });
   }
 
-  getCustomerProfileById(): void {
+  getPolicyAccountById(): void {
     this.policyAccountService.getPolicyAccountById(this.AccountId).subscribe({
       next: (response) => {
-        this.customer = response.data;
+        this.Account = response.data;
         console.log(response);
       },
       error: (err: HttpErrorResponse) => {
@@ -62,7 +60,7 @@ export class ApprovePolicyAccountDocumentComponent {
           console.log(err);
           alert(err.error.exceptionMessage);
         } else {
-          alert('Error occurred while retrieving customer details.');
+          alert('Error occurred while retrieving Account details.');
         }
       },
     });
@@ -85,7 +83,7 @@ export class ApprovePolicyAccountDocumentComponent {
       },
       error: (err) => console.error('Error updating document status:', err),
     });
-    
+
   }
 
   openRejectionModal(documentId: string): void {
