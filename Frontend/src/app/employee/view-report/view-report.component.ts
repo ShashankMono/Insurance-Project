@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
 import { PolicyAccountService } from 'src/app/services/policy-account.service';
 import { TransactionService } from 'src/app/services/transaction.service';
@@ -16,11 +16,22 @@ export class ViewReportComponent {
   customerId: string = '';
   customer: any = null;
 
+  currentPage: number = 1;
+  pageSize: number = 3; 
+  totalPages: number = 1; 
+  totalRecords: number = 0; 
+  searchText: string = '';
+  startDate: string = '';
+  endDate: string = '';
+  private typingTimer: any; 
+  private debounceTime = 1000;
+
   constructor(
     private transactionService: TransactionService,
     private policyAccountService: PolicyAccountService,
     private customerService: CustomerDashboardService,
-    private router:Router
+    private router:Router,
+    private activatedRoute:ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -44,16 +55,56 @@ export class ViewReportComponent {
   }
 
   loadTransactions(): void {
-    this.transactionService.getTransactionByCutomerId(this.customerId).subscribe({
+    const filterParams = {
+      page: this.currentPage,
+      pageSize: this.pageSize,
+      searchText: this.searchText,
+      startDate: this.startDate,
+      endDate: this.endDate,
+    };
+  
+    this.transactionService.getTransactionByCutomerId(this.customerId,filterParams).subscribe({
       next: (response) => {
         if (response.success) {
-          this.transactions = response.data;
+          this.transactions = response.data; 
+          this.totalRecords = response.totalItems; 
+          this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
         }
       },
-      error: (err: HttpErrorResponse) => {
-        this.handleError(err, "loading transactions");
-      },
+      error: (err:HttpErrorResponse) => {
+        if (err.error.exceptionMessage) {
+          alert(err.error.exceptionMessage);
+        } else {
+          alert("Error occurred while loading transactions!");
+        }
+        console.error('Error loading transactions:', err);
+      }
     });
+  }
+  
+  onInput(event: Event): void {
+    clearTimeout(this.typingTimer); // Clear the previous timer
+    const inputValue = (event.target as HTMLInputElement).value;
+  
+    this.typingTimer = setTimeout(() => {
+      this.searchText = inputValue;
+      this.loadTransactions();
+    }, this.debounceTime);
+  }
+  
+  onDateChange(): void {
+    if (new Date(this.startDate) > new Date(this.endDate)) {
+      alert('Start date cannot be greater than end date.');
+      return;
+    }
+    this.loadTransactions();
+  }
+  
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.loadTransactions();
+    }
   }
 
   loadPolicyAccounts(): void {
@@ -79,7 +130,10 @@ export class ViewReportComponent {
   }
 
   viewInstallments(policyAccountId:any){
-    this.router.navigate(['/employee-view/view-policy-installment'],{state:{policyAccountId}})
+    const basePath = this.router.url.includes('/admin-view') ? '/admin-view' : '/employee-dashboard';
+      this.router.navigate([`${basePath}/employee-view/view-policy-installment`], {
+  state: { policyAccountId },
+});
   }
 
 }

@@ -1,23 +1,63 @@
 <div class="container mt-5">
-    <h2 class="text-center">Claim Form</h2>
-  
-    <form [formGroup]="claimForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="claimDescription">Claim Description</label>
-        <textarea
-          id="claimDescription"
-          class="form-control"
-          rows="4"
-          formControlName="claimDescription"
-          placeholder="Enter claim description"
-        ></textarea>
-        <div *ngIf="claimDescription?.invalid && claimDescription?.touched" class="text-danger">
-          <small *ngIf="claimDescription?.errors?.['required']">Claim description is required.</small><br>
-          <small *ngIf="claimDescription?.errors?.['maxlength']">Claim description cannot exceed 500 characters.</small>
-        </div>
+  <h2 class="text-center">Claim Form</h2>
+
+  <form [formGroup]="claimForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="claimDescription">Claim Description</label>
+      <textarea
+        id="claimDescription"
+        class="form-control"
+        rows="4"
+        formControlName="claimDescription"
+        placeholder="Enter claim description"
+      ></textarea>
+      <div *ngIf="claimDescription?.invalid && claimDescription?.touched" class="text-danger">
+        <small *ngIf="claimDescription?.errors?.['required']">Claim description is required.</small><br>
+        <small *ngIf="claimDescription?.errors?.['maxlength']">Claim description cannot exceed 500 characters.</small>
       </div>
-  
-      <button type="submit" class="btn btn-primary mt-3" [disabled]="claimForm.invalid">Submit</button>
-    </form>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3" [disabled]="claimForm.invalid || policyAccountId == null">
+      Submit
+    </button>
+  </form>
+
+  <div class="mt-5">
+    <h3>Submitted Claims</h3>
+
+    <table *ngIf="claimReuqests?.length > 0" class="table table-bordered table-striped mt-3">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Sr. No.</th>
+          <th scope="col">Policy Name</th>
+          <th scope="col">Claim Description</th>
+          <th scope="col">Status</th>
+          <th scope="col">Request Date</th>
+          <th scope="col">Acknowledgement Date</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let claim of claimReuqests; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ claim.policyName }}</td>
+          <td>{{ claim.claimDescription }}</td>
+          <td>{{ claim.approvedStatus }}</td>
+          <td>{{ claim.dateAndTime | date: 'short' }}</td>
+          <td>{{ claim.acknowledgementDate | date: 'short' }}</td>
+          <td>
+            <button 
+              class="btn btn-danger btn-sm" 
+              [disabled]="claim.approvedStatus != 'Approved'"
+              (click)="withdrawClaim(claim)">
+              Withdrawal
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="claimReuqests?.length === 0" class="text-center text-muted mt-3">
+      <p>No claims have been submitted yet.</p>
+    </div>
   </div>
-  
+</div>

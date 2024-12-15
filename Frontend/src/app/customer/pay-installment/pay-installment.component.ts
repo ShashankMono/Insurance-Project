@@ -49,7 +49,7 @@ export class PayInstallmentComponent implements OnInit {
   }
 
   fetchPolicyAccounts(): void {
-    this.PolicyAccountService.getPolicyAccounts().subscribe(
+    this.PolicyAccountService.getPolicyAccountsByCustomerId(this.customerId).subscribe(
       (data) => {
         this.policyAccounts = data;
       },

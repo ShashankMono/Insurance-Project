@@ -94,7 +94,7 @@ namespace Insurance_final_project.Services
                 throw new InvalidGuidException("Account not found!");
             }
             Document.IsVerified = document.IsVerified.ToLower() == "Verified".ToLower() || document.IsVerified == "Verify".ToLower()
-                                                            ? ApprovalType.Approved.ToString() : ApprovalType.Rejected.ToString(); ;
+                                                            ? VerificationType.Verified.ToString() : VerificationType.Verified.ToString(); ;
             
             if (Document.IsVerified == VerificationType.Rejected.ToString())
             {

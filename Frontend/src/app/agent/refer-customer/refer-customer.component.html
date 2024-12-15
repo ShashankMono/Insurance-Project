@@ -1,22 +1,23 @@
 <div class="container mt-5">
     <h1 class="text-center mb-4">Customer List</h1>
 
-    <!-- Alert for Error Message -->
     <div *ngIf="errorMessage" class="alert alert-danger text-center">
         {{ errorMessage }}
     </div>
 
-    <!-- Search Box -->
-    <div class="mb-4">
-        <input 
-            type="text" 
-            class="form-control" 
-            placeholder="Search customers by name..." 
-            [(ngModel)]="searchTerm" 
-            (input)="filterCustomers()" />
-    </div>
+    <div class="mb-3">
+        <label for="searchInput" class="form-label">Search</label>
+        <input
+          type="text"
+          id="searchInput"
+          class="form-control"
+          [(ngModel)]="searchText"
+          (input)="onInput($event)"
+          placeholder="Search by Customer Name, City, State or Approval"
+        />
+      </div>
+    
 
-    <!-- Table -->
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -40,7 +41,24 @@
         </tbody>
     </table>
 
-    <!-- No Results Message -->
+    <nav *ngIf="totalPages > 1" aria-label="Page navigation" class="d-flex justify-content-center mt-3">
+        <ul class="pagination">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" (click)="changePage(currentPage - 1)">Previous</button>
+          </li>
+          <li
+            class="page-item"
+            *ngFor="let page of [].constructor(totalPages); let idx = index"
+            [class.active]="currentPage === idx + 1"
+          >
+            <button class="page-link" (click)="changePage(idx + 1)">{{ idx + 1 }}</button>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button class="page-link" (click)="changePage(currentPage + 1)">Next</button>
+          </li>
+        </ul>
+      </nav>
+
     <div *ngIf="filteredCustomers.length === 0" class="alert alert-info text-center">
         No customers found.
     </div>

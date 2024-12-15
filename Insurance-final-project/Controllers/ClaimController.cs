@@ -29,6 +29,19 @@ namespace Insurance_final_project.Controllers
             });
         }
 
+        [HttpGet("{customerId}")]
+        public async Task<IActionResult> GetClaimAccountsByCustomerId(Guid customerId)
+        {
+            var claims = await _claimService.GetClaimByCustomerId(customerId);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = claims,
+                Message = "Claim accounts retrieved successfully."
+            });
+        }
+
         [HttpPost("approve")]
         public async Task<IActionResult> ClaimApproval([FromBody] ApprovalDto claim)
         {
@@ -58,8 +71,8 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost("{policyAccountId}")]
-        public async Task<IActionResult> AddClaimPolicy(Guid policyAccountId, [FromBody] ClaimDto claimDto)
+        [HttpPost]
+        public async Task<IActionResult> AddClaimPolicy( [FromBody] ClaimDto claimDto)
         {
 
             if (!ModelState.IsValid)
@@ -78,7 +91,7 @@ namespace Insurance_final_project.Controllers
                 });
             }
 
-            var claimId = await _claimService.AddClaimPolicy(policyAccountId, claimDto);
+            var claimId = await _claimService.AddClaimPolicy( claimDto);
 
             return Ok(new
             {

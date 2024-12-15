@@ -109,12 +109,26 @@ namespace Insurance_final_project.Services
             return _mapper.Map<CustomerDto>(customer);
         }
 
-        public async Task<List<CustomerProfileDto>> GetCustomerAccounts()
+        public async Task<List<CustomerProfileDto>> GetCustomerAccounts(string searchQuery)
         {
-            return _mapper.Map<List<Customer>, List<CustomerProfileDto>>(_customerRepository.GetAll()
+            var query = _customerRepository.GetAll()
                 .Include(c => c.City)
                 .Include(c => c.State)
-                .ToList());
+                .OrderByDescending(c=>c.CustomerId)
+                .AsQueryable();
+           
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                searchQuery = searchQuery.ToLower();
+                query = query.Where(c => (c.FirstName + " " + c.LastName).ToLower() == searchQuery ||
+                    c.IsApproved.ToLower() == searchQuery ||
+                    c.City.CityName.ToLower() == searchQuery ||
+                    c.State.StateName.ToLower() == searchQuery
+                    
+                );
+            }
+                return _mapper.Map<List<Customer>, List<CustomerProfileDto>>(query.ToList());
         }
         public CustomerProfileDto GetCustomerByUserId(Guid UserId)
         {

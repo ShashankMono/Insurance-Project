@@ -81,7 +81,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-danger" [disabled]="rejectionForm.invalid">Submit</button>
+              <button type="submit" class="btn btn-danger" (click)="submitRejectionReason()" [disabled]="rejectionForm.invalid">Submit</button>
               <button type="button" class="btn btn-secondary" (click)="closeRejectionModal()">Cancel</button>
             </div>
           </form>

@@ -96,6 +96,11 @@ namespace Insurance_final_project.Mapper
             CreateMap<PolicyInstallment, PolicyInstallmentResponsDto>().ReverseMap();
             CreateMap<PolicyCancel, PolicyCancelReponseDto>()
                 .ForMember(dest => dest.policyName, val => val.MapFrom(src => src.PolicyAccount.Policy.Name));
+            CreateMap<Claim, ClaimDto>()
+                .ForMember(dest => dest.policyName, val => val.MapFrom(src => src.PolicyAccount.Policy.Name));
+            CreateMap<Transaction, TransactionDto>()
+                .ForMember(dest => dest.policyName, val => val.MapFrom(src => src.PolicyAccount.Policy.Name))
+                .ForMember(dest => dest.CustomerName, val => val.MapFrom(src => (src.Customer.FirstName + " " + src.Customer.LastName)));
             
         }
     }

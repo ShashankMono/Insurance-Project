@@ -16,6 +16,13 @@ export class ReferCustomerComponent {
   errorMessage: string = '';
   policy:any="";
   agent:any="";
+  currentPage: number = 1;
+  pageSize: number = 3; 
+  totalPages: number = 1; 
+  totalRecords: number = 0; 
+  searchText:string = '';
+  private typingTimer: any; 
+  private debounceTime = 1000;
 
   constructor(private customerService: CustomerDashboardService,
     private emailService: MailService,
@@ -28,10 +35,14 @@ export class ReferCustomerComponent {
   }
 
   loadCustomers(): void {
-    this.customerService.getAllCustomers().subscribe({
+    this.customerService.getAllCustomers(this.currentPage,this.pageSize,this.searchText).subscribe({
       next: (response) => {
-        this.customers = response.data;
-        this.filteredCustomers = response.data; 
+        if (response.success) {
+          this.customers = response.data; 
+          this.totalRecords = response.totalItems; 
+          this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+          this.filteredCustomers = response.data;
+        }
       },
       error: (err: HttpErrorResponse) => {
         if (err.error.exceptionMessage) {
@@ -43,13 +54,25 @@ export class ReferCustomerComponent {
     });
   }
 
-  filterCustomers(): void {
-    const term = this.searchTerm.toLowerCase();
-    this.filteredCustomers = this.customers.filter(customer =>
-      customer.name.toLowerCase().includes(term)
-    );
+  onInput(event: Event): void {
+    clearTimeout(this.typingTimer); // Clear the previous timer
+    const inputValue = (event.target as HTMLInputElement).value;
+
+    this.typingTimer = setTimeout(() => {
+      this.Search(inputValue); // Execute the function after delay
+    }, this.debounceTime);
+  }
+  Search(value:any){
+    this.searchText = value;
+    this.loadCustomers();
   }
 
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.loadCustomers();
+    }
+  }
   referCustomer(customerId: any): void {
 
     var obj={

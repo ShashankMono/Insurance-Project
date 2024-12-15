@@ -1,8 +1,11 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Exceptions;
+using Insurance_final_project.Models;
+using Insurance_final_project.PagingFiles;
 using Insurance_final_project.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Stripe;
 
 namespace Insurance_final_project.Controllers
 {
@@ -17,7 +20,6 @@ namespace Insurance_final_project.Controllers
             _transactionService = transactionService;
         }
 
-        // Add a new transaction
         [HttpPost]
         public async Task<IActionResult> AddTransaction([FromBody] TransactionDto transactionDto)
         {
@@ -46,26 +48,53 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpGet("customer/{customerId}")]
-        public async Task<IActionResult> GetTransactionByCustomerId(Guid customerId)
+        public async Task<IActionResult> GetTransactionByCustomerId(Guid customerId, 
+            [FromQuery] PageParameters pageParameter,
+            [FromQuery]string? searchQuery,
+            [FromQuery]DateTime? startDate,
+            [FromQuery] DateTime? endDate)
         {
-                var transactions = await _transactionService.GetTransactionByCustomerId(customerId);
-                return Ok(new
+                var transactions = await _transactionService.GetTransactionByCustomerId(customerId,
+                    searchQuery,
+                    startDate,
+            endDate);
+
+            var pagedData = PageList<TransactionDto>.ToPagedList(transactions, pageParameter.PageNumber, pageParameter.PageSize);
+
+            return Ok(new
                 {
                     Success = true,
-                    Data = transactions,
-                    Message = "Transactions retrieved successfully."
+                    Data = pagedData,
+                    totalItems = pagedData.TotalCount,
+                    pageNumber = pagedData.CurrentPage,
+                    pagesize = pagedData.PageSize,
+                    totalPages = pagedData.TotalPages,
+                Message = "Transactions retrieved successfully."
                 });
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTransactions()
+        public async Task<IActionResult> GetTransactions([FromQuery] PageParameters pageParameter,
+            [FromQuery] string? searchQuery,
+            [FromQuery] DateTime? startDate,
+            [FromQuery] DateTime? endDate)
         {
-            var transactions = await _transactionService.GetTransactions();
+            var transactions = await _transactionService.GetTransactions(
+                searchQuery,
+                startDate,
+                endDate);
+
+            var pagedData = PageList<TransactionDto>.ToPagedList(transactions, pageParameter.PageNumber, pageParameter.PageSize);
+
             return Ok(new
             {
                 Success = true,
-                Data = transactions,
-                Message = "All transactions retrieved successfully."
+                Data = pagedData,
+                totalItems = pagedData.TotalCount,
+                pageNumber = pagedData.CurrentPage,
+                pagesize = pagedData.PageSize,
+                totalPages = pagedData.TotalPages,
+                Message = "Transactions retrieved successfully."
             });
         }
     }

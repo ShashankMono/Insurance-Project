@@ -76,7 +76,8 @@ import { CustomersReportComponent } from './employee/customers-report/customers-
 import { ViewPolicyInstallmentComponent } from './employee/view-policy-installment/view-policy-installment.component';
 import { UpdateUsernameComponent } from './login/update-username/update-username.component';
 import { UpdateUserpasswordComponent } from './login/update-userpassword/update-userpassword.component';
-import { CheckPolicyComponent } from './customer/check-policy/check-policy.component';
+import { ClaimRequestComponent } from './admin/claim-request/claim-request.component';
+import { ViewAllCustomersTransactionsComponent } from './admin/view-all-customers-transactions/view-all-customers-transactions.component';
 
 const routes: Routes = [
   { 
@@ -113,7 +114,22 @@ const routes: Routes = [
         component:AdminDashboardComponent,
         pathMatch: 'full',
       },
-      
+      {
+        path:'view-transactions',
+        component:ViewAllCustomersTransactionsComponent,
+      },
+      {
+        path:'view-policy-installment',
+        component:ViewPolicyInstallmentComponent
+      },
+      {
+        path:'customer-report',
+        component:ViewReportComponent
+      },
+      {
+        path:'claim-request',
+        component:ClaimRequestComponent
+      },
       {
         path: 'add-agent', 
         component: AddAgentComponent
@@ -274,7 +290,7 @@ const routes: Routes = [
       },
       
       { 
-        path: 'claim-policy/:customerId', 
+        path: 'claim-policy', 
         component: AddClaimComponent
       },
       
@@ -361,9 +377,16 @@ const routes: Routes = [
         pathMatch:'full'
       },
       {
+        path:'change-password',
+        component:UpdateUserpasswordComponent
+      },
+      {
+        path:'change-username',
+        component:UpdateUsernameComponent
+      },
+      {
         path:'approve-customer',
         component:ApproveCustomerComponent
-        
       },
       {
         path:'approve-document',

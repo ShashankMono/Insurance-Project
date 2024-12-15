@@ -1,56 +1,47 @@
 <div class="container mt-5">
-    <h2>Account Documents</h2>
+    <h2 class="text-center">Claim Requests</h2>
   
-    <div *ngIf="Account" class="mb-4">
-      <p><strong>Name:</strong> {{ Account.policyName }}</p>
-      <p><strong>Customer name:</strong> {{ Account.customerName }}</p>
-      <p><strong>Investment Amount:</strong> {{ Account.investmentAmount | currency: "INR"}}</p>
-      <p><strong>Start date:</strong> {{ Account.startDate | date }}</p>
-      <p><strong>End date:</strong> {{ Account.endDate | date}}</p>
-      <p><strong>Approval status:</strong> {{ Account.isApproved }}</p>
-      
-    </div>
-  
-    <div *ngIf="documents.length > 0; else noDocuments">
+    <div *ngIf="claimRequests.length > 0; else noClaims">
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>Sr. no.</th>
-            <th>Document Type</th>
-            <th>Document Name</th>
+            <th>Sr. No.</th>
+            <th>Policy Name</th>
+            <th>Claim Description</th>
             <th>Status</th>
+            <th>Request Date</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let document of documents; let i=index">
-            <td>{{i+1}}</td>
-            <td>{{ document.documentType }}</td>
+          <tr *ngFor="let claim of claimRequests; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ claim.policyName }}</td>
+            <td>{{ claim.claimDescription }}</td>
+            <td>{{ claim.approvedStatus }}</td>
+            <td>{{ claim.dateAndTime | date: 'short' }}</td>
             <td>
-              {{ document.documentName }}
-            </td>
-            <td>{{ document.isVerified }}</td>
-            <td>
-              <a
-              [href]="document.documentFileURL"
-              target="_blank"
-              class="btn btn-secondary"
-            >
-              View Document
-            </a>
               <button
-                class="btn btn-success mx-2"
-                (click)="updateStatus(document.documentId, 'Verified','')"
-                [disabled]="document.isVerified === 'Verified' || document.isVerified === 'Rejected'"
+                class="btn btn-success btn-sm"
+                (click)="changeClaimStatus({ id: claim.claimId, isApproved: 'Approved', reason: '' })"
+                [disabled]="claim.approvedStatus === 'Approved' || claim.approvedStatus === 'Rejected'"
               >
                 Approve
               </button>
+  
               <button
-                class="btn btn-danger"
-                (click)="openRejectionModal(document.documentId)"
-                [disabled]="document.isVerified === 'Rejected' || document.isVerified === 'Verified'"
+                class="btn btn-danger btn-sm mx-2"
+                (click)="openRejectionModal(claim.claimId)"
+                [disabled]="claim.approvedStatus === 'Rejected' || claim.approvedStatus === 'Approved'"
               >
                 Reject
+              </button>
+  
+              <button
+                class="btn btn-primary btn-sm"
+                (click)="viewInstallments(claim.policyAccountId)"
+              >
+                Installments
               </button>
             </td>
           </tr>
@@ -58,8 +49,8 @@
       </table>
     </div>
   
-    <ng-template #noDocuments>
-      <p class="text-center">No documents available for this customer.</p>
+    <ng-template #noClaims>
+      <p class="text-center text-muted">No claims available.</p>
     </ng-template>
   
     <div *ngIf="isRejectionModalOpen" class="modal show" style="display: block;">
@@ -94,3 +85,4 @@
       </div>
     </div>
   </div>
+  

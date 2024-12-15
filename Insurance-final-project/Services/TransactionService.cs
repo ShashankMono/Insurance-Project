@@ -3,6 +3,7 @@ using Insurance_final_project.Dto;
 using Insurance_final_project.Exceptions;
 using Insurance_final_project.Models;
 using Insurance_final_project.Repositories;
+using MailKit.Search;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,18 +46,70 @@ namespace Insurance_final_project.Services
             return _TransactionRepo.Add(_Mapper.Map<Transaction>(transactionDto)).Id;
         }
 
-        public async Task<List<TransactionDto>> GetTransactionByCustomerId(Guid customerId)
+        public async Task<List<TransactionDto>> GetTransactionByCustomerId(Guid customerId,
+            string? searchQuery,
+            DateTime? startDate,
+            DateTime? endDate)
         {
             if (_customerRepo.Get(customerId) == null)
             {
                 throw new CustomerNotFoundException("Customer Not found!");
             }
-            return _Mapper.Map<List<TransactionDto>>(_TransactionRepo.GetAll().Where(t => t.CustomerId == customerId).ToList());
+
+            var query = _TransactionRepo.GetAll()
+                .Include(t => t.PolicyAccount).ThenInclude(pa => pa.Policy)
+                .Where(t=>t.CustomerId == customerId)
+                .OrderByDescending(t=>t.Id)
+            .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                searchQuery = searchQuery.ToLower();
+                query = query.Where(t => t.PolicyAccount.Policy.Name.ToLower() == searchQuery || 
+                    t.ReferenceNumber.ToString().ToLower() == searchQuery ||
+                    t.Type.ToLower() == searchQuery
+                );
+            }
+            if (startDate.HasValue)
+            {
+                query = query.Where(t => t.DateTime.Date >= startDate.Value.Date);
+            }
+            if (endDate.HasValue)
+            {
+                query = query.Where(t => t.DateTime.Date <= endDate.Value.Date);
+            }
+
+            return _Mapper.Map<List<Transaction>, List<TransactionDto>>(query.ToList());
         }
 
-        public async Task<List<TransactionDto>> GetTransactions()
+        public async Task<List<TransactionDto>> GetTransactions(string? searchQuery,
+            DateTime? startDate,
+            DateTime? endDate)
         {
-            return _Mapper.Map<List<Transaction>, List<TransactionDto>>(_TransactionRepo.GetAll().ToList());
+            var query = _TransactionRepo.GetAll()
+                .Include(t => t.PolicyAccount).ThenInclude(pa => pa.Policy)
+                .Include(t => t.Customer)
+                .OrderByDescending(t => t.Id)
+                .AsQueryable();
+
+            if(!string.IsNullOrEmpty(searchQuery))
+            {
+                searchQuery = searchQuery.ToLower();
+                query = query.Where(t=>t.PolicyAccount.Policy.Name.ToLower() == searchQuery ||
+                    (t.Customer.FirstName+" "+t.Customer.LastName).ToLower() == searchQuery ||
+                    t.Type.ToLower() == searchQuery
+                );
+            }
+            if (startDate.HasValue)
+            {
+                query = query.Where(t=>t.DateTime.Date >=  startDate.Value.Date);
+            }
+            if (endDate.HasValue) 
+            { 
+                query=query.Where(t=>t.DateTime.Date <= endDate.Value.Date);
+            }
+
+            return _Mapper.Map<List<Transaction>, List<TransactionDto>>(query.ToList());
         }
 
     }

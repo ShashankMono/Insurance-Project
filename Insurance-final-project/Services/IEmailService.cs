@@ -8,5 +8,7 @@ namespace Insurance_final_project.Services
         public void SendMarketingMail(MarketingDto info);
         public void RejectionMail(Guid customerId, string reason, string subject);
         public void CommissionWithdrawalMail(Guid agentId, double amount);
+        public void ClaimWithdrawalMail(Guid policyAccountId);
+        public void ApprovalOrVrifiedMail(string mail, string subject, string message);
     }
 }
