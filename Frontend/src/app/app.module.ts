@@ -100,7 +100,7 @@ import { UpdateUserpasswordComponent } from './login/update-userpassword/update-
 import { ClaimRequestComponent } from './admin/claim-request/claim-request.component';
 import { ViewAllCustomersTransactionsComponent } from './admin/view-all-customers-transactions/view-all-customers-transactions.component';
 import { CheckPolicyComponent } from './customer/check-policy/check-policy.component';
-import { CustomerReportAdminComponent } from './admin/customer-report-admin/customer-report-admin.component';
+
 import { PolicyCancelRequestComponent } from './admin/policy-cancel-request/policy-cancel-request.component';
 
 
@@ -195,7 +195,6 @@ import { PolicyCancelRequestComponent } from './admin/policy-cancel-request/poli
     CheckPolicyComponent,
     ClaimRequestComponent,
     ViewAllCustomersTransactionsComponent,
-    CustomerReportAdminComponent,
     PolicyCancelRequestComponent,
     
   ],

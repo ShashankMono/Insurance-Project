@@ -113,7 +113,7 @@ export class AdminDashboardComponent  implements OnInit {
     this.router.navigate(['/admin-view/claim-request'], { relativeTo: this.router.routerState.root });
   }
   viewCustomerTransactions(): void {
-    this.router.navigate(['/admin-view/view-customer-transactions'], { relativeTo: this.router.routerState.root });
+    this.router.navigate(['/admin-view/view-transactions'], { relativeTo: this.router.routerState.root });
   }
 
   // Reports

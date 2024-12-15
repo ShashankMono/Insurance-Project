@@ -79,7 +79,7 @@ import { UpdateUserpasswordComponent } from './login/update-userpassword/update-
 import { ClaimRequestComponent } from './admin/claim-request/claim-request.component';
 import { ViewAllCustomersTransactionsComponent } from './admin/view-all-customers-transactions/view-all-customers-transactions.component';
 import { CheckPolicyComponent } from './customer/check-policy/check-policy.component';
-import { CustomerReportAdminComponent } from './admin/customer-report-admin/customer-report-admin.component';
+
 import { PolicyCancelRequestComponent } from './admin/policy-cancel-request/policy-cancel-request.component';
 
 const routes: Routes = [
@@ -128,10 +128,6 @@ const routes: Routes = [
       {
         path:'view-policy-installment',
         component:ViewPolicyInstallmentComponent
-      },
-      {
-        path:'customer-report-admin',
-        component:CustomerReportAdminComponent
       },
       {
         path:'customer-report',
@@ -301,7 +297,7 @@ const routes: Routes = [
       },
       
       { 
-        path: 'claim-policy/:policyId', 
+        path: 'claim-policy', 
         component: AddClaimComponent
       },
       
