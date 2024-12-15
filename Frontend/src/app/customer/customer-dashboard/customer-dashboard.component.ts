@@ -53,7 +53,7 @@ export class CustomerDashboardComponent{
   }
 
   claimPolicy(): void {
-    this.router.navigate(['/customer-view/claim-policy',this.customerId]);
+      this.router.navigate(['/customer-view/claim-policy'],{state:{customerId:this.customerId}});
   }
 
   payInstallment(): void {

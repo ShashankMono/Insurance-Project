@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
-import { Router , ActivatedRoute} from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PolicyAccountService } from 'src/app/services/policy-account.service';
+import { CancelPolicyService } from 'src/app/services/cancel-policy.service';
 @Component({
   selector: 'app-policy-operations',
   templateUrl: './policy-operations.component.html',
@@ -17,7 +18,8 @@ export class PolicyOperationsComponent {
   constructor(
     private customerDashboardService: CustomerDashboardService,
     private router: Router,
-    private policyAccountService:PolicyAccountService
+    private policyAccountService:PolicyAccountService,
+    private policyCancelService: CancelPolicyService
   ) {}
 
   ngOnInit(): void {
@@ -49,7 +51,7 @@ export class PolicyOperationsComponent {
   }
 
   cancelPolicy(policyAccountId: string): void {
-    this.customerDashboardService.addCancelPolicyAccount(policyAccountId).subscribe({
+    this.policyCancelService.addCancelPolicyAccount(policyAccountId).subscribe({
       next:(response)=>{
         if(response.data){
           alert("Policy Cancelled");

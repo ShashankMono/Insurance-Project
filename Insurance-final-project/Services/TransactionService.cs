@@ -97,6 +97,7 @@ namespace Insurance_final_project.Services
                 searchQuery = searchQuery.ToLower();
                 query = query.Where(t=>t.PolicyAccount.Policy.Name.ToLower() == searchQuery ||
                     (t.Customer.FirstName+" "+t.Customer.LastName).ToLower() == searchQuery ||
+                    t.ReferenceNumber.ToString().ToLower() == searchQuery ||
                     t.Type.ToLower() == searchQuery
                 );
             }

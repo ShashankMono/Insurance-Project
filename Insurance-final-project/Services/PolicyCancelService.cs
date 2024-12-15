@@ -14,12 +14,18 @@ namespace Insurance_final_project.Services
         private readonly IMapper _Mapper;
         private readonly IRepository<PolicyCancel> _policyCancelRepository;
         private readonly IRepository<Customer> _cutomerRepo;
-        public PolicyCancelService(IRepository<PolicyAccount> repo, IRepository<Customer> cutomerRepo, IMapper mapper, IRepository<PolicyCancel> policyCancelRepository)
+        private readonly IEmailService _emailService;
+        public PolicyCancelService(IRepository<PolicyAccount> repo,
+            IRepository<Customer> cutomerRepo,
+            IMapper mapper,
+            IRepository<PolicyCancel> policyCancelRepository,
+            IEmailService emailService)
         {
             _policyAccountRepository = repo;
             _Mapper = mapper;
             _policyCancelRepository = policyCancelRepository;
-            _cutomerRepo= cutomerRepo;
+            _cutomerRepo = cutomerRepo;
+            _emailService = emailService;
         }
         public async Task<bool> CancelPolicy(Guid policyAccountId)
         {
@@ -47,8 +53,14 @@ namespace Insurance_final_project.Services
 
         public async Task<Guid> ApprovePolicyCancelation(ApprovalDto policyCancel)
         {
-            var policyCan = _policyCancelRepository.GetAll().AsNoTracking().FirstOrDefault(pc=>pc.PolicyCancelId == policyCancel.Id);
-            if(policyCan == null)
+            var policyCan = _policyCancelRepository.GetAll()
+                .AsNoTracking()
+                .Include(pc=>pc.PolicyAccount).ThenInclude(pa=>pa.Policy)
+                .Include(pc=>pc.PolicyAccount).ThenInclude(pc=>pc.Customer)
+                .FirstOrDefault(pc=>pc.PolicyCancelId == policyCancel.Id);
+            
+            var message = policyCancel.Reason;
+            if (policyCan == null)
             {
                 throw new InvalidGuidException("Policy cancelation not found!");
             }
@@ -58,20 +70,64 @@ namespace Insurance_final_project.Services
                 if (policyAccount != null) throw new PolicyAccountNotFountException("Policy Account not found!");
                 policyAccount.Status = PolicyAccountStatus.Closed.ToString();
                 _policyAccountRepository.Update(policyAccount);
+                message = $"Your policy cancel status is for policy scheme name ${policyCan.PolicyAccount.Policy.Name} is ${policyCancel.IsApproved}";
             }
             policyCan.IsApproved = policyCancel.IsApproved;
+            var mail = policyCan.PolicyAccount.Customer.EmailId;
+            var subject = $"Status Changes on you policy scheme cancel on ${policyCan.PolicyAccount.Policy.Name} is ${policyCancel.IsApproved}";
+            
+            _emailService.ApprovalOrVrifiedMail(mail, subject, message);
             PolicyCancel updatedPolicyCancel = _policyCancelRepository.Update(policyCan);
 
             return updatedPolicyCancel.PolicyCancelId;
         }
 
-        public async Task<List<PolicyCancelReponseDto>> GetPolicyCancels(Guid customerId)
+        public async Task<List<PolicyCancelReponseDto>> GetPolicyCancels(Guid customerId, string? searchQuery)
         {
             if(_cutomerRepo.Get(customerId) == null)
             {
                 throw new CustomerNotFoundException("Customer not found");
             }
-            return _Mapper.Map<List<PolicyCancel>, List<PolicyCancelReponseDto>>(_policyCancelRepository.GetAll().Where(pc=>pc.PolicyAccount.CustomerId == customerId).Include(pc=>pc.PolicyAccount).ThenInclude(pa=>pa.Policy).ToList());
+            var query = _policyCancelRepository.GetAll()
+                .Where(pc => pc.PolicyAccount.CustomerId == customerId)
+                .Include(pc => pc.PolicyAccount)
+                .ThenInclude(pa => pa.Policy)
+                .OrderByDescending(pc => pc.PolicyCancelId)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                 searchQuery = searchQuery.ToLower();
+                query = query.Where(pc => pc.PolicyAccount.Policy.Name.ToLower() == searchQuery ||
+                    pc.IsApproved.ToLower() == searchQuery
+                );
+            }
+
+            return _Mapper.Map<List<PolicyCancel>, List<PolicyCancelReponseDto>>(query.ToList());
         }
+
+
+        public async Task<List<PolicyCancelReponseDto>> GetAllPolicyCancels( string? searchQuery)
+        {
+            var query = _policyCancelRepository.GetAll()
+                .Include(pc => pc.PolicyAccount)
+                .ThenInclude(pa => pa.Policy)
+                .Include(pc=>pc.PolicyAccount).ThenInclude(pa=>pa.Customer)
+                .OrderByDescending(pc => pc.PolicyCancelId)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                searchQuery = searchQuery.ToLower();
+                query = query.Where(pc => pc.PolicyAccount.Policy.Name.ToLower() == searchQuery ||
+                    pc.IsApproved.ToLower() == searchQuery ||
+                    (pc.PolicyAccount.Customer.FirstName+ " " +pc.PolicyAccount.Customer.LastName).ToLower() == searchQuery
+                );
+            }
+
+            return _Mapper.Map<List<PolicyCancel>, List<PolicyCancelReponseDto>>(query.ToList());
+        }
+
+
     }
 }

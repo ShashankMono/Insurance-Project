@@ -80,6 +80,7 @@ import { ClaimRequestComponent } from './admin/claim-request/claim-request.compo
 import { ViewAllCustomersTransactionsComponent } from './admin/view-all-customers-transactions/view-all-customers-transactions.component';
 import { CheckPolicyComponent } from './customer/check-policy/check-policy.component';
 import { CustomerReportAdminComponent } from './admin/customer-report-admin/customer-report-admin.component';
+import { PolicyCancelRequestComponent } from './admin/policy-cancel-request/policy-cancel-request.component';
 
 const routes: Routes = [
   { 
@@ -117,7 +118,11 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path:'view-customer-transactions',
+        path:'policy-cancel-request',
+        component:PolicyCancelRequestComponent,
+      },
+      {
+        path:'view-transactions',
         component:ViewAllCustomersTransactionsComponent,
       },
       {

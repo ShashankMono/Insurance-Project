@@ -21,21 +21,12 @@ export class CustomerDashboardService {
   }
 
   createPolicyAccount(policyAccount: any): Observable<any> {
-    console.log("policyaccount:",policyAccount)
     return this.http.post(`${this.url}/PolicyAccount`, policyAccount);
   }
 
   
   saveDocument(documentData: any) {
     return this.http.post<any>(`${this.url}/PolicyAccountDocument`, documentData);
-  }
-
-  addCancelPolicyAccount(policyAccountId:any):Observable<any>{
-    return this.http.get(`${this.url}/PolicyCancel/${policyAccountId}`);
-  }
-
-  cancelPolicyAccount(customerId:any): Observable<any> {
-    return this.http.get<any>(`${this.url}/PolicyCancel/customer/${customerId}`);
   }
 
   payInstallment(installmentId: string, customerId: string): Observable<any> {
