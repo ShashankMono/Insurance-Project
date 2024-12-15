@@ -22,23 +22,23 @@ export class AdminDashboardComponent  implements OnInit {
     const adminId = localStorage.getItem('adminId');
     console.log('Retrieved Admin ID:', adminId); // Debug
     
-    if (!adminId) {
-      alert("Admin ID not found! Please log in again.");
-      this.router.navigate(['/login-dashboard']);
-      return;
-    }
+    // if (!adminId) {
+    //   alert("Admin ID not found! Please log in again.");
+    //   this.router.navigate(['/login-dashboard']);
+    //   return;
+    // }
   
-    this.adminService.getAdminById(adminId).subscribe({
-      next: (response) => {
-        this.admin = response.data.result;
-        console.log('Admin data:', this.admin); // Debug fetched data
-      },
-      error: (err) => {
-        console.error('Error fetching admin:', err); // Debug error details
-        alert("Invalid Admin!");
-        this.router.navigate(['/login-dashboard']);
-      }
-    });
+    // this.adminService.getAdminById(adminId).subscribe({
+    //   next: (response) => {
+    //     this.admin = response.data.result;
+    //     console.log('Admin data:', this.admin); // Debug fetched data
+    //   },
+    //   error: (err) => {
+    //     console.error('Error fetching admin:', err); // Debug error details
+    //     alert("Invalid Admin!");
+    //     this.router.navigate(['/login-dashboard']);
+    //   }
+    // });
   }
   
 

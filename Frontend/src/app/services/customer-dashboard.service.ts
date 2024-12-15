@@ -21,6 +21,7 @@ export class CustomerDashboardService {
   }
 
   createPolicyAccount(policyAccount: any): Observable<any> {
+    console.log("policyaccount:",policyAccount)
     return this.http.post(`${this.url}/PolicyAccount`, policyAccount);
   }
 

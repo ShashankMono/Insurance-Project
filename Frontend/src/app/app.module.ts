@@ -97,6 +97,7 @@ import { ViewReportComponent } from './employee/view-report/view-report.componen
 import { ViewPolicyInstallmentComponent } from './employee/view-policy-installment/view-policy-installment.component';
 import { UpdateUsernameComponent } from './login/update-username/update-username.component';
 import { UpdateUserpasswordComponent } from './login/update-userpassword/update-userpassword.component';
+import { CheckPolicyComponent } from './customer/check-policy/check-policy.component';
 
 
 
@@ -187,6 +188,7 @@ import { UpdateUserpasswordComponent } from './login/update-userpassword/update-
     ViewPolicyInstallmentComponent,
     UpdateUsernameComponent,
     UpdateUserpasswordComponent,
+    CheckPolicyComponent,
     
   ],
   imports: [

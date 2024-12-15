@@ -29,7 +29,7 @@ export class PolicyAccountComponent implements OnInit{
   ngOnInit(): void {
     this.customerId=history.state.customerId
     this.policy = history.state.PolicyData
-    //console.log(this.customerId," ",this.policy);
+    console.log(this.customerId, this.policy);
     this.policyAccountForm = new FormGroup({
       policyId: new FormControl('', Validators.required),
       investmentAmount: new FormControl(0, [Validators.min(0),Validators.required]),

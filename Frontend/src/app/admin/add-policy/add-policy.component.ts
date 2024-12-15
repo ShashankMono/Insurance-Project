@@ -49,14 +49,10 @@ export class AddPolicyComponent {
      private fileService: FileUploadService
     ) {}
 
-  ngOnInit(): void {
-    this.getPolicyTypes();
-  }
-
   getPolicyTypes(): void {
-    this.policyTypeService.getPolicyTypes().subscribe({
-      next: (types) => {
-        this.policyTypes = types;
+    this.addPolicyService.getPolicyTypes().subscribe({
+      next: (response) => {
+        this.policyTypes = response.data;
       },
       error: (error) => {
         console.error('Error fetching policy types:', error);

@@ -65,7 +65,6 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" (click)="viewAllUsers()">View Users</a></li>
-            <li><a class="dropdown-item" (click)="addUser()">Add User</a></li>
             <li><a class="dropdown-item" (click)="viewAllRoles()">View Roles</a></li>
             <li><a class="dropdown-item" (click)="addRole()">Add Role</a></li>
           </ul>
@@ -89,8 +88,30 @@
           </ul>
         </li>
 
-        <!-- Admin Profile Dropdown -->
+
         <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="userActionDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            (click)="$event.preventDefault()"
+          >
+            User Action
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userActionDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="/change-username">Change Username</a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/change-password">Change Password</a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Admin Profile Dropdown -->
+        <!-- <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
             id="userDropdown"
@@ -106,7 +127,7 @@
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
           </ul>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>

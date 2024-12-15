@@ -35,7 +35,9 @@ export class CustomerDashboardComponent{
   }
 
   viewPolicies(): void {
-    this.router.navigate(['/customer-view/view-policies'],{state:{customerId:this.customerId}});
+    this.router.navigate(['/customer-view/view-policies'],{state:{customerId:this.customerId,
+     customer:this.customerDets
+    }});
   }
 
   createPolicyAccount(): void {

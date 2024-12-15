@@ -76,6 +76,7 @@ import { CustomersReportComponent } from './employee/customers-report/customers-
 import { ViewPolicyInstallmentComponent } from './employee/view-policy-installment/view-policy-installment.component';
 import { UpdateUsernameComponent } from './login/update-username/update-username.component';
 import { UpdateUserpasswordComponent } from './login/update-userpassword/update-userpassword.component';
+import { CheckPolicyComponent } from './customer/check-policy/check-policy.component';
 
 const routes: Routes = [
   { 
@@ -261,6 +262,11 @@ const routes: Routes = [
         path: 'view-policies',
         component: ViewAllPoliciesComponent
       },
+      {
+        path: 'check-policy/:policyId',
+        component: CheckPolicyComponent
+      },
+      
       
       {
         path: 'create-policy-account',
@@ -331,6 +337,14 @@ const routes: Routes = [
       },
       
     ]
+  },
+  {
+    path: 'view-policies',
+    component: ViewAllPoliciesComponent
+  },
+  {
+    path: 'check-policy/:policyId',
+    component: CheckPolicyComponent
   },
   
   {

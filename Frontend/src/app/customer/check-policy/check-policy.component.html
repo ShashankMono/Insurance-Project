@@ -1,0 +1,42 @@
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Policy Details</h1>
+    <div *ngIf="policy" class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">{{ policy.name }}</h5>
+        <p class="card-text">{{ policy.description }}</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Investment:</strong> {{ policy.minimumInvestmentAmount | currency:'INR' }} - {{ policy.maximumInvestmentAmount | currency:'INR' }}</li>
+          <li class="list-group-item"><strong>Term:</strong> {{ policy.minimumPolicyTerm }} - {{ policy.maximumPolicyTerm }} years</li>
+          <li class="list-group-item"><strong>Profit %:</strong> {{ policy.profitPercentage }}%</li>
+        </ul>
+        <div class="mt-3">
+          <label>Investment Amount:</label>
+          <input type="number" [(ngModel)]="investmentAmount" class="form-control" />
+        </div>
+        <div class="mt-3">
+          <label>Policy Term (Years):</label>
+          <input type="number" [(ngModel)]="policyTerm" class="form-control" />
+        </div>
+        <div class="mt-3">
+          <label>Installment Type:</label>
+          <select [(ngModel)]="installment" class="form-control">
+            <option value="">-- Select Installment Type --</option>
+            <option value="Monthly">Monthly</option>
+            <option value="Quarterly">Quarterly</option>
+            <option value="HalfYearly">Half Yearly</option>
+            <option value="Yearly">Yearly</option>
+          </select>
+        </div>
+        <div class="mt-3">
+          <button class="btn btn-success" (click)="calculateInvestment()">Calculate</button>
+        </div>
+        <div class="mt-3">
+          <p><strong>Installment Amount:</strong> {{ installmentAmount | currency:'INR' }}</p>
+          <p><strong>Total Claim Amount:</strong> {{ calculatedAmount | currency:'INR' }}</p>
+        </div>
+        <div class="mt-3">
+          <button class="btn btn-primary" (click)="buyPolicy(policy)">Buy Policy</button>
+        </div>
+      </div>
+    </div>
+</div>
