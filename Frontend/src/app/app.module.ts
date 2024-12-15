@@ -98,6 +98,7 @@ import { ViewPolicyInstallmentComponent } from './employee/view-policy-installme
 import { UpdateUsernameComponent } from './login/update-username/update-username.component';
 import { UpdateUserpasswordComponent } from './login/update-userpassword/update-userpassword.component';
 import { ClaimRequestComponent } from './admin/claim-request/claim-request.component';
+import { ViewAllCustomersTransactionsComponent } from './admin/view-all-customers-transactions/view-all-customers-transactions.component';
 
 
 
@@ -189,6 +190,7 @@ import { ClaimRequestComponent } from './admin/claim-request/claim-request.compo
     UpdateUsernameComponent,
     UpdateUserpasswordComponent,
     ClaimRequestComponent,
+    ViewAllCustomersTransactionsComponent,
     
   ],
   imports: [

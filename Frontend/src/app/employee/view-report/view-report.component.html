@@ -71,27 +71,89 @@
       </table>
     </div>
   
-    <div class="mt-4">
-      <h4>Transactions</h4>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Sr. No.</th>
-            <th>Amount</th>
-            <th>Type</th>
-            <th>Date</th>
-            <th>Reference Number</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let transaction of transactions; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>{{ transaction.amount | currency:'INR' }}</td>
-            <td>{{ transaction.type }}</td>
-            <td>{{ transaction.dateTime | date:'mediumDate' }}</td>
-            <td>{{ transaction.referenceNumber }}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="container mt-5">
+      <h2>Transaction History</h2>
+    
+      <div class="mb-3">
+        <label for="searchInput" class="form-label">Search</label>
+        <input
+          type="text"
+          id="searchInput"
+          class="form-control"
+          [(ngModel)]="searchText"
+          (input)="onInput($event)"
+          placeholder="Search by Policy Name or Reference Number"
+        />
+      </div>
+    
+      <div class="mb-3 d-flex align-items-center gap-3">
+        <div>
+          <label for="startDate" class="form-label">Start Date</label>
+          <input
+            type="date"
+            id="startDate"
+            class="form-control"
+            [(ngModel)]="startDate"
+            (change)="onDateChange()"
+          />
+        </div>
+        <div>
+          <label for="endDate" class="form-label">End Date</label>
+          <input
+            type="date"
+            id="endDate"
+            class="form-control"
+            [(ngModel)]="endDate"
+            (change)="onDateChange()"
+          />
+        </div>
+      </div>
+    
+      <div *ngIf="transactions.length > 0; else noTransactions">
+        <table class="table table-bordered table-striped mt-3">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Sr. No.</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Policy Name</th>
+              <th scope="col">Type</th>
+              <th scope="col">Date</th>
+              <th scope="col">Reference Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let transaction of transactions; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ transaction.amount | currency: 'INR' }}</td>
+              <td>{{ transaction.policyName }}</td>
+              <td>{{ transaction.type }}</td>
+              <td>{{ transaction.dateTime | date: 'mediumDate' }}</td>
+              <td>{{ transaction.referenceNumber }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+      <nav *ngIf="totalPages > 1" aria-label="Page navigation" class="d-flex justify-content-center mt-3">
+        <ul class="pagination">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" (click)="changePage(currentPage - 1)">Previous</button>
+          </li>
+          <li
+            class="page-item"
+            *ngFor="let page of [].constructor(totalPages); let idx = index"
+            [class.active]="currentPage === idx + 1"
+          >
+            <button class="page-link" (click)="changePage(idx + 1)">{{ idx + 1 }}</button>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button class="page-link" (click)="changePage(currentPage + 1)">Next</button>
+          </li>
+        </ul>
+      </nav>
+    
+      <ng-template #noTransactions>
+        <p class="text-center">No transactions available.</p>
+      </ng-template>
     </div>
   </div>

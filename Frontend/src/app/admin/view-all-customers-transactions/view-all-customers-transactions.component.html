@@ -9,7 +9,7 @@
         class="form-control"
         [(ngModel)]="searchText"
         (input)="onInput($event)"
-        placeholder="Search by Policy Name or Reference Number"
+        placeholder="Search by Policy Name, transaction type, customer name or Reference Number"
       />
     </div>
   
@@ -46,6 +46,8 @@
             <th scope="col">Type</th>
             <th scope="col">Date</th>
             <th scope="col">Reference Number</th>
+            <th scope="col">Customer name</th>
+            <th scope="col">Customer report</th>
           </tr>
         </thead>
         <tbody>
@@ -56,6 +58,15 @@
             <td>{{ transaction.type }}</td>
             <td>{{ transaction.dateTime | date: 'medium' }}</td>
             <td>{{ transaction.referenceNumber }}</td>
+            <td>{{transaction.customerName}}</td>
+            <td>
+                <button
+                    class="btn btn-success btn-sm mx-2"
+                    (click)="viewReport(transaction.customerId)"
+                >
+                    View report
+                </button>
+            </td>
           </tr>
         </tbody>
       </table>

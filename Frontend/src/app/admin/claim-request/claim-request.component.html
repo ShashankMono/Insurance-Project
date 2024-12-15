@@ -23,7 +23,7 @@
             <td>
               <button
                 class="btn btn-success btn-sm"
-                (click)="changeClaimStatus({ id: claim.id, status: 'Approved', reason: '' })"
+                (click)="changeClaimStatus({ id: claim.claimId, isApproved: 'Approved', reason: '' })"
                 [disabled]="claim.approvedStatus === 'Approved' || claim.approvedStatus === 'Rejected'"
               >
                 Approve
@@ -31,7 +31,7 @@
   
               <button
                 class="btn btn-danger btn-sm mx-2"
-                (click)="openRejectionModal(claim.id)"
+                (click)="openRejectionModal(claim.claimId)"
                 [disabled]="claim.approvedStatus === 'Rejected' || claim.approvedStatus === 'Approved'"
               >
                 Reject
@@ -76,7 +76,7 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-danger" [disabled]="rejectionForm.invalid">Submit</button>
+                <button type="submit" class="btn btn-danger" (click)="submitRejectionReason()" [disabled]="rejectionForm.invalid">Submit</button>
                 <button type="button" class="btn btn-secondary" (click)="closeRejectionModal()">Cancel</button>
               </div>
             </form>

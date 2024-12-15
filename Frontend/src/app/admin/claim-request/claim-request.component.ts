@@ -73,11 +73,12 @@ export class ClaimRequestComponent {
   }
 
   submitRejectionReason(): void {
+    console.log(this.rejectionForm.valid , " ", this.rejectingClaimId);
     if (this.rejectionForm.valid && this.rejectingClaimId) {
       const reason = this.rejectionForm.get('reason')?.value;
       const approvalObj = {
         id: this.rejectingClaimId,
-        status: 'Rejected',
+        isApproved: 'Rejected',
         reason: reason,
       };
       this.changeClaimStatus(approvalObj);

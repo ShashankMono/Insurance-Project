@@ -77,6 +77,7 @@ import { ViewPolicyInstallmentComponent } from './employee/view-policy-installme
 import { UpdateUsernameComponent } from './login/update-username/update-username.component';
 import { UpdateUserpasswordComponent } from './login/update-userpassword/update-userpassword.component';
 import { ClaimRequestComponent } from './admin/claim-request/claim-request.component';
+import { ViewAllCustomersTransactionsComponent } from './admin/view-all-customers-transactions/view-all-customers-transactions.component';
 
 const routes: Routes = [
   { 
@@ -114,8 +115,16 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
+        path:'view-transactions',
+        component:ViewAllCustomersTransactionsComponent,
+      },
+      {
         path:'view-policy-installment',
         component:ViewPolicyInstallmentComponent
+      },
+      {
+        path:'customer-report',
+        component:ViewReportComponent
       },
       {
         path:'claim-request',
@@ -289,7 +298,6 @@ const routes: Routes = [
       {
         path:'approve-customer',
         component:ApproveCustomerComponent
-        
       },
       {
         path:'approve-document',

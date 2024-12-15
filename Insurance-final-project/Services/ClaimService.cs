@@ -56,15 +56,17 @@ namespace Insurance_final_project.Services
             claimAccount.AcknowledgementDate = DateTime.UtcNow;
             var mail = claimAccount.PolicyAccount.Customer.EmailId;
             var subject =$"Claim request status changed" ;
-            var message = $"You claim request {claimAccount.PolicyAccount.Policy.Name} Approved! ";
+            var message = $"You claim request {claimAccount.PolicyAccount.Policy.Name} {claim.IsApproved}! ";
             _emailService.ApprovalOrVrifiedMail(mail,subject,message);
             return _ClaimRepo.Update(claimAccount).ClaimId;
         }
         public async Task<Guid> AddClaimPolicy( ClaimDto claimDto)
         {
             var policyAccount = _policyAccountRepository.GetAll().AsNoTracking().Include(pa=>pa.PolicyInstallments ).FirstOrDefault(pa=>pa.Id == claimDto.PolicyAccountId);
-           
-            if (policyAccount == null || policyAccount.EndDate > DateTime.UtcNow || policyAccount.PolicyInstallments.ToList().Find(i=>i.InstallmentDueDate == policyAccount.EndDate).IsPaid != true)
+
+            if (policyAccount == null || 
+                policyAccount.EndDate >= DateTime.UtcNow || 
+                policyAccount.PolicyInstallments.ToList().Find(i => i.InstallmentDueDate == policyAccount.EndDate).IsPaid != true)
                 throw new InvalidClaimRequestException("Invalid claim request!");
 
             var claim = _Mapper.Map<Claim>(claimDto);
