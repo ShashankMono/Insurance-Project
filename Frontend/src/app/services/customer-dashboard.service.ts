@@ -35,7 +35,7 @@ export class CustomerDashboardService {
   }
 
   cancelPolicyAccount(customerId:any): Observable<any> {
-    return this.http.get<any>(`${this.url}/PolicyCancel/${customerId}`);
+    return this.http.get<any>(`${this.url}/PolicyCancel/customer/${customerId}`);
   }
 
   payInstallment(installmentId: string, customerId: string): Observable<any> {

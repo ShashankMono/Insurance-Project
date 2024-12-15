@@ -108,6 +108,14 @@ export class AdminDashboardComponent  implements OnInit {
     this.router.navigate(['/admin-view/view-policy-types'], { relativeTo: this.router.routerState.root });
   }
 
+  //addons
+  viewAllClaims(): void {
+    this.router.navigate(['/admin-view/claim-request'], { relativeTo: this.router.routerState.root });
+  }
+  viewCustomerTransactions(): void {
+    this.router.navigate(['/admin-view/view-customer-transactions'], { relativeTo: this.router.routerState.root });
+  }
+
   // Reports
   // viewPolicyReport(): void {
   //   this.adminService.getPolicyReports().subscribe((data) => {

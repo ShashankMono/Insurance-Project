@@ -78,6 +78,8 @@ import { UpdateUsernameComponent } from './login/update-username/update-username
 import { UpdateUserpasswordComponent } from './login/update-userpassword/update-userpassword.component';
 import { ClaimRequestComponent } from './admin/claim-request/claim-request.component';
 import { ViewAllCustomersTransactionsComponent } from './admin/view-all-customers-transactions/view-all-customers-transactions.component';
+import { CheckPolicyComponent } from './customer/check-policy/check-policy.component';
+import { CustomerReportAdminComponent } from './admin/customer-report-admin/customer-report-admin.component';
 
 const routes: Routes = [
   { 
@@ -115,12 +117,16 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path:'view-transactions',
+        path:'view-customer-transactions',
         component:ViewAllCustomersTransactionsComponent,
       },
       {
         path:'view-policy-installment',
         component:ViewPolicyInstallmentComponent
+      },
+      {
+        path:'customer-report-admin',
+        component:CustomerReportAdminComponent
       },
       {
         path:'customer-report',
@@ -290,7 +296,7 @@ const routes: Routes = [
       },
       
       { 
-        path: 'claim-policy', 
+        path: 'claim-policy/:policyId', 
         component: AddClaimComponent
       },
       
