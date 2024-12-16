@@ -15,7 +15,6 @@
         
         <input
           type="text"
-          readonly
           id="policyId"
           class="form-control"
           formControlName="policyId"
@@ -78,6 +77,24 @@
       fileupload endpoint
       file sent
       document endpoint add-viewdocuments comp on doc button-->
+
+      <div class="mb-3">
+        <label for="document" class="form-label">Document<span class="text-danger">*</span></label>
+        <select
+          id="document"
+          class="form-control"
+          formControlName="document"
+        >
+          <option value="">-- Select document Type --</option>
+          <option *ngFor="let type of documents" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+        <div *ngIf="policyAccountForm.get('document')?.invalid && policyAccountForm.get('document')?.touched" class="text-danger">
+          Document Type is required.
+        </div>
+      </div>
+
       <div class="mb-3">
       <label for="fileInput" class="form-label">Upload Document<span class="text-danger">*</span></label>
       <input

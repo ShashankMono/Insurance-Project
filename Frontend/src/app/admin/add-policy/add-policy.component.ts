@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component,OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -22,9 +23,9 @@ export class AddPolicyComponent {
     { controlName: 'minimumAgeCriteria', label: 'Minimum Age Criteria' },
     { controlName: 'maximumAgeCriteria', label: 'Maximum Age Criteria' },
     { controlName: 'minimumInvestmentAmount', label: 'Minimum Investment Amount' },
+    { controlName: 'maximumInvestmentAmount', label: 'Maximum Investment Amount' },
     { controlName: 'minimumPolicyTerm', label: 'Minimum Policy Term' },
     { controlName: 'maximumPolicyTerm', label: 'Maximum Policy Term' },
-    { controlName: 'maximumInvestmentAmount', label: 'Maximum Investment Amount' },
     { controlName: 'profitPercentage', label: 'Profit Percentage' },
     { controlName: 'commissionPercentage', label: 'Commission Percentage' },
   ];
@@ -35,6 +36,7 @@ export class AddPolicyComponent {
     description: new FormControl('', Validators.required),
     imageFile: new FormControl('', Validators.required),
     policyTypeId: new FormControl('', Validators.required),
+    documentsRequired: new FormControl('', Validators.required),
     minimumAgeCriteria: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
     maximumAgeCriteria: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
     minimumInvestmentAmount: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
@@ -83,13 +85,14 @@ export class AddPolicyComponent {
         name: policyData.name,
         description: policyData.description ,
         imageUrl:fileUrl ,
+        documentsRequired:policyData.documentsRequired,
         policyTypeId: policyData.policyTypeId,
         minimumAgeCriteria: policyData.minimumAgeCriteria,
         maximumAgeCriteria: policyData.maximumAgeCriteria,
         minimumInvestmentAmount: policyData.minimumInvestmentAmount,
+        maximumInvestmentAmount: policyData.maximumInvestmentAmount,
         minimumPolicyTerm: policyData.minimumPolicyTerm,
         maximumPolicyTerm: policyData.maximumPolicyTerm,
-        maximumInvestmentAmount: policyData.maximumInvestmentAmount,
         profitPercentage: policyData.profitPercentage,
         commissionPercentage: policyData.commissionPercentage,
       }
@@ -101,8 +104,13 @@ export class AddPolicyComponent {
           this.addPolicyForm.reset();
           this.router.navigate(['/admin-view']);
         },
-        error: (error) => {
-          console.error('Error adding policy:', error);
+        error: (err:HttpErrorResponse) => {
+          if(err.error.exceptionMessage){
+            alert(err.error.exceptionMessage);
+          }else{
+            alert("Error occured while adding new policy scheme");
+          }
+          console.error('Error adding policy:', err);
         }
       });
     }

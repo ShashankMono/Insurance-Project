@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AdminDashboardService } from 'src/app/services/admin-dashboard.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-agent',
@@ -40,8 +41,13 @@ export class AddAgentComponent{
           alert('Agent added successfully! check email for credential\'s.');
           this.router.navigate(['/admin-dashboard']);
         },
-        error: (error) => {
-          console.error('Error adding agent:', error);
+        error: (err:HttpErrorResponse) => {
+          if(err.error.exceptionMessage){
+            alert(err.error.exceptionMessage);
+          }else{
+            alert("Error occured while adding new agent");
+          }
+          console.error('Error adding agent:', err);
         },
       });
     }

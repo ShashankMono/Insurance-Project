@@ -4,6 +4,7 @@ import { AdminDashboardService } from 'src/app/services/admin-dashboard.service'
 import { Router } from '@angular/router';
 import { State } from 'src/app/models/state';
 import { City } from 'src/app/models/city';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-add-city',
   templateUrl: './add-city.component.html',
@@ -33,9 +34,13 @@ export class AddCityComponent implements OnInit {
       next: (cities: City[]) => {
         this.cities = cities;
       },
-      error: (error) => {
-        console.error('Error fetching cities:', error);
-        alert('Failed to load cities. Please try again.');
+      error: (err:HttpErrorResponse) => {
+        if(err.error.exceptionMessage){
+          alert(err.error.exceptionMessage);
+        }else{
+          alert("Failed to load cities. Please try again.");
+        }
+        console.error('Error fetching cities:', err);
       }
     });
   }

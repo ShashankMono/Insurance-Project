@@ -90,7 +90,7 @@ namespace Insurance_final_project.Mapper
                 .ForMember(dest=> dest.State,val=>val.MapFrom(src=>src.State.StateName));
             CreateMap<PolicyAccount, PolicyAccountResponseDto>()
                 .ForMember(dest=>dest.PolicyName,val=>val.MapFrom(src=>src.Policy.Name))
-                //.ForMember(dest=>dest.RequiredDocuments,val=>val.MapFrom(src=>src.Policy.DocumentsRequired))
+                .ForMember(dest=>dest.RequiredDocuments,val=>val.MapFrom(src=>src.Policy.DocumentsRequired))
                 .ForMember(dest=>dest.AgentName,val=>val.MapFrom(src=>src.Agent.FirstName+" "+src.Agent.LastName))
                 .ForMember(dest=>dest.CustomerName,val=>val.MapFrom(src=>src.Customer.FirstName+" "+src.Customer.LastName));
             CreateMap<PolicyInstallment, PolicyInstallmentResponsDto>().ReverseMap();

@@ -61,8 +61,8 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("customer/{customerId}")]
-        public async Task<IActionResult> GetNominees(Guid customerId)
+        [HttpGet("customer/{customerId}/policyAccount/{policyAccountId}")]
+        public async Task<IActionResult> GetNominees(Guid customerId,Guid policyAccountId)
         {
             if (!ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace Insurance_final_project.Controllers
                 });
             }
 
-            var nominees = await _nomineeService.GetNominees(customerId);
+            var nominees = await _nomineeService.GetNominees(customerId,policyAccountId);
             return Ok(new
             {
                 Success = true,

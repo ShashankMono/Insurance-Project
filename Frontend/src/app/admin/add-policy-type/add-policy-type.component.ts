@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdminDashboardService } from 'src/app/services/admin-dashboard.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-add-policy-type',
   templateUrl: './add-policy-type.component.html',
@@ -27,8 +28,13 @@ export class AddPolicyTypeComponent {
           alert('Policy type added successfully!');
           this.router.navigate(['/admin-dashboard']);
         },
-        error: (error) => {
-          console.error('Error adding policy type:', error);
+        error: (err:HttpErrorResponse) => {
+          if(err.error.exceptionMessage){
+            alert(err.error.exceptionMessage);
+          }else{
+            alert("Error occured while adding new new policy plan");
+          }
+          console.error('Error adding policy type:', err);
         },
       });
     }

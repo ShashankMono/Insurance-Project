@@ -1,11 +1,24 @@
 <div class="container mt-5">
   <h1 class="text-center">Nominees</h1>
-  <div *ngIf="nomineeData.data.length === 0" class="text-center mt-4">
+
+  <div class="mb-4">
+    <label for="policyType" class="form-label">Filter by Policy Plans</label>
+    <select 
+      id="policyType" 
+      class="form-select"  
+      [(ngModel)]="selectedPolicyAccountId" 
+      (change)="onChange()">
+      <option value="" selected>All Policy Plans</option>
+      <option *ngFor="let type of policyAccounts" [value]="type.id">{{ type.policyName }}</option>
+    </select>
+  </div>
+
+  <div *ngIf="nomineeData.data?.length === 0" class="text-center mt-4">
       <p>No nominees found.</p>
       <button class="btn btn-primary" (click)="addNominee()">Add Nominee</button>
   </div>
 
-  <div *ngIf="nomineeData.data.length > 0" class="mt-4">
+  <div *ngIf="nomineeData?.data?.length > 0; else noNominee" class="mt-4">
       <table class="table table-striped">
           <thead>
               <tr>
@@ -36,9 +49,11 @@
           </tbody>
       </table>
   </div>
+  <ng-template #noNominee>
+    <p class="text-center">No nominees available.</p>
+  </ng-template>
 </div>
 
-<!-- Edit  -->
 <div *ngIf="isEditModalOpen" class="modal show" style="display: block;">
   <div class="modal-dialog">
       <div class="modal-content">
@@ -66,15 +81,19 @@
                       </div>
                   </div>
                   <div class="mb-3">
-                      <label for="nomineeRelation" class="form-label">
-                          Nominee Relation <span class="text-danger">*</span>
-                      </label>
-                      <input
-                          type="text"
-                          id="nomineeRelation"
+                    <div class="form-group">
+                        <label for="relation">Relation</label>
+                        <select
+                          id="relation"
                           class="form-control"
                           formControlName="nomineeRelation"
-                      />
+                        >
+                          <option value="" disabled selected>Select Relation</option>
+                          <option *ngFor="let relation of relations" [value]="relation">
+                            {{ relation }}
+                          </option>
+                        </select>
+                      </div>
                       <div
                           *ngIf="editNomineeForm.get('nomineeRelation')?.invalid && editNomineeForm.get('nomineeRelation')?.touched"
                           class="text-danger"

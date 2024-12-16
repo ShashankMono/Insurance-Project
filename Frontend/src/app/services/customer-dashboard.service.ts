@@ -71,8 +71,8 @@ export class CustomerDashboardService {
   updateNomine(nominee:any):Observable<any>{
     return this.http.put(`${this.url}/Nominee`,nominee);
   }
-  getNomineesByCustomerId(customerId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.url}/Nominee/customer/${customerId}`);
+  getNomineesByCustomerId(customerId: string,policyAccountId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.url}/Nominee/customer/${customerId}/policyAccount/${policyAccountId}`);
   }
   
   deleteNominee(nomineeId: string): Observable<any> {

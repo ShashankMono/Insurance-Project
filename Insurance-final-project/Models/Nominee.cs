@@ -22,11 +22,11 @@ namespace Insurance_final_project.Models
 
         public Customer Customer { get; set; }
 
-        //[Required(ErrorMessage = "PolicyAccount is required.")]
-        //[ForeignKey("PolicyAccount")]
-        //public Guid PolicyAccountId { get; set; }
+        [Required(ErrorMessage = "PolicyAccount is required.")]
+        [ForeignKey("PolicyAccount")]
+        public Guid PolicyAccountId { get; set; }
 
-        //public PolicyAccount PolicyAccount  { get; set; }
+        public PolicyAccount PolicyAccount { get; set; }
 
     }
 }

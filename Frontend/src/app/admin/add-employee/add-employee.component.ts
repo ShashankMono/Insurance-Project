@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -33,9 +34,14 @@ export class AddEmployeeComponent {
           alert('Employee added successfully! check email for login credential\'s.');
           this.router.navigate(['/admin-dashboard']);
         },
-        error: (error) => {
-          console.error('Error adding employee:', error);
-          alert('Failed to add employee. Please try again.');
+        error: (err:HttpErrorResponse) => {
+          if(err.error.exceptionMessage){
+            alert(err.error.exceptionMessage);
+          }else{
+            alert('Failed to add employee. Please try again.');
+          }
+          console.error('Error adding employee:', err);
+          
         },
       });
     }
