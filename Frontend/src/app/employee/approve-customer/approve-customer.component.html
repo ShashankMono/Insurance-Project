@@ -23,6 +23,7 @@
                   <th scope="col">Mobile Number</th>
                   <th scope="col">Email</th>
                   <th scope="col">State</th>
+                  <th scope="col">Status</th>
                   <th scope="col">Action</th>
               </tr>
           </thead>
@@ -34,6 +35,7 @@
                   <td>{{ customer.mobileNo }}</td>
                   <td>{{ customer.emailId }}</td>
                   <td>{{ customer.state }}</td>
+                  <td>{{ customer.isApproved }}</td>
                   <td>
                       <a
                           routerLink="/employee-view/approve-document"
@@ -45,14 +47,14 @@
                       <button
                           class="btn btn-success btn-sm mx-2"
                           (click)="updateStatus(customer.customerId, 'Approved','')"
-                          [disabled]="customer.isApproved === 'Approved' || customer.isApproved === 'Rejected'"
+                          [disabled]="customer.isApproved === 'Approved' || customer.isApproved === 'Rejected' || customer.documentCount<=0"
                       >
                           Approve
                       </button>
                       <button
                           class="btn btn-danger btn-sm"
                           (click)="openRejectionModal(customer.customerId)"
-                          [disabled]="customer.isApproved === 'Rejected' || customer.isApproved === 'Approved'"
+                          [disabled]="customer.isApproved === 'Rejected' || customer.isApproved === 'Approved' || customer.documentCount<=0"
                       >
                           Reject
                       </button>

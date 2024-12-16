@@ -22,14 +22,46 @@
     </div>
 
     <div class="form-group mb-3">
-      <label for="document">Documents required<span class="text-danger">*</span>:</label>
-      <input type="text" id="document" class="form-control" formControlName="documentsRequired" />
+      <label for="requiredDocuments">Required Documents<span class="text-danger">*</span>:</label>
+      <textarea
+        id="requiredDocuments"
+        class="form-control mb-2"
+        rows="3"
+        readonly
+        formControlName="documentsRequired"
+      ></textarea>
+
+      <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="documentDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Select Documents
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="documentDropdown">
+          <li *ngFor="let docType of documentTypes">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                [id]="docType"
+                [value]="docType"
+                (change)="onDocumentSelect($event)"
+              />
+              <label class="form-check-label" [for]="docType">{{ docType }}</label>
+            </div>
+          </li>
+        </ul>
+      </div>
       <div *ngIf="addPolicyForm.get('documentsRequired')?.touched">
         <div *ngIf="addPolicyForm.get('documentsRequired')?.hasError('required')" class="text-danger">
-          Documents Required field is required.
+          At least one document is required.
         </div>
       </div>
-    </div>
+    </div>
 
     <div class="mb-3">
       <label for="fileInput" class="form-label">Upload Document<span class="text-danger">*</span></label>
@@ -81,6 +113,6 @@
       </div>
     </div>
 
-    <button class="btn btn-primary w-100" type="submit" [disabled]="addPolicyForm.invalid">Add Policy</button>
+    <button class="btn btn-primary w-100" type="submit" [disabled]="addPolicyForm.invalid || !uploadFile">Add Policy</button>
   </form>
 </div>

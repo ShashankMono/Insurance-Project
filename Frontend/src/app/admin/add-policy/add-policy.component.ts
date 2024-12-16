@@ -15,6 +15,21 @@ export class AddPolicyComponent {
   selectedFile:any | null=null
   fileError: any | null = null
   fileUploaded : any | null = null
+  fileUrl: any | null = null
+
+  documentTypes = [
+    'Passport',
+    'Aadhaar_card',
+    'Voter_ID',
+    'PAN_card',
+    'Ration_card',
+    'Driving_license',
+    'Bank_account_passbook',
+    'Photo_ID_card',
+  ];
+
+  selectedDocuments: string[] = [];
+
   ngOnInit(){
     this.getPolicyTypes();
   }
@@ -66,24 +81,23 @@ export class AddPolicyComponent {
     const file = event.target.files[0];
     if (file && ['image/jpeg', 'image/png', 'image/gif', 'image/bmp'].includes(file.type)) {
       this.selectedFile = file;
+      this.uploadFile(); 
       this.fileError = null;
-      this.fileUploaded = true;
     } else {
       this.fileError = 'Invalid file type. Only images are allowed.';
       this.selectedFile = null;
+      this.fileUrl = null;
     }
   }
 
   onSubmit(): void {
     if (this.addPolicyForm.valid) {
       const policyData = this.addPolicyForm.value;
-
-      let fileUrl = this.uploadFile(); 
-
+      console.log(this.fileUrl);
       var obj = {
         name: policyData.name,
         description: policyData.description ,
-        imageUrl:fileUrl ,
+        imageUrl:this.fileUrl ,
         documentsRequired:policyData.documentsRequired,
         policyTypeId: policyData.policyTypeId,
         minimumAgeCriteria: policyData.minimumAgeCriteria,
@@ -123,14 +137,32 @@ export class AddPolicyComponent {
       this.fileService.uploadFile(formData).subscribe(
         (response) => {
           const fileUrl = response.data.result.url;
+          this.fileUrl = fileUrl;
+          this.fileUploaded = this.fileUrl != "" && this.fileUrl != null ?  true : false;
+          alert("File uploaded successfully!");
+          console.log(fileUrl);
           return fileUrl;
         },
         (error) => {
           alert('Error uploading file. Please try again.');
           console.error(error);
+          return "";
         }
       );
     }
     return "";
   }
+
+  onDocumentSelect(event: any): void {
+    const selectedDoc = event.target.value;
+    if (event.target.checked) {
+      this.selectedDocuments.push(selectedDoc);
+    } else {
+      this.selectedDocuments = this.selectedDocuments.filter(
+        (doc) => doc !== selectedDoc
+      );
+    }
+    this.addPolicyForm.get('documentsRequired')?.setValue(this.selectedDocuments.join(', '));
+  }
+
 }

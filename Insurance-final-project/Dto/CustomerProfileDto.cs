@@ -40,5 +40,7 @@ namespace Insurance_final_project.Dto
         [Required(ErrorMessage = "Approval status is required.")]
         [MaxLength(20, ErrorMessage = "Approval status cannot exceed 20 characters.")]
         public string IsApproved { get; set; } = ApprovalType.Pending.ToString();
+
+        public int? DocumentCount { get; set; }
     }
 }
