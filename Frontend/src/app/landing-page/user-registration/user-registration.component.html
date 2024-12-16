@@ -1,15 +1,56 @@
 <div class="container">
-    <h3>Register Username and Password</h3>
-    <form [formGroup]="usernamePasswordForm" (ngSubmit)="registerUsernamePassword()">
-      <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" id="username" class="form-control" formControlName="username" required />
+  <h3>Register Username and Password</h3>
+  <form [formGroup]="usernamePasswordForm" (ngSubmit)="registerUsernamePassword()">
+    <!-- Username Field -->
+    <div class="mb-3">
+      <label for="username" class="form-label">
+        Username<span class="text-danger">*</span> 
+      </label>
+      <input
+        type="text"
+        id="username"
+        class="form-control"
+        formControlName="username"
+        required
+      />
+      <div
+        *ngIf="usernamePasswordForm.get('username')?.invalid && usernamePasswordForm.get('username')?.touched"
+        class="text-danger"
+      >
+        <!-- Username Validation Errors -->
+        <span *ngIf="usernamePasswordForm.get('username')?.errors?.['required']">
+          Username is required.
+        </span>
       </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" id="password" class="form-control" formControlName="password" required />
+    </div>
+
+    <!-- Password Field -->
+    <div class="mb-3">
+      <label for="password" class="form-label">
+        Password<span class="text-danger">*</span> 
+      </label>
+      <input
+        type="password"
+        id="password"
+        class="form-control"
+        formControlName="password"
+        required
+      />
+      <div
+        *ngIf="usernamePasswordForm.get('password')?.invalid && usernamePasswordForm.get('password')?.touched"
+        class="text-danger"
+      >
+        <!-- Password Validation Errors -->
+        <span *ngIf="usernamePasswordForm.get('password')?.errors?.['required']">
+          Password is required.
+        </span>
+        <span *ngIf="usernamePasswordForm.get('password')?.errors?.['minlength']">
+          Password must be at least 6 characters long.
+        </span>
       </div>
-      <button type="submit" class="btn btn-primary">Register</button>
-    </form>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
 </div>
-  

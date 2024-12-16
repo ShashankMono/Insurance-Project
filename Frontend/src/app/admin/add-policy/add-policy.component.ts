@@ -14,6 +14,21 @@ export class AddPolicyComponent {
   selectedFile:any | null=null
   fileError: any | null = null
   fileUploaded : any | null = null
+
+  documentError: string | null = null;
+  selectedDocuments: string[] = [];
+  selectedDocumentsText: string = '';
+
+  documentTypes: string[] = [
+    'Passport',
+    'Aadhaar_card',
+    'Voter_ID',
+    'PAN_card',
+    'Ration_card',
+    'Driving_license',
+    'Bank_account_passbook',
+    'Photo_ID_card'
+  ];
   ngOnInit(){
     this.getPolicyTypes();
   }
@@ -71,12 +86,23 @@ export class AddPolicyComponent {
       this.selectedFile = null;
     }
   }
+  onDocumentSelect(event: any): void {
+    const doc = event.target.value;
+    if (event.target.checked) {
+      this.selectedDocuments.push(doc);
+    } else {
+      this.selectedDocuments = this.selectedDocuments.filter((d) => d !== doc);
+    }
+    this.documentError = this.selectedDocuments.length ? null : 'At least one document must be selected.';
+    this.selectedDocumentsText = this.selectedDocuments.join(', ');
+  }
 
   onSubmit(): void {
-    if (this.addPolicyForm.valid) {
+    if (this.addPolicyForm.valid && this.selectedDocuments.length > 0) {
       const policyData = this.addPolicyForm.value;
 
       let fileUrl = this.uploadFile(); 
+      const requiredDocuments = this.selectedDocuments.join(',');
 
       var obj = {
         name: policyData.name,
@@ -91,6 +117,7 @@ export class AddPolicyComponent {
         maximumInvestmentAmount: policyData.maximumInvestmentAmount,
         profitPercentage: policyData.profitPercentage,
         commissionPercentage: policyData.commissionPercentage,
+        requiredDocuments: requiredDocuments
       }
 
       this.addPolicyService.addPolicy(obj).subscribe({
@@ -98,14 +125,17 @@ export class AddPolicyComponent {
           console.log('Policy added successfully:', response);
           alert('Policy added successfully!');
           this.addPolicyForm.reset();
+          this.selectedDocuments = [];
+          this.selectedDocumentsText = '';
           this.router.navigate(['/admin-view']);
         },
         error: (error) => {
           console.error('Error adding policy:', error);
         },
       });
-    }
-  }
+    }else if (this.selectedDocuments.length === 0) {
+      this.documentError = 'At least one document must be selected.';
+  }}
 
   uploadFile(): string {
     if (this.selectedFile) {

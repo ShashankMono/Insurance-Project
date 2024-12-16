@@ -5,7 +5,7 @@
       <label for="firstName" class="form-label">First Name<span class="text-danger">*</span></label>
       <input type="text" id="firstName" class="form-control" formControlName="firstName" required />
       <div *ngIf="customerForm.get('firstName')?.invalid && customerForm.get('firstName')?.touched" class="text-danger">
-         First Name is required.
+        First Name is required.
       </div>
     </div>
     <div class="mb-3">
@@ -13,49 +13,59 @@
       <input type="text" id="lastName" class="form-control" formControlName="lastName" required />
       <div *ngIf="customerForm.get('lastName')?.invalid && customerForm.get('lastName')?.touched" class="text-danger">
         Last Name is required.
-     </div>
+      </div>
     </div>
     <div class="mb-3">
       <label for="emailId" class="form-label">Email<span class="text-danger">*</span></label>
       <input type="email" id="emailId" class="form-control" formControlName="emailId" required />
-      <div *ngIf="customerForm.get('emailId')?.invalid && customerForm.get('emailId')?.touched" class="text-danger">
-        Email Id is required.
-     </div>
+      <div *ngIf="customerForm.get('emailId')?.touched">
+        <div *ngIf="customerForm.get('emailId')?.hasError('required')" class="text-danger">
+          Email is required.
+        </div>
+        <div *ngIf="customerForm.get('emailId')?.hasError('email')" class="text-danger">
+          Invalid email format.
+        </div>
+        
+      </div>
     </div>
     <div class="mb-3">
       <label for="mobileNo" class="form-label">Mobile Number<span class="text-danger">*</span></label>
       <input type="text" id="mobileNo" class="form-control" formControlName="mobileNo" required />
-      <div *ngIf="customerForm.get('mobileNo')?.invalid && customerForm.get('mobileNo')?.touched" class="text-danger">
-        Mobile No. is required.
-     </div>
+      <div *ngIf="customerForm.get('mobileNo')?.touched">
+        <div *ngIf="customerForm.get('mobileNo')?.hasError('required')" class="text-danger">
+          Mobile number is required.
+        </div>
+        <div *ngIf="customerForm.get('mobileNo')?.hasError('pattern')" class="text-danger">
+          Invalid mobile number format (must be 10 digits).
+        </div>
+        
+      </div>
     </div>
     <div class="mb-3">
       <label for="dateOfBirth" class="form-label">Date of Birth<span class="text-danger">*</span><span>(Should be 18 years old)</span></label>
       <input type="date" id="dateOfBirth" class="form-control" formControlName="dateOfBirth" [max]="MaxDate" required />
       <div *ngIf="customerForm.get('dateOfBirth')?.invalid && customerForm.get('dateOfBirth')?.touched" class="text-danger">
         Date of Birth is required.
-     </div>
+      </div>
     </div>
     <div class="mb-3">
       <label for="stateId" class="form-label">State<span class="text-danger">*</span></label>
       <select id="stateId" class="form-control" formControlName="stateId" required>
-
         <option *ngFor="let state of states" [value]="state.stateId">{{ state.stateName }}</option>
       </select>
       <div *ngIf="customerForm.get('stateId')?.invalid && customerForm.get('stateId')?.touched" class="text-danger">
         State selection is required.
-     </div>
+      </div>
     </div>
     <div class="mb-3">
       <label for="cityId" class="form-label">City<span class="text-danger">*</span></label>
       <select id="cityId" class="form-control" formControlName="cityId" required>
-        
         <option *ngFor="let city of cities" [value]="city.cityId">{{ city.cityName }}</option>
       </select>
       <div *ngIf="customerForm.get('cityId')?.invalid && customerForm.get('cityId')?.touched" class="text-danger">
         City selection is required.
-     </div>
-    </div >
+      </div>
+    </div>
     <input type="hidden" formControlName="isApprove" value="Pending" />
     <button type="submit" class="btn btn-primary mb-3">Register</button>
   </form>

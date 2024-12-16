@@ -31,14 +31,17 @@ export class CustomerRegistrationComponent implements OnInit {
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
       emailId: new FormControl('', [Validators.required, Validators.email]),
-      mobileNo: new FormControl('', [Validators.required, Validators.pattern(/^\d{10}$/)]),
+      mobileNo: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^\d{10}$/)
+      ]),
       dateOfBirth: new FormControl('', Validators.required),
       stateId: new FormControl('', Validators.required),
       cityId: new FormControl('', Validators.required)
       
     });
   }
-
+  
   ngOnInit() {
     this.userId = localStorage.getItem('userId') || '';
     console.log(this.userId)

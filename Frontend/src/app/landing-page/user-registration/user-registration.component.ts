@@ -20,7 +20,10 @@ export class UserRegistrationComponent {
   ) {
     this.usernamePasswordForm = new FormGroup({
       username: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
     });
   }
 
