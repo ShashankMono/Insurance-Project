@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AdminDashboardService } from 'src/app/services/admin-dashboard.service';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { PolicyTypeService } from 'src/app/services/policy-type.service';
-
+import { PolicyType } from 'src/app/models/policy-type';
 @Component({
   selector: 'app-add-policy',
   templateUrl: './add-policy.component.html',
@@ -49,15 +49,14 @@ export class AddPolicyComponent {
      private fileService: FileUploadService
     ) {}
 
-
   getPolicyTypes(): void {
-    this.addPolicyService.getPolicyType().subscribe({
+    this.addPolicyService.getPolicyTypes().subscribe({
       next: (response) => {
         this.policyTypes = response.data;
       },
       error: (error) => {
         console.error('Error fetching policy types:', error);
-      }
+      },
     });
   }
 
@@ -103,7 +102,7 @@ export class AddPolicyComponent {
         },
         error: (error) => {
           console.error('Error adding policy:', error);
-        }
+        },
       });
     }
   }

@@ -24,6 +24,8 @@ export class ViewAllPoliciesComponent implements OnInit {
   installment:string = "";
   InstallemtnAmount:number=0;
   customer: any = "";
+  policyId: any=""
+  policy:any=""
 
   constructor(
     private cutomerService:CustomerDashboardService,
@@ -33,26 +35,44 @@ export class ViewAllPoliciesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.policy = history.state.policy;
+    this.policyId = history.state.policyId;
     this.customerId=history.state.customerId;
     this.customer=history.state.customer;
+    console.log('Policy:', this.policy);
     console.log("cus",this.customer);
     this.loadPolicies();
     this.loadPolicyTypes(); 
     this.fetchInstallmentTypes();
   }
-
+  checkPolicy(policyId: any): void {
+    this.router.navigate([`/customer-view/check-policy/${policyId}`],{
+      state: {
+        policyId: this.policyId,
+        customerId: this.customerId,
+        customer:this.customer
+      },
+    });
+  }
   loadPolicies(): void {
-    this.policyService.getPolicies().subscribe(
-      (response) => {
+    this.policyService.getPolicies().subscribe({
+      next: (response) => {
         this.policies = response;
         this.filteredPolicies = response; 
+        
       },
-      (error) => {
+      error: (error) => {
         this.errorMessage = 'Failed to load policies. Please try again later.';
         console.error('Error fetching policies:', error);
       }
-    );
+    });
   }
+
+  
+      
+    
+      
+    
 
   fetchInstallmentTypes(): void {
     this.cutomerService.getInstallmentTypes().subscribe(
@@ -93,7 +113,7 @@ export class ViewAllPoliciesComponent implements OnInit {
       return
     }
     if(localStorage.getItem('userId') != null){
-      this.router.navigate(['/create-policy-account'],{state:
+      this.router.navigate(['/customer-view/create-policy-account'],{state:
         {customerId:this.customerId,
         PolicyData:policy,
         PolicyTerm:this.policyTerm,

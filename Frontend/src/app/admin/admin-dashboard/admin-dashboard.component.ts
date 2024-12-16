@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminDashboardService } from 'src/app/services/admin-dashboard.service';
 import { Router } from '@angular/router';
 import { City } from 'src/app/models/city';
@@ -9,11 +9,38 @@ import { State } from 'src/app/models/state';
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css'],
 })
-export class AdminDashboardComponent {
+export class AdminDashboardComponent  implements OnInit {
   cities: City[] = [];
   states: State[] = [];
+  admin:any
   constructor(private adminService: AdminDashboardService, private router: Router) {}
+  ngOnInit() {
+    this.loadAdmin();
+  }
 
+  loadAdmin() {
+    const adminId = localStorage.getItem('adminId');
+    console.log('Retrieved Admin ID:', adminId); // Debug
+    
+    // if (!adminId) {
+    //   alert("Admin ID not found! Please log in again.");
+    //   this.router.navigate(['/login-dashboard']);
+    //   return;
+    // }
+  
+    // this.adminService.getAdminById(adminId).subscribe({
+    //   next: (response) => {
+    //     this.admin = response.data.result;
+    //     console.log('Admin data:', this.admin); // Debug fetched data
+    //   },
+    //   error: (err) => {
+    //     console.error('Error fetching admin:', err); // Debug error details
+    //     alert("Invalid Admin!");
+    //     this.router.navigate(['/login-dashboard']);
+    //   }
+    // });
+  }
+  
 
   viewAllUsers(): void {
     this.router.navigate(['/admin-view/view-users'], { relativeTo: this.router.routerState.root });
@@ -79,6 +106,14 @@ export class AdminDashboardComponent {
   
   viewPolicyTypes(): void {
     this.router.navigate(['/admin-view/view-policy-types'], { relativeTo: this.router.routerState.root });
+  }
+
+  //addons
+  viewAllClaims(): void {
+    this.router.navigate(['/admin-view/claim-request'], { relativeTo: this.router.routerState.root });
+  }
+  viewCustomerTransactions(): void {
+    this.router.navigate(['/admin-view/view-transactions'], { relativeTo: this.router.routerState.root });
   }
 
   // Reports

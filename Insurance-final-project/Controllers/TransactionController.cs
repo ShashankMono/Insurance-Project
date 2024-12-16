@@ -48,29 +48,29 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpGet("customer/{customerId}")]
-        public async Task<IActionResult> GetTransactionByCustomerId(Guid customerId, 
+        public async Task<IActionResult> GetTransactionByCustomerId(Guid customerId,
             [FromQuery] PageParameters pageParameter,
-            [FromQuery]string? searchQuery,
-            [FromQuery]DateTime? startDate,
+            [FromQuery] string? searchQuery,
+            [FromQuery] DateTime? startDate,
             [FromQuery] DateTime? endDate)
         {
-                var transactions = await _transactionService.GetTransactionByCustomerId(customerId,
-                    searchQuery,
-                    startDate,
-            endDate);
+            var transactions = await _transactionService.GetTransactionByCustomerId(customerId,
+                searchQuery,
+                startDate,
+        endDate);
 
             var pagedData = PageList<TransactionDto>.ToPagedList(transactions, pageParameter.PageNumber, pageParameter.PageSize);
 
             return Ok(new
-                {
-                    Success = true,
-                    Data = pagedData,
-                    totalItems = pagedData.TotalCount,
-                    pageNumber = pagedData.CurrentPage,
-                    pagesize = pagedData.PageSize,
-                    totalPages = pagedData.TotalPages,
+            {
+                Success = true,
+                Data = pagedData,
+                totalItems = pagedData.TotalCount,
+                pageNumber = pagedData.CurrentPage,
+                pagesize = pagedData.PageSize,
+                totalPages = pagedData.TotalPages,
                 Message = "Transactions retrieved successfully."
-                });
+            });
         }
 
         [HttpGet]

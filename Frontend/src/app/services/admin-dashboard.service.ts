@@ -11,6 +11,9 @@ export class AdminDashboardService {
 
   constructor(private http: HttpClient) {}
 
+  getAdminById(adminId: string): Observable<any> {
+    return this.http.get<any>(`${this.url}/Admin/${adminId}`);
+  }
   addAgent(agent: any): Observable<any> {
     return this.http.post(`${this.url}/Agent`, agent);
   }

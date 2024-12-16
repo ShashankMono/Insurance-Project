@@ -1,1 +1,121 @@
-<p>agent-header works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+    <div class="container-fluid">
+      <!-- Agent Dashboard Header -->
+      <a class="navbar-brand" routerLink="/agent-view">Agent Dashboard</a>
+  
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#agentNavbar"
+        aria-controls="agentNavbar"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="agentNavbar">
+        <ul class="navbar-nav ms-auto">
+          <!-- Marketing -->
+          <li class="nav-item">
+            <a class="nav-link" (click)="goToMarketing()">
+              Marketing
+            </a>
+          </li>
+  
+          <!-- Policy Accounts -->
+          <li class="nav-item">
+            <a class="nav-link" (click)="viewPolicyAccounts()">
+              Policy Accounts
+            </a>
+          </li>
+  
+          <!-- Commissions Dropdown -->
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Commissions
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" (click)="viewCommissions()">
+                  View Commissions
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" (click)="withdrawCommission()">
+                 Withdraw Commission
+                </a>
+              </li>
+            </ul>
+          </li>
+  
+          <!-- Withdrawal History -->
+          <li class="nav-item">
+            <a class="nav-link" (click)="viewWithdrawalHistory()">
+              Withdrawal History
+            </a>
+          </li>
+  
+          <!-- Agent Profile Dropdown -->
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Agent Profile
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" (click)="viewProfile()">
+                  View Profile
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" (click)="editProfile()">
+                 Edit Profile
+                </a>
+              </li>
+            </ul>
+          </li>
+  
+          <!-- Policy Schemes -->
+          <li class="nav-item">
+            <a class="nav-link" (click)="viewPolicySchemes()">
+              Policy Schemes
+            </a>
+          </li>
+
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              id="userActionDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              (click)="$event.preventDefault()"
+            >
+              User Action
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userActionDropdown">
+              <li>
+                <a class="dropdown-item" routerLink="/change-username">Change Username</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/change-password">Change Password</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
+  

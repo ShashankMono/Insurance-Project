@@ -91,7 +91,7 @@ export class ViewNomineesComponent {
 
   addNominee() {
     console.log('working');
-    this.router.navigate(['/add-nominee', this.customerId]);
+    this.router.navigate(['/customer-view/add-nominee', this.customerId]);
   }
 
   deleteNominee(nomineeId: any): void {

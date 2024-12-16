@@ -1,42 +1,134 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
-    <div class="container-fluid">
-      <!-- Logo -->
-      <!-- <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="assets/logo.png" alt="Logo" width="40" height="40" class="me-2">
-        <span>Insurance Admin</span>
-      </a> -->
-  
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link active cursor-pointer" aria-current="page" routerLink="/admin-view">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Agents</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Policies</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Claims</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Reports</a>
-          </li>
-        </ul>
-  
-        <div class="dropdown">
-          <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+  <div class="container-fluid">
+    <!-- Admin Dashboard Link -->
+    <a class="navbar-brand" routerLink="/admin-view">Admin Dashboard</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#adminNavbar"
+      aria-controls="adminNavbar"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="adminNavbar">
+      <ul class="navbar-nav ms-auto">
+        <!-- Policies Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Policies
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" (click)="viewPolicies()">View Policies</a></li>
+            <li><a class="dropdown-item" (click)="addPolicy()">Add Policy</a></li>
+            <li><a class="dropdown-item" (click)="viewPolicyTypes()">View Policy Types</a></li>
+            <li><a class="dropdown-item" (click)="addPolicyType()">Add Policy Type</a></li>
+          </ul>
+        </li>
+
+        <!-- Agent and Employee Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Agent and Employee
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" (click)="viewAllAgents()">View Agents</a></li>
+            <li><a class="dropdown-item" (click)="addAgent()">Add Agent</a></li>
+            <li><a class="dropdown-item" (click)="viewAllEmployee()">View Employees</a></li>
+            <li><a class="dropdown-item" (click)="addEmployee()">Add Employee</a></li>
+          </ul>
+        </li>
+
+        <!-- User Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            User
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" (click)="viewAllUsers()">View Users</a></li>
+            <li><a class="dropdown-item" (click)="viewAllRoles()">View Roles</a></li>
+            <li><a class="dropdown-item" (click)="addRole()">Add Role</a></li>
+          </ul>
+        </li>
+
+        <!-- State and City Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            State and City
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" (click)="getStates()">View States</a></li>
+            <li><a class="dropdown-item" (click)="addState()">Add State</a></li>
+            <li><a class="dropdown-item" (click)="getCities()">View Cities</a></li>
+            <li><a class="dropdown-item" (click)="addCity()">Add City</a></li>
+          </ul>
+        </li>
+
+
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="userActionDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            (click)="$event.preventDefault()"
+          >
+            User Action
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userActionDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="/change-username">Change Username</a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/change-password">Change Password</a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Admin Profile Dropdown -->
+        <!-- <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="userDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
             Admin <i class="bi bi-person-circle"></i>
-          </button>
+          </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
             <li><a class="dropdown-item" href="#">Profile</a></li>
             <li><a class="dropdown-item" href="#">Settings</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
           </ul>
-        </div>
-      </div>
+        </li> -->
+      </ul>
     </div>
+  </div>
 </nav>
-  

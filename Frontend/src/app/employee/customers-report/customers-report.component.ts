@@ -53,7 +53,7 @@ export class CustomersReportComponent {
   }
 
   viewReport(customerId:any){
-    this.router.navigate(['/employee-dashboard/view-report'],{state:{customerId}})
+    this.router.navigate(['/employee-view/view-report'],{state:{customerId}})
   }
 
   changePage(page: number): void {

@@ -9,6 +9,7 @@ export class AgentDashboardService {
   private url='https://localhost:7258/api'
   constructor(private http: HttpClient) {}
 
+  
   getAgentReport(agentId: any): Observable<any> {
     return this.http.get(`${this.url}/Agent/${agentId}`);
   }
@@ -26,5 +27,8 @@ export class AgentDashboardService {
   }
   getCommissionWithdrawals(agentId: any): Observable<any> {
     return this.http.get(`${this.url}/CommissionWithdrawal/${agentId}`);
+  }
+  updateAgentProfile(agent: any): Observable<any> {
+    return this.http.put<any>(`${this.url}/Agent`, agent);
   }
 }
