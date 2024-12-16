@@ -18,11 +18,13 @@ export class LoginHeaderComponent {
   getDashboard():string{
     switch(this.userRole){
       case 'Admin':
-        return '/admin-dashboard';
+        return '/admin-view';
       case 'Agent':
-        return '/agent-dashboard'
+        return '/agent-view'
       case 'Customer':
-        return '/customer-dashboard'
+        return '/customer-view'
+      case 'Employee':
+        return '/employee-view'
       default :
         return '/login-dashboard'
     }
@@ -33,7 +35,7 @@ export class LoginHeaderComponent {
     localStorage.removeItem('role');
     localStorage.removeItem('userId');
     localStorage.clear();
-    this.router.navigateByUrl('/login-dashboard');
+    this.router.navigateByUrl('/landing-page');
   }
 
 }

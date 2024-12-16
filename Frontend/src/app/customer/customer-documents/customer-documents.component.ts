@@ -13,6 +13,7 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
 })
 export class CustomerDocumentsComponent implements OnInit {
   documents: any[] = [];
+  
   successMessage: string | null = null;
   errorMessage: string | null = null;
   selectedDocumentUrl: string | null = null;

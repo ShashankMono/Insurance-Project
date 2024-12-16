@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Models;
+using Insurance_final_project.PagingFiles;
 using Insurance_final_project.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -124,10 +125,18 @@ namespace Insurance_final_project.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers([FromQuery] PageParameters pageParameter,
+            [FromQuery] string? searchQuery)
         {
-            var users = await _userService.GetUsers();
-            return Ok(new { Success = true, Data = users, Message = "All users retrieved successfully." });
+            var users = await _userService.GetUsers(searchQuery);
+            var pagedData = PageList<UserLogInResponseDto>.ToPagedList(users, pageParameter.PageNumber, pageParameter.PageSize);
+            return Ok(new { Success = true,
+                Data = pagedData,
+                totalItems = pagedData.TotalCount,
+                pageNumber = pagedData.CurrentPage,
+                pagesize = pagedData.PageSize,
+                totalPages = pagedData.TotalPages,
+                Message = "All users retrieved successfully." });
         }
 
         [HttpPost("deactivate")]

@@ -76,7 +76,7 @@ export class AddNomineeComponent {
           if(response.success){
             alert("Nominee added successfully!");
           }
-          this.router.navigate(['/customer-dashboard']);
+          this.router.navigate(['/customer-view']);
         },
         error:(err:HttpErrorResponse) => {
           if(err.error.exceptionMessage){

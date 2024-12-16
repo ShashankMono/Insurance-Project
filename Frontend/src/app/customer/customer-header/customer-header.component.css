@@ -1,0 +1,24 @@
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block; /* Shows the dropdown */
+}
+  
+.nav-item.dropdown .dropdown-menu {
+    display: none; /* Hide the dropdown by default */
+    position: absolute;
+    top: 100%; /* Position the dropdown below the menu item */
+    left: 0;
+    min-width: 10rem;
+    z-index: 1000; /* Ensure it appears above other content */
+}
+  
+  /* Optional: Add some transition for smooth hover effect */
+.nav-item.dropdown .dropdown-menu {
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+  
+  /* Optional: Adjust dropdown menu appearance */
+.dropdown-menu {
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}

@@ -90,6 +90,6 @@ export class ViewQueryComponent {
   }
 
   addQuery(): void {
-    this.router.navigate(['/add-query', this.customerId]);
+    this.router.navigate(['/customer-view/add-query', this.customerId]);
   }
 }

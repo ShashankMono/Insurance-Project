@@ -77,10 +77,10 @@ export class LoginDashboardComponent {
               this.router.navigate(['/admin-view']);
               break;
             case 'Customer':
-              this.router.navigate(['/customer-dashboard']);
+              this.router.navigate(['/customer-view']);
               break;
             case 'Employee':
-              this.router.navigate(['/employee-dashboard']);
+              this.router.navigate(['/employee-view']);
               break;
             case 'Agent':
               this.router.navigate(['/agent-view']);

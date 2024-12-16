@@ -29,6 +29,6 @@ export class ViewAgentsComponent {
     });
   }
   getReport(agentId: any): void {
-    this.router.navigate(['/agent-report', agentId]);
+    this.router.navigate(['/admin-view/agent-report', agentId]);
   }
 }

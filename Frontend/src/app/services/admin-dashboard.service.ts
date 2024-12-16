@@ -11,6 +11,9 @@ export class AdminDashboardService {
 
   constructor(private http: HttpClient) {}
 
+  getAdminById(adminId: string): Observable<any> {
+    return this.http.get<any>(`${this.url}/Admin/${adminId}`);
+  }
   addAgent(agent: any): Observable<any> {
     return this.http.post(`${this.url}/Agent`, agent);
   }
@@ -70,25 +73,6 @@ export class AdminDashboardService {
   
   getPolicy(): Observable<{ success: boolean; data: any[]; message: string }> {
     return this.http.get<{ success: boolean; data: any[]; message: string }>(`${this.url}/Policy`);
-  }
-  
-  
-
-  // getClaimAccounts(): Observable<any> {
-  //   return this.http.get(`${this.url}/get-claim-accounts`);
-  // }
-
-  // getCommissions(): Observable<any> {
-  //   return this.http.get(`${this.url}/get-commissions`);
-  // }
-
- 
-
-  // getPolicyAccount(): Observable<any> {
-  //   return this.http.get(`${this.url}/get-policy-account`);
-  // }
-  getAllUsers(): Observable<any> {
-    return this.http.get(`${this.url}/User`);
   }
   
   addUser(user: any): Observable<any> {

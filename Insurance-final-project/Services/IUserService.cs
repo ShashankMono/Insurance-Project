@@ -5,10 +5,10 @@ namespace Insurance_final_project.Services
 {
     public interface IUserService
     {
-        public Task<Guid> AddUser(UserDto user);// add new user
-        public Task<(string token, UserLogInResponseDto userData)> LogIn(UserLoginDto user);// make login
-        public Task<bool> UpdateUsername(UserUpdateDto user);// just password can be changed and can change username too
-        public Task<List<UserDto>> GetUsers();// to verify the username are unique
+        public Task<Guid> AddUser(UserDto user);
+        public Task<(string token, UserLogInResponseDto userData)> LogIn(UserLoginDto user);
+        public Task<bool> UpdateUsername(UserUpdateDto user);
+        public Task<List<UserLogInResponseDto>> GetUsers(string? searchQuery);
         public  Task<UserDto> GetUserById(Guid id);
         public  Task<bool> ChangePassword(ChangePasswordDto changePassword);
         public  Task<bool> DeactivateUser(ChangeUserStatusDto changeStatus);

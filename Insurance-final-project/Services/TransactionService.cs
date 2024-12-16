@@ -58,14 +58,14 @@ namespace Insurance_final_project.Services
 
             var query = _TransactionRepo.GetAll()
                 .Include(t => t.PolicyAccount).ThenInclude(pa => pa.Policy)
-                .Where(t=>t.CustomerId == customerId)
-                .OrderByDescending(t=>t.Id)
+                .Where(t => t.CustomerId == customerId)
+                .OrderByDescending(t => t.Id)
             .AsQueryable();
 
             if (!string.IsNullOrEmpty(searchQuery))
             {
                 searchQuery = searchQuery.ToLower();
-                query = query.Where(t => t.PolicyAccount.Policy.Name.ToLower() == searchQuery || 
+                query = query.Where(t => t.PolicyAccount.Policy.Name.ToLower() == searchQuery ||
                     t.ReferenceNumber.ToString().ToLower() == searchQuery ||
                     t.Type.ToLower() == searchQuery
                 );
@@ -92,22 +92,22 @@ namespace Insurance_final_project.Services
                 .OrderByDescending(t => t.Id)
                 .AsQueryable();
 
-            if(!string.IsNullOrEmpty(searchQuery))
+            if (!string.IsNullOrEmpty(searchQuery))
             {
                 searchQuery = searchQuery.ToLower();
-                query = query.Where(t=>t.PolicyAccount.Policy.Name.ToLower() == searchQuery ||
-                    (t.Customer.FirstName+" "+t.Customer.LastName).ToLower() == searchQuery ||
+                query = query.Where(t => t.PolicyAccount.Policy.Name.ToLower() == searchQuery ||
+                    (t.Customer.FirstName + " " + t.Customer.LastName).ToLower() == searchQuery ||
                     t.ReferenceNumber.ToString().ToLower() == searchQuery ||
                     t.Type.ToLower() == searchQuery
                 );
             }
             if (startDate.HasValue)
             {
-                query = query.Where(t=>t.DateTime.Date >=  startDate.Value.Date);
+                query = query.Where(t => t.DateTime.Date >= startDate.Value.Date);
             }
-            if (endDate.HasValue) 
-            { 
-                query=query.Where(t=>t.DateTime.Date <= endDate.Value.Date);
+            if (endDate.HasValue)
+            {
+                query = query.Where(t => t.DateTime.Date <= endDate.Value.Date);
             }
 
             return _Mapper.Map<List<Transaction>, List<TransactionDto>>(query.ToList());

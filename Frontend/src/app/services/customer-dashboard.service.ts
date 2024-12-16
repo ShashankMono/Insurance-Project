@@ -117,6 +117,6 @@ export class CustomerDashboardService {
           params = params.set('searchQuery', searchQuery);
         }
 
-    return this.http.get(`${this.url}/Customer`);
+    return this.http.get(`${this.url}/Customer`,{params});
   }
 }

@@ -1,18 +1,27 @@
-.dashboard-btn {
-    width: 150px;
-    height: 150px;
+.customer-dashboard {
+    margin-top: 1rem;
+  }
+  
+  .dashboard-section {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .dashboard-section h5 {
+    margin-bottom: 1rem;
+  }
+  
+  .dashboard-btn {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    font-size: 1.2rem;
-    margin: 20px;
-    border-radius: 12px;
-}
-.dashboard-btn i {
-    font-size: 3rem;
-    margin-bottom: 10px;
-}
-.dashboard-section {
-    text-align: center;
-}
+    justify-content: center;
+    margin: 0.5rem 0;
+    width: 100%;
+  }
+  
+  .dashboard-btn i {
+    margin-right: 0.5rem;
+  }
+  

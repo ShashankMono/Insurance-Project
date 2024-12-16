@@ -1,38 +1,79 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-    <div class="container-fluid">
-      
-      <div class="collapse navbar-collapse" id="customerNavbar">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Policies</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Claims</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Payments</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Support</a>
-          </li>
-        </ul>
-  
-        <div class="dropdown">
-          <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            <!-- {{ customerName }}  -->
-            <i class="bi bi-person-circle"></i>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
-          </ul>
-        </div>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#customerNavbar" aria-controls="customerNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="customerNavbar">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/customer-view">Customer Dashboard</a>
+        </li>
+      </ul>
     </div>
-  </nav>
-  
+    <div class="collapse navbar-collapse" id="customerNavbar">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/customer-view/view-policies">Policies</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="claimPolicy()">Claims</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="getTransactionHistory()">Payments</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Profile
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" (click)="viewProfile()">View Profile</a></li>
+            <li><a class="dropdown-item" (click)="editProfile()">Edit Profile</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Nominee
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" (click)="addNominee()">Add Nominee</a></li>
+            <li><a class="dropdown-item" (click)="viewNominee()">View Nominees</a></li>
+          </ul>
+        </li>
+
+        <!-- Query Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Query
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" (click)="submitQuery()">Submit Query</a></li>
+            <li><a class="dropdown-item" (click)="viewQueries()">View Queries</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="userActionDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            (click)="$event.preventDefault()"
+          >
+            User Action
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userActionDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="/change-username">Change Username</a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/change-password">Change Password</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

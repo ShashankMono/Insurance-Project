@@ -130,10 +130,10 @@ export class ViewReportComponent {
   }
 
   viewInstallments(policyAccountId:any){
-    const basePath = this.router.url.includes('/admin-view') ? '/admin-view' : '/employee-dashboard';
-this.router.navigate([`${basePath}/view-policy-installment`], {
-  state: { policyAccountId },
-});
+      const basePath = this.router.url.includes('/admin-view') ? '/admin-view' : '/employee-view';
+      this.router.navigate([`${basePath}/view-policy-installment`], {
+      state: { policyAccountId },
+    });
   }
 
 }

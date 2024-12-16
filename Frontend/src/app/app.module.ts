@@ -99,6 +99,8 @@ import { UpdateUsernameComponent } from './login/update-username/update-username
 import { UpdateUserpasswordComponent } from './login/update-userpassword/update-userpassword.component';
 import { ClaimRequestComponent } from './admin/claim-request/claim-request.component';
 import { ViewAllCustomersTransactionsComponent } from './admin/view-all-customers-transactions/view-all-customers-transactions.component';
+import { CheckPolicyComponent } from './customer/check-policy/check-policy.component';
+
 import { PolicyCancelRequestComponent } from './admin/policy-cancel-request/policy-cancel-request.component';
 
 
@@ -190,6 +192,7 @@ import { PolicyCancelRequestComponent } from './admin/policy-cancel-request/poli
     ViewPolicyInstallmentComponent,
     UpdateUsernameComponent,
     UpdateUserpasswordComponent,
+    CheckPolicyComponent,
     ClaimRequestComponent,
     ViewAllCustomersTransactionsComponent,
     PolicyCancelRequestComponent,

@@ -31,7 +31,7 @@ export class SuccessComponent {
   }
 
   getInstallmentPage(){
-    this.router.navigate(['/policy-operations'],{state:{customerId:this.customerId}})
+    this.router.navigate(['/customer-view/policy-operations'],{state:{customerId:this.customerId}})
   }
 
   

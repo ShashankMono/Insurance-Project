@@ -1,20 +1,18 @@
 <div class="container py-5">
   <h2 class="text-center mb-4">View All Users</h2>
 
-  <!-- Role Selection Dropdown -->
-  <div class="mb-4">
-    <label for="roleSelect" class="form-label">Filter by Role:</label>
-    <select 
-      id="roleSelect" 
-      class="form-select" 
-      [(ngModel)]="selectedRole" 
-      (change)="filterUsersByRole()">
-      <option value="All">All Roles</option>
-      <option *ngFor="let role of roles" [value]="role.roleName">{{ role.roleName }}</option>
-    </select>
-  </div>
+<div class="mb-3">
+  <label for="searchInput" class="form-label">Search</label>
+  <input
+    type="text"
+    id="searchInput"
+    class="form-control"
+    [(ngModel)]="searchText"
+    (input)="onInput($event)"
+    placeholder="Search by Policy Name, Customer Name, Status, or Approval"
+  />
+</div>
 
-  <!-- User Table -->
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -26,7 +24,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of filteredUsers; let i = index;">
+      <tr *ngFor="let user of users; let i = index;">
         <td>{{ i + 1 }}</td>
         <td>{{ user.username }}</td>
         <td>{{ user.roleName }}</td>
@@ -49,4 +47,23 @@
       </tr>
     </tbody>
   </table>
+
+  <nav *ngIf="totalPages > 1" aria-label="Page navigation" class="d-flex justify-content-center mt-3">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <button class="page-link" (click)="changePage(currentPage - 1)">Previous</button>
+      </li>
+      <li
+        class="page-item"
+        *ngFor="let page of [].constructor(totalPages); let idx = index"
+        [class.active]="currentPage === idx + 1"
+      >
+        <button class="page-link" (click)="changePage(idx + 1)">{{ idx + 1 }}</button>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <button class="page-link" (click)="changePage(currentPage + 1)">Next</button>
+      </li>
+    </ul>
+  </nav>
+
 </div>

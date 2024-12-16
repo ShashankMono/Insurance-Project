@@ -17,7 +17,7 @@ namespace Insurance_final_project.Dto
 
         [Required(ErrorMessage = "Customer ID is required.")]
         public Guid CustomerId { get; set; }
-        public string? CustomerName {  get; set; }
+        public string? CustomerName { get; set; }
 
         [Required(ErrorMessage = "Policy Account ID is required.")]
         public Guid PolicyAccountId { get; set; }
