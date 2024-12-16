@@ -102,6 +102,7 @@ import { ViewAllCustomersTransactionsComponent } from './admin/view-all-customer
 import { CheckPolicyComponent } from './customer/check-policy/check-policy.component';
 
 import { PolicyCancelRequestComponent } from './admin/policy-cancel-request/policy-cancel-request.component';
+import { ShowPolicyByAgentComponent } from './customer/show-policy-by-agent/show-policy-by-agent.component';
 
 
 
@@ -196,6 +197,7 @@ import { PolicyCancelRequestComponent } from './admin/policy-cancel-request/poli
     ClaimRequestComponent,
     ViewAllCustomersTransactionsComponent,
     PolicyCancelRequestComponent,
+    ShowPolicyByAgentComponent,
     
   ],
   imports: [

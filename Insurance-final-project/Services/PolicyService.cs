@@ -21,6 +21,7 @@ namespace Insurance_final_project.Services
         public async Task<Guid> AddPolicy(PolicyDto policy)
         {
             check(policy);
+         
             var newPolicy = _Mapper.Map<PolicyDto, Policy>(policy);
             Policy policyAdded = _PolicyRepo.Add(newPolicy);
             return policyAdded.Id;

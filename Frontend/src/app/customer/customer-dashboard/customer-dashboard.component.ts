@@ -27,10 +27,13 @@ export class CustomerDashboardComponent{
           }
         },
         error: (err) => {
-          alert("User not found!");
+          alert("Error occured while loading customer data")
           console.error('Error fetching customer details', err);
         }
       });
+    }else{
+      alert("Customer not found!");
+      router.navigate(['/']);
     }
   }
 

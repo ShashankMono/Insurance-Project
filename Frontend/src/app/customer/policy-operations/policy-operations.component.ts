@@ -75,7 +75,7 @@ export class PolicyOperationsComponent {
   addNominee(policyAccountId: string){
     this.router.navigate(['/customer-view/add-nominee',this.customerId],{state:{policyAccountId}})
   }
-  manageDocuments(policyAccountId: string): void {
-    this.router.navigate(['/customer-view/policy-account-documents', policyAccountId]);
+  manageDocuments(policyAccountId: string,policyId: string): void {
+    this.router.navigate(['/customer-view/policy-account-documents', policyAccountId],{state:{policyId}});
   }
 }

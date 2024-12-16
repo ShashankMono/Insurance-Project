@@ -36,8 +36,7 @@ export class AgentDashboardComponent {
   goToMarketing() {
     this.router.navigate(['/agent-view/marketing'], 
       { relativeTo: this.router.routerState.root ,
-         state:{agentId:this.agent.agentId,
-          agentName:this.agent.firstName}});
+         state:{agent:this.agent}});
   }
 
   viewPolicyAccounts() {

@@ -38,7 +38,7 @@ export class PolicyAccountComponent implements OnInit{
       installmentType: new FormControl('', Validators.required),
       document:new FormControl('',Validators.required),
     });
-    console.log("values",this.policy.name,history.state.PolicyTerm,history.state.installmentType,history.state.investmentAmount);
+    //console.log("values",this.policy.name,history.state.PolicyTerm,history.state.installmentType,history.state.investmentAmount);
     this.fetchInstallmentTypes();
 
     this.setFormValue();
@@ -78,7 +78,7 @@ export class PolicyAccountComponent implements OnInit{
       investmentAmount:history.state.investmentAmount,
       document:'',
     })
-    console.log(this.policy.name,history.state.PolicyTerm,history.state.installmentType,history.state.investmentAmount);
+    //console.log(this.policy.name,history.state.PolicyTerm,history.state.installmentType,history.state.investmentAmount);
   }
 
   fetchInstallmentTypes(): void {
@@ -157,8 +157,8 @@ export class PolicyAccountComponent implements OnInit{
   saveDocument(policyAccountId: any, fileUrl: string): void {
     console.log(policyAccountId);
     const documentData = {
-      documentType: 'Policy Document',
-      documentName: this.policyAccountForm.get('Document')?.value || this.selectedFile?.name,
+      documentType: this.policyAccountForm.get('Document')?.value ||'Policy Document',
+      documentName: this.selectedFile?.name,
       documentFileURL: fileUrl,
       isVerified: 'Pending',
       policyAccountId: policyAccountId,
