@@ -145,11 +145,18 @@ export class AdminDashboardComponent  implements OnInit {
     this.router.navigate(['/admin/approve-customer']);
   }
 
+  viewTax():void{
+    this.router.navigate(['/admin-view/tax-management']);
+  }
   
   navigateToApproveDocument(): void {
     this.router.navigate(['/admin/approve-document']);
   }
   getReport(){
     this.router.navigate(['/admin-view/agent-report'], { relativeTo: this.router.routerState.root });
+  }
+
+  viewAllCustomersReport():void{
+    this.router.navigate(['/admin-view/customer-report']);
   }
 }

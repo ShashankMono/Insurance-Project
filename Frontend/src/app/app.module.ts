@@ -103,6 +103,7 @@ import { CheckPolicyComponent } from './customer/check-policy/check-policy.compo
 
 import { PolicyCancelRequestComponent } from './admin/policy-cancel-request/policy-cancel-request.component';
 import { ShowPolicyByAgentComponent } from './customer/show-policy-by-agent/show-policy-by-agent.component';
+import { TaxManagementComponent } from './admin/tax-management/tax-management.component';
 
 
 
@@ -198,6 +199,7 @@ import { ShowPolicyByAgentComponent } from './customer/show-policy-by-agent/show
     ViewAllCustomersTransactionsComponent,
     PolicyCancelRequestComponent,
     ShowPolicyByAgentComponent,
+    TaxManagementComponent,
     
   ],
   imports: [

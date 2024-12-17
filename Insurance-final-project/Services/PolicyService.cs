@@ -20,11 +20,24 @@ namespace Insurance_final_project.Services
         }
         public async Task<Guid> AddPolicy(PolicyDto policy)
         {
-            check(policy);
-         
+            check(policy);//cheks duplication of policy scheme name
+            validateData(policy);// check validations
             var newPolicy = _Mapper.Map<PolicyDto, Policy>(policy);
             Policy policyAdded = _PolicyRepo.Add(newPolicy);
             return policyAdded.Id;
+        }
+
+        public void validateData(PolicyDto policy) {
+            if (policy.MinimumAgeCriteria > policy.MaximumAgeCriteria || policy.MinimumAgeCriteria == policy.MaximumAgeCriteria) {
+                throw new Exceptions.InvalidDataException("Invalid age criteria! please enter proper minimum and maximum age criteria");
+            }
+            if (policy.MinimumInvestmentAmount > policy.MaximumInvestmentAmount || policy.MinimumInvestmentAmount == policy.MaximumInvestmentAmount) {
+                throw new Exceptions.InvalidDataException("Invalid Investement criteria! please enter proper minimum and maximum Investment criteria");
+            }
+            if(policy.MinimumPolicyTerm > policy.MaximumPolicyTerm)
+            {
+                throw new Exceptions.InvalidDataException("Invalid Policy term criteria! please enter proper minimum and maximum Policy term criteria");
+            }
         }
 
         public void check(PolicyDto policy)

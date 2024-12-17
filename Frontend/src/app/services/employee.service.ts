@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -12,8 +12,16 @@ export class EmployeeService {
   addEmployee(employee: any): Observable<any> {
     return this.http.post(`${this.url}/Employee`, employee);
   }
-  getEmployees(): Observable<{ data: any[] }> {
-    return this.http.get<{ data: any[] }>(`${this.url}/Employee`);
+  
+  getEmployees(pageNumber: number, pageSize: number, searchQuery: string): Observable<any> {
+    let params = new HttpParams()
+          .set('pageNumber', pageNumber.toString())
+          .set('pageSize', pageSize.toString());
+    
+        if (searchQuery) {
+          params = params.set('searchQuery', searchQuery);
+        }
+    return this.http.get<{ data: any[] }>(`${this.url}/Employee`,{params});
   }
   
 }

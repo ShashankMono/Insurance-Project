@@ -81,6 +81,7 @@ namespace Insurance_final_project
             builder.Services.AddTransient<ICommonService, CommonService>();
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddTransient<ITaxService,TaxService>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

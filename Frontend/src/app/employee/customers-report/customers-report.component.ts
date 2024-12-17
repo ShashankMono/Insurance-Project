@@ -53,7 +53,13 @@ export class CustomersReportComponent {
   }
 
   viewReport(customerId:any){
-    this.router.navigate(['/employee-view/view-report'],{state:{customerId}})
+
+    const basePath = this.router.url.includes('/admin-view') ? '/admin-view' : '/employee-view';
+      this.router.navigate([`${basePath}/view-report`], {
+      state: { customerId },
+    });
+
+    // this.router.navigate(['/employee-view/view-report'],{state:{customerId}})
   }
 
   changePage(page: number): void {

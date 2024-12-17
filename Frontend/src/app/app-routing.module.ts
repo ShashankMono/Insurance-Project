@@ -82,6 +82,7 @@ import { CheckPolicyComponent } from './customer/check-policy/check-policy.compo
 
 import { PolicyCancelRequestComponent } from './admin/policy-cancel-request/policy-cancel-request.component';
 import { ShowPolicyByAgentComponent } from './customer/show-policy-by-agent/show-policy-by-agent.component';
+import { TaxManagementComponent } from './admin/tax-management/tax-management.component';
 
 const routes: Routes = [
   { 
@@ -118,6 +119,18 @@ const routes: Routes = [
         path: '',
         component:AdminDashboardComponent,
         pathMatch: 'full',
+      },
+      {
+        path:'tax-management',
+        component:TaxManagementComponent,
+      },
+      {
+        path:'view-report',
+        component:ViewReportComponent
+      },
+      {
+        path:'customer-report',
+        component:CustomersReportComponent,
       },
       {
         path:'policy-cancel-request',

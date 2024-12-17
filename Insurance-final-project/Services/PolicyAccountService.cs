@@ -60,10 +60,11 @@ namespace Insurance_final_project.Services
 
             if (!string.IsNullOrEmpty(searchQuery))
             {
-                query = query.Where(pa => pa.Policy.Name.ToLower() == searchQuery.ToLower() ||
-                    (pa.Customer.FirstName + " " + pa.Customer.LastName).ToLower() == searchQuery.ToLower() ||
-                    pa.Status.ToLower() == searchQuery.ToLower() ||
-                    pa.IsApproved.ToLower() == searchQuery.ToLower()
+                searchQuery = searchQuery.ToLower().Trim();
+                query = query.Where(pa => pa.Policy.Name.ToLower() == searchQuery ||
+                    (pa.Customer.FirstName + " " + pa.Customer.LastName).ToLower() == searchQuery ||
+                    pa.Status.ToLower() == searchQuery ||
+                    pa.IsApproved.ToLower() == searchQuery
                      );
             }
 

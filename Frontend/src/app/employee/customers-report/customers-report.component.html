@@ -9,7 +9,7 @@
           class="form-control"
           [(ngModel)]="searchText"
           (input)="onInput($event)"
-          placeholder="Search by Customer Name, City, State or Approval"
+          placeholder="Search by Customer Name, Email, Mobile number, City, State or Approval"
         />
       </div>
     
@@ -24,6 +24,7 @@
                     <th scope="col">Mobile Number</th>
                     <th scope="col">Email</th>
                     <th scope="col">State</th>
+                    <th scope="col">City</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -35,6 +36,7 @@
                     <td>{{ customer.mobileNo }}</td>
                     <td>{{ customer.emailId }}</td>
                     <td>{{ customer.state }}</td>
+                    <td>{{customer.city}}</td>
                     <td>
                         <button
                             class="btn btn-success btn-sm mx-2"

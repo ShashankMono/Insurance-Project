@@ -1,4 +1,6 @@
 ﻿using Insurance_final_project.Dto;
+using Insurance_final_project.Models;
+using Insurance_final_project.PagingFiles;
 using Insurance_final_project.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -49,14 +51,21 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllEmployees()
+        public async Task<IActionResult> GetAllEmployees([FromQuery] PageParameters pageParameter,
+            [FromQuery] string? searchQuery)
         {
-            var employees = await _employeeService.GetAllEmployee();
+            var employees = await _employeeService.GetAllEmployee(searchQuery);
+
+            var pagedData = PageList<EmployeeDto>.ToPagedList(employees, pageParameter.PageNumber, pageParameter.PageSize);
 
             return Ok(new
             {
                 Success = true,
-                Data = employees,
+                Data = pagedData,
+                totalItems = pagedData.TotalCount,
+                pageNumber = pagedData.CurrentPage,
+                pagesize = pagedData.PageSize,
+                totalPages = pagedData.TotalPages,
                 Message = "Employees retrieved successfully."
             });
         }
