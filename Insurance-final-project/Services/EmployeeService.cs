@@ -43,9 +43,23 @@ namespace Insurance_final_project.Services
             return user;
         }
 
-        public async Task<List<EmployeeDto>> GetAllEmployee()
+        public async Task<List<EmployeeDto>> GetAllEmployee(string? searchQuery)
         {
-            return _Mapper.Map<List<Employee>, List<EmployeeDto>>(_EmployeeRepo.GetAll().ToList());
+            var query = _EmployeeRepo.GetAll().AsNoTracking().AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                searchQuery = searchQuery.ToLower().Trim();
+
+                query = query.Where(e=>e.FirstName.ToLower() == searchQuery ||
+                    e.LastName.ToLower() == searchQuery || 
+                    e.MobileNo.ToLower() == searchQuery ||
+                    e.EmailId.ToLower() == searchQuery 
+
+                );
+            }
+
+            return _Mapper.Map<List<Employee>, List<EmployeeDto>>(query.ToList());
         }
 
         public async Task<Guid> UpdateEmployeeProfile(EmployeeDto employee)

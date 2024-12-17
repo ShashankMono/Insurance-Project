@@ -121,11 +121,13 @@ namespace Insurance_final_project.Services
 
             if (!string.IsNullOrEmpty(searchQuery))
             {
-                searchQuery = searchQuery.ToLower();
+                searchQuery = searchQuery.ToLower().Trim();
                 query = query.Where(c => (c.FirstName + " " + c.LastName).ToLower() == searchQuery ||
                     c.IsApproved.ToLower() == searchQuery ||
                     c.City.CityName.ToLower() == searchQuery ||
-                    c.State.StateName.ToLower() == searchQuery
+                    c.State.StateName.ToLower() == searchQuery ||
+                    c.MobileNo.ToLower() == searchQuery ||
+                    c.EmailId.ToLower() == searchQuery
                     
                 );
             }

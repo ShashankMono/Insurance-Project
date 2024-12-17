@@ -1,6 +1,19 @@
 <div class="container mt-4">
     <h1 class="text-center">Agents</h1>
-    <table *ngIf="agents.length > 0" class="table table-striped mt-3">
+
+    <div class="mb-3">
+      <label for="searchInput" class="form-label">Search</label>
+      <input
+        type="text"
+        id="searchInput"
+        class="form-control"
+        [(ngModel)]="searchText"
+        (input)="onInput($event)"
+        placeholder="Search by Agent first name or last name"
+      />
+    </div>
+
+    <table *ngIf="agents.length > 0 ; else noAgent" class="table table-striped mt-3">
         <thead>
           <tr>
             <th>Sr. no.</th>
@@ -21,5 +34,28 @@
           </tr>
         </tbody>
     </table>
+
+    <nav *ngIf="totalPages > 1" aria-label="Page navigation" class="d-flex justify-content-center mt-3">
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button class="page-link" (click)="changePage(currentPage - 1)">Previous</button>
+        </li>
+        <li
+          class="page-item"
+          *ngFor="let page of [].constructor(totalPages); let idx = index"
+          [class.active]="currentPage === idx + 1"
+        >
+          <button class="page-link" (click)="changePage(idx + 1)">{{ idx + 1 }}</button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button class="page-link" (click)="changePage(currentPage + 1)">Next</button>
+        </li>
+      </ul>
+    </nav>
+
+    <ng-template #noAgent>
+      <p class="text-center">No Agent available.</p>
+    </ng-template>
+
 </div>
   

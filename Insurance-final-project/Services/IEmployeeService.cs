@@ -6,7 +6,7 @@ namespace Insurance_final_project.Services
     {
         Task<Guid> UpdateEmployeeProfile(EmployeeDto employee);
         Task<UserDto> AddEmployee(EmployeeDto employee);
-        Task<List<EmployeeDto>> GetAllEmployee();
+        Task<List<EmployeeDto>> GetAllEmployee(string? sarchQuery);
 
     }
 }

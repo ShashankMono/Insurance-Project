@@ -1,0 +1,50 @@
+<div class="container mt-4">
+    <div class="mb-4">
+      <h4>Current Tax</h4>
+      <p>
+        <strong>Tax Percentage:</strong>
+        <span>{{ tax?.taxPercentage }}%</span>
+      </p>
+    </div>
+  
+    <div class="card">
+      <div class="card-header">
+        <h5>Update Tax Percentage</h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="taxUpdateForm" (ngSubmit)="updateTax()">
+          <div class="mb-3">
+            <label for="taxPercentage" class="form-label">New Tax Percentage</label>
+            <input
+              type="number"
+              id="taxPercentage"
+              class="form-control"
+              formControlName="taxPercentage"
+              placeholder="Enter new tax percentage"
+              step="0.01"
+              min="0"
+            />
+            <div
+              *ngIf="
+                taxUpdateForm.get('taxPercentage')?.invalid &&
+                taxUpdateForm.get('taxPercentage')?.touched
+              "
+              class="text-danger"
+            >
+              Tax Percentage is required.
+            </div>
+          </div>
+  
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="taxUpdateForm.invalid"
+          >
+            Update Tax
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

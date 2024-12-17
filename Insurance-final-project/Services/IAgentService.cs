@@ -8,7 +8,7 @@ namespace Insurance_final_project.Services
         public AgentResponseDto GetAgentById(Guid agentId);
 
         public Task<UserDto> AddAgent(AgentInputDto agent);
-        public Task<List<AgentResponseDto>> GetAllAgents();
+        public Task<List<AgentResponseDto>> GetAllAgents(string? searchQuery);
         public double ViewEarnedCommission(Guid agentId);
         public Task<Guid> UpdateAgent(AgentInputDto agent);
         public Task<AgentResponseDto> GetAgentByUserId(Guid UserId);

@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Insurance_final_project.Models
+namespace Insurance_final_project.Dto
 {
-    public class Tax
+    public class TaxDto
     {
-        [Key]
         public Guid TaxId { get; set; }
 
         [Required(ErrorMessage = "Tax percentage is required.")]

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { State } from '../models/state';
 import { City } from '../models/city';
@@ -17,8 +17,15 @@ export class AdminDashboardService {
   addAgent(agent: any): Observable<any> {
     return this.http.post(`${this.url}/Agent`, agent);
   }
-  getAgents(): Observable<{ data: any[] }> {
-    return this.http.get<{ data: any[] }>(`${this.url}/Agent`);
+  getAgents(pageNumber: number, pageSize: number, searchQuery: string): Observable<any> {
+    let params = new HttpParams()
+          .set('pageNumber', pageNumber.toString())
+          .set('pageSize', pageSize.toString());
+    
+        if (searchQuery) {
+          params = params.set('searchQuery', searchQuery);
+        }
+    return this.http.get<{ data: any[] }>(`${this.url}/Agent`,{params});
   }
   getAgentReport(agentId: any): Observable<any> {
     return this.http.get(`${this.url}/Agent/${agentId}`);

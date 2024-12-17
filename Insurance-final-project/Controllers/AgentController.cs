@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Models;
+using Insurance_final_project.PagingFiles;
 using Insurance_final_project.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -56,7 +57,6 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        // Add Agent
         [HttpPost]
         public async Task<IActionResult> AddAgent([FromBody] AgentInputDto newAgent)
         {
@@ -80,14 +80,21 @@ namespace Insurance_final_project.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAgents()
+        public async Task<IActionResult> GetAllAgents([FromQuery] PageParameters pageParameter,
+            [FromQuery] string? searchQuery)
         {
-            var agents = await _agentService.GetAllAgents();
+            var agents = await _agentService.GetAllAgents(searchQuery);
+
+            var pagedData = PageList<AgentResponseDto>.ToPagedList(agents, pageParameter.PageNumber, pageParameter.PageSize);
 
             return Ok(new
             {
                 Success = true,
-                Data = agents,
+                Data = pagedData,
+                totalItems = pagedData.TotalCount,
+                pageNumber = pagedData.CurrentPage,
+                pagesize = pagedData.PageSize,
+                totalPages = pagedData.TotalPages,
                 Message = "All agents retrieved successfully."
             });
         }

@@ -25,6 +25,7 @@ namespace Insurance_final_project.Data
         public DbSet<Transaction> Transaction { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<PolicyAccountDocument> Policydocuments { get; set; }
+        public DbSet<Tax> Tax { get; set; }
         public InsuranceContext(DbContextOptions<InsuranceContext> options) : base(options)
         {
 
@@ -181,6 +182,14 @@ namespace Insurance_final_project.Data
                 entity.HasKey(e => e.DocumentId);
 
                 entity.Property(e => e.DocumentId)
+                    .HasDefaultValueSql("NEWSEQUENTIALID()");
+            });
+
+            modelBuilder.Entity<Tax>(entity =>
+            {
+                entity.HasKey(e => e.TaxId);
+
+                entity.Property(e => e.TaxId)
                     .HasDefaultValueSql("NEWSEQUENTIALID()");
             });
         }

@@ -70,9 +70,19 @@ namespace Insurance_final_project.Services
             return user;
         }
 
-        public async Task<List<AgentResponseDto>> GetAllAgents()
+        public async Task<List<AgentResponseDto>> GetAllAgents(string? searchQuery)
         {
-            return _Mapper.Map<List<Agent>, List<AgentResponseDto>>(_agentRepository.GetAll().ToList());
+            var query = _agentRepository.GetAll().AsNoTracking().AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                searchQuery = searchQuery.ToLower().Trim();
+                 query = query.Where(a=>a.FirstName.ToLower() == searchQuery ||
+                    a.LastName.ToLower() == searchQuery
+                 );
+            }
+
+            return _Mapper.Map<List<Agent>, List<AgentResponseDto>>(query.ToList());
         }
 
         public async Task<Guid> UpdateAgent(AgentInputDto agentInput)
