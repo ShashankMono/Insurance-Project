@@ -50,6 +50,7 @@ export class LoginDashboardComponent {
   
     if (missingFields.length > 0) {
       alert(`Please enter the following: ${missingFields.join(', ')}`);
+      this.generateCaptcha();
       return;
     }
 
@@ -94,6 +95,7 @@ export class LoginDashboardComponent {
         }
       },
       error: (err: HttpErrorResponse) => {
+        this.generateCaptcha(); 
         if(err.error.exceptionMessage){
           alert("Log in failed, "+err.error.exceptionMessage);
         }else{

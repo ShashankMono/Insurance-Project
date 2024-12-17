@@ -2,9 +2,21 @@
   <h1 class="text-center mb-4">Policy Details</h1>
   <div *ngIf="policy" class="card shadow-sm">
     <div class="card-body">
-      <h5 class="card-title">{{ policy.name }}</h5>
-      <p class="card-text">{{ policy.description }}</p>
-      <div *ngIf="policy.documentsRequired">
+      <div class="d-flex align-items-start mb-3">
+        <!-- Left Section: Image -->
+        <img 
+          [src]="policy.imageUrl || 'assets/default-policy.jpg'" 
+          alt="{{ policy.name }}" 
+          class="img-thumbnail me-3" 
+          style="width: 150px; height: 150px; object-fit: cover;"
+        />
+        <!-- Right Section: Name and Description -->
+        <div>
+          <h5 class="card-title">{{ policy.name }}</h5>
+          <p class="card-text">{{ policy.description }}</p>
+        </div>
+      </div>
+      <div *ngIf="policy.documentsRequired" class="mb-3">
         <p><strong>Required Documents:</strong></p>
         <ul>
           <li *ngFor="let doc of policy.documentsRequired.split(', ')">{{ doc }}</li>
