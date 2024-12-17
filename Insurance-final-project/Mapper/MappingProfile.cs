@@ -87,7 +87,8 @@ namespace Insurance_final_project.Mapper
             CreateMap<Document, DocumentResponseDto>().ReverseMap();
             CreateMap<Customer, CustomerProfileDto>()
                 .ForMember(dest => dest.City, val => val.MapFrom(src => src.City.CityName))
-                .ForMember(dest=> dest.State,val=>val.MapFrom(src=>src.State.StateName));
+                .ForMember(dest=> dest.State,val=>val.MapFrom(src=>src.State.StateName))
+                .ForMember(dest=> dest.DocumentCount,val=>val.MapFrom(src=>src.Documents != null ? src.Documents.Count : 0));
             CreateMap<PolicyAccount, PolicyAccountResponseDto>()
                 .ForMember(dest=>dest.PolicyName,val=>val.MapFrom(src=>src.Policy.Name))
                 .ForMember(dest=>dest.RequiredDocuments,val=>val.MapFrom(src=>src.Policy.DocumentsRequired))

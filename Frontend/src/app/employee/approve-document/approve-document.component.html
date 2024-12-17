@@ -37,14 +37,14 @@
             <button
               class="btn btn-success mx-2"
               (click)="updateStatus(document.documentId, 'Verified','')"
-              [disabled]="document.isVerified === 'Verified'"
+              [disabled]="document.isVerified === 'Verified' || document.isVerified === 'Rejected'"
             >
               Approve
             </button>
             <button
               class="btn btn-danger"
               (click)="openRejectionModal(document.documentId)"
-              [disabled]="document.isVerified === 'Rejected'"
+              [disabled]="document.isVerified === 'Rejected' || document.isVerified === 'Verified'"
             >
               Reject
             </button>

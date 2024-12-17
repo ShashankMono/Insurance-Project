@@ -58,11 +58,11 @@ export class PolicyAccountVerificationComponent {
   }
 
   onInput(event: Event): void {
-    clearTimeout(this.typingTimer); // Clear the previous timer
+    clearTimeout(this.typingTimer); 
     const inputValue = (event.target as HTMLInputElement).value;
 
     this.typingTimer = setTimeout(() => {
-      this.Search(inputValue); // Execute the function after delay
+      this.Search(inputValue); 
     }, this.debounceTime);
   }
   Search(value:any){
@@ -99,14 +99,17 @@ export class PolicyAccountVerificationComponent {
       next: (response) => {
         if (response.success) {
           this.loadPolicies();
+          alert("Status updated successfully!");
         }
         if(status == 'Approved'){
           this.installmentService.addInstallments(policyId).subscribe({
             error:(err:HttpErrorResponse)=>{
               if(err.error.exceptionMessage){
                 alert(err.error.exceptionMessage);
+              }else{
+                alert("error occured while setting up the installment");
               }
-              alert("error occured while setting up the installment");
+              
               console.log(err);
             }
           });

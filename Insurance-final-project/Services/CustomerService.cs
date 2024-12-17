@@ -114,6 +114,7 @@ namespace Insurance_final_project.Services
             var query = _customerRepository.GetAll()
                 .Include(c => c.City)
                 .Include(c => c.State)
+                .Include(c=>c.Documents)
                 .OrderByDescending(c=>c.CustomerId)
                 .AsQueryable();
            

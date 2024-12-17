@@ -79,7 +79,14 @@ export class ApproveDocumentComponent implements OnInit{
           alert("Status updated successfully!");
         }
       },
-      error: (err) => console.error('Error updating document status:', err),
+      error: (err) => {
+        if(err.error.exceptionMessage){
+          alert(err.error.exceptionMessage);
+        }else{
+          alert("Error occured while updating the the status");
+        }
+        console.error('Error updating document status:', err)
+      }
     });
   }
 

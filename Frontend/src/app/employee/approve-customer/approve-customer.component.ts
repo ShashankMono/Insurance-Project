@@ -54,11 +54,11 @@ export class ApproveCustomerComponent {
   }
 
   onInput(event: Event): void {
-    clearTimeout(this.typingTimer); // Clear the previous timer
+    clearTimeout(this.typingTimer); 
     const inputValue = (event.target as HTMLInputElement).value;
 
     this.typingTimer = setTimeout(() => {
-      this.Search(inputValue); // Execute the function after delay
+      this.Search(inputValue); 
     }, this.debounceTime);
   }
   Search(value:any){
@@ -94,11 +94,16 @@ export class ApproveCustomerComponent {
       next: (response) => {
         if (response.success) {
           this.loadCustomers();
+          alert("Status updated successfully!");
         }
       },
       error: (err) => {
+        if(err.error.exceptionMessage){
+          alert(err.error.exceptionMessage);
+        }else{
+          alert("Error occured while updating the the status");
+        }
         console.error(`Error updating status for customer ${customerId}:`, err);
-        alert("Error occured while updating the the status");
       }
     });
   }
