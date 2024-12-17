@@ -31,6 +31,7 @@ export class ReferCustomerComponent {
   ngOnInit(): void {
     this.policy = history.state.policy;
     this.agent = history.state.agent;
+    console.log(this.agent,this.policy);
     this.loadCustomers();
   }
 
@@ -55,11 +56,11 @@ export class ReferCustomerComponent {
   }
 
   onInput(event: Event): void {
-    clearTimeout(this.typingTimer); // Clear the previous timer
+    clearTimeout(this.typingTimer); 
     const inputValue = (event.target as HTMLInputElement).value;
 
     this.typingTimer = setTimeout(() => {
-      this.Search(inputValue); // Execute the function after delay
+      this.Search(inputValue); 
     }, this.debounceTime);
   }
   Search(value:any){
@@ -79,7 +80,7 @@ export class ReferCustomerComponent {
       customerId:customerId,
       agentName:this.agent.firstName + " " + this.agent.lastName ,
       policyName:this.policy.name,
-      url:`http://localhost:4200/customer-dashboard/policy-agent?policyId=${this.policy.id}&agentId=${this.agent.agentId}`
+      url:`http://localhost:4200/customer-view/show-policy-by-agent?policyId=${this.policy.id}&agentId=${this.agent.agentId}`
     }
     console.log(obj);
     this.emailService.sendMarketingMail(obj).subscribe({

@@ -75,25 +75,6 @@ export class AdminDashboardService {
     return this.http.get<{ success: boolean; data: any[]; message: string }>(`${this.url}/Policy`);
   }
   
-  
-
-  // getClaimAccounts(): Observable<any> {
-  //   return this.http.get(`${this.url}/get-claim-accounts`);
-  // }
-
-  // getCommissions(): Observable<any> {
-  //   return this.http.get(`${this.url}/get-commissions`);
-  // }
-
- 
-
-  // getPolicyAccount(): Observable<any> {
-  //   return this.http.get(`${this.url}/get-policy-account`);
-  // }
-  getAllUsers(): Observable<any> {
-    return this.http.get(`${this.url}/User`);
-  }
-  
   addUser(user: any): Observable<any> {
     return this.http.post(`${this.url}/User`, user);
   }

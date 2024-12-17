@@ -20,6 +20,7 @@ export class PolicyAccountComponent implements OnInit{
   customerId: any | null = "";
   fileUploaded:boolean= false;
   policy:any="";
+  documents:any=""
 
   constructor(
     private customerDashboardService: CustomerDashboardService,
@@ -29,14 +30,15 @@ export class PolicyAccountComponent implements OnInit{
   ngOnInit(): void {
     this.customerId=history.state.customerId
     this.policy = history.state.PolicyData
-    console.log(this.customerId, this.policy);
+    this.documents = this.policy.documentsRequired .split(',').map((doc:string) => doc.trim());
     this.policyAccountForm = new FormGroup({
       policyId: new FormControl('', Validators.required),
       investmentAmount: new FormControl(0, [Validators.min(0),Validators.required]),
       policyTerm: new FormControl(0, [Validators.required, Validators.min(1)]),
       installmentType: new FormControl('', Validators.required),
+      document:new FormControl('',Validators.required),
     });
-
+    //console.log("values",this.policy.name,history.state.PolicyTerm,history.state.installmentType,history.state.investmentAmount);
     this.fetchInstallmentTypes();
 
     this.setFormValue();
@@ -73,8 +75,10 @@ export class PolicyAccountComponent implements OnInit{
       policyId:this.policy.name,
       policyTerm:history.state.PolicyTerm,
       installmentType:history.state.installmentType,
-      investmentAmount:history.state.investmentAmount
+      investmentAmount:history.state.investmentAmount,
+      document:'',
     })
+    //console.log(this.policy.name,history.state.PolicyTerm,history.state.installmentType,history.state.investmentAmount);
   }
 
   fetchInstallmentTypes(): void {
@@ -99,15 +103,48 @@ export class PolicyAccountComponent implements OnInit{
       this.selectedFile = null;
     }
   }
+  isWholeNumber(value: number): boolean {
+    return Number.isInteger(value);
+  }
 
   onSubmit(): void {
     if (this.policyAccountForm.valid && this.selectedFile) {
+      const investmentAmount = this.policyAccountForm.value.investmentAmount;
+      const policyTerm = this.policyAccountForm.value.policyTerm;
+
+      this.errorMessage = null;
+
+      let isValid = true;
+
+     
+      if (!this.isWholeNumber(investmentAmount)) {
+        isValid = false;
+        this.errorMessage = 'Investment amount should be a whole number (not a decimal).';
+      }
+
+      if (!this.isWholeNumber(policyTerm)) {
+        isValid = false;
+        if (this.errorMessage) {
+          this.errorMessage += ' Policy term should be a whole number (not a decimal).';
+        } else {
+          this.errorMessage = 'Policy term should be a whole number (not a decimal).';
+        }
+      }
+
+      if (!isValid) {
+        return;
+      }
+      
+  
+      
       const policyAccountData = {
         customerId: this.customerId,
         policyId:this.policy.id,
-        policyTerm:this.policyAccountForm.value.policyTerm,
-        investmentAmount:this.policyAccountForm.value.investmentAmount,
+        policyTerm:policyTerm,
+        investmentAmount:investmentAmount,
         installmentType:this.policyAccountForm.value.installmentType,
+
+        
       }
       console.log("Data",policyAccountData);
 
@@ -153,7 +190,7 @@ export class PolicyAccountComponent implements OnInit{
   saveDocument(policyAccountId: any, fileUrl: string): void {
     console.log(policyAccountId);
     const documentData = {
-      documentType: 'Policy Document',
+      documentType: this.policyAccountForm.get('Document')?.value ||'Policy Document',
       documentName: this.selectedFile?.name,
       documentFileURL: fileUrl,
       isVerified: 'Pending',

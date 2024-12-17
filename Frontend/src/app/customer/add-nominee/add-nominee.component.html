@@ -18,21 +18,25 @@
     </div>
 
     <div class="mb-3">
-      <label for="nomineeRelation" class="form-label">
-        Nominee Relation <span class="text-danger">*</span>
-      </label>
-      <input
-        type="text"
-        id="nomineeRelation"
-        class="form-control"
-        formControlName="nomineeRelation"
-      />
+      <div class="form-group">
+        <label for="relation">Relation</label>
+        <select
+          id="relation"
+          class="form-control"
+          formControlName="nomineeRelation"
+        >
+          <option value="" disabled selected>Select Relation</option>
+          <option *ngFor="let relation of relations" [value]="relation">
+            {{ relation }}
+          </option>
+        </select>
+      </div>
       <div *ngIf="nomineeForm.get('nomineeRelation')?.touched && nomineeForm.get('nomineeRelation')?.invalid" class="text-danger">
         Nominee relation is required.
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="nomineeForm.invalid">
+    <button type="submit" class="btn btn-primary" [disabled]="nomineeForm.invalid  || this.policyAccountId == null">
       Submit
     </button>
   </form>

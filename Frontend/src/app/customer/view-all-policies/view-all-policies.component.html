@@ -25,6 +25,9 @@
           <p class="card-text text-truncate" title="{{ policy.description }}">
             {{ policy.description }}
           </p>
+          <!-- <p class="card-text text-truncate" title="{{ policy.description }}">
+            {{ policy.requiredDocuments }}
+          </p> -->
           <ul class="list-group list-group-flush">
             <li class="list-group-item"><strong>Age Criteria:</strong> {{ policy.minimumAgeCriteria }} - {{ policy.maximumAgeCriteria }}</li>
             <li class="list-group-item"><strong>Investment:</strong> {{ policy.minimumInvestmentAmount | currency:'INR' }} - {{ policy.maximumInvestmentAmount | currency:'INR' }}</li>

@@ -58,8 +58,6 @@ export class AdminDashboardComponent  implements OnInit {
     this.router.navigate(['/admin-view/view-roles'], { relativeTo: this.router.routerState.root });
   }
 
-
-  // Agent and Employee Management
   addAgent(): void {
     this.router.navigate(['/admin-view/add-agent'], { relativeTo: this.router.routerState.root });
   }
@@ -138,6 +136,10 @@ export class AdminDashboardComponent  implements OnInit {
   navigateToPolicyAccountVerification(): void {
     this.router.navigate(['/admin/policy-account-verification']);
   }
+
+  viewAllCancelPolicies(){
+    this.router.navigate(['/admin-view/policy-cancel-request']);
+  };
   
   navigateToApproveCustomer(): void {
     this.router.navigate(['/admin/approve-customer']);

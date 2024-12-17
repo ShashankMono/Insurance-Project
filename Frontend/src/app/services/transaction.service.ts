@@ -15,8 +15,8 @@ export class TransactionService {
         .set('pageNumber', filterObj.page.toString())
         .set('pageSize', filterObj.pageSize.toString());
   
-      if (filterObj.searchQuery) {
-        params = params.set('searchQuery', filterObj.searchQuery);
+      if (filterObj.searchText) {
+        params = params.set('searchQuery', filterObj.searchText);
       }
       if(filterObj.startDate){
         params = params.set('startDate',filterObj.startDate);
@@ -34,8 +34,8 @@ export class TransactionService {
       .set('pageNumber', filterObj.page.toString())
       .set('pageSize', filterObj.pageSize.toString());
 
-    if (filterObj.searchQuery) {
-      params = params.set('searchQuery', filterObj.searchQuery);
+    if (filterObj.searchText) {
+      params = params.set('searchQuery', filterObj.searchText);
     }
     if(filterObj.startDate){
       params = params.set('startDate',filterObj.startDate);

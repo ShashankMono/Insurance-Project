@@ -37,7 +37,7 @@
           <td>{{policy.isApproved}}</td>
           <td>
             <button
-              class="btn btn-primary"
+              class="btn btn-primary mr-3"
               (click)="payInstallment(policy.id,policy.policyName)"
               [disabled]="isDisable(policy)"
             >
@@ -61,10 +61,18 @@
             </button>
             <button
             class="btn btn-info"
-            (click)="manageDocuments(policy.id)"
+            (click)="manageDocuments(policy.id,policy.policyId)"
           >
             Manage Documents
           </button>
+
+          <button
+              class="btn btn-primary"
+              (click)="addNominee(policy.id)"
+              [disabled]="isDisable(policy)"
+            >
+              Add Nominee
+            </button>
           </td>
         </tr>
       </tbody>

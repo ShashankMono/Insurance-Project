@@ -52,8 +52,8 @@ export class CustomerHeaderComponent {
   }
 
   claimPolicy(): void {
-    this.router.navigate(['/customer-view/claim-policy',this.customerId]);
-  }
+    this.router.navigate(['/customer-view/claim-policy'],{state:{customerId:this.customerId}});
+}
 
   payInstallment(): void {
     this.router.navigate(['/customer-view/pay-installment'],{state:{customerId:this.customerId}});

@@ -31,6 +31,7 @@
           id="investmentAmount"
           class="form-control"
           formControlName="investmentAmount"
+          [value]="this.investmentAmount"
           placeholder="Enter investment Amount"
         />
         <div *ngIf="policyAccountForm.get('investmentAmount')?.invalid && policyAccountForm.get('investmentAmount')?.touched" class="text-danger">
@@ -45,6 +46,7 @@
           id="policyTerm"
           class="form-control"
           formControlName="policyTerm"
+          [value]="this.PolicyTerm"
           placeholder="Enter Policy Term"
         />
         <div *ngIf="policyAccountForm.get('policyTerm')?.invalid && policyAccountForm.get('policyTerm')?.touched" class="text-danger">
@@ -57,6 +59,7 @@
         <select
           id="installmentType"
           class="form-control"
+          [value]="this.installmentType"
           formControlName="installmentType"
         >
           <option value="">-- Select Installment Type --</option>
@@ -74,6 +77,25 @@
       fileupload endpoint
       file sent
       document endpoint add-viewdocuments comp on doc button-->
+
+      <div class="mb-3">
+        <label for="document" class="form-label">Document<span class="text-danger">*</span></label>
+        <select
+          id="document"
+          class="form-control"
+          formControlName="document"
+        >
+          <option value="">-- Select document Type --</option>
+          <option *ngFor="let type of documents" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+        <div *ngIf="policyAccountForm.get('document')?.invalid && policyAccountForm.get('document')?.touched" class="text-danger">
+          Document Type is required.
+        </div>
+      </div>
+
+
       <div class="mb-3">
       <label for="fileInput" class="form-label">Upload Document<span class="text-danger">*</span></label>
       <input

@@ -1,5 +1,5 @@
 import { Component,OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/services/login.service';
 import { State } from 'src/app/models/state';
 import { City } from 'src/app/models/city';
@@ -18,6 +18,7 @@ export class CustomerRegistrationComponent implements OnInit {
   customerForm: FormGroup;
   states: any[] = [];
   cities: any[] = [];
+  filteredCities: any[] = [];
   userId: string='';
   MaxDate: any = "";
 
@@ -35,7 +36,10 @@ export class CustomerRegistrationComponent implements OnInit {
         Validators.required,
         Validators.pattern(/^\d{10}$/)
       ]),
-      dateOfBirth: new FormControl('', Validators.required),
+      dateOfBirth: new FormControl('', [
+        Validators.required,
+        this.minimumAgeValidator(18) // Add custom validator here
+      ]),
       stateId: new FormControl('', Validators.required),
       cityId: new FormControl('', Validators.required)
       
@@ -44,7 +48,7 @@ export class CustomerRegistrationComponent implements OnInit {
   
   ngOnInit() {
     this.userId = localStorage.getItem('userId') || '';
-    console.log(this.userId)
+    // console.log(this.userId)
     this.loadStates();
     this.loadCities();
     const today = new Date();
@@ -66,15 +70,25 @@ export class CustomerRegistrationComponent implements OnInit {
       this.cities = response.data;
     });
   }
-  // onStateSelect(event: Event): void {
-  //   // Get the selected state ID
-  //   const selectedStateId = (event.target as HTMLSelectElement).value;
-  //   console.log('Selected State ID:', selectedStateId);
-  //   this.loadCities(selectedStateId);
-   
-  // }
+  onStateChange() {
+    const selectedStateId = this.customerForm.get('stateId')?.value;
+    if (selectedStateId) {
+      // Filter cities based on the selected state
+      this.filteredCities = this.cities.filter(city => city.stateId === selectedStateId);
+    } else {
+      this.filteredCities = []; // No cities if no state is selected
+    }
+
+    // Clear the city selection if the state changes
+    this.customerForm.get('cityId')?.setValue('');
+  }
   // Handle customer registration form submission
   registerCustomer() {
+    if (this.customerForm.invalid) {
+      this.customerForm.markAllAsTouched();
+      alert('Please correct the errors in the form before submitting.');
+      return;
+    }
     const customerData = {
       userId: this.userId,
       firstName: this.customerForm.value.firstName,
@@ -95,5 +109,41 @@ export class CustomerRegistrationComponent implements OnInit {
         alert(response.message);
       }
     });
+  }
+
+  // Custom Validator: Minimum Age
+  minimumAgeValidator(minAge: number) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) {
+        return null; // Return null if no value is entered
+      }
+
+      const inputDate = new Date(control.value);
+      const today = new Date();
+      const minDate = new Date(
+        today.getFullYear() - minAge,
+        today.getMonth(),
+        today.getDate()
+      );
+
+      return inputDate > minDate
+        ? { minimumAge: { requiredAge: minAge, actualAge: this.calculateAge(inputDate) } }
+        : null; // Return error if input date violates the age restriction
+    };
+  }
+
+  private calculateAge(dateOfBirth: Date): number {
+    const today = new Date();
+    let age = today.getFullYear() - dateOfBirth.getFullYear();
+    const monthDifference = today.getMonth() - dateOfBirth.getMonth();
+
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < dateOfBirth.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
   }
 }

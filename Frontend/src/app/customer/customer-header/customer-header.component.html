@@ -16,13 +16,12 @@
           <a class="nav-link" routerLink="/customer-view/view-policies">Policies</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Claims</a>
+          <a class="nav-link" (click)="claimPolicy()">Claims</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/customer-view/policy-operations">Payments</a>
+          <a class="nav-link" (click)="getTransactionHistory()">Payments</a>
         </li>
 
-        <!-- Profile Dropdown -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Profile
@@ -30,11 +29,9 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" (click)="viewProfile()">View Profile</a></li>
             <li><a class="dropdown-item" (click)="editProfile()">Edit Profile</a></li>
-            <!-- <li><a class="dropdown-item" (click)="document()">Documents</a></li> -->
           </ul>
         </li>
 
-        <!-- Nominee Dropdown -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Nominee
@@ -77,18 +74,6 @@
           </ul>
         </li>
       </ul>
-
-      <!-- <div class="dropdown">
-        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="bi bi-person-circle"></i>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><a class="dropdown-item" href="#">Settings</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
-        </ul>
-      </div> -->
     </div>
   </div>
 </nav>

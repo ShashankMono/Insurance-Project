@@ -7,7 +7,7 @@ namespace Insurance_final_project.Services
         public Task<Guid> AddNominee(NomineeDto nominee);
 
         public Task<Guid> UpdateNominee(NomineeDto nominee);
-        public Task<List<NomineeDto>> GetNominees(Guid customerId);
+        public Task<List<NomineeDto>> GetNominees(Guid customerId,Guid PolicyAccountId);
         public Task<NomineeDto> GetNominee(Guid nomineeId);
         public Task<bool> Delete(Guid nomineeId);
     }

@@ -21,6 +21,7 @@ namespace Insurance_final_project.Services
         public async Task<Guid> AddPolicy(PolicyDto policy)
         {
             check(policy);
+         
             var newPolicy = _Mapper.Map<PolicyDto, Policy>(policy);
             Policy policyAdded = _PolicyRepo.Add(newPolicy);
             return policyAdded.Id;
@@ -35,7 +36,7 @@ namespace Insurance_final_project.Services
         }
         public async Task<Guid> UpdatePolicy(PolicyDto policy)
         {
-            check(policy);
+     
             if (_PolicyRepo.GetAll().AsNoTracking().FirstOrDefault(p=>p.Id == policy.Id) == null)
             {
                 throw new InvalidGuidException("Invalid Policy!");

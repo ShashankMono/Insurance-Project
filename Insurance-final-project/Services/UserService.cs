@@ -57,9 +57,20 @@ namespace Insurance_final_project.Services
             return user;
         }
 
-        public async Task<List<UserDto>> GetUsers()
+        public async Task<List<UserLogInResponseDto>> GetUsers(string? searchQuery)
         {
-            return _mapper.Map<List<User>, List<UserDto>>(_userRepo.GetAll().ToList());
+            var query = _userRepo.GetAll().Include(u=>u.Role).OrderByDescending(u=>u.UserId).AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                searchQuery = searchQuery.ToLower();
+                query = query.Where(u=>u.Username.ToLower() == searchQuery ||
+                    (u.IsActive?"active":"inactive") == searchQuery ||
+                    u.Role.RoleName.ToString() == searchQuery
+                );
+            }
+
+            return _mapper.Map<List<User>, List<UserLogInResponseDto>>(query.ToList());
         }
 
         public async Task<(string token,UserLogInResponseDto userData)> LogIn(UserLoginDto user)

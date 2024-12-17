@@ -1,9 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { UpdatePolicyAccountDocumentService } from 'src/app/services/policy-account-document.service';
+import { PolicyService } from 'src/app/services/policy.service';
 
 @Component({
   selector: 'app-policy-account-documents',
@@ -16,27 +18,31 @@ export class PolicyAccountDocumentsComponent implements OnInit {
   errorMessage: string | null = null;
   selectedDocumentUrl: string | null = null;
   isAddDocumentModalOpen: boolean = false;
-  
+  PolicyId:any=""
   policyAccountId: string = '';
   addDocumentForm!: FormGroup;
   selectedFile!: File;
   fileError: string | null = null;
-
+  policy:any="";
   isUpdateDocumentModalOpen: boolean = false;
   updateDocumentForm!: FormGroup;
   selectedDocumentId: string | null = null;
+  documentRequired:any="";
+
   constructor(
     private customerDashboardService: CustomerDashboardService,
     private router: Router,
     private route: ActivatedRoute,
     private policyAccountDocument:UpdatePolicyAccountDocumentService,
-    private fileService : FileUploadService
+    private fileService : FileUploadService,
+    private policyService : PolicyService,
   ) {}
 
   ngOnInit(): void {
     this.policyAccountId = this.route.snapshot.params['policyAccountId'];
+    this.PolicyId = history.state.policyId;
     this.fetchDocuments();
-
+    this.loadPolicy()
     this.addDocumentForm = new FormGroup({
       documentType: new FormControl('', Validators.required),
       documentName: new FormControl('', Validators.required),
@@ -46,6 +52,8 @@ export class PolicyAccountDocumentsComponent implements OnInit {
     this.updateDocumentForm = new FormGroup({
       documentFile: new FormControl(null, Validators.required),
     });
+
+    
   }
 
   fetchDocuments(): void {
@@ -57,6 +65,26 @@ export class PolicyAccountDocumentsComponent implements OnInit {
         this.errorMessage = 'Failed to fetch documents.';
       }
     );
+  }
+
+  loadPolicy(){
+    this.policyService.getPolicyById(this.PolicyId).subscribe({
+      next:(response)=>{
+        if(response.success){
+          this.policy= response.data
+          
+          this.documentRequired=this.policy?.documentsRequired.split(',').map((d:string)=>d.trim());
+          console.log(this.policy,this.documentRequired);
+        }
+      },
+      error:(err:HttpErrorResponse)=>{
+        if(err.error.exceptionMessage){
+          alert(err.error.exceptionMessage);
+        }else{
+          alert("Error occured while loading policy");
+        }
+      }
+    })
   }
 
   onFileSelected(event: Event): void {
@@ -144,9 +172,6 @@ export class PolicyAccountDocumentsComponent implements OnInit {
     this.selectedDocumentUrl = url;
   }
 
-  // openUpdateDocumentModal(documentId: string): void {
-  //   this.router.navigate(['/policy-account-documents/update', documentId]);
-  // }
 
   openUpdateDocumentModal(documentId: string): void {
     this.selectedDocumentId = documentId;

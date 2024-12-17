@@ -19,4 +19,8 @@ export class PolicyService {
     return this.http.get(`${this.url}/${policyId}`);
   }
 
+  updatePolicyStatus(policy:any):Observable<any>{
+    return this.http.put<any>(`${this.url}`,policy);
+  }
+
 }

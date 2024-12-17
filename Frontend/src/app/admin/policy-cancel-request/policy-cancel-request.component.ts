@@ -13,7 +13,6 @@ export class PolicyCancelRequestComponent {
   policyCancelAccounts: any[] = [];  
   successMessage: string | null = null;
   errorMessage: string | null = null;
-  customerId: any = "";
   currentPage: number = 1;
   pageSize: number = 1; 
   totalPages: number = 1; 
@@ -33,7 +32,6 @@ export class PolicyCancelRequestComponent {
   ) {}
 
   ngOnInit(): void {
-    this.customerId = this.route.snapshot.params['customerId'];
     this.fetchPolicyCancelAccount();
 
     this.rejectionForm = new FormGroup({

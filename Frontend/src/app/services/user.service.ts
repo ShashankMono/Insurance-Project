@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -13,6 +13,17 @@ export class UserService {
 
   getUserById(userId:any):Observable<any>{
     return this.http.get<any>(`${this.url}/${userId}`);
+  }
+
+  getAllUsers(pageNumber: number, pageSize: number, searchQuery: string): Observable<any> {
+    let params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+
+    if (searchQuery) {
+      params = params.set('searchQuery', searchQuery);
+    }
+    return this.http.get(`${this.url}`,{params});
   }
   registerUser(userData: any): Observable<any> {
     return this.http.post<any>(this.url, userData);

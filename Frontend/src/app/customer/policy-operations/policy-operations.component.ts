@@ -33,7 +33,7 @@ export class PolicyOperationsComponent {
       (response) => {
         this.policyAccounts = response.data;
         this.policyAccounts = this.policyAccounts.filter(pa=>pa.status!="Closed")
-        console.log(this.policyAccounts);
+        //console.log(this.policyAccounts);
       },
       (error) => {
         console.error('Error fetching policy accounts', error);
@@ -71,7 +71,11 @@ export class PolicyOperationsComponent {
         policyAccountId:policyAccountId
       }});
   }
-  manageDocuments(policyAccountId: string): void {
-    this.router.navigate(['/customer-view/policy-account-documents', policyAccountId]);
+
+  addNominee(policyAccountId: string){
+    this.router.navigate(['/customer-view/add-nominee',this.customerId],{state:{policyAccountId}})
+  }
+  manageDocuments(policyAccountId: string,policyId: string): void {
+    this.router.navigate(['/customer-view/policy-account-documents', policyAccountId],{state:{policyId}});
   }
 }

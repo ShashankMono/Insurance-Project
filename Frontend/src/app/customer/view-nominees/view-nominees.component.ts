@@ -3,6 +3,7 @@ import { CustomerDashboardService } from 'src/app/services/customer-dashboard.se
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { PolicyAccountService } from 'src/app/services/policy-account.service';
 @Component({
   selector: 'app-view-nominees',
   templateUrl: './view-nominees.component.html',
@@ -15,10 +16,34 @@ export class ViewNomineesComponent {
   selectedNominee: any = null; 
   editNomineeForm: FormGroup; 
   nomineeId:any="";
+  policyAccounts:any="";
+  selectedPolicyAccountId:any="";
+
+  relations: string[] = [
+    'Spouse',
+    'Son',
+    'Daughter',
+    'Father',
+    'Mother',
+    'Brother',
+    'Sister',
+    'Grandfather',
+    'Grandmother',
+    'Uncle',
+    'Aunt',
+    'Nephew',
+    'Niece',
+    'Cousin',
+    'Legal Guardian',
+    'Friend',
+    'Employer',
+    'Partner',
+  ];
   constructor(
     private customerService: CustomerDashboardService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private policyAccountService:PolicyAccountService
   ) {
 
     this.editNomineeForm = new FormGroup({
@@ -32,15 +57,42 @@ export class ViewNomineesComponent {
       this.customerId = params.get('customerId');
     });
     console.log(this.customerId);
+    this.fetchPolicyAccounts();
+  }
+
+  onChange(){
     this.fetchNominees();
   }
 
+  fetchPolicyAccounts(): void {
+    this.policyAccountService.getPolicyAccountsByCustomerId(this.customerId).subscribe(
+      (response) => {
+        this.policyAccounts = response.data;
+        this.policyAccounts = this.policyAccounts.filter((pa:any)=>pa.status!="Closed")
+        console.log(this.policyAccounts);
+      },
+      (err:HttpErrorResponse) => {
+        if(err.error?.exceptionMessage){
+          alert(err.error.exceptionMessage);
+        }else{
+          alert("Error occured!");
+        }
+        console.error('Error fetching policy accounts', err);
+      }
+    );
+  }
+
   fetchNominees(): void {
-    this.customerService.getNomineesByCustomerId(this.customerId!).subscribe({
+    this.customerService.getNomineesByCustomerId(this.customerId,this.selectedPolicyAccountId).subscribe({
       next: (response) => {
         this.nomineeData = response;
       },
       error: (err: HttpErrorResponse) => {
+        if(err.error?.exceptionMessage){
+          alert(err.error?.exceptionMessage);
+        }else{
+          alert("error occured while loading nominees");
+        }
         console.log(err.error);
       },
     });
@@ -63,7 +115,8 @@ export class ViewNomineesComponent {
         id:this.nomineeId,
         nomineeName:this.editNomineeForm.value.nomineeName,
         nomineeRelation:this.editNomineeForm.value.nomineeRelation,
-        customerId:this.customerId
+        customerId:this.customerId,
+        policyAccountId:this.selectedPolicyAccountId
       }
 
       this.customerService.updateNomine(obj).subscribe({

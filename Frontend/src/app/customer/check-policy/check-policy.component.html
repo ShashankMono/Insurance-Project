@@ -4,13 +4,19 @@
     <div class="card-body">
       <h5 class="card-title">{{ policy.name }}</h5>
       <p class="card-text">{{ policy.description }}</p>
+      <div *ngIf="policy.documentsRequired">
+        <p><strong>Required Documents:</strong></p>
+        <ul>
+          <li *ngFor="let doc of policy.documentsRequired.split(', ')">{{ doc }}</li>
+        </ul>
+      </div>
+      
       <ul class="list-group list-group-flush">
         <li class="list-group-item"><strong>Investment:</strong> {{ policy.minimumInvestmentAmount | currency:'INR' }} - {{ policy.maximumInvestmentAmount | currency:'INR' }}</li>
         <li class="list-group-item"><strong>Term:</strong> {{ policy.minimumPolicyTerm }} - {{ policy.maximumPolicyTerm }} years</li>
         <li class="list-group-item"><strong>Profit %:</strong> {{ policy.profitPercentage }}%</li>
       </ul>
       
-      <!-- Investment Amount Field -->
       <div class="mt-3">
         <label>Investment Amount:</label>
         <input 
@@ -23,12 +29,14 @@
           [min]="policy?.minimumInvestmentAmount" 
           [max]="policy?.maximumInvestmentAmount"
         />
+        <div *ngIf="!isWholeNumber(investmentAmount)" class="text-danger">
+          Investment amount should be a whole number.
+        </div>
         <div *ngIf="investment.invalid && investment.touched" class="text-danger">
           Please enter an amount between {{ policy.minimumInvestmentAmount }} and {{ policy.maximumInvestmentAmount }}.
         </div>
       </div>
 
-      <!-- Policy Term Field -->
       <div class="mt-3">
         <label>Policy Term (Years):</label>
         <input 
@@ -41,12 +49,14 @@
           [min]="policy?.minimumPolicyTerm" 
           [max]="policy?.maximumPolicyTerm"
         />
+        <div *ngIf="!isWholeNumber(policyTerm)" class="text-danger">
+          Policy term should be a whole number.
+        </div>
         <div *ngIf="term.invalid && term.touched" class="text-danger">
           Please select a term between {{ policy.minimumPolicyTerm }} and {{ policy.maximumPolicyTerm }} years.
         </div>
       </div>
 
-      <!-- Installment Type Field -->
       <div class="mt-3">
         <label>Installment Type:</label>
         <select [(ngModel)]="installment" class="form-control" required>
@@ -62,7 +72,6 @@
         <button class="btn btn-success" (click)="calculateInvestment()">Calculate</button>
       </div>
 
-      <!-- Result Section -->
       <div class="mt-3">
         <p><strong>Installment Amount:</strong> {{ installmentAmount | currency:'INR' }}</p>
         <p><strong>Total Claim Amount:</strong> {{ calculatedAmount | currency:'INR' }}</p>

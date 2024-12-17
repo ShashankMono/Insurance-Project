@@ -15,14 +15,6 @@ namespace Insurance_final_project.Models
         public Guid PolicyAccountId { get; set; } 
         public PolicyAccount PolicyAccount { get; set; }
 
-        //[Required(ErrorMessage = "Document is required.")]
-        //[ForeignKey("Document")]
-        //public Guid DocumentId { get; set; } 
-        //public Document Document { get; set; } 
-
-        //[Range(0, double.MaxValue, ErrorMessage = "Amount to be claimed cannot be negative.")]
-        //public double AmountToBeClaimed { get; set; } 
-
         [MaxLength(500, ErrorMessage = "Claim description cannot exceed 500 characters.")]
         public string ClaimDescription { get; set; } 
 

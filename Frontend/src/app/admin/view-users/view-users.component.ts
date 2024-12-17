@@ -9,54 +9,44 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./view-users.component.css']
 })
 export class ViewUsersComponent {
-  users: any[] = [];
-  filteredUsers: any[] = []; // For displaying filtered users
-  roles: any[] = [];
-  selectedRole: string = 'All'; // Default to "All"
+  users: any[] = []; 
+  currentPage: number = 1;
+  pageSize: number = 1; 
+  totalPages: number = 1; 
+  totalRecords: number = 0; 
+  searchText:string = '';
+  private typingTimer: any; 
+  private debounceTime = 1000;
 
   constructor(private adminService: AdminDashboardService,
     private userService : UserService
   ) {}
 
   ngOnInit(): void {
-    this.getRolesAndUsers();
+    this.getUsers();
   }
 
-  getRolesAndUsers(): void {
-    this.adminService.getAllRoles().subscribe({
-      next: (rolesResponse: any) => {
-        if (rolesResponse.success) {
-          this.roles = rolesResponse.data;
-
-          this.adminService.getAllUsers().subscribe({
-            next: (usersResponse: any) => {
-              if (usersResponse.success) {
-                this.users = usersResponse.data.map((user: any) => ({
-                  ...user,
-                  roleName: this.getRoleName(user.roleId),
-                }));
-                this.filteredUsers = [...this.users]; // Initialize with all users
-              }
-            },
-            error: (err) => console.error('Error fetching users:', err),
-          });
+  getUsers(): void {
+    this.userService.getAllUsers(this.currentPage, this.pageSize, this.searchText).subscribe(
+      {
+        next: (response) => {
+          console.log(response);
+          this.users = response.data;
+          this.totalRecords = response.totalItems; 
+          this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+        },
+        error: (err: HttpErrorResponse) => {
+          if(err.error.exceptionMessage){
+            alert(err.error.exceptionMessage);
+          }else{
+            alert("error ouccured while getting the Users"+err)
+          }
+          console.log(err);
         }
-      },
-      error: (err) => console.error('Error fetching roles:', err),
+
     });
-  }
+ 
 
-  getRoleName(roleId: string): string {
-    const role = this.roles.find((r: any) => r.roleId === roleId);
-    return role ? role.roleName : 'Unknown';
-  }
-
-  filterUsersByRole(): void {
-    if (this.selectedRole === 'All') {
-      this.filteredUsers = [...this.users];
-    } else {
-      this.filteredUsers = this.users.filter(user => user.roleName === this.selectedRole);
-    }
   }
 
   updateUserStatus(userId:any,updatedStaus:any){
@@ -67,7 +57,7 @@ export class ViewUsersComponent {
     this.userService.changeUserStatus(obj).subscribe({
       next:(response)=>{
         if(response.success){
-          this.getRolesAndUsers();
+          this.getUsers();
           alert("user's status updated successfully!");
         }
       },
@@ -78,6 +68,23 @@ export class ViewUsersComponent {
           alert("Error occured while updating user status");
         }
       }
-    })
+    });
+  };
+
+  onInput(event: Event): void {
+    clearTimeout(this.typingTimer); 
+    const inputValue = (event.target as HTMLInputElement).value;
+
+    this.typingTimer = setTimeout(() => {
+      this.searchText = inputValue;
+      this.getUsers();
+    }, this.debounceTime);
+  }
+
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.getUsers();
+    }
   }
 }

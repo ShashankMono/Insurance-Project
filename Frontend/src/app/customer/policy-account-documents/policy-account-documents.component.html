@@ -1,20 +1,17 @@
 <div class="container mt-5">
     <h1 class="text-center mb-4">Policy Account Documents</h1>
   
-    <!-- Success/Error Alerts -->
     <div *ngIf="successMessage" class="alert alert-success text-center">
       {{ successMessage }}
     </div>
     <div *ngIf="errorMessage" class="alert alert-danger text-center">
       {{ errorMessage }}
     </div>
-  
-    <!-- Add New Document Button -->
+
     <div class="text-end mb-3">
       <button class="btn btn-success" (click)="openAddDocumentModal()">Add New Document</button>
     </div>
   
-    <!-- Documents Table -->
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -40,7 +37,6 @@
     </table>
   </div>
   
-  <!-- Add Document Modal -->
   <div *ngIf="isAddDocumentModalOpen" class="modal show" style="display: block;" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -51,15 +47,18 @@
         <div class="modal-body">
           <form [formGroup]="addDocumentForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
-              <label for="documentType" class="form-label">Document Type<span style="color: red;">*</span></label>
-              <input
-                type="text"
+              <label for="documentType" class="form-label">Document<span class="text-danger">*</span></label>
+              <select
                 id="documentType"
                 class="form-control"
                 formControlName="documentType"
-                placeholder="Enter document type"
-              />
-              <div *ngIf="addDocumentForm.get('documentType')?.invalid && addDocumentForm.get('documentType')?.touched" class="text-danger">
+              >
+                <option value="">-- Select document Type --</option>
+                <option *ngFor="let type of documentRequired" [value]="type">
+                  {{ type }}
+                </option>
+              </select>
+              <div *ngIf="addDocumentForm.get('documentType')?.invalid && addDocumentForm.get('installmentType')?.touched" class="text-danger">
                 Document Type is required.
               </div>
             </div>

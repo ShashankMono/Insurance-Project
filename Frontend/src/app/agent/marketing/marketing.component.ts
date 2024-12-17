@@ -22,6 +22,7 @@ export class MarketingComponent {
   calculatedAmount: number = 0; 
   selectedPolicy:any="";
   agentId:any="";
+  agent:any="";
 
   constructor(
     private policyTypeService: PolicyTypeService,
@@ -31,9 +32,9 @@ export class MarketingComponent {
 
   
   ngOnInit(): void {
-    this.agentId = history.state.agentId;
+    this.agentId = history.state.agent.agentId;
     console.log(this.agentId);
-    console.log(history.state.agentName);
+    console.log(history.state.agent);
     this.loadPolicies();
     this.loadPolicyTypes();
   }
@@ -52,10 +53,9 @@ export class MarketingComponent {
   }
 
   referPolicy(policy:any){
-    this.router.navigate(['/agent-view/refer-customer'],{state:{policyId:policy.id,
-      agentId:this.agentId,
-      policyName:policy.name,
-      agentName:history.state.agentName,
+    this.router.navigate(['/agent-view/refer-customer'],{state:{
+      policy:policy,
+      agent:history.state.agent,
     }});
   }
 

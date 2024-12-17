@@ -42,27 +42,58 @@
       </div>
     </div>
     <div class="mb-3">
-      <label for="dateOfBirth" class="form-label">Date of Birth<span class="text-danger">*</span><span>(Should be 18 years old)</span></label>
-      <input type="date" id="dateOfBirth" class="form-control" formControlName="dateOfBirth" [max]="MaxDate" required />
-      <div *ngIf="customerForm.get('dateOfBirth')?.invalid && customerForm.get('dateOfBirth')?.touched" class="text-danger">
-        Date of Birth is required.
+      <label for="dateOfBirth" class="form-label">
+        Date of Birth<span class="text-danger">*</span>
+        <span>(Should be at least 18 years old)</span>
+      </label>
+      <input
+        type="date"
+        id="dateOfBirth"
+        class="form-control"
+        formControlName="dateOfBirth"
+        [max]="MaxDate"
+        required
+      />
+      <div *ngIf="customerForm.get('dateOfBirth')?.touched">
+        <div *ngIf="customerForm.get('dateOfBirth')?.hasError('required')" class="text-danger">
+          Date of Birth is required.
+        </div>
+        <div *ngIf="customerForm.get('dateOfBirth')?.hasError('minimumAge')" class="text-danger">
+          You must be at least 18 years old.
+        </div>
       </div>
     </div>
+    
     <div class="mb-3">
       <label for="stateId" class="form-label">State<span class="text-danger">*</span></label>
-      <select id="stateId" class="form-control" formControlName="stateId" required>
+      <select
+        id="stateId"
+        class="form-control"
+        formControlName="stateId"
+        (change)="onStateChange()"
+        required
+      >
+        <option value="">Select State</option>
         <option *ngFor="let state of states" [value]="state.stateId">{{ state.stateName }}</option>
       </select>
-      <div *ngIf="customerForm.get('stateId')?.invalid && customerForm.get('stateId')?.touched" class="text-danger">
+      <div
+        *ngIf="customerForm.get('stateId')?.invalid && customerForm.get('stateId')?.touched"
+        class="text-danger"
+      >
         State selection is required.
       </div>
     </div>
+
     <div class="mb-3">
       <label for="cityId" class="form-label">City<span class="text-danger">*</span></label>
       <select id="cityId" class="form-control" formControlName="cityId" required>
-        <option *ngFor="let city of cities" [value]="city.cityId">{{ city.cityName }}</option>
+        <option value="">Select City</option>
+        <option *ngFor="let city of filteredCities" [value]="city.cityId">{{ city.cityName }}</option>
       </select>
-      <div *ngIf="customerForm.get('cityId')?.invalid && customerForm.get('cityId')?.touched" class="text-danger">
+      <div
+        *ngIf="customerForm.get('cityId')?.invalid && customerForm.get('cityId')?.touched"
+        class="text-danger"
+      >
         City selection is required.
       </div>
     </div>

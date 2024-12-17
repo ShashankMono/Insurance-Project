@@ -26,6 +26,10 @@ export class BuyPolicyAgentComponent {
   policyId:any="";
   agentName: any = "";
   agentId:any = "";
+  documents:any="";
+  investmentAmount:any="";
+  installmentType:any="";
+  PolicyTerm:any="";
 
   constructor(
     private customerDashboardService: CustomerDashboardService
@@ -38,12 +42,20 @@ export class BuyPolicyAgentComponent {
   ngOnInit(): void {
     this.customerId=localStorage.getItem('customerId');
 
-    this.route.queryParamMap.subscribe((params) => {
-      this.policyId = params.get('policyId');
-      this.agentId = params.get('agentId');
-      console.log('Policy ID:', this.policyId);
-      console.log('Agent ID:', this.agentId);
-    });
+    // this.route.queryParamMap.subscribe((params) => {
+    //   this.policyId = params.get('policyId');
+    //   this.agentId = params.get('agentId');
+    //   console.log('Policy ID:', this.policyId);
+    //   console.log('Agent ID:', this.agentId);
+    // });
+
+    this.policyId=history.state.policyId;
+    this.agentId=history.state.agentId;
+    this.PolicyTerm = history.state.PolicyTerm;
+    this.investmentAmount = 
+    this.installmentType = history.state.installmentType;
+
+    console.log(this.PolicyTerm,this.investmentAmount,this.installmentType);
 
     this.fetchPolicy();
     this.fetchInstallmentTypes();
@@ -58,7 +70,8 @@ export class BuyPolicyAgentComponent {
     this.policyAccountForm = new FormGroup({
       investmentAmount: new FormControl(0, [Validators.required]),
       policyTerm: new FormControl(0, [Validators.required, Validators.min(1)]),
-      installmentType: new FormControl('', Validators.required)
+      installmentType: new FormControl('', Validators.required),
+      document:new FormControl('',Validators.required),
     });
 
 
@@ -67,13 +80,14 @@ export class BuyPolicyAgentComponent {
   setValidators(policy:any){
     const investmentAmountControl = this.policyAccountForm.get('investmentAmount');
     const policyTermControl = this.policyAccountForm.get('policyTerm');
+    const installmentTypeControl = this.policyAccountForm.get('installmentType');
     if (investmentAmountControl) {
       investmentAmountControl.setValidators([
         Validators.min(policy.minimumInvestmentAmount),
         Validators.max(policy.maximumInvestmentAmount),
         Validators.required
       ]);
-
+      investmentAmountControl.setValue(history.state.investmentAmount || 0);
       investmentAmountControl.updateValueAndValidity();
     }
     if(policyTermControl){
@@ -82,7 +96,12 @@ export class BuyPolicyAgentComponent {
         Validators.max(policy.maximumPolicyTerm),
         Validators.required,
       ])
+      policyTermControl.setValue(history.state.PolicyTerm || 0);
       policyTermControl.updateValueAndValidity();
+    }
+    if(installmentTypeControl){
+      installmentTypeControl.setValue(history.state.installmentType);
+      installmentTypeControl.updateValueAndValidity();
     }
   }
 
@@ -92,6 +111,7 @@ export class BuyPolicyAgentComponent {
         next:(response)=>{
           console.log(response);
           this.policy=response.data;
+          this.documents = this.policy.documentsRequired .split(',').map((doc:string) => doc.trim());
           this.setValidators(this.policy);
           // this.setFormValue(this.policy);
         },
@@ -161,7 +181,7 @@ export class BuyPolicyAgentComponent {
         policyTerm:this.policyAccountForm.value.policyTerm,
         investmentAmount:this.policyAccountForm.value.investmentAmount,
         installmentType:this.policyAccountForm.value.installmentType,
-        agentId:this.agentId,
+        agentId:this.agentId
       }
       //console.log("Data",policyAccountData);
 
@@ -207,7 +227,7 @@ export class BuyPolicyAgentComponent {
   saveDocument(policyAccountId: any, fileUrl: string): void {
     console.log(policyAccountId);
     const documentData = {
-      documentType: 'Policy Document',
+      documentType: this.policyAccountForm.get('Document')?.value ||'Policy Document',
       documentName: this.selectedFile?.name,
       documentFileURL: fileUrl,
       isVerified: 'Pending',
