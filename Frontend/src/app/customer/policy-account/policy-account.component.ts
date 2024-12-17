@@ -103,15 +103,48 @@ export class PolicyAccountComponent implements OnInit{
       this.selectedFile = null;
     }
   }
+  isWholeNumber(value: number): boolean {
+    return Number.isInteger(value);
+  }
 
   onSubmit(): void {
     if (this.policyAccountForm.valid && this.selectedFile) {
+      const investmentAmount = this.policyAccountForm.value.investmentAmount;
+      const policyTerm = this.policyAccountForm.value.policyTerm;
+
+      this.errorMessage = null;
+
+      let isValid = true;
+
+     
+      if (!this.isWholeNumber(investmentAmount)) {
+        isValid = false;
+        this.errorMessage = 'Investment amount should be a whole number (not a decimal).';
+      }
+
+      if (!this.isWholeNumber(policyTerm)) {
+        isValid = false;
+        if (this.errorMessage) {
+          this.errorMessage += ' Policy term should be a whole number (not a decimal).';
+        } else {
+          this.errorMessage = 'Policy term should be a whole number (not a decimal).';
+        }
+      }
+
+      if (!isValid) {
+        return;
+      }
+      
+  
+      
       const policyAccountData = {
         customerId: this.customerId,
         policyId:this.policy.id,
-        policyTerm:this.policyAccountForm.value.policyTerm,
-        investmentAmount:this.policyAccountForm.value.investmentAmount,
+        policyTerm:policyTerm,
+        investmentAmount:investmentAmount,
         installmentType:this.policyAccountForm.value.installmentType,
+
+        
       }
       console.log("Data",policyAccountData);
 

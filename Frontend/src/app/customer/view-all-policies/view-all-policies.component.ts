@@ -53,6 +53,7 @@ export class ViewAllPoliciesComponent implements OnInit {
   loadPolicies(): void {
     this.policyService.getPolicies().subscribe({
       next: (response) => {
+        console.log('Fetched Policies:', response);
         this.policies = response;
         this.filteredPolicies = response; 
         

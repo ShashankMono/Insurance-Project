@@ -20,12 +20,25 @@
   <div class="row">
     <div *ngFor="let policy of filteredPolicies" class="col-md-6 col-lg-4 mb-4">
       <div class="card h-100 shadow-sm">
+
         <div class="card-body">
-          <h5 class="card-title text-center">{{ policy.name }}</h5>
-          <p class="card-text text-truncate" title="{{ policy.description }}">
+          <div class="d-flex align-items-start mb-3">
+            
+            <img 
+              [src]="policy.imageUrl || 'assets/default-policy.jpg'" 
+              alt="{{ policy.name }}" 
+              class="img-thumbnail me-3" 
+              style="width: 100px; height: 100px; object-fit: cover;"
+            />
+          
+            <h5 class="card-title text-center">{{ policy.name }}</h5>
+            
+          </div>
+          <div class="card-text text-truncate" title="{{ policy.description }}">
             {{ policy.description }}
-          </p>
+          </div>
           <ul class="list-group list-group-flush">
+            
             <li class="list-group-item"><strong>Age Criteria:</strong> {{ policy.minimumAgeCriteria }} - {{ policy.maximumAgeCriteria }}</li>
             <li class="list-group-item"><strong>Investment:</strong> {{ policy.minimumInvestmentAmount | currency:'INR' }} - {{ policy.maximumInvestmentAmount | currency:'INR' }}</li>
             <li class="list-group-item"><strong>Term:</strong> {{ policy.minimumPolicyTerm }} - {{ policy.maximumPolicyTerm }} years</li>

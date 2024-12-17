@@ -2,8 +2,27 @@
   <h1 class="text-center mb-4">Policy Details</h1>
   <div *ngIf="policy" class="card shadow-sm">
     <div class="card-body">
-      <h5 class="card-title">{{ policy.name }}</h5>
-      <p class="card-text">{{ policy.description }}</p>
+      <div class="d-flex align-items-start mb-3">
+        <!-- Left Section: Image -->
+        <img 
+          [src]="policy.imageUrl || 'assets/default-policy.jpg'" 
+          alt="{{ policy.name }}" 
+          class="img-thumbnail me-3" 
+          style="width: 150px; height: 150px; object-fit: cover;"
+        />
+        <!-- Right Section: Name and Description -->
+        <div>
+          <h5 class="card-title">{{ policy.name }}</h5>
+          <p class="card-text">{{ policy.description }}</p>
+        </div>
+      </div>
+      <div *ngIf="policy.documentsRequired" class="mb-3">
+        <p><strong>Required Documents:</strong></p>
+        <ul>
+          <li *ngFor="let doc of policy.documentsRequired.split(', ')">{{ doc }}</li>
+        </ul>
+      </div>
+      
       <ul class="list-group list-group-flush">
         <li class="list-group-item"><strong>Investment:</strong> {{ policy.minimumInvestmentAmount | currency:'INR' }} - {{ policy.maximumInvestmentAmount | currency:'INR' }}</li>
         <li class="list-group-item"><strong>Term:</strong> {{ policy.minimumPolicyTerm }} - {{ policy.maximumPolicyTerm }} years</li>
@@ -22,6 +41,9 @@
           [min]="policy?.minimumInvestmentAmount" 
           [max]="policy?.maximumInvestmentAmount"
         />
+        <div *ngIf="!isWholeNumber(investmentAmount)" class="text-danger">
+          Investment amount should be a whole number.
+        </div>
         <div *ngIf="investment.invalid && investment.touched" class="text-danger">
           Please enter an amount between {{ policy.minimumInvestmentAmount }} and {{ policy.maximumInvestmentAmount }}.
         </div>
@@ -39,6 +61,9 @@
           [min]="policy?.minimumPolicyTerm" 
           [max]="policy?.maximumPolicyTerm"
         />
+        <div *ngIf="!isWholeNumber(policyTerm)" class="text-danger">
+          Policy term should be a whole number.
+        </div>
         <div *ngIf="term.invalid && term.touched" class="text-danger">
           Please select a term between {{ policy.minimumPolicyTerm }} and {{ policy.maximumPolicyTerm }} years.
         </div>

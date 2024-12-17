@@ -18,23 +18,19 @@
             Password is required.
          </div>
         </div>
-        <div class="mb-3">
-          <label for= "captcha" class="form-label">Solve the CAPTCHA<span class="text-danger">*</span>: 
-            <strong class="text-primary" style="background-color: black;">{{ captcha.question }}</strong></label>
-          <input type="text" id="captcha" class="form-control" formControlName="captcha" placeholder="Enter CAPTCHA answer" #captchaInput
-          >
-          <div *ngIf="loginForm.get('captcha')?.invalid && loginForm.get('captcha')?.touched" class="text-danger">
-            CAPTCHA is required.
-         </div>
-        </div>
         
-  
-        <div class="mb-3 text-end">
-            <a routerLink="/update-password" class="text-decoration-none">
-              Forget Password?
-            </a>
+      <div class="mb-3">
+        <label for="captcha" class="form-label">Solve the CAPTCHA<span class="text-danger">*</span>: 
+          <strong class="text-primary" style="background-color: black;">{{ captcha.question }}</strong></label>
+        <div class="d-flex justify-content-between">
+          <input type="text" id="captcha" class="form-control" formControlName="captcha" placeholder="Enter CAPTCHA answer" #captchaInput>
+          <button type="button" class="btn btn-secondary" (click)="generateCaptcha()">🔄</button>
         </div>
-  
+        <div *ngIf="loginForm.get('captcha')?.invalid && loginForm.get('captcha')?.touched" class="text-danger">
+          CAPTCHA is required.
+        </div>
+      </div>
+        
         <button type="submit" class="btn btn-primary w-100">Login</button>
       </form>
     </div>

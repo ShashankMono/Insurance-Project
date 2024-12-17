@@ -39,6 +39,9 @@
         <div *ngIf="policyAccountForm.get('investmentAmount')?.invalid && policyAccountForm.get('investmentAmount')?.touched" class="text-danger">
           Investment Amount must be a in range {{policy?.minimumInvestmentAmount}}-{{policy?.maximumInvestmentAmount}} value.
         </div>
+        <div *ngIf="!isWholeNumber(policyAccountForm.value.investmentAmount) && policyAccountForm.get('investmentAmount')?.touched" class="text-danger">
+          Investment amount should be a whole number (not a decimal).
+        </div>
       </div>
   
       <div class="mb-3">
@@ -52,6 +55,9 @@
         />
         <div *ngIf="policyAccountForm.get('policyTerm')?.invalid && policyAccountForm.get('policyTerm')?.touched" class="text-danger">
           Policy Term must be a in range {{policy?.minimumPolicyTerm}} - {{policy?.maximumPolicyTerm}} value.
+        </div>
+        <div *ngIf="!isWholeNumber(policyAccountForm.value.policyTerm) && policyAccountForm.get('policyTerm')?.touched" class="text-danger">
+          Policy term should be a whole number (not a decimal).
         </div>
       </div>
   

@@ -103,15 +103,38 @@
         class="form-control"
         [formControlName]="field.controlName"
       />
+    
+      <!-- Show Field-Level Errors -->
       <div *ngIf="addPolicyForm.get(field.controlName)?.touched">
-        <div *ngIf="addPolicyForm.get(field.controlName)?.hasError('required')" class="text-danger">
+        <div
+          *ngIf="addPolicyForm.get(field.controlName)?.hasError('required')"
+          class="text-danger"
+        >
           {{ field.label }} is required.
         </div>
-        <div *ngIf="addPolicyForm.get(field.controlName)?.hasError('pattern')" class="text-danger">
-          {{ field.label }} should be a positive number.
+        <div
+          *ngIf="addPolicyForm.get(field.controlName)?.hasError('pattern')"
+          class="text-danger"
+        >
+          {{ field.label }} should be a positive and whole number.
         </div>
       </div>
+    
+      <div *ngIf="addPolicyForm.errors && addPolicyForm.hasError('policyTermRange') && 
+            (field.controlName === 'minimumPolicyTerm' || field.controlName === 'maximumPolicyTerm')">
+        <div class="text-danger">{{ addPolicyForm.errors['policyTermRange'] }}</div>
+      </div>
+      <div *ngIf="addPolicyForm.errors && addPolicyForm.hasError('investmentRange') && 
+            (field.controlName === 'minimumInvestmentAmount' || field.controlName === 'maximumInvestmentAmount')">
+        <div class="text-danger">{{ addPolicyForm.errors['investmentRange'] }}</div>
+      </div>
+      <div *ngIf="addPolicyForm.errors && addPolicyForm.hasError('ageRange') && 
+            (field.controlName === 'minimumAgeCriteria' || field.controlName === 'maximumAgeCriteria')">
+        <div class="text-danger">{{ addPolicyForm.errors['ageRange'] }}</div>
+      </div>
+
     </div>
+    
 
     <button class="btn btn-primary w-100" type="submit" [disabled]="addPolicyForm.invalid || !uploadFile">Add Policy</button>
   </form>

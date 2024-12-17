@@ -10,39 +10,57 @@ import { EmployeeService } from 'src/app/services/employee.service';
   styleUrls: ['./add-employee.component.css']
 })
 export class AddEmployeeComponent {
-  addEmployeeForm=new FormGroup({
-    firstName: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-    lastName: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-    mobileNo: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')]),
-    address: new FormControl('', [Validators.required, Validators.maxLength(200)]),
-    emailId: new FormControl('', [Validators.required, Validators.email]), // Changed to match backend
-    salary: new FormControl('', [Validators.required])
-  })
+  addEmployeeForm = new FormGroup({
+    firstName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.maxLength(50)
+    ]),
+    lastName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.maxLength(50)
+    ]),
+    mobileNo: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^[0-9]{10}$/)
+    ]),
+    address: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(200)
+    ]),
+    emailId: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+    ]),
+    salary: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^[0-9]+$/) 
+    ])
+  });
 
-  constructor(private addEmployeeService: EmployeeService,
+  constructor(
+    private addEmployeeService: EmployeeService,
     private router: Router
-  ) {
-    
-  }
-
-  ngOnInit(): void {}
+  ) {}
 
   onSubmit(): void {
     if (this.addEmployeeForm.valid) {
-      this.addEmployeeService.addEmployee(this.addEmployeeForm.value).subscribe({
+      const employeeData = this.addEmployeeForm.value;
+
+      this.addEmployeeService.addEmployee(employeeData).subscribe({
         next: () => {
-          alert('Employee added successfully! check email for login credential\'s.');
+          alert('Employee added successfully! Check email for login credentials.');
           this.router.navigate(['/admin-dashboard']);
         },
-        error: (err:HttpErrorResponse) => {
-          if(err.error.exceptionMessage){
+        error: (err: HttpErrorResponse) => {
+          if (err.error.exceptionMessage) {
             alert(err.error.exceptionMessage);
-          }else{
+          } else {
             alert('Failed to add employee. Please try again.');
           }
           console.error('Error adding employee:', err);
-          
-        },
+        }
       });
     }
   }

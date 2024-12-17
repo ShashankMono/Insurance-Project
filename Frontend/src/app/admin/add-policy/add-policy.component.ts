@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component,OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminDashboardService } from 'src/app/services/admin-dashboard.service';
 import { FileUploadService } from 'src/app/services/file-upload.service';
@@ -18,20 +18,70 @@ export class AddPolicyComponent {
   fileUrl: any | null = null
 
   documentTypes = [
-    'Passport',
-    'Aadhaar_card',
-    'Voter_ID',
-    'PAN_card',
-    'Ration_card',
-    'Driving_license',
-    'Bank_account_passbook',
-    'Photo_ID_card',
+    'PROOF OF IDENTITY',
+    'PROOF OF ADDRESS',
+    'AGE PROOF',
+    'MEDICAL RECORDS',
+    'INCOME PROOF',
+    'PHOTOGRAPHS',
+    'POLICY APPLICATION FORM',
+    'NOMINEE DETAILS',
+    'KYC (KNOW YOUR CUSTOMER)',
+    'VEHICLE REGISTRATION CERTIFICATE (RC)',
+    'DRIVING LICENSE',
+    'POLLUTION UNDER CONTROL (PUC) CERTIFICATE',
+    'VEHICLE INSPECTION REPORT',
+    'PREVIOUS INSURANCE DETAILS',
+    'PROPERTY DOCUMENTS',
+    'SALE DEED',
+    'PURCHASE AGREEMENT',
+    'PROPERTY TAX RECEIPT',
+    'TITLE DEED',
+    'HOME LOAN DOCUMENTS',
+    'TRAVEL ITINERARY',
+    'PROOF OF TRAVEL',
+    'MEDICAL CERTIFICATE (FOR ACCIDENT INSURANCE)',
+    'BUSINESS REGISTRATION CERTIFICATE',
+    'TAX REGISTRATION DETAILS',
+    'FINANCIAL STATEMENTS (PROFIT AND LOSS STATEMENT, BALANCE SHEET)',
+    'LEASE AGREEMENT',
+    'CARGO DETAILS (INVOICE, BILL OF LADING)',
+    'OWNERSHIP DETAILS (FOR CARGO OR SHIP)',
+    'ROUTE AND DESTINATION INFORMATION',
+    'VALUE OF CARGO (INVOICE OR PURCHASE ORDER)',
+    'PET ADOPTION PAPERS OR PURCHASE DETAILS',
+    'PET MEDICAL HISTORY',
+    'BIRTH CERTIFICATE (FOR PET AGE)'
   ];
+  
 
   selectedDocuments: string[] = [];
 
   ngOnInit(){
     this.getPolicyTypes();
+  }
+  rangeValidator(): ValidatorFn {
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+      const minTerm = formGroup.get('minimumPolicyTerm')?.value;
+      const maxTerm = formGroup.get('maximumPolicyTerm')?.value;
+      const minInvestment = formGroup.get('minimumInvestmentAmount')?.value;
+      const maxInvestment = formGroup.get('maximumInvestmentAmount')?.value;
+      const minAge = formGroup.get('minimumAgeCriteria')?.value;
+      const maxAge = formGroup.get('maximumAgeCriteria')?.value;
+
+      const errors: any = {};
+      if (minTerm && maxTerm && +minTerm > +maxTerm) {
+        errors.policyTermRange = 'Minimum Policy Term cannot exceed Maximum Policy Term.';
+      }
+      if (minInvestment && maxInvestment && +minInvestment > +maxInvestment) {
+        errors.investmentRange = 'Minimum Investment cannot exceed Maximum Investment.';
+      }
+      if (minAge && maxAge && +minAge > +maxAge) {
+        errors.ageRange = 'Minimum Age cannot exceed Maximum Age.';
+      }
+
+      return Object.keys(errors).length ? errors : null;
+    };
   }
 
   numericFields = [
@@ -60,7 +110,7 @@ export class AddPolicyComponent {
     maximumInvestmentAmount: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
     profitPercentage: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
     commissionPercentage: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-  });
+  }, { validators: this.rangeValidator() });
   constructor(private addPolicyService: AdminDashboardService,
      private router: Router,
      private fileService: FileUploadService

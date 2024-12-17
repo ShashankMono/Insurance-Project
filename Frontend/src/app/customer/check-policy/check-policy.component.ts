@@ -56,21 +56,36 @@ export class CheckPolicyComponent implements OnInit {
       }
     );
   }
-
+  isWholeNumber(value: number): boolean {
+    return Number.isInteger(value);
+  }
   calculateInvestment(): void {
-    if (
-      this.investmentAmount < this.policy.minimumInvestmentAmount ||
-      this.investmentAmount > this.policy.maximumInvestmentAmount
-    ) {
+    if (!this.isWholeNumber(this.investmentAmount)) {
+      return;
+    }
+
+    if (this.investmentAmount < this.policy.minimumInvestmentAmount || this.investmentAmount > this.policy.maximumInvestmentAmount) {
       alert(`Please enter an amount between ${this.policy.minimumInvestmentAmount} and ${this.policy.maximumInvestmentAmount}`);
       return;
     }
+
+    if (!this.isWholeNumber(this.policyTerm)) {
+      return;
+    }
+
+    if (this.policyTerm < this.policy.minimumPolicyTerm || this.policyTerm > this.policy.maximumPolicyTerm) {
+      alert(`Please select a term between ${this.policy.minimumPolicyTerm} and ${this.policy.maximumPolicyTerm} years.`);
+      return;
+    }
+
     const profitAmount = (this.investmentAmount * this.policy.profitPercentage) / 100;
     this.installmentAmount = Math.round(
       this.investmentAmount / (this.policyTerm * this.getInstallmentCountInYear(this.installment))
     );
     this.calculatedAmount = this.investmentAmount + profitAmount;
   }
+
+  
   fetchInstallmentTypes(): void {
     this.cutomerService.getInstallmentTypes().subscribe(
       (installmentTypes) => {
