@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Insurance_final_project.Controllers
             _commissionWithdrawalService = commissionWithdrawalService;
         }
 
-        [HttpGet]
+        [HttpGet,Authorize(Roles ="Agent,Admin")]
         public async Task<IActionResult> GetCommissionsWithdrawal()
         {
             var withdrawals = await _commissionWithdrawalService.GetCommissionsWithdrawal();
@@ -30,7 +31,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost,Authorize(Roles ="Agent")]
         public async Task<IActionResult> AddWithdrawalRequest([FromBody] CommissionWithdrawalDto withdrawRequest)
         {
             if (!ModelState.IsValid)
@@ -59,7 +60,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("{agentId}")]
+        [HttpGet("{agentId}"), Authorize(Roles = "Admin,Agent")]
         public async Task<IActionResult> GetCommissionWithdrawalByAgentId(Guid agentId)
         {
             var withdrawals = await _commissionWithdrawalService.GetCommissionWithdrawalByAgentId(agentId);

@@ -2,8 +2,28 @@
     <h1 class="text-center mb-4">Policy Details</h1>
     <div *ngIf="policy" class="card shadow-sm">
       <div class="card-body">
-        <h5 class="card-title">{{ policy.name }}</h5>
-        <p class="card-text">{{ policy.description }}</p>
+
+
+        <div class="d-flex align-items-start mb-3">
+          <img 
+            [src]="policy.imageUrl || 'assets/default-policy.jpg'" 
+            alt="{{ policy.name }}" 
+            class="img-thumbnail me-3" 
+            style="width: 150px; height: 150px; object-fit: cover;"
+          />
+          <div>
+            <h5 class="card-title">{{ policy.name }}</h5>
+            <p class="card-text">{{ policy.description }}</p>
+          </div>
+        </div>
+        <div *ngIf="policy.documentsRequired" class="mb-3">
+          <p><strong>Required Documents:</strong></p>
+          <ul>
+            <li *ngFor="let doc of policy.documentsRequired.split(', ')">{{ doc }}</li>
+          </ul>
+        </div>
+
+
         <ul class="list-group list-group-flush">
           <li class="list-group-item"><strong>Investment:</strong> {{ policy.minimumInvestmentAmount | currency:'INR' }} - {{ policy.maximumInvestmentAmount | currency:'INR' }}</li>
           <li class="list-group-item"><strong>Term:</strong> {{ policy.minimumPolicyTerm }} - {{ policy.maximumPolicyTerm }} years</li>

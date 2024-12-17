@@ -2,6 +2,7 @@
 using Insurance_final_project.Models;
 using Insurance_final_project.PagingFiles;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1.Pkcs;
@@ -19,7 +20,7 @@ namespace Insurance_final_project.Controllers
             _policyAccountService = policyAccountService;
         }
 
-        [HttpGet("{policyAccountId}")]
+        [HttpGet("{policyAccountId}"), Authorize(Roles = "Customer,Admin,Agent,Employee")]
         public async Task<IActionResult> GetPolicyAccountById(Guid policyAccountId)
         {
             var policyAccount = await _policyAccountService.GetPolicyAccountById(policyAccountId);
@@ -32,7 +33,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Customer,Admin,Agent,Employee")]
         public async Task<IActionResult> GetAllPolicyAccounts([FromQuery] PageParameters pageParameter,
             [FromQuery] string? searchQuery)
         {
@@ -52,7 +53,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Customer")]
         public async Task<IActionResult> CreatePolicyAccount([FromBody] PolicyAccountDto policyAccountDto)
         {
             if (!ModelState.IsValid)
@@ -81,7 +82,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("agent/{agentId}")]
+        [HttpGet("agent/{agentId}"), Authorize(Roles = "Admin,Agent")]
         public async Task<IActionResult> GetPolicyAccountsByAgent(Guid agentId)
         {
             var policyAccounts = await _policyAccountService.GetPolicyAccountsByAgent(agentId);
@@ -94,7 +95,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("customer/{customerId}")]
+        [HttpGet("customer/{customerId}"), Authorize(Roles = "Customer,Admin,Employee")]
         public async Task<IActionResult> GetPoliciesByCustomer(Guid customerId)
         {
             var policies = await _policyAccountService.GetPoliciesByCustomer(customerId);
@@ -107,7 +108,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost("approve")]
+        [HttpPost("approve"),Authorize(Roles ="Employee")]
         public IActionResult ApproveAccount([FromBody] ApprovalDto approval)
         {
 

@@ -104,6 +104,8 @@ namespace Insurance_final_project.Mapper
                 .ForMember(dest => dest.policyName, val => val.MapFrom(src => src.PolicyAccount.Policy.Name))
                 .ForMember(dest => dest.CustomerName, val => val.MapFrom(src => (src.Customer.FirstName + " " + src.Customer.LastName)));
             CreateMap<Tax, TaxDto>().ReverseMap();
+            CreateMap<Query, QueryDto>()
+                .ForMember(dest => dest.CustomerName, val => val.MapFrom(src => (src.Customer.FirstName + " " + src.Customer.LastName)));
             
         }
     }

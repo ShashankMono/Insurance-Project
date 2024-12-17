@@ -15,6 +15,12 @@ export class QueryResponseComponent {
   isEditModalOpen: boolean = false; 
   selectedQuery: any = null; 
   editQueryForm: FormGroup; 
+  currentPage: number = 1;
+  pageSize: number = 3; 
+  totalPages: number = 1; 
+  totalRecords: number = 0; 
+  private typingTimer: any; 
+  private debounceTime = 1000;
 
   constructor(
     private queryService: QueryService,
@@ -34,15 +40,29 @@ export class QueryResponseComponent {
   }
 
   fetchQueries(): void {
-    this.queryService.getAllQuery().subscribe({
+    this.queryService.getAllQuery(this.currentPage,this.pageSize).subscribe({
       next: (response) => {
-        this.queryData = response;
+        if (response.success) {
+          if (response.success) {
+            console.log(response);
+            this.queryData = response; 
+            this.totalRecords = response.totalItems; 
+            this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+          }
+        }
       },
       error: (err: HttpErrorResponse) => {
         console.error('Error fetching queries:', err.error);
         alert('Failed to load queries. Please try again.');
       },
     });
+  }
+
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.fetchQueries();
+    }
   }
 
   editQuery(query: any): void {

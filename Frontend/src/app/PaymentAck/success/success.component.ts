@@ -18,7 +18,7 @@ export class SuccessComponent {
   ){
     this.installmentId=route.snapshot.queryParamMap.get('id');
     this.customerId=route.snapshot.queryParamMap.get('customerId');
-    console.log(this.installmentId);
+    console.log(this.installmentId,this.customerId);
     dashboardService.postTransaction(this.installmentId).subscribe({
       next:(response)=>{
         console.log(response.result);

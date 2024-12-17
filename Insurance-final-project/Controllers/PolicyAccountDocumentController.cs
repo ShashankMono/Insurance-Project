@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Insurance_final_project.Controllers
             _service = service;
         }
 
-        [HttpPost]
+        [HttpPost,Authorize(Roles ="Customer")]
         public async Task<IActionResult> AddDocument([FromBody] PolicyAccountDocumentDto document)
         {
             if (!ModelState.IsValid)
@@ -37,7 +38,7 @@ namespace Insurance_final_project.Controllers
             return Ok(new { Success = true, Data = documentId, Message = "Document added successfully." });
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(Roles = "Customer")]
         public async Task<IActionResult> DeleteDocument(Guid id)
         {
             var success = await _service.DeleteDocument(id);
@@ -47,14 +48,14 @@ namespace Insurance_final_project.Controllers
             return Ok(new { Success = true, Message = "Document deleted successfully." });
         }
 
-        [HttpGet("{policyAccountId}")]
+        [HttpGet("{policyAccountId}"), Authorize(Roles = "Customer,Employee")]
         public async Task<IActionResult> GetDocuments(Guid policyAccountId)
         {
             var documents = await _service.GetDocuments(policyAccountId);
             return Ok(new { Success = true, Data = documents, Message = "Documents retrieved successfully." });
         }
 
-        [HttpPut]
+        [HttpPut,Authorize(Roles ="Customer")]
         public async Task<IActionResult> UpdateDocument([FromBody] UpdateDocumentDto updateDoc)
         {
             if (!ModelState.IsValid)
@@ -75,7 +76,7 @@ namespace Insurance_final_project.Controllers
             return Ok(new { Success = true, Data = documentId, Message = "Document updated successfully." });
         }
 
-        [HttpGet("customer/{accountId}")]
+        [HttpGet("customer/{accountId}"),Authorize(Roles ="Customer,Employee")]
         public async Task<IActionResult> GetDocumentsByCustomerId(Guid accountId)
         {
             var documents = await _service.GetDocumentByAccountId(accountId);
@@ -88,7 +89,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPut("approve")]
+        [HttpPut("approve"),Authorize(Roles ="Employee")]
         public async Task<IActionResult> ChangeApproveStatus([FromBody] VerificationDto verifyInfo)
         {
 

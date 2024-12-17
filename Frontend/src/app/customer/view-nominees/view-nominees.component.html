@@ -87,6 +87,7 @@
                           id="relation"
                           class="form-control"
                           formControlName="nomineeRelation"
+                          [disabled]="true"
                         >
                           <option value="" disabled selected>Select Relation</option>
                           <option *ngFor="let relation of relations" [value]="relation">

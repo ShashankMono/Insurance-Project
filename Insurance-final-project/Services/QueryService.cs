@@ -30,7 +30,7 @@ namespace Insurance_final_project.Services
 
         public async Task<List<QueryDto>> GetAllQuery()
         {
-            return _Mapper.Map<List<QueryDto>>(_QueryRepo.GetAll().ToList());
+            return _Mapper.Map<List<QueryDto>>(_QueryRepo.GetAll().AsNoTracking().Include(q=>q.Customer).ToList());
         }
 
         public async Task<Guid> ResponseToQuery(QueryDto queryDto)

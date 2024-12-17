@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Insurance_final_project.Controllers
             _paymentService = paymentService;
         }
 
-        [HttpPost("create-session")]
+        [HttpPost("create-session"),Authorize(Roles ="Customer")]
         public async Task<IActionResult> CreatePaymentSession([FromBody] PaymentDto paymentDto)
         {
             if (!ModelState.IsValid)

@@ -2,6 +2,7 @@
 using Insurance_final_project.Models;
 using Insurance_final_project.PagingFiles;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ namespace Insurance_final_project.Controllers
             _agentService = agentService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), Authorize(Roles = "Admin,Agent")]
         public IActionResult GetAgentById(Guid id)
         {
             var agent = _agentService.GetAgentById(id);
@@ -44,7 +45,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("{id}/commission")]
+        [HttpGet("{id}/commission"),Authorize(Roles ="Admin,Agent,Employee")]
         public IActionResult ViewTotalCommission(Guid id)
         {
             var commission = _agentService.ViewEarnedCommission(id);
@@ -57,7 +58,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPost,Authorize(Roles ="Admin")]
         public async Task<IActionResult> AddAgent([FromBody] AgentInputDto newAgent)
         {
             if (!ModelState.IsValid)
@@ -79,7 +80,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet]
+        [HttpGet,Authorize(Roles="Admin,Employee")]
         public async Task<IActionResult> GetAllAgents([FromQuery] PageParameters pageParameter,
             [FromQuery] string? searchQuery)
         {
@@ -99,7 +100,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPut]
+        [HttpPut,Authorize(Roles ="Admin,Agent")]
         public async Task<IActionResult> UpdateAgent(AgentInputDto agent)
         {
             if (!ModelState.IsValid)

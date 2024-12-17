@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +29,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPost,Authorize(Roles ="Admin")]
         public async Task<IActionResult> AddPolicyType([FromBody] PolicyTypeDto policyType)
         {
             if (!ModelState.IsValid)
@@ -55,7 +56,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPut]
+        [HttpPut,Authorize(Roles ="Admin")]
         public async Task<IActionResult> UpdatePolicyType([FromBody] PolicyTypeDto policyType)
         {
             if (!ModelState.IsValid)
@@ -82,7 +83,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(Roles = "Admin")]
         public IActionResult DeletePolicyType(Guid id)
         {
             bool isDeleted = _policyTypeService.DeletePolicyType(id);

@@ -1,11 +1,8 @@
 ﻿using Insurance_final_project.Dto;
-using Insurance_final_project.Exceptions;
-using Insurance_final_project.Models;
 using Insurance_final_project.PagingFiles;
 using Insurance_final_project.Services;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Stripe;
 
 namespace Insurance_final_project.Controllers
 {
@@ -20,7 +17,7 @@ namespace Insurance_final_project.Controllers
             _transactionService = transactionService;
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Customer")]
         public async Task<IActionResult> AddTransaction([FromBody] TransactionDto transactionDto)
         {
             if (!ModelState.IsValid)
@@ -47,7 +44,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("customer/{customerId}")]
+        [HttpGet("customer/{customerId}"), Authorize(Roles = "Customer,Admin,Employee")]
         public async Task<IActionResult> GetTransactionByCustomerId(Guid customerId,
             [FromQuery] PageParameters pageParameter,
             [FromQuery] string? searchQuery,
@@ -73,7 +70,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetTransactions([FromQuery] PageParameters pageParameter,
             [FromQuery] string? searchQuery,
             [FromQuery] DateTime? startDate,

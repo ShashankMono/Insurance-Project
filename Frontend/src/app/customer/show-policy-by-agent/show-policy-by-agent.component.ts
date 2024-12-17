@@ -41,8 +41,6 @@ export class ShowPolicyByAgentComponent {
       this.route.queryParamMap.subscribe((params) => {
         this.policyId = params.get('policyId');
         this.agentId = params.get('agentId');
-        console.log('Policy ID:', this.policyId);
-        console.log('Agent ID:', this.agentId);
       });
       console.log('Policy ID:', this.policyId);
 

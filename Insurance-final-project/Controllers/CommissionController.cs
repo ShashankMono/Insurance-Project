@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Insurance_final_project.Controllers
             _commissionService = commissionService;
         }
 
-        [HttpGet]
+        [HttpGet,Authorize(Roles ="Agent,Admin,Employee")]
         public async Task<IActionResult> GetCommissions()
         {
             var commissions = await _commissionService.GetCommissions();
@@ -29,7 +30,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("{agentId}")]
+        [HttpGet("{agentId}"), Authorize(Roles = "Agent,Admin,Employee")]
         public async Task<IActionResult> GetCommissionByAgentId(Guid agentId)
         {
             var commissions = await _commissionService.GetCommissionByAgentId(agentId);
@@ -42,7 +43,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Employee")]
         public async Task<IActionResult> AddCommission([FromBody] CommissionDto commissionDto, [FromQuery] double amountPaid)
         {
             if (!ModelState.IsValid)

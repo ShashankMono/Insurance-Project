@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Insurance_final_project.Controllers
             _claimService = claimService;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetClaimAccounts()
         {
             var claims = await _claimService.GetClaimAccounts();
@@ -29,7 +30,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("{customerId}")]
+        [HttpGet("{customerId}"), Authorize(Roles = "Customer,Admin,Employee")]
         public async Task<IActionResult> GetClaimAccountsByCustomerId(Guid customerId)
         {
             var claims = await _claimService.GetClaimByCustomerId(customerId);
@@ -42,7 +43,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost("approve")]
+        [HttpPost("approve"),Authorize(Roles ="Admin")]
         public async Task<IActionResult> ClaimApproval([FromBody] ApprovalDto claim)
         {
             if (!ModelState.IsValid)
@@ -71,7 +72,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPost,Authorize(Roles ="Customer")]
         public async Task<IActionResult> AddClaimPolicy( [FromBody] ClaimDto claimDto)
         {
 
@@ -101,7 +102,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost("Withdrawal")]
+        [HttpPost("Withdrawal"),Authorize(Roles ="Customer")]
         public async Task<IActionResult> ClaimWithdrawal([FromBody] ClaimDto claimDto)
         {
             if (!ModelState.IsValid)

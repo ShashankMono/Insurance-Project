@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Insurance_final_project.Controllers
             _policyInstallmentService = policyInstallmentService;
         }
 
-        [HttpGet("add/{policyAccountId}")]
+        [HttpGet("add/{policyAccountId}"), Authorize(Roles = "Employee")]
         public IActionResult AddInstallments(Guid policyAccountId)
         {
             if (!ModelState.IsValid)
@@ -45,7 +46,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("pay/{InstallmentId}")]
+        [HttpGet("pay/{InstallmentId}"), Authorize(Roles = "Customer")]
         public async Task<IActionResult> PayInstallment(Guid InstallmentId)
         {
             if (!ModelState.IsValid)
@@ -75,7 +76,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpGet("policyaccount/{policyAccountId}")]
+        [HttpGet("policyaccount/{policyAccountId}"), Authorize(Roles = "Admin,Customer,Employee")]
         public async Task<IActionResult> GetInstallmentsByPolicyAccountId(Guid policyAccountId)
         {
             var installments = await _policyInstallmentService.GetInstallmentsByPolicyAccountId(policyAccountId);

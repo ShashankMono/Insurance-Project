@@ -2,10 +2,9 @@
 using Insurance_final_project.Models;
 using Insurance_final_project.PagingFiles;
 using Insurance_final_project.Services;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-using System.Security.Cryptography.Xml;
+
 
 namespace Insurance_final_project.Controllers
 {
@@ -70,7 +69,7 @@ namespace Insurance_final_project.Controllers
             return Ok(new { Success = true, Data = dataObj.userData, Message = "User logged in successfully." });
         }
 
-        [HttpPut("update-username")]
+        [HttpPut("update-username"), Authorize(Roles = "Admin,Agent,Employee,Customer")]
         public async Task<IActionResult> UpdateUser([FromBody] UserUpdateDto updatedUser)
         {
             if (!ModelState.IsValid)
@@ -93,14 +92,14 @@ namespace Insurance_final_project.Controllers
             return Ok(new { Success = true, Data = userId, Message = "User updated successfully." });
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet("{userId}"), Authorize(Roles ="Admin")]
         public async Task<IActionResult> GetUserProfile( Guid userId)
         {
             var userProfile = await _userService.GetUserById(userId);
             return Ok(new { Success = true, Data = userProfile, Message = "User profile retrieved successfully." });
         }
 
-        [HttpPut("change-password")]
+        [HttpPut("change-password"), Authorize(Roles="Admin,Agent,Employee,Customer")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
         {
             if (!ModelState.IsValid)
@@ -124,7 +123,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles ="Admin")]
         public async Task<IActionResult> GetAllUsers([FromQuery] PageParameters pageParameter,
             [FromQuery] string? searchQuery)
         {
@@ -139,7 +138,7 @@ namespace Insurance_final_project.Controllers
                 Message = "All users retrieved successfully." });
         }
 
-        [HttpPost("deactivate")]
+        [HttpPost("deactivate"), Authorize(Roles="Admin")]
         public async Task<IActionResult> DeactivateUser([FromBody] ChangeUserStatusDto userStatus)
         {
             if (!ModelState.IsValid)
@@ -162,7 +161,7 @@ namespace Insurance_final_project.Controllers
             return Ok(new { Success = true, Data = userId, Message = "User deactivated successfully." });
         }
 
-        [HttpGet("role/{RoleId}")]
+        [HttpGet("role/{RoleId}"), Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetUsersByRole( Guid RoleId)
         {
             var user = await _userService.GetUsersByRole(RoleId);

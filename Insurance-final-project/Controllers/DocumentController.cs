@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -18,7 +19,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Customer")]
         public async Task<IActionResult> AddDocument([FromBody] DocumentDto document)
         {
 
@@ -49,7 +50,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPut("approve")]
+        [HttpPut("approve"),Authorize(Roles ="Employee")]
         public async Task<IActionResult> ChangeApproveStatus([FromBody] VerificationDto document)
         {
 
@@ -79,7 +80,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("customer/{customerId}")]
+        [HttpGet("customer/{customerId}"),Authorize(Roles ="Customer,Employee")]
         public async Task<IActionResult> GetDocumentsByCustomerId(Guid customerId)
         {
             var documents = await _documentService.GetDocumentByCustomerId(customerId);
@@ -92,7 +93,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPut]
+        [HttpPut,Authorize(Roles ="Customer")]
         public async Task<IActionResult> UpdateDoc([FromBody] UpdateDocumentDto document)
         {
 
@@ -122,7 +123,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet]
+        [HttpGet,Authorize(Roles ="Customer,Employee")]
         public async Task<IActionResult> GetDocuments()
         {
             var documents = await _documentService.GetDocument();
@@ -135,7 +136,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpDelete("{DocumentId}")]
+        [HttpDelete("{DocumentId}"),Authorize(Roles ="Customer")]
         public async Task<IActionResult> DeleteDocuments(Guid DocumentId)
         {
             var documents = await _documentService.DeleteDocument(DocumentId);

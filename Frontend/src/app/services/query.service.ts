@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 @Injectable({
@@ -20,8 +20,13 @@ export class QueryService {
     return this.http.put(`${this.url}`, query);
   }
 
-  getAllQuery():Observable<any>{
-    return this.http.get<any>(this.url);
+  getAllQuery(pageNumber: number, pageSize: number): Observable<any> {
+      console.log(pageSize);
+      let params = new HttpParams()
+            .set('pageNumber', pageNumber.toString())
+            .set('pageSize', pageSize.toString());
+      
+    return this.http.get<any>(this.url,{params});
   }
 
 }

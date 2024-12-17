@@ -58,6 +58,7 @@ export class ViewNomineesComponent {
     });
     console.log(this.customerId);
     this.fetchPolicyAccounts();
+    this.editNomineeForm.get('nomineeRelation')?.disable();
   }
 
   onChange(){
@@ -94,6 +95,7 @@ export class ViewNomineesComponent {
           alert("error occured while loading nominees");
         }
         console.log(err.error);
+        this.nomineeData.data = null
       },
     });
   }
@@ -136,7 +138,6 @@ export class ViewNomineesComponent {
     }
   }
 
-  // Close the edit modal and reset the form
   closeEditModal(): void {
     this.isEditModalOpen = false;
     this.editNomineeForm.reset();

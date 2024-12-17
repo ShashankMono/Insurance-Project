@@ -1,11 +1,16 @@
 <div class="container mt-5">
     <h1 class="text-center">Queries</h1>
 
-    <div *ngIf="queryData.data.length > 0" class="mt-4">
+    <ng-template #noQ>
+      <p class="text-center">No Query available.</p>
+    </ng-template>
+
+    <div *ngIf="queryData?.data?.length > 0 ; else noQ" class="mt-4">
       <table class="table table-striped">
         <thead>
           <tr>
             <th>Sr No.</th>
+            <th>Customer name</th>
             <th>Question</th>
             <th>Response</th>
             <th>Action</th>
@@ -14,6 +19,7 @@
         <tbody>
           <tr *ngFor="let query of queryData.data; let i = index">
             <td>{{ i + 1 }}</td>
+            <td>{{query.customerName}}</td>
             <td>
               <textarea
                 class="form-control"
@@ -40,6 +46,27 @@
           </tr>
         </tbody>
       </table>
+
+
+      <nav *ngIf="totalPages > 1" aria-label="Page navigation" class="d-flex justify-content-center mt-3">
+        <ul class="pagination">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" (click)="changePage(currentPage - 1)">Previous</button>
+          </li>
+          <li
+            class="page-item"
+            *ngFor="let page of [].constructor(totalPages); let idx = index"
+            [class.active]="currentPage === idx + 1"
+          >
+            <button class="page-link" (click)="changePage(idx + 1)">{{ idx + 1 }}</button>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button class="page-link" (click)="changePage(currentPage + 1)">Next</button>
+          </li>
+        </ul>
+      </nav>
+
+
     </div>
   
     <div *ngIf="isEditModalOpen" class="modal show" style="display: block;">

@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ namespace Insurance_final_project.Controllers
             _emailService=emailService;
         }
 
-        [HttpPost("Marketing")]
+        [HttpPost("Marketing"), Authorize(Roles = "Agent")]
 
         public IActionResult SendMarketingMail(MarketingDto info)
         {

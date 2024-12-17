@@ -2,6 +2,7 @@
 using Insurance_final_project.Models;
 using Insurance_final_project.PagingFiles;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +20,7 @@ namespace Insurance_final_project.Controllers
             _customerService = customerService;
         }
 
-        [HttpGet("{customerId}")]
+        [HttpGet("{customerId}"), Authorize(Roles = "Customer,Employee,Admin")]
         public IActionResult GetCustomerById(Guid customerId)
         {
             var customer = _customerService.GetCustomerById(customerId);
@@ -32,7 +33,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("User/{UserId}")]
+        [HttpGet("User/{UserId}"), Authorize(Roles = "Customer")]
         public IActionResult GetCustomerByUserId(Guid UserId)
         {
             var customer = _customerService.GetCustomerByUserId(UserId);
@@ -46,7 +47,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut,Authorize(Roles ="Customer")]
         public IActionResult UpdateProfile([FromBody] CustomerDto customerDto)
         {
 
@@ -76,7 +77,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost("approve")]
+        [HttpPost("approve"), Authorize(Roles = "Employee")]
         public IActionResult ApproveCustomer([FromBody] ApprovalDto approval)
         {
 
@@ -136,7 +137,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet]
+        [HttpGet,Authorize(Roles ="Admin,Employee,Agent")]
         public async Task<IActionResult> GetCustomerAccounts([FromQuery] PageParameters pageParameter,
             [FromQuery] string? searchQuery)
         {

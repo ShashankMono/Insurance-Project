@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Insurance_final_project.Controllers
             _roleService = roleService;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetRoles()
         {
             var roles = await _roleService.GetRoles();
@@ -28,7 +29,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddRole([FromBody] RoleDto roleDto)
         {
             if (!ModelState.IsValid)
@@ -55,7 +56,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPut]
+        [HttpPut, Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateRole([FromBody] RoleDto roleDto)
         {
             if (!ModelState.IsValid)

@@ -1,4 +1,5 @@
 ﻿using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -17,7 +18,7 @@ namespace Insurance_final_project.Controllers
             _commonService = commonService;
         }
 
-        [HttpGet("approval")]
+        [HttpGet("approval"), Authorize(Roles = "Admin,Employee")]
         public IActionResult GetApprovalTypes()
         {
             var approvalTypes = _commonService.GetapprovalTypes();
@@ -30,7 +31,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpGet("Account_status")]
+        [HttpGet("Account_status"), Authorize(Roles = "Customer,Admin,Employee,Agent")]
         public IActionResult GetPolicyAccountStatus()
         {
             var accountStatus = _commonService.GetPolicyAccountStatus();
@@ -42,7 +43,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("transaction_status")]
+        [HttpGet("transaction_status"), Authorize(Roles = "Customer,Admin,Employee,Agent")]
         public IActionResult GetTransactionStatus()
         {
             var transactionTypes = _commonService.GetTransactionStatus();
@@ -55,7 +56,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpGet("verification")]
+        [HttpGet("verification"), Authorize(Roles = "Employee")]
         public IActionResult GetVerificationType()
         {
             var verificationTypes = _commonService.GetVerificationType();
@@ -68,7 +69,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpGet("installment_types")]
+        [HttpGet("installment_types"), Authorize(Roles = "Customer")]
         public IActionResult GetPolicyInstallmentType()
         {
             var installmentTypes = _commonService.GetpolicyInstallmentType();
@@ -81,7 +82,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpGet("document_types")]
+        [HttpGet("document_types"), Authorize(Roles = "Customer")]
         public IActionResult GetDocumentType()
         {
             var documentTypes = _commonService.GetDocumentType();

@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetStates()
         {
             var states = await _stateService.GetStates();
@@ -30,7 +31,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddState([FromBody] StateDto stateDto)
         {
             if (!ModelState.IsValid)
@@ -58,7 +59,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut, Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateState([FromBody] StateDto stateDto)
         {
             if (!ModelState.IsValid)

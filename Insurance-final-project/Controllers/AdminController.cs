@@ -1,6 +1,7 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Exceptions;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -18,7 +19,7 @@ namespace Insurance_final_project.Controllers
             _adminService = adminService;
         }
 
-        [HttpPost]
+        [HttpPost,Authorize(Roles ="Admin")]
         public async Task<IActionResult> AddAdmin([FromBody] AdminDto adminDto)
         {
 
@@ -41,7 +42,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPut]
+        [HttpPut, Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAdmin([FromBody] AdminDto adminDto)
         {
             if (!ModelState.IsValid)
@@ -63,7 +64,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAdmin(Guid id)
         {
 

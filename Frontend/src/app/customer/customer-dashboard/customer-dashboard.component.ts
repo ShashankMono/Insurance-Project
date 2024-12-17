@@ -76,9 +76,9 @@ export class CustomerDashboardComponent{
     this.router.navigate(['/customer-view/edit-profile'],{state:{customerId:this.customerId}});
   }
 
-  addNominee(): void {
-    this.router.navigate(['/customer-view/add-nominee',this.customerId]);
-  }
+  // addNominee(): void {
+  //   this.router.navigate(['/customer-view/add-nominee',this.customerId]);
+  // }
 
   viewNominee(): void {
     this.router.navigate(['/customer-view/view-nominee',this.customerId]);

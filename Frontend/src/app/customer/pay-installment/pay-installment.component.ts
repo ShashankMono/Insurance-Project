@@ -1,8 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
-import { PolicyAccountService } from 'src/app/services/policy-account.service';
 
 @Component({
   selector: 'app-pay-installment',
@@ -17,12 +15,7 @@ export class PayInstallmentComponent implements OnInit {
   policyName:any=""
   customerId:any=""
 
-  constructor(private dashboardService: CustomerDashboardService, private PolicyAccountService:PolicyAccountService ) {
-    this.policyAccountId=history.state.policyAccountId;
-    this.policyName = history.state.policyName;
-    // console.log(this.policyAccountId);
-    this.getInstallments();
-  }
+  constructor(private dashboardService: CustomerDashboardService ) {}
 
   isDueDatePassed(dueDate:string ):boolean{
     const today = new Date();
@@ -30,7 +23,10 @@ export class PayInstallmentComponent implements OnInit {
     return due<today;
   }
   ngOnInit(): void {
-    this.fetchPolicyAccounts();
+    this.policyAccountId=history.state.policyAccountId;
+    this.policyName = history.state.policyName;
+    this.customerId = history.state.customerId;
+    this.getInstallments();
   }
 
   getInstallments(){
@@ -47,18 +43,6 @@ export class PayInstallmentComponent implements OnInit {
       }
     })
   }
-
-  fetchPolicyAccounts(): void {
-    this.PolicyAccountService.getPolicyAccountsByCustomerId(this.customerId).subscribe(
-      (data) => {
-        this.policyAccounts = data;
-      },
-      (error) => {
-        console.error('Error fetching policy accounts', error);
-      }
-    );
-  }
-
   payInstallment(Amount:any,id:any): void {
     var obj = {
       policyName:this.policyName,
@@ -67,7 +51,6 @@ export class PayInstallmentComponent implements OnInit {
       cancelUrl:"http://localhost:4200/Cancel"
     }
 
-    //console.log(obj);
     this.dashboardService.getPaymentSession(obj).subscribe({
       next:(response)=>{
         var resData = response;
@@ -76,8 +59,6 @@ export class PayInstallmentComponent implements OnInit {
         }
       },
       error:(err:HttpErrorResponse)=>{
-        
-        console.log(err);
         alert(err.error);
       }
     })

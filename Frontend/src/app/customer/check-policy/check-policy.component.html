@@ -3,14 +3,12 @@
   <div *ngIf="policy" class="card shadow-sm">
     <div class="card-body">
       <div class="d-flex align-items-start mb-3">
-        <!-- Left Section: Image -->
         <img 
           [src]="policy.imageUrl || 'assets/default-policy.jpg'" 
           alt="{{ policy.name }}" 
           class="img-thumbnail me-3" 
           style="width: 150px; height: 150px; object-fit: cover;"
         />
-        <!-- Right Section: Name and Description -->
         <div>
           <h5 class="card-title">{{ policy.name }}</h5>
           <p class="card-text">{{ policy.description }}</p>

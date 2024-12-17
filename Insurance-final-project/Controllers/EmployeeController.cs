@@ -2,6 +2,7 @@
 using Insurance_final_project.Models;
 using Insurance_final_project.PagingFiles;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -20,7 +21,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddEmployee([FromBody] EmployeeDto newEmployee)
         {
 
@@ -50,7 +51,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllEmployees([FromQuery] PageParameters pageParameter,
             [FromQuery] string? searchQuery)
         {
@@ -71,7 +72,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut, Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateEmployeeProfile([FromBody] EmployeeDto employee)
         {
             if (!ModelState.IsValid)

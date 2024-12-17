@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddPolicy([FromBody] PolicyDto policy)
         {
             var policyId = await _policyService.AddPolicy(policy);
@@ -30,7 +31,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPut]
+        [HttpPut, Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdatePolicy([FromBody] PolicyDto policy)
         {
             var updatedPolicyId = await _policyService.UpdatePolicy(policy);
@@ -43,7 +44,6 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        // Get all policies
         [HttpGet]
         public async Task<IActionResult> GetPolicies()
         {

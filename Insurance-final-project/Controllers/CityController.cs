@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Insurance_final_project.Controllers
             _cityService = cityService;
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Customer")]
         public async Task<IActionResult> AddCity([FromBody] CityDto city)
         {
             if (!ModelState.IsValid)
@@ -45,7 +46,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPut]
+        [HttpPut,Authorize(Roles ="Admin")]
         public async Task<IActionResult> UpdateCity([FromBody] CityDto city)
         {
             if (!ModelState.IsValid)
@@ -74,7 +75,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet]
+        [HttpGet,Authorize(Roles ="Customer,Admin")]
         public async Task<IActionResult> GetCities()
         {
             var cities = await _cityService.GetCities();
@@ -87,7 +88,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("State/{id}")]
+        [HttpGet("State/{id}"),Authorize(Roles ="Customer,Admin")]
         public async Task<IActionResult> GetCitiedByStateId(Guid id)
         {
             var cities = _cityService.GetCitiesByStateId(id);

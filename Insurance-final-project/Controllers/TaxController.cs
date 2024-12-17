@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Insurance_final_project.Controllers
             _taxService = taxService;
         }
 
-        [HttpPost]
+        [HttpPost,Authorize(Roles ="Admin")]
         public async Task<IActionResult> AddTax([FromBody] TaxDto Tax)
         {
             if (!ModelState.IsValid)
@@ -39,7 +40,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut,Authorize(Roles ="Admin")]
         public async Task<IActionResult> UpdateTax([FromBody] TaxDto Tax)
         {
             if (!ModelState.IsValid)
@@ -62,7 +63,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles ="Admin")]
         public async Task<IActionResult> GetTax()
         {
 

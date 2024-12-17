@@ -2,6 +2,7 @@
 using Insurance_final_project.Models;
 using Insurance_final_project.PagingFiles;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ namespace Insurance_final_project.Controllers
             _policyCancelService = policyCancelService;
         }
 
-        [HttpGet("{policyAccountId}")]
+        [HttpGet("{policyAccountId}"), Authorize(Roles = "Customer")]
         public async Task<IActionResult> CancelPolicy(Guid policyAccountId)
         {
             var result = await _policyCancelService.CancelPolicy(policyAccountId);
@@ -41,7 +42,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPut("approve")]
+        [HttpPut("approve"),Authorize(Roles ="Admin")]
         public async Task<IActionResult> ApprovePolicyCancelation([FromBody] ApprovalDto approvalDto)
         {
             if (!ModelState.IsValid)
@@ -71,8 +72,8 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpGet("customer/{customerId}")]
-        public async Task<IActionResult> GetPolicyCancels(Guid customerId,
+        [HttpGet("customer/{customerId}"), Authorize(Roles = "Customer")]
+        public async Task<IActionResult> GetPolicyCancelsByCustomerId(Guid customerId,
             [FromQuery] string? searchQuery,
             [FromQuery] PageParameters pageParameter
             )
@@ -93,7 +94,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet]
+        [HttpGet,Authorize(Roles="Admin")]
         public async Task<IActionResult> GetAllPolicyCancels(
             [FromQuery] string? searchQuery,
             [FromQuery] PageParameters pageParameter

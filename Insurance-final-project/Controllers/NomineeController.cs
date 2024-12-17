@@ -1,5 +1,6 @@
 ﻿using Insurance_final_project.Dto;
 using Insurance_final_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Insurance_final_project.Controllers
             _nomineeService = nomineeService;
         }
 
-        [HttpPost]
+        [HttpPost,Authorize(Roles ="Customer")]
         public async Task<IActionResult> AddNominee([FromBody] NomineeDto nominee)
         {
 
@@ -39,7 +40,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("{nomineeId}")]
+        [HttpGet("{nomineeId}"), Authorize(Roles = "Customer")]
         public async Task<IActionResult> GetNominee(Guid nomineeId)
         {
             if (!ModelState.IsValid)
@@ -61,7 +62,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpGet("customer/{customerId}/policyAccount/{policyAccountId}")]
+        [HttpGet("customer/{customerId}/policyAccount/{policyAccountId}"), Authorize(Roles = "Customer")]
         public async Task<IActionResult> GetNominees(Guid customerId,Guid policyAccountId)
         {
             if (!ModelState.IsValid)
@@ -83,7 +84,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpPut]
+        [HttpPut, Authorize(Roles = "Customer")]
         public async Task<IActionResult> UpdateNominee([FromBody] NomineeDto nominee)
         {
             if (!ModelState.IsValid)
@@ -105,7 +106,7 @@ namespace Insurance_final_project.Controllers
             });
         }
 
-        [HttpDelete("{nomineeId}")]
+        [HttpDelete("{nomineeId}"), Authorize(Roles = "Customer")]
         public async Task<IActionResult> DeleteNominee(Guid nomineeId)
         {
             if (!ModelState.IsValid)

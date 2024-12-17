@@ -52,7 +52,7 @@ namespace Insurance_final_project.Services
                 case "Monthly":
                     installmentsPerYear = 12;
                     break;
-                case "Half-Yearly":
+                case "HalfYearly":
                     installmentsPerYear = 2;
                     break;
                 case "Yearly":
