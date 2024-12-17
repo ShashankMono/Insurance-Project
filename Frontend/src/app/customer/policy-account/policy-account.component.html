@@ -84,41 +84,31 @@
       file sent
       document endpoint add-viewdocuments comp on doc button-->
 
-      <div class="mb-3">
-        <label for="document" class="form-label">Document<span class="text-danger">*</span></label>
-        <select
-          id="document"
-          class="form-control"
-          formControlName="document"
-        >
-          <option value="">-- Select document Type --</option>
-          <option *ngFor="let type of documents" [value]="type">
-            {{ type }}
-          </option>
-        </select>
-        <div *ngIf="policyAccountForm.get('document')?.invalid && policyAccountForm.get('document')?.touched" class="text-danger">
-          Document Type is required.
-        </div>
-      </div>
 
       <div class="mb-3">
-      <label for="fileInput" class="form-label">Upload Document<span class="text-danger">*</span></label>
-      <input
-        type="file"
-        id="fileInput"
-        class="form-control"
-        (change)="onFileSelect($event)"
-        accept=".jpg,.jpeg,.png,.gif,.bmp"
-      />
-      <div *ngIf="fileError" class="text-danger">{{ fileError }}</div>
-      <div *ngIf="policyAccountForm.get('uploadDocument')?.invalid && policyAccountForm.get('uploadDocument')?.touched" class="text-danger">
-        Document is required.
+        <label class="form-label">Required Documents<span class="text-danger">*</span></label>
+      
+        <div *ngFor="let documentType of documents; let i = index" class="mb-3">
+          <label [for]="'fileInput' + i" class="form-label">{{ documentType }}<span class="text-danger">*</span></label>
+          <input
+            type="file"
+            [id]="'fileInput' + i"
+            class="form-control"
+            (change)="onFileSelect($event, documentType)"
+            accept=".jpg,.jpeg,.png,.gif,.bmp"
+          />
+        </div>
+      
+        <div *ngIf="fileError" class="text-danger">{{ fileError }}</div>
+        
+        
       </div>
-    </div>
+      
       <button
         type="submit"
         class="btn btn-primary w-100 mt-3"
-        [disabled]="!isDiable(policyAccountForm.invalid)"
+        [disabled]="policyAccountForm.invalid || !areAllDocumentsUploaded()"
+
       >
         Create Policy Account
       </button>
