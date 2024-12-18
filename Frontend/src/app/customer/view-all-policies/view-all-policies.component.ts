@@ -54,8 +54,8 @@ export class ViewAllPoliciesComponent implements OnInit {
     this.policyService.getPolicies().subscribe({
       next: (response) => {
         console.log('Fetched Policies:', response);
-        this.policies = response;
-        this.filteredPolicies = response; 
+        this.policies = response.filter(p=>p.isActive);
+        this.filteredPolicies = response.filter(p=>p.isActive); 
         
       },
       error: (error) => {

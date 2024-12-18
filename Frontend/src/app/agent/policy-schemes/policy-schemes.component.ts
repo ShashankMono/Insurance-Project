@@ -47,8 +47,8 @@ export class PolicySchemesComponent {
   loadPolicies(): void {
     this.policyService.getPolicies().subscribe(
       (response) => {
-        this.policies = response;
-        this.filteredPolicies = response; 
+        this.policies = response.filter(p=>p.isActive);
+        this.filteredPolicies = response.filter(p=>p.isActive); 
       },
       (error) => {
         this.errorMessage = 'Failed to load policies. Please try again later.';

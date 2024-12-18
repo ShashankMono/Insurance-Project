@@ -10,13 +10,13 @@ import { ClaimService } from 'src/app/services/claim.service';
   styleUrls: ['./add-claim.component.css']
 })
 export class AddClaimComponent {
-  policyAccountId: string="";
+  policyAccountId: string | null=null;
   successMessage: string | null = null;
   errorMessage: string | null = null;
   customerId: any = "";
   claimReuqests: any ="";
   claimForm = new FormGroup({
-    claimDescription: new FormControl('', [Validators.required, Validators.maxLength(500)])
+  claimDescription: new FormControl('', [Validators.required, Validators.maxLength(500)])
   });
   constructor(
     private route: ActivatedRoute,

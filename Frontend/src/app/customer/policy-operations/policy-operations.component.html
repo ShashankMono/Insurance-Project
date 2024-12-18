@@ -37,7 +37,7 @@
           <td>{{policy.isApproved}}</td>
           <td>
             <button
-              class="btn btn-primary mr-3"
+              class="btn btn-primary me-1 mt-1"
               (click)="payInstallment(policy.id,policy.policyName)"
               [disabled]="isDisable(policy)"
             >
@@ -45,7 +45,7 @@
             </button>
 
             <button
-              class="btn btn-danger"
+              class="btn btn-danger me-1 mt-1"
               (click)="cancelPolicy(policy.id)"
               [disabled]="isDisable(policy)"
             >
@@ -53,21 +53,21 @@
             </button>
 
             <button
-              class="btn btn-warning"
+              class="btn btn-warning me-1 mt-1"
               (click)="claimPolicy(policy.id)"
               [disabled]="isDisable(policy)"
             >
               Claim Policy
             </button>
             <button
-            class="btn btn-info"
+            class="btn btn-info me-1 mt-1"
             (click)="manageDocuments(policy.id,policy.policyId)"
           >
             Manage Documents
           </button>
 
           <button
-              class="btn btn-primary"
+              class="btn btn-primary mt-1"
               (click)="addNominee(policy.id)"
               [disabled]="isDisable(policy)"
             >

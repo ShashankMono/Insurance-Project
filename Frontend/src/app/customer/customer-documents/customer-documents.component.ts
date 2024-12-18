@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,40 +21,15 @@ export class CustomerDocumentsComponent implements OnInit {
   isAddDocumentModalOpen: boolean = false;
 
   documentTypes: string[] = [
-    'PROOF OF IDENTITY',
-    'PROOF OF ADDRESS',
-    'AGE PROOF',
-    'MEDICAL RECORDS',
-    'INCOME PROOF',
-    'PHOTOGRAPHS',
-    'POLICY APPLICATION FORM',
-    'NOMINEE DETAILS',
-    'KYC (KNOW YOUR CUSTOMER)',
-    'VEHICLE REGISTRATION CERTIFICATE (RC)',
-    'DRIVING LICENSE',
-    'POLLUTION UNDER CONTROL (PUC) CERTIFICATE',
-    'VEHICLE INSPECTION REPORT',
-    'PREVIOUS INSURANCE DETAILS',
-    'PROPERTY DOCUMENTS',
-    'SALE DEED',
-    'PURCHASE AGREEMENT',
-    'PROPERTY TAX RECEIPT',
-    'TITLE DEED',
-    'HOME LOAN DOCUMENTS',
-    'TRAVEL ITINERARY',
-    'PROOF OF TRAVEL',
-    'MEDICAL CERTIFICATE (FOR ACCIDENT INSURANCE)',
-    'BUSINESS REGISTRATION CERTIFICATE',
-    'TAX REGISTRATION DETAILS',
-    'FINANCIAL STATEMENTS (PROFIT AND LOSS STATEMENT, BALANCE SHEET)',
-    'LEASE AGREEMENT',
-    'CARGO DETAILS (INVOICE, BILL OF LADING)',
-    'OWNERSHIP DETAILS (FOR CARGO OR SHIP)',
-    'ROUTE AND DESTINATION INFORMATION',
-    'VALUE OF CARGO (INVOICE OR PURCHASE ORDER)',
-    'PET ADOPTION PAPERS OR PURCHASE DETAILS',
-    'PET MEDICAL HISTORY',
-    'BIRTH CERTIFICATE (FOR PET AGE)'
+    'Passport',
+    'Drivering License',
+    'Aadhaar_card',
+    'Voter ID Card',
+    'National ID Card',
+    'Utility Bill',
+    'Bank Statement',
+    'Passport',
+    'Rental Agreement'
   ];
   
 
@@ -139,9 +115,12 @@ export class CustomerDocumentsComponent implements OnInit {
                 this.fetchDocuments();
                 this.closeAddDocumentModal();
               },
-              (error) => {
-                this. setErrorMessage( 'Failed to save document.');
-                console.log(error);
+              (err:HttpErrorResponse) => {
+                if(err.error.exceptionMessage){
+                  alert(err.error.exceptionMessage);
+                }else{
+                  this. setErrorMessage( 'Failed to save document.');
+                }
               }
             );
           } else {

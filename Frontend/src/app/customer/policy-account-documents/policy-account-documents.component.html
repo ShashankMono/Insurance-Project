@@ -28,9 +28,9 @@
           <td>{{ document.documentName }}</td>
           <td>{{ document.isVerified }}</td>
           <td>
-            <button class="btn btn-info" (click)="viewDocument(document.documentFileURL)">View</button>
-            <button class="btn btn-danger" (click)="deleteDocument(document.documentId)">Delete</button>
-            <button class="btn btn-warning" (click)="openUpdateDocumentModal(document.documentId)">Update</button>
+            <button class="btn btn-info me-1" (click)="viewDocument(document.documentFileURL)">View</button>
+            <button class="btn btn-danger me-1" [disabled]="document.isVerified == 'Verified'" (click)="deleteDocument(document.documentId)">Delete</button>
+            <button class="btn btn-warning" [disabled]="document.isVerified == 'Verified'" (click)="openUpdateDocumentModal(document.documentId)">Update</button>
           </td>
         </tr>
       </tbody>
