@@ -15,18 +15,19 @@ import { PolicyService } from 'src/app/services/policy.service';
 export class BuyPolicyAgentComponent {
 
   policyAccountForm!: FormGroup;
-  policy: any | null= null;
+  policies: any[] = [];
   installmentTypes: string[] = [];
   successMessage: string | null = null;
   errorMessage: string | null = null;
   fileError: string | null = null;
-  selectedFile: File | null = null;
+  uploadedFiles: { documentType: string; file: File }[] = [];
   customerId: any | null = "";
   fileUploaded:boolean= false;
   policyId:any="";
+  policy:any="";
   agentName: any = "";
   agentId:any = "";
-  documents:any="";
+  documents: any[] = [];
   investmentAmount:any="";
   installmentType:any="";
   PolicyTerm:any="";
@@ -40,7 +41,7 @@ export class BuyPolicyAgentComponent {
 ) {}
 
   ngOnInit(): void {
-    this.customerId=localStorage.getItem('customerId');
+    // this.customerId=localStorage.getItem('customerId');
 
     // this.route.queryParamMap.subscribe((params) => {
     //   this.policyId = params.get('policyId');
@@ -48,8 +49,11 @@ export class BuyPolicyAgentComponent {
     //   console.log('Policy ID:', this.policyId);
     //   console.log('Agent ID:', this.agentId);
     // });
+    this.customerId=history.state.customerId
 
     this.policyId=history.state.policyId;
+    this.policy = history.state.PolicyData
+    this.documents = this.policy.documentsRequired .split(',').map((doc:string) => doc.trim());
     this.agentId=history.state.agentId;
     this.PolicyTerm = history.state.PolicyTerm;
     this.investmentAmount = 
@@ -68,11 +72,17 @@ export class BuyPolicyAgentComponent {
     console.log(this.customerId);
 
     this.policyAccountForm = new FormGroup({
-      investmentAmount: new FormControl(0, [Validators.required]),
+      policyId: new FormControl('', Validators.required),
+      investmentAmount: new FormControl(0, [Validators.min(0),Validators.required]),
       policyTerm: new FormControl(0, [Validators.required, Validators.min(1)]),
       installmentType: new FormControl('', Validators.required),
-      document:new FormControl('',Validators.required),
+      // document:new FormControl('',Validators.required),
     });
+
+    this.setFormValue();
+    if(this.policy != null){
+      this.setValidators(this.policy);
+    }
 
 
   }
@@ -80,14 +90,13 @@ export class BuyPolicyAgentComponent {
   setValidators(policy:any){
     const investmentAmountControl = this.policyAccountForm.get('investmentAmount');
     const policyTermControl = this.policyAccountForm.get('policyTerm');
-    const installmentTypeControl = this.policyAccountForm.get('installmentType');
     if (investmentAmountControl) {
       investmentAmountControl.setValidators([
         Validators.min(policy.minimumInvestmentAmount),
         Validators.max(policy.maximumInvestmentAmount),
         Validators.required
       ]);
-      investmentAmountControl.setValue(history.state.investmentAmount || 0);
+
       investmentAmountControl.updateValueAndValidity();
     }
     if(policyTermControl){
@@ -96,13 +105,21 @@ export class BuyPolicyAgentComponent {
         Validators.max(policy.maximumPolicyTerm),
         Validators.required,
       ])
-      policyTermControl.setValue(history.state.PolicyTerm || 0);
       policyTermControl.updateValueAndValidity();
     }
-    if(installmentTypeControl){
-      installmentTypeControl.setValue(history.state.installmentType);
-      installmentTypeControl.updateValueAndValidity();
-    }
+  }
+
+
+  setFormValue() {
+    this.policyAccountForm.setValue({
+      policyId: this.policy.name,
+      policyTerm: history.state.PolicyTerm,
+      installmentType: history.state.installmentType,
+      investmentAmount: history.state.investmentAmount,
+     
+      
+    });
+    this.policyAccountForm.updateValueAndValidity();
   }
 
   fetchPolicy(): void {
@@ -161,20 +178,68 @@ export class BuyPolicyAgentComponent {
     );
   }
 
-  onFileSelect(event: any): void {
+  onFileSelect(event: any, documentType: string): void {
     const file = event.target.files[0];
-    if (file && ['image/jpeg', 'image/png', 'image/gif', 'image/bmp'].includes(file.type)) {
-      this.selectedFile = file;
+    const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/bmp'];
+
+    if (file && validTypes.includes(file.type)) {
+      const existingIndex = this.uploadedFiles.findIndex((f) => f.documentType === documentType);
+      if (existingIndex >= 0) {
+        this.uploadedFiles[existingIndex] = { documentType, file }; // Replace existing file
+        console.log(this.uploadedFiles);
+      } else {
+        this.uploadedFiles.push({ documentType, file });
+        console.log(this.uploadedFiles);
+      }
       this.fileError = null;
-      this.fileUploaded = true;
     } else {
-      this.fileError = 'Invalid file type. Only images are allowed.';
-      this.selectedFile = null;
+      this.fileError = `Invalid file type for ${documentType}. Only images are allowed.`;
+      this.removeInvalidFile(documentType);
     }
   }
+  removeInvalidFile(documentType: string): void {
+    this.uploadedFiles = this.uploadedFiles.filter((f) => f.documentType !== documentType);
+  }
+  isWholeNumber(value: number): boolean {
+    return Number.isInteger(value);
+  }
+
+  areAllDocumentsUploaded(): boolean {
+    return this.documents.every((doc) =>
+      this.uploadedFiles.some((file) => file.documentType === doc)
+    );
+  }
+  
 
   onSubmit(): void {
-    if (this.policyAccountForm.valid && this.selectedFile) {
+    if (!this.areAllDocumentsUploaded()) {
+      this.errorMessage = 'Please upload all required documents.';
+      return;
+    }
+    if (this.policyAccountForm.valid) {
+      const investmentAmount = this.policyAccountForm.value.investmentAmount;
+      const policyTerm = this.policyAccountForm.value.policyTerm;
+
+      this.errorMessage = null;
+      let isValid = true;
+
+      if (!this.isWholeNumber(investmentAmount)) {
+        isValid = false;
+        this.errorMessage = 'Investment amount should be a whole number (not a decimal).';
+      }
+
+      if (!this.isWholeNumber(policyTerm)) {
+        isValid = false;
+        if (this.errorMessage) {
+          this.errorMessage += ' Policy term should be a whole number (not a decimal).';
+        } else {
+          this.errorMessage = 'Policy term should be a whole number (not a decimal).';
+        }
+      }
+      if (!isValid) {
+        return;
+      }
+
       const policyAccountData = {
         customerId: this.customerId,
         policyId:this.policy.id,
@@ -192,7 +257,7 @@ export class BuyPolicyAgentComponent {
           const policyAccountId = response.data;
           console.log(policyAccountId)
           if (policyAccountId) {
-            this.uploadFile(policyAccountId);
+            this.uploadFiles(policyAccountId);
           } else {
             this.errorMessage = 'Policy Account ID not found in the response.';
           }
@@ -203,52 +268,52 @@ export class BuyPolicyAgentComponent {
           console.error(error);
         }
       );      
+    }else {
+      this.errorMessage = 'Please upload all required documents.';
     }
   }
 
-  uploadFile(policyAccountId: any): void {
-    if (this.selectedFile) {
+  uploadFiles(policyAccountId: any): void {
+    this.uploadedFiles.forEach(({ documentType, file }) => {
       const formData = new FormData();
-      formData.append('file', this.selectedFile);
+      formData.append('file', file);
 
       this.fileService.uploadFile(formData).subscribe(
         (response) => {
           const fileUrl = response.data.result.url;
-          this.saveDocument(policyAccountId, fileUrl);
+          this.saveDocument(policyAccountId, documentType, file.name, fileUrl);
         },
         (error) => {
           this.errorMessage = 'Error uploading file. Please try again.';
           console.error(error);
         }
       );
-    }
+    });
   }
 
-  saveDocument(policyAccountId: any, fileUrl: string): void {
-    console.log(policyAccountId);
+  saveDocument(policyAccountId: any, documentType: string, documentName: string, fileUrl: string): void {
     const documentData = {
-      documentType: this.policyAccountForm.get('Document')?.value ||'Policy Document',
-      documentName: this.selectedFile?.name,
+      documentType: documentType,
+      documentName: documentName,
       documentFileURL: fileUrl,
       isVerified: 'Pending',
-      policyAccountId: policyAccountId,
+      policyAccountId: policyAccountId
     };
 
     this.customerDashboardService.saveDocument(documentData).subscribe(
-      (response) => {
-        this.successMessage = 'Policy Account created and document uploaded successfully!';
+      () => {
+        this.successMessage = 'Policy Account created and documents uploaded successfully!';
         this.errorMessage = null;
         this.policyAccountForm.reset();
-        this.selectedFile = null;
+        this.uploadedFiles = [];
       },
       (error) => {
         this.errorMessage = 'Error saving document. Please try again.';
         console.error(error);
       }
     );
-
   }
-  isDiable(form:boolean):Boolean{
+  isDiable(form: boolean): Boolean {
     return !form && this.fileUploaded;
   }
 
