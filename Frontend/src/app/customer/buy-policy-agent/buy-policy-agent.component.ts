@@ -31,32 +31,25 @@ export class BuyPolicyAgentComponent {
   investmentAmount:any="";
   installmentType:any="";
   PolicyTerm:any="";
+  inProcess:boolean=false;
 
   constructor(
     private customerDashboardService: CustomerDashboardService
     ,private policyService:PolicyService
     ,private agentService:AgentDashboardService
-    ,private route:ActivatedRoute
     ,private fileService:FileUploadService
 ) {}
 
   ngOnInit(): void {
-    // this.customerId=localStorage.getItem('customerId');
-
-    // this.route.queryParamMap.subscribe((params) => {
-    //   this.policyId = params.get('policyId');
-    //   this.agentId = params.get('agentId');
-    //   console.log('Policy ID:', this.policyId);
-    //   console.log('Agent ID:', this.agentId);
-    // });
     this.customerId=history.state.customerId
 
     this.policyId=history.state.policyId;
-    this.policy = history.state.PolicyData
+    this.policy = history.state.policy
+    console.log(this.policy);
     this.documents = this.policy.documentsRequired .split(',').map((doc:string) => doc.trim());
     this.agentId=history.state.agentId;
     this.PolicyTerm = history.state.PolicyTerm;
-    this.investmentAmount = 
+    this.investmentAmount = history.state.investmentAmount;
     this.installmentType = history.state.installmentType;
 
     console.log(this.PolicyTerm,this.investmentAmount,this.installmentType);
@@ -76,15 +69,12 @@ export class BuyPolicyAgentComponent {
       investmentAmount: new FormControl(0, [Validators.min(0),Validators.required]),
       policyTerm: new FormControl(0, [Validators.required, Validators.min(1)]),
       installmentType: new FormControl('', Validators.required),
-      // document:new FormControl('',Validators.required),
     });
 
     this.setFormValue();
     if(this.policy != null){
       this.setValidators(this.policy);
     }
-
-
   }
 
   setValidators(policy:any){
@@ -115,9 +105,7 @@ export class BuyPolicyAgentComponent {
       policyId: this.policy.name,
       policyTerm: history.state.PolicyTerm,
       installmentType: history.state.installmentType,
-      investmentAmount: history.state.investmentAmount,
-     
-      
+      investmentAmount: history.state.investmentAmount,      
     });
     this.policyAccountForm.updateValueAndValidity();
   }
@@ -130,7 +118,6 @@ export class BuyPolicyAgentComponent {
           this.policy=response.data;
           this.documents = this.policy.documentsRequired .split(',').map((doc:string) => doc.trim());
           this.setValidators(this.policy);
-          // this.setFormValue(this.policy);
         },
         error:(err:HttpErrorResponse)=>{
           if(err.error.exceptionMessage){
@@ -149,7 +136,7 @@ export class BuyPolicyAgentComponent {
     this.agentService.getAgentReport(this.agentId).subscribe(
       {
         next:(response)=>{
-          console.log(response);
+          console.log("agent",response);
           this.agentName=response.data.firstName+" "+response.data.lastName;
         },
         error:(err:HttpErrorResponse)=>{
@@ -212,6 +199,7 @@ export class BuyPolicyAgentComponent {
   
 
   onSubmit(): void {
+    this.inProcess = true;
     if (!this.areAllDocumentsUploaded()) {
       this.errorMessage = 'Please upload all required documents.';
       return;
@@ -248,12 +236,9 @@ export class BuyPolicyAgentComponent {
         installmentType:this.policyAccountForm.value.installmentType,
         agentId:this.agentId
       }
-      //console.log("Data",policyAccountData);
 
       this.customerDashboardService.createPolicyAccount(policyAccountData).subscribe(
         (response) => {
-          console.log(response); 
-          
           const policyAccountId = response.data;
           console.log(policyAccountId)
           if (policyAccountId) {
@@ -261,15 +246,18 @@ export class BuyPolicyAgentComponent {
           } else {
             this.errorMessage = 'Policy Account ID not found in the response.';
           }
+          this.inProcess=false;
         },
         (error) => {
           this.errorMessage = 'Error creating Policy Account. Please try again.';
           this.successMessage = null;
           console.error(error);
+          this.inProcess=false;
         }
       );      
     }else {
       this.errorMessage = 'Please upload all required documents.';
+      this.inProcess=false;
     }
   }
 

@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./add-agent.component.css']
 })
 export class AddAgentComponent{
+  inProcess=false;
   addAgentForm = new FormGroup({
     firstName: new FormControl('', [
       Validators.required,
@@ -42,6 +43,7 @@ export class AddAgentComponent{
   ) {}
 
   onSubmit(): void {
+    this.inProcess=true;
     if (this.addAgentForm.valid) {
       const agentData = {
         firstName: this.addAgentForm.value.firstName,
@@ -49,8 +51,8 @@ export class AddAgentComponent{
         qualification: this.addAgentForm.value.qualification,
         email: this.addAgentForm.value.email,
         mobileNo: this.addAgentForm.value.mobileNo,
-        commissionEarned: 0, // Default value
-        totalCommission: 0, // Default value
+        commissionEarned: 0, 
+        totalCommission: 0, 
       };
 
       this.addAgentService.addAgent(agentData).subscribe({
@@ -58,6 +60,7 @@ export class AddAgentComponent{
           console.log('Agent added successfully:', response);
           alert("Agent added successfully! Check email for credentials.");
           this.router.navigate(['/admin-dashboard']);
+          this.inProcess=false;
         },
         error: (err: HttpErrorResponse) => {
           if (err.error.exceptionMessage) {
@@ -66,6 +69,7 @@ export class AddAgentComponent{
             alert('Error occurred while adding new agent.');
           }
           console.error('Error adding agent:', err);
+          this.inProcess=false;
         },
       });
     }

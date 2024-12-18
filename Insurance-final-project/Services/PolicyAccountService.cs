@@ -19,6 +19,7 @@ namespace Insurance_final_project.Services
         private readonly IRepository<Policy> _policyRepo;
         private readonly IRepository<Customer> _customerRepo;
         private readonly IEmailService _emailService;
+        private readonly IRepository<PolicyAccountDocument> _policyAccountDocumentRepo;
         public PolicyAccountService(IRepository<PolicyAccount> repo
             , IMapper mapper
             , ICommissionService commissionService
@@ -26,7 +27,8 @@ namespace Insurance_final_project.Services
             , IRepository<Agent> agent
             , IRepository<Policy> policyRepo
             , IRepository<Customer> customerRepo
-            , IEmailService emailService)
+            , IEmailService emailService
+            , IRepository<PolicyAccountDocument> policyAccountDocumentRepo)
         {
             _PolicyAccountRepo = repo;
             _Mapper = mapper;
@@ -36,6 +38,7 @@ namespace Insurance_final_project.Services
             _policyRepo = policyRepo;
             _customerRepo = customerRepo;
             _emailService = emailService;
+            _policyAccountDocumentRepo = policyAccountDocumentRepo;
         }
 
 
@@ -119,19 +122,38 @@ namespace Insurance_final_project.Services
 
         public async Task<bool> ApproveAccount(ApprovalDto approval)
         {
-            var existingAccount = _PolicyAccountRepo.GetAll().AsNoTracking().Include(pa=>pa.Policy).FirstOrDefault(pa => pa.Id == approval.Id);
+            var existingAccount = _PolicyAccountRepo.GetAll().AsNoTracking().Include(pa=>pa.Policy).Include(pa=>pa.Customer).FirstOrDefault(pa => pa.Id == approval.Id);
             if (existingAccount == null)
             {
                 throw new PolicyAccountNotFountException("Account not found!");
             }
-            
+
+            if (approval.IsApproved.ToLower() == ApprovalType.Approved.ToString().ToLower())
+            {
+                var documents = _policyAccountDocumentRepo.GetAll().AsNoTracking().Where(d => d.PolicyAccountId == approval.Id).ToList();
+                foreach (var document in documents)
+                {
+                    if (document.IsVerified != VerificationType.Verified.ToString())
+                    {
+                        throw new AllDocumentNotVerifiedException("Please verify all document's!");
+                    }
+                }
+            }
+
             existingAccount.IsApproved = approval.IsApproved.ToLower() == "Approved".ToLower() || approval.IsApproved == "Approve".ToLower()
                                                             ? ApprovalType.Approved.ToString() : ApprovalType.Rejected.ToString();
-            if (approval.IsApproved.ToLower() == VerificationType.Rejected.ToString().ToLower())
+            if (approval.IsApproved.ToLower() == ApprovalType.Rejected.ToString().ToLower())
             {
                 existingAccount.Status = PolicyAccountStatus.Closed.ToString();
                 _emailService.RejectionMail(existingAccount.CustomerId, approval.Reason,
                     $"{existingAccount.Policy.Name} Kyc rejected");
+            }
+            else if (approval.IsApproved.ToLower() == ApprovalType.Approved.ToString().ToLower())
+            {
+                var mail = existingAccount.Customer.EmailId;
+                var Subject = $"Status update of scheme account {existingAccount.Policy.Name} kyc";
+                var message = $"Kyc Approved! for policy scheme account {existingAccount.Policy.Name}";
+                _emailService.ApprovalOrVrifiedMail(mail, Subject, message);
             }
             _PolicyAccountRepo.Update(existingAccount);
             return true;
@@ -149,6 +171,7 @@ namespace Insurance_final_project.Services
                 .Include(pa=>pa.Policy)
                 .Include(pa=>pa.Customer)
                 .Include(pa=>pa.Agent)
+                .OrderByDescending(p => p.Id)
                 .ToList();
 
             return _Mapper.Map<List<PolicyAccountResponseDto>>(policyAccounts);
@@ -162,6 +185,7 @@ namespace Insurance_final_project.Services
                 .Include(pa => pa.Policy)
                 .Include(pa => pa.Customer)
                 .Include(pa => pa.Agent)
+                .OrderByDescending(p => p.Id)
                 .ToList();
             return _Mapper.Map<List<PolicyAccountResponseDto>>(policies);
         }

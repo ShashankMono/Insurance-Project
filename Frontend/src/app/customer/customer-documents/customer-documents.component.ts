@@ -19,6 +19,7 @@ export class CustomerDocumentsComponent implements OnInit {
   errorMessage: string | null = null;
   selectedDocumentUrl: string | null = null;
   isAddDocumentModalOpen: boolean = false;
+  inProcess:boolean = false;
 
   documentTypes: string[] = [
     'Passport',
@@ -94,6 +95,7 @@ export class CustomerDocumentsComponent implements OnInit {
 
   onSubmit(): void {
     console.log('Form submitted:', this.addDocumentForm.value);
+    this.inProcess = true;
     if (this.addDocumentForm.valid) {
       const file = this.addDocumentForm.get('documentFile')?.value;
       const formData = new FormData();
@@ -107,6 +109,7 @@ export class CustomerDocumentsComponent implements OnInit {
               documentName: this.addDocumentForm.get('documentName')?.value,
               documentFileURL: uploadResponse.data.result.url,
               customerId: this.customerId
+
             };
   
             this.customerService.addCustomerDocument(documentData).subscribe(
@@ -114,6 +117,7 @@ export class CustomerDocumentsComponent implements OnInit {
                 this.successMessage = 'Document added successfully.';
                 this.fetchDocuments();
                 this.closeAddDocumentModal();
+                this.inProcess= false
               },
               (err:HttpErrorResponse) => {
                 if(err.error.exceptionMessage){
@@ -121,18 +125,22 @@ export class CustomerDocumentsComponent implements OnInit {
                 }else{
                   this. setErrorMessage( 'Failed to save document.');
                 }
+                this.inProcess = false
               }
             );
           } else {
             this. setErrorMessage( 'File upload failed: No file URL returned.');
+            this.inProcess=false;
           }
         },
         (error) => {
           this. setErrorMessage( 'Failed to upload file.');
+          this.inProcess=false;
         }
       );
     } else {
       this. setErrorMessage( 'Please fill in all required fields.');
+      this.inProcess=false;
     }
   }
   

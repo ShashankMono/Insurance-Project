@@ -67,6 +67,6 @@
       </div>
     </div>
 
-    <button class="btn btn-primary w-100" type="submit" [disabled]="addAgentForm.invalid">Add Agent</button>
+    <button class="btn btn-primary w-100" type="submit" [disabled]="addAgentForm.invalid  || inProcess">Add Agent</button>
   </form>
 </div>

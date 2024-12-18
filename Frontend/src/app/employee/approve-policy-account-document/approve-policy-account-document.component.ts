@@ -73,6 +73,7 @@ export class ApprovePolicyAccountDocumentComponent {
       isVerified:isVerified,
       reason:message
     }
+    console.log(obj);
     this.documentService.updateDocumentStatus(obj).subscribe({
       next: (response) => {
         this.loadDocuments(this.AccountId!);

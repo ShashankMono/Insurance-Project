@@ -8,34 +8,40 @@
       {{ errorMessage }}
     </div>
   
-    <div class="text-end mb-3">
+    <div class="text-end mb-3" >
       <button class="btn btn-success" (click)="openAddDocumentModal()">Add New Document</button>
     </div>
-  
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Sr no.</th>
-          <th>Document Type</th>
-          <th>Document Name</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let document of documents; let i=index">
-          <td>{{i+1}}</td>
-          <td>{{ document.documentType }}</td>
-          <td>{{ document.documentName }}</td>
-          <td>{{ document.isVerified }}</td>
-          <td>
-            <button class="btn btn-info me-1" (click)="viewDocument(document.documentFileURL)">View</button>
-            <button class="btn btn-danger me-1" [disabled]="document.isVerified == 'Verified'" (click)="deleteDocument(document.documentId)">Delete</button>
-            <button class="btn btn-warning" [disabled]="document.isVerified == 'Verified'" (click)="updateDocument(document)">Update</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+
+    <ng-template #noDocument>
+      <p class="text-center">No Document available.</p>
+    </ng-template>
+    
+    <div *ngIf="documents.length > 0 ; else noDocument">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Sr no.</th>
+            <th>Document Type</th>
+            <th>Document Name</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let document of documents; let i=index">
+            <td>{{i+1}}</td>
+            <td>{{ document.documentType }}</td>
+            <td>{{ document.documentName }}</td>
+            <td>{{ document.isVerified }}</td>
+            <td>
+              <button class="btn btn-info me-1" (click)="viewDocument(document.documentFileURL)">View</button>
+              <button class="btn btn-danger me-1" [disabled]="document.isVerified == 'Verified'" (click)="deleteDocument(document.documentId)">Delete</button>
+              <button class="btn btn-warning" [disabled]="document.isVerified == 'Verified'" (click)="updateDocument(document)">Update</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   
   <div *ngIf="isAddDocumentModalOpen" class="modal show" style="display: block;">
@@ -48,7 +54,7 @@
         <div class="modal-body">
           <form [formGroup]="addDocumentForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
-              <label for="documentType">Document Type</label>
+              <label for="documentType">Document Type<span class="text-danger">*</span></label>
               <select id="documentType" class="form-control" formControlName="documentType">
                 <option value="" disabled selected>Select a Document Type</option>
                 <option *ngFor="let type of documentTypes" [value]="type">{{ type }}</option>
@@ -56,15 +62,15 @@
             </div>
             
             <div class="mb-3">
-              <label for="documentName">Document Name</label>
+              <label for="documentName">Document Name<span class="text-danger">*</span></label>
               <input type="text" id="documentName" class="form-control" formControlName="documentName" />
             </div>
             <div class="mb-3">
-              <label for="documentFile">Upload File</label>
+              <label for="documentFile">Upload File<span class="text-danger">*</span></label>
               <input type="file" id="documentFile" class="form-control" (change)="onFileSelected($event)" />
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Add Document</button>
+              <button type="submit" class="btn btn-primary" [disabled]="inProcess">Add Document</button>
               <button type="button" class="btn btn-secondary" (click)="closeAddDocumentModal()">Cancel</button>
             </div>
           </form>

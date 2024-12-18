@@ -1,14 +1,10 @@
 ﻿using Insurance_final_project.Models;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Insurance_final_project.Dto;
 using Insurance_final_project.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Insurance_final_project.Data;
 using Insurance_final_project.Constant;
 using Insurance_final_project.Exceptions;
-using System.Reflection.Metadata;
 
 namespace Insurance_final_project.Services
 {
@@ -20,6 +16,7 @@ namespace Insurance_final_project.Services
         private readonly IRepository<City> _cityRepo;
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
+        private readonly IRepository<Document> _documentRepo;
 
         public CustomerService(
             IRepository<Customer> customerRepository,
@@ -27,7 +24,8 @@ namespace Insurance_final_project.Services
             , IRepository<City> city
             , IRepository<State> stateRepo
             , IRepository<User> userRepo
-            , IEmailService emailService)
+            , IEmailService emailService
+            ,IRepository<Document> documentRepo)
         {
             _customerRepository = customerRepository;
             _mapper = mapper;
@@ -35,6 +33,7 @@ namespace Insurance_final_project.Services
             _stateRepo = stateRepo;
             _userRepo = userRepo;
             _emailService = emailService;
+            _documentRepo = documentRepo;
         }
 
         public CustomerProfileDto GetCustomerById(Guid customerId)
@@ -61,12 +60,30 @@ namespace Insurance_final_project.Services
                 throw new CustomerNotFoundException("Customer not found!");
             }
 
+            if(approval.IsApproved.ToLower() == ApprovalType.Approved.ToString().ToLower())
+            {
+                var documents = _documentRepo.GetAll().AsNoTracking().Where(d=>d.CustomerId == approval.Id).ToList();
+                foreach (var document in documents) { 
+                    if(document.IsVerified != VerificationType.Verified.ToString())
+                    {
+                        throw new AllDocumentNotVerifiedException("Please verify all document!");
+                    }
+                }
+            }
+
             existingCustomer.IsApproved = approval.IsApproved.ToLower()=="Approved".ToLower() || approval.IsApproved == "Approve".ToLower()
                                                             ?ApprovalType.Approved.ToString():ApprovalType.Rejected.ToString();
-            if (approval.IsApproved.ToLower() == VerificationType.Rejected.ToString().ToLower())
+            if (approval.IsApproved.ToLower() == ApprovalType.Rejected.ToString().ToLower())
             {
                 _emailService.RejectionMail(approval.Id, approval.Reason,
                     $"{existingCustomer.FirstName+" "+existingCustomer.LastName} Kyc rejected");
+            }
+            else if (approval.IsApproved.ToLower() == ApprovalType.Approved.ToString().ToLower())
+            {
+                var mail = existingCustomer.EmailId;
+                var Subject = $"Status update of Account kyc";
+                var message = $"Kyc Approved! {existingCustomer.FirstName + " " + existingCustomer.LastName}";
+                _emailService.ApprovalOrVrifiedMail(mail, Subject, message);
             }
             _customerRepository.Update(existingCustomer);
             return true;

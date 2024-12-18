@@ -9,7 +9,11 @@
       {{ errorMessage }}
     </div>
 
-    <table class="table table-bordered">
+    <ng-template #noAccount>
+      <p class="text-center">No Account available.</p>
+    </ng-template>
+
+    <table class="table table-bordered" *ngIf="policyAccounts.length>0; else noAccount">
       <thead>
         <tr>
           <th>Policy Plan</th>

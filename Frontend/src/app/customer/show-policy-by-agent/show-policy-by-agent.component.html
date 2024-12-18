@@ -42,6 +42,9 @@
             [min]="policy?.minimumInvestmentAmount" 
             [max]="policy?.maximumInvestmentAmount"
           />
+          <div *ngIf="!isWholeNumber(investmentAmount)" class="text-danger">
+            Policy term should be a whole number.
+          </div>
           <div *ngIf="investment.invalid && investment.touched" class="text-danger">
             Please enter an amount between {{ policy.minimumInvestmentAmount }} and {{ policy.maximumInvestmentAmount }}.
           </div>
@@ -59,6 +62,9 @@
             [min]="policy?.minimumPolicyTerm" 
             [max]="policy?.maximumPolicyTerm"
           />
+          <div *ngIf="!isWholeNumber(policyTerm)" class="text-danger">
+            Policy term should be a whole number.
+          </div>
           <div *ngIf="term.invalid && term.touched" class="text-danger">
             Please select a term between {{ policy.minimumPolicyTerm }} and {{ policy.maximumPolicyTerm }} years.
           </div>

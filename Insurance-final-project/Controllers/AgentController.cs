@@ -19,7 +19,7 @@ namespace Insurance_final_project.Controllers
             _agentService = agentService;
         }
 
-        [HttpGet("{id}"), Authorize(Roles = "Admin,Agent")]
+        [HttpGet("{id}"), Authorize(Roles = "Admin,Agent,Customer")]
         public IActionResult GetAgentById(Guid id)
         {
             var agent = _agentService.GetAgentById(id);

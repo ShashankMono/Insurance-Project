@@ -10,6 +10,7 @@ import { EmployeeService } from 'src/app/services/employee.service';
   styleUrls: ['./add-employee.component.css']
 })
 export class AddEmployeeComponent {
+  inProcess= false;
   addEmployeeForm = new FormGroup({
     firstName: new FormControl('', [
       Validators.required,
@@ -45,6 +46,7 @@ export class AddEmployeeComponent {
   ) {}
 
   onSubmit(): void {
+    this.inProcess = true;
     if (this.addEmployeeForm.valid) {
       const employeeData = this.addEmployeeForm.value;
 
@@ -52,6 +54,7 @@ export class AddEmployeeComponent {
         next: () => {
           alert('Employee added successfully! Check email for login credentials.');
           this.router.navigate(['/admin-dashboard']);
+          this.inProcess = false;
         },
         error: (err: HttpErrorResponse) => {
           if (err.error.exceptionMessage) {
@@ -60,6 +63,7 @@ export class AddEmployeeComponent {
             alert('Failed to add employee. Please try again.');
           }
           console.error('Error adding employee:', err);
+          this.inProcess = false;
         }
       });
     }

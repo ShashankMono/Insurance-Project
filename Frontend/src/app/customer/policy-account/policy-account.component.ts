@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomerDashboardService } from 'src/app/services/customer-dashboard.service';
@@ -21,6 +22,7 @@ export class PolicyAccountComponent implements OnInit{
   fileUploaded:boolean= false;
   policy:any="";
   documents: any[] = [];
+  inProcess: boolean = false;
 
   constructor(
     private customerDashboardService: CustomerDashboardService,
@@ -131,6 +133,7 @@ export class PolicyAccountComponent implements OnInit{
       this.errorMessage = 'Please upload all required documents.';
       return;
     }
+    this.inProcess = true;
     if (this.policyAccountForm.valid) {
 
       const investmentAmount = this.policyAccountForm.value.investmentAmount;
@@ -165,19 +168,24 @@ export class PolicyAccountComponent implements OnInit{
       };
       console.log("Data",policyAccountData);
 
-      this.customerDashboardService.createPolicyAccount(policyAccountData).subscribe(
-        (response) => {
+      this.customerDashboardService.createPolicyAccount(policyAccountData).subscribe({
+        next:(response) => {
           const policyAccountId = response.data;
           if (policyAccountId) {
             this.uploadFiles(policyAccountId);
           } else {
             this.errorMessage = 'Policy Account ID not found in the response.';
           }
+          this.inProcess = false;
         },
-        (error) => {
+        error:(error:HttpErrorResponse) => {
+          this.inProcess = false;
+          if(error.error.exceptionMessage){
+            alert(error.error.exceptionMessage);
+          }
           this.errorMessage = 'Error creating Policy Account. Please try again.';
           console.error(error);
-        }
+        }}
       );
     } else {
       this.errorMessage = 'Please upload all required documents.';
@@ -223,9 +231,6 @@ export class PolicyAccountComponent implements OnInit{
         console.error(error);
       }
     );
-  }
-  isDiable(form: boolean): Boolean {
-    return !form && this.fileUploaded;
   }
   
 }

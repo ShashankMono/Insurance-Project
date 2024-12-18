@@ -86,6 +86,10 @@ export class ShowPolicyByAgentComponent {
         }
       );
     }
+
+    isWholeNumber(value: number): boolean {
+      return Number.isInteger(value);
+    }
   
     // loadPolicyTypes(): void {
     //   this.policyTypeService.getPolicyTypes().subscribe(
@@ -134,6 +138,7 @@ export class ShowPolicyByAgentComponent {
         const customerId = localStorage.getItem('customerId');  
       this.router.navigate(['/customer-view/policy-agent'],{state:
           {customerId:customerId,
+          policy:this.policy,
           agentId:this.agentId,
           policyId:this.policyId,
           PolicyTerm:this.policyTerm,

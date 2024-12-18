@@ -25,7 +25,8 @@ namespace Insurance_final_project.Services
         public async Task<Guid> AddDocument(DocumentDto document)
         {
             var existingDocument = _DocumentRepo.GetAll().AsNoTracking().FirstOrDefault(d => d.CustomerId == document.CustomerId && d.DocumentType == document.DocumentType);
-            if(_customerRepo.Get(document.CustomerId) == null)
+            var customer = _customerRepo.GetAll().AsNoTracking().FirstOrDefault(c => c.CustomerId == document.CustomerId);
+            if (customer == null)
             {
                 throw new InvalidGuidException("Customer not found!");
             }
@@ -33,26 +34,36 @@ namespace Insurance_final_project.Services
             {
                 throw new DocumentExistException("Document already exist!");
             }
+            customer.IsApproved = ApprovalType.Pending.ToString();
+            _customerRepo.Update(customer);
             return _DocumentRepo.Add(_Mapper.Map<Document>(document)).DocumentId;
         }
 
         public async Task<Guid> ChangeApproveStatus(VerificationDto document)
         {
             var Document = _DocumentRepo.GetAll().AsNoTracking().FirstOrDefault(d => d.DocumentId == document.Id);
+            var customer = _customerRepo.GetAll().AsNoTracking().FirstOrDefault(c=>c.CustomerId == document.AccountId);
             if ( Document == null)
             {
                 throw new InvalidGuidException("Invalid Document!");
             }
-            if (_customerRepo.Get(document.AccountId) == null)
+            if ( customer == null)
             {
                 throw new InvalidGuidException("Customer not found!");
             }
             Document.IsVerified = document.IsVerified.ToLower() == "Verified".ToLower() || document.IsVerified == "Verify".ToLower()
-                                                            ? VerificationType.Verified.ToString() : VerificationType.Verified.ToString() ;
+                                                            ? VerificationType.Verified.ToString() : VerificationType.Rejected.ToString() ;
             if(Document.IsVerified == VerificationType.Rejected.ToString())
             {
                 _emailService.RejectionMail(document.AccountId, document.Reason,//here account id is customer Id
                     $"{Document.DocumentName.ToUpper()} document rejected");
+            }
+            else if (Document.IsVerified == VerificationType.Verified.ToString())
+            {
+                var mail = customer.EmailId;
+                var Subject = $"Status change of document uploaded on Kyc";
+                var message = $"Document uploaded for kyc {Document.DocumentType} is Approved!";
+                _emailService.ApprovalOrVrifiedMail(mail, Subject, message);
             }
             return _DocumentRepo.Update(Document).DocumentId;
         }
@@ -60,12 +71,15 @@ namespace Insurance_final_project.Services
         public async Task<Guid> UpdateDocument(UpdateDocumentDto documentDto)
         {
             var document = _DocumentRepo.GetAll().AsNoTracking().FirstOrDefault(d => d.DocumentId == documentDto.DocumentId);
+            var customer = _customerRepo.GetAll().AsNoTracking().FirstOrDefault(c=>c.CustomerId == document.CustomerId);
             if ( document== null)
             {
                 throw new InvalidGuidException("Invalid Document!");
             }
             document.DocumentFileURL = documentDto.DocumentFileURL;
             document.IsVerified = VerificationType.Pending.ToString();
+            customer.IsApproved = ApprovalType.Pending.ToString();
+            _customerRepo.Update(customer);
             return _DocumentRepo.Update(document).DocumentId;
         }
 

@@ -97,10 +97,7 @@
           accept=".jpg,.jpeg,.png,.gif,.bmp"
         />
       </div>
-    
       <div *ngIf="fileError" class="text-danger">{{ fileError }}</div>
-      
-      
     </div>
 
     <div class="mb-3">
@@ -118,7 +115,7 @@
     <button
         type="submit"
         class="btn btn-primary w-100 mt-3"
-        [disabled]="policyAccountForm.invalid || !areAllDocumentsUploaded()"
+        [disabled]="policyAccountForm.invalid || !areAllDocumentsUploaded() || inProcess"
 
       >
         Create Policy Account

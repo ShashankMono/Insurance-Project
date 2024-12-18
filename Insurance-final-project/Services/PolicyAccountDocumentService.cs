@@ -15,14 +15,17 @@ namespace Insurance_final_project.Services
         private readonly IMapper _Mapper;
         private readonly IRepository<PolicyAccount> _PolicyAccountRepository;
         private readonly IEmailService _emailService;
+        private readonly IRepository<Customer> _CustomerRepository;
         public PolicyAccountDocumentService(IRepository<PolicyAccountDocument> documentRepo
             , IRepository<PolicyAccount> PolicyAccountRepository
             ,IMapper map
-            ,IEmailService emailService) { 
+            ,IEmailService emailService
+            ,IRepository<Customer> customerRepo) { 
             _documentRepo= documentRepo;
             _Mapper = map;
             _PolicyAccountRepository = PolicyAccountRepository;
             _emailService= emailService;
+            _CustomerRepository = customerRepo;
         }
         public async Task<Guid> AddDocument(PolicyAccountDocumentDto document)
         {
@@ -93,13 +96,20 @@ namespace Insurance_final_project.Services
             {
                 throw new InvalidGuidException("Account not found!");
             }
+            
             Document.IsVerified = document.IsVerified.ToLower() == "Verified".ToLower() || document.IsVerified == "Verify".ToLower()
-                                                            ? VerificationType.Verified.ToString() : VerificationType.Verified.ToString(); ;
+                                                            ? VerificationType.Verified.ToString() : VerificationType.Rejected.ToString(); ;
             
             if (Document.IsVerified == VerificationType.Rejected.ToString())
             {
                 _emailService.RejectionMail(policyAccount.CustomerId, document.Reason,
                     $"{Document.DocumentName.ToUpper()} document rejected on policy scheme {policyAccount.Policy.Name} with investment {policyAccount.InvestmentAmount}");
+            }else if (Document.IsVerified == VerificationType.Verified.ToString())
+            {
+                var mail = _CustomerRepository.GetAll().AsNoTracking().FirstOrDefault(c=>c.CustomerId == policyAccount.CustomerId)?.EmailId;
+                var Subject = $"Status change of document uploaded on scheme account {policyAccount.Policy.Name}";
+                var message = $"Document uploaded on policy scheme account {policyAccount.Policy.Name} {Document.DocumentType} Approved!";
+                _emailService.ApprovalOrVrifiedMail(mail,Subject,message);
             }
             return _documentRepo.Update(Document).DocumentId;
         }
