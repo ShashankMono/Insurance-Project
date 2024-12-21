@@ -83,6 +83,6 @@ export class ViewAllCustomersTransactionsComponent {
   }
 
   viewReport(customerId:any):void{
-    this.router.navigate(['/admin-view/customer-report'],{state:{customerId}})
+    this.router.navigate(['/admin-view/view-report'],{state:{customerId}})
   }
 }

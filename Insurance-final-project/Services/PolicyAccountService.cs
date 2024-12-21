@@ -52,7 +52,7 @@ namespace Insurance_final_project.Services
                 );
         }
 
-        public async Task<List<PolicyAccountResponseDto>> GetAllPolicyAccounts(string searchQuery)
+        public async Task<List<PolicyAccountResponseDto>> GetAllPolicyAccounts(string? searchQuery)
         {
             var query = _PolicyAccountRepo.GetAll()
                  .Include(pa => pa.Policy)

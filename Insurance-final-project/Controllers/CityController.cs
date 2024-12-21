@@ -17,7 +17,7 @@ namespace Insurance_final_project.Controllers
             _cityService = cityService;
         }
 
-        [HttpPost, Authorize(Roles = "Customer")]
+        [HttpPost, Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddCity([FromBody] CityDto city)
         {
             if (!ModelState.IsValid)

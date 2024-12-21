@@ -27,8 +27,8 @@
             Profile
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" (click)="viewProfile()">View Profile</a></li>
-            <li><a class="dropdown-item" (click)="editProfile()">Edit Profile</a></li>
+            <li><a class="dropdown-item" style="cursor: pointer;" (click)="viewProfile()">View Profile</a></li>
+            <li><a class="dropdown-item" style="cursor: pointer;" (click)="editProfile()">Edit Profile</a></li>
           </ul>
         </li>
 
@@ -37,19 +37,18 @@
             Nominee
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" (click)="addNominee()">Add Nominee</a></li>
-            <li><a class="dropdown-item" (click)="viewNominee()">View Nominees</a></li>
+            <li><a class="dropdown-item" style="cursor: pointer;" (click)="addNominee()">Add Nominee</a></li>
+            <li><a class="dropdown-item" style="cursor: pointer;" (click)="viewNominee()">View Nominees</a></li>
           </ul>
         </li>
 
-        <!-- Query Dropdown -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Query
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" (click)="submitQuery()">Submit Query</a></li>
-            <li><a class="dropdown-item" (click)="viewQueries()">View Queries</a></li>
+            <li><a class="dropdown-item" style="cursor: pointer;" (click)="submitQuery()">Submit Query</a></li>
+            <li><a class="dropdown-item" style="cursor: pointer;" (click)="viewQueries()">View Queries</a></li>
           </ul>
         </li>
 
@@ -66,10 +65,10 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userActionDropdown">
             <li>
-              <a class="dropdown-item" routerLink="/change-username">Change Username</a>
+              <a class="dropdown-item" style="cursor: pointer;" routerLink="/change-username">Change Username</a>
             </li>
             <li>
-              <a class="dropdown-item" routerLink="/change-password">Change Password</a>
+              <a class="dropdown-item" style="cursor: pointer;" routerLink="/change-password">Change Password</a>
             </li>
           </ul>
         </li>

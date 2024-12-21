@@ -1,11 +1,14 @@
-/* Enable dropdowns on hover */
+
 .navbar-nav .dropdown:hover > .dropdown-menu {
     display: block;
-    margin-top: 0; /* Adjust if needed for spacing */
+    margin-top: 0; 
 }
   
-  /* Ensure dropdown menu aligns properly */
 .navbar-nav .dropdown-menu {
     transition: all 0.3s ease-in-out;
+}
+
+.cursor-pointer{
+  cursor: pointer;
 }
   

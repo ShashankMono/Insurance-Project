@@ -26,7 +26,7 @@ export class LoginHeaderComponent {
       case 'Employee':
         return '/employee-view'
       default :
-        return '/login-dashboard'
+        return '/'
     }
   }
 

@@ -1,6 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
     <div class="container-fluid">
-      <!-- Agent Dashboard Header -->
       <a class="navbar-brand" routerLink="/agent-view">Agent Dashboard</a>
   
       <button
@@ -17,13 +16,13 @@
   
       <div class="collapse navbar-collapse" id="agentNavbar">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
+          <li class="nav-item custom-pointer">
             <a class="nav-link" (click)="goToMarketing()">
-              Marketing
+              Sell policy
             </a>
           </li>
   
-          <li class="nav-item">
+          <li class="nav-item custom-pointer">
             <a class="nav-link" (click)="viewPolicyAccounts()">
               Policy Accounts
             </a>
@@ -40,19 +39,19 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <a class="dropdown-item" (click)="viewCommissions()">
+                <a class="dropdown-item custom-pointer" (click)="viewCommissions()">
                   View Commissions
                 </a>
               </li>
               <li>
-                <a class="dropdown-item" (click)="withdrawCommission()">
+                <a class="dropdown-item custom-pointer" (click)="withdrawCommission()">
                  Withdraw Commission
                 </a>
               </li>
             </ul>
           </li>
   
-          <li class="nav-item">
+          <li class="nav-item custom-pointer">
             <a class="nav-link" (click)="viewWithdrawalHistory()">
               Withdrawal History
             </a>
@@ -69,19 +68,19 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <a class="dropdown-item" (click)="viewProfile()">
+                <a class="dropdown-item custom-pointer" (click)="viewProfile()">
                   View Profile
                 </a>
               </li>
               <li>
-                <a class="dropdown-item" (click)="editProfile()">
+                <a class="dropdown-item custom-pointer" (click)="editProfile()">
                  Edit Profile
                 </a>
               </li>
             </ul>
           </li>
   
-          <li class="nav-item">
+          <li class="nav-item custom-pointer">
             <a class="nav-link" (click)="viewPolicySchemes()">
               Policy Schemes
             </a>

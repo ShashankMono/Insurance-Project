@@ -10,7 +10,7 @@
         <p><strong>Qualification:</strong> {{ agent.qualification }}</p>
         <p><strong>Email:</strong> {{ agent.email }}</p>
         <p><strong>Mobile Number:</strong> {{ agent.mobileNo }}</p>
-        <p><strong>Commission Earned:</strong> {{ agent.commissionEarned | currency }}</p>
+        <p><strong>Commission Earned:</strong> {{ agent.commissionEarned | currency: 'INR' }}</p>
       </div>
       <ng-template #noData>
         <p>No profile data available.</p>

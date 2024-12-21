@@ -7,8 +7,14 @@
     <div *ngIf="errorMessage" class="alert alert-danger text-center">
       {{ errorMessage }}
     </div>
-  
-    <div class="text-end mb-3" >
+    
+    <ng-template #approved>
+      <div class="text-center mb-3">
+        <h2>Your KYC is done!</h2>
+      </div>
+    </ng-template>
+
+    <div *ngIf="customerDets?.isApproved != 'Approved'; else approved" class="text-end mb-3" >
       <button class="btn btn-success" (click)="openAddDocumentModal()">Add New Document</button>
     </div>
 

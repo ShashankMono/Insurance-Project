@@ -26,10 +26,10 @@
             Policies
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" (click)="viewPolicies()">View Policies</a></li>
-            <li><a class="dropdown-item" (click)="addPolicy()">Add Policy</a></li>
-            <li><a class="dropdown-item" (click)="viewPolicyTypes()">View Policy Types</a></li>
-            <li><a class="dropdown-item" (click)="addPolicyType()">Add Policy Type</a></li>
+            <li><a class="dropdown-item cursor-pointer" (click)="viewPolicies()">View Policies</a></li>
+            <li><a class="dropdown-item cursor-pointer" (click)="addPolicy()">Add Policy</a></li>
+            <li><a class="dropdown-item cursor-pointer" (click)="viewPolicyTypes()">View Policy Types</a></li>
+            <li><a class="dropdown-item cursor-pointer" (click)="addPolicyType()">Add Policy Type</a></li>
           </ul>
         </li>
 
@@ -43,10 +43,27 @@
             Agent and Employee
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" (click)="viewAllAgents()">View Agents</a></li>
-            <li><a class="dropdown-item" (click)="addAgent()">Add Agent</a></li>
-            <li><a class="dropdown-item" (click)="viewAllEmployee()">View Employees</a></li>
-            <li><a class="dropdown-item" (click)="addEmployee()">Add Employee</a></li>
+            <li><a class="dropdown-item cursor-pointer" (click)="viewAllAgents()">View Agents</a></li>
+            <li><a class="dropdown-item cursor-pointer" (click)="addAgent()">Add Agent</a></li>
+            <li><a class="dropdown-item cursor-pointer" (click)="viewAllEmployee()">View Employees</a></li>
+            <li><a class="dropdown-item cursor-pointer" (click)="addEmployee()">Add Employee</a></li>
+          </ul> 
+        </li>
+
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Customer
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="claim-request">Claim request</a></li>
+            <li><a class="dropdown-item" routerLink="policy-cancel-request">Policy cancel request</a></li>
+            <li><a class="dropdown-item" routerLink="customer-report">Customer report</a></li>
+            <li><a class="dropdown-item" routerLink="view-transactions">View all transactions</a></li>
           </ul>
         </li>
 
@@ -60,9 +77,9 @@
             User
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" (click)="viewAllUsers()">View Users</a></li>
-            <li><a class="dropdown-item" (click)="viewAllRoles()">View Roles</a></li>
-            <li><a class="dropdown-item" (click)="addRole()">Add Role</a></li>
+            <li><a class="dropdown-item cursor-pointer" (click)="viewAllUsers()">View Users</a></li>
+            <li><a class="dropdown-item cursor-pointer" (click)="viewAllRoles()">View Roles</a></li>
+            <li><a class="dropdown-item cursor-pointer" (click)="addRole()">Add Role</a></li>
           </ul>
         </li>
 
@@ -76,10 +93,10 @@
             State and City
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" (click)="getStates()">View States</a></li>
-            <li><a class="dropdown-item" (click)="addState()">Add State</a></li>
-            <li><a class="dropdown-item" (click)="getCities()">View Cities</a></li>
-            <li><a class="dropdown-item" (click)="addCity()">Add City</a></li>
+            <li><a class="dropdown-item cursor-pointer" (click)="getStates()">View States</a></li>
+            <li><a class="dropdown-item cursor-pointer" (click)="addState()">Add State</a></li>
+            <li><a class="dropdown-item cursor-pointer" (click)="getCities()">View Cities</a></li>
+            <li><a class="dropdown-item cursor-pointer" (click)="addCity()">Add City</a></li>
           </ul>
         </li>
 
@@ -97,10 +114,10 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userActionDropdown">
             <li>
-              <a class="dropdown-item" routerLink="/change-username">Change Username</a>
+              <a class="dropdown-item cursor-pointer" routerLink="/change-username">Change Username</a>
             </li>
             <li>
-              <a class="dropdown-item" routerLink="/change-password">Change Password</a>
+              <a class="dropdown-item cursor-pointer" routerLink="/change-password">Change Password</a>
             </li>
           </ul>
         </li>

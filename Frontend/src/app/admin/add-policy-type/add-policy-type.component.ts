@@ -26,7 +26,7 @@ export class AddPolicyTypeComponent {
         next: (response) => {
           console.log('Policy type added successfully:', response);
           alert('Policy type added successfully!');
-          this.router.navigate(['/admin-dashboard']);
+          this.router.navigate(['/admin-view/view-policy-types']);
         },
         error: (err:HttpErrorResponse) => {
           if(err.error.exceptionMessage){

@@ -22,11 +22,13 @@ export class AddStateComponent {
       this.addStateService.addState(this.addStateForm.value).subscribe({
         next: () => {
           alert('State added successfully!');
-          this.router.navigate(['/admin-dashboard']);
+          this.router.navigate(['/admin-view/view-states']);
         },
         error: (error) => {
           if(error.error.exceptionMessage){
             alert(error.error.exceptionMessage);
+          }else{
+            alert("Error ocuured while add new state, please again later! ");
           }
           console.error('Error adding state:', error);
         },

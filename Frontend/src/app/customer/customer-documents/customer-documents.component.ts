@@ -14,7 +14,7 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
 })
 export class CustomerDocumentsComponent implements OnInit {
   documents: any[] = [];
-  
+  customerDets:any | null = null;
   successMessage: string | null = null;
   errorMessage: string | null = null;
   selectedDocumentUrl: string | null = null;
@@ -22,18 +22,10 @@ export class CustomerDocumentsComponent implements OnInit {
   inProcess:boolean = false;
 
   documentTypes: string[] = [
-    'Passport',
-    'Drivering License',
-    'Aadhaar_card',
-    'Voter ID Card',
-    'National ID Card',
-    'Utility Bill',
-    'Bank Statement',
-    'Passport',
-    'Rental Agreement'
+    'Identity proof',
+    'Address proof'
   ];
   
-
   customerId: string = '';
   addDocumentForm!: FormGroup;
   selectedFile!: File;
@@ -51,7 +43,8 @@ export class CustomerDocumentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerId = this.route.snapshot.params['customerId'];
-    console.log(this.customerId);
+    this.customerDets = history.state.CustomerDets;
+    //console.log(this.customerId);
     this.fetchDocuments();
 
     this.addDocumentForm = new FormGroup({

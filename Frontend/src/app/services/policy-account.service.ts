@@ -21,7 +21,7 @@ export class PolicyAccountService {
     return this.http.get<any>(`${this.url}`,{params});
   }
 
-  getPolicyAccountsByCustomerId(customerId:any):Observable<any>{
+  getPolicyAccountsByCustomerId(customerId:any,):Observable<any>{
     return this.http.get<any>(`${this.url}/customer/${customerId}`);
   }
 

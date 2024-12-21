@@ -30,8 +30,7 @@ export class ViewReportComponent {
     private transactionService: TransactionService,
     private policyAccountService: PolicyAccountService,
     private customerService: CustomerDashboardService,
-    private router:Router,
-    private activatedRoute:ActivatedRoute
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -108,7 +107,7 @@ export class ViewReportComponent {
   }
 
   loadPolicyAccounts(): void {
-    this.policyAccountService.getPolicyAccountsByCustomerId(this.customerId).subscribe({
+    this.policyAccountService.getPolicyAccountsByCustomerId(this.customerId,).subscribe({
       next: (response) => {
         if (response.success) {
           this.policyAccounts = response.data;

@@ -18,7 +18,7 @@ namespace Insurance_final_project.Controllers
         }
 
 
-        [HttpGet, Authorize(Roles = "Admin")]
+        [HttpGet, Authorize(Roles = "Admin,Customer")]
         public async Task<IActionResult> GetStates()
         {
             var states = await _stateService.GetStates();

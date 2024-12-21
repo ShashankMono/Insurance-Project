@@ -52,7 +52,7 @@ export class CustomerDashboardComponent{
   }
 
   document(){
-    this.router.navigate(['/customer-view/customer-documents',this.customerId])
+    this.router.navigate(['/customer-view/customer-documents',this.customerId],{state:{CustomerDets:this.customerDets}})
   }
 
   claimPolicy(): void {
@@ -75,10 +75,6 @@ export class CustomerDashboardComponent{
   editProfile(): void {
     this.router.navigate(['/customer-view/edit-profile'],{state:{customerId:this.customerId}});
   }
-
-  // addNominee(): void {
-  //   this.router.navigate(['/customer-view/add-nominee',this.customerId]);
-  // }
 
   viewNominee(): void {
     this.router.navigate(['/customer-view/view-nominee',this.customerId]);

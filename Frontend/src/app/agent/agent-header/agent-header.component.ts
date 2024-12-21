@@ -30,23 +30,23 @@ export class AgentHeaderComponent {
   }
 
   goToMarketing() {
-    this.router.navigate(['/agent-view/marketing'], { relativeTo: this.router.routerState.root , state:{agentId:this.agent.agentId,agentName:this.agent.firstName}});
+    this.router.navigate(['/agent-view/marketing'], { relativeTo: this.router.routerState.root , state:{agent:this.agent}});
   }
 
   viewPolicyAccounts() {
-    this.router.navigate(['/agent-view/policy-accounts-view'], { relativeTo: this.router.routerState.root });
+    this.router.navigate(['/agent-view/policy-accounts-view'], { relativeTo: this.router.routerState.root, state:{agentId:this.agent.agentId} });
   }
 
   viewCommissions() {
-    this.router.navigate(['/agent-view/commissions'], { relativeTo: this.router.routerState.root });
+    this.router.navigate(['/agent-view/commissions'], { relativeTo: this.router.routerState.root ,state:{agentId:this.agent.agentId}});
   }
 
   withdrawCommission() {
-    this.router.navigate(['/agent-view/withdraw-commission'], { relativeTo: this.router.routerState.root });
+    this.router.navigate(['/agent-view/withdraw-commission'], { relativeTo: this.router.routerState.root ,state:{agentId:this.agent.agentId}});
   }
 
   viewWithdrawalHistory() {
-    this.router.navigate(['/agent-view/withdrawal-history'], { relativeTo: this.router.routerState.root });
+    this.router.navigate(['/agent-view/withdrawal-history'], { relativeTo: this.router.routerState.root ,state:{agentId:this.agent.agentId}});
   }
 
   viewProfile() {
@@ -58,6 +58,6 @@ export class AgentHeaderComponent {
   }
 
   viewPolicySchemes() {
-    this.router.navigate(['/agent-view/policy-schemes'], { relativeTo: this.router.routerState.root });
+    this.router.navigate(['/agent-view/policy-schemes'], { relativeTo: this.router.routerState.root , state:{agentId:this.agent}});
   }
 }

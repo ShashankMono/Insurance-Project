@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 export class ViewUsersComponent {
   users: any[] = []; 
   currentPage: number = 1;
-  pageSize: number = 1; 
+  pageSize: number = 3; 
   totalPages: number = 1; 
   totalRecords: number = 0; 
   searchText:string = '';

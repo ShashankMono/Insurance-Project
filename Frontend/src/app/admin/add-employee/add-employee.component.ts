@@ -53,7 +53,8 @@ export class AddEmployeeComponent {
       this.addEmployeeService.addEmployee(employeeData).subscribe({
         next: () => {
           alert('Employee added successfully! Check email for login credentials.');
-          this.router.navigate(['/admin-dashboard']);
+          this.addEmployeeForm.reset();
+          this.router.navigate(['/admin-view/view-employees']);
           this.inProcess = false;
         },
         error: (err: HttpErrorResponse) => {

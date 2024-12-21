@@ -18,15 +18,12 @@ export class AddPolicyComponent {
   fileUrl: any | null = null
 
   documentTypes = [
-    'PROOF OF IDENTITY',
-    'PROOF OF ADDRESS',
     'AGE PROOF',
     'MEDICAL RECORDS',
     'INCOME PROOF',
-    'PHOTOGRAPHS',
+    'PASSPORT SIZE PHOTO',
     'POLICY APPLICATION FORM',
     'NOMINEE DETAILS',
-    'KYC (KNOW YOUR CUSTOMER)',
     'VEHICLE REGISTRATION CERTIFICATE (RC)',
     'DRIVING LICENSE',
     'POLLUTION UNDER CONTROL (PUC) CERTIFICATE',
@@ -165,7 +162,7 @@ export class AddPolicyComponent {
           console.log('Policy added successfully:', response);
           alert('Policy added successfully!');
           this.addPolicyForm.reset();
-          this.router.navigate(['/admin-view']);
+          this.router.navigate(['/admin-view/view-policies']);
         },
         error: (err:HttpErrorResponse) => {
           if(err.error.exceptionMessage){

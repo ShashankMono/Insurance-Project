@@ -59,7 +59,7 @@ export class AddAgentComponent{
         next: (response) => {
           console.log('Agent added successfully:', response);
           alert("Agent added successfully! Check email for credentials.");
-          this.router.navigate(['/admin-dashboard']);
+          this.router.navigate(['/admin-view/view-agents']);
           this.inProcess=false;
         },
         error: (err: HttpErrorResponse) => {

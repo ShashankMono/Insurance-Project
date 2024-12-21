@@ -109,7 +109,7 @@ namespace Insurance_final_project.Services
                 CustomerId = policyAccount.CustomerId,
                 PolicyAccountId = installment.PolicyAccountId,
                 PolicyInstallmentId = installment.Id,
-                DateTime = DateTime.UtcNow,
+                DateTime = DateTime.UtcNow.ToLocalTime(),
                 ReferenceNumber = Guid.NewGuid(),
             }; ;
 
@@ -125,7 +125,7 @@ namespace Insurance_final_project.Services
                     PolicyAccountId = installment.PolicyAccountId,
                     AgentId = (Guid)policyAccount.AgentId,
                     CommissionType = CommissionType.Installment.ToString(),
-                    Date = DateTime.UtcNow,
+                    Date = DateTime.UtcNow.ToLocalTime(),
                 };
                 _CommissionService.AddCommission(commission,commissionAmount);
             }

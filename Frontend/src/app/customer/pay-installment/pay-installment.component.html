@@ -26,7 +26,7 @@
           <td>
             <div *ngIf="installment.isPaid; then thenblock; else elseblock"></div>
             <ng-template #thenblock>
-                <h4 style="background-color: green; color: white;">Paid</h4>
+                <h4 class="btn" style="background-color: green; color: white; cursor: default">Paid</h4>
             </ng-template>
             <ng-template #elseblock>
                 <button 

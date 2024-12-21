@@ -16,6 +16,7 @@
     <table class="table table-bordered" *ngIf="policyAccounts.length>0; else noAccount">
       <thead>
         <tr>
+          <th>Sr no.</th>
           <th>Policy Plan</th>
           <th>Coverage Amount</th>
           <th>Total Amount paid</th>
@@ -29,7 +30,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let policy of policyAccounts">
+        <tr *ngFor="let policy of policyAccounts; let i=index">
+          <td>{{i+1}}</td>
           <td>{{ policy.policyName }}</td>
           <td>{{ policy.coverageAmount }}</td>
           <td>{{ policy.totalAmountPaid }}</td>

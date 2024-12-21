@@ -72,14 +72,16 @@ export class AddCityComponent implements OnInit {
       this.addCityService.addCity(obj).subscribe({
         next: () => {
           alert('City added successfully!');
-          this.router.navigate(['/admin-dashboard']);
+          this.addCityForm.reset();
+          this.router.navigate(['/admin-view/view-cities']);
         },
         error: (error) => {
           console.error('Error adding city:', error);
           if(error.error.exceptionMessage){
             alert(error.error.exceptionMessage);
+          }else{
+            alert('Failed to add city. Please try again.');
           }
-          alert('Failed to add city. Please try again.');
         }
       });
     }

@@ -24,6 +24,7 @@ export class LoginDashboardComponent {
     console.log('LoginDashboardComponent loaded');
   }
   ngOnInit(): void {
+    this.checkLogin();
     this.generateCaptcha();
   }
   generateCaptcha(): void {
@@ -104,5 +105,35 @@ export class LoginDashboardComponent {
         console.error('Error signing in:', err);
       },
     });
+  }
+
+  checkLogin(){
+    let userId = localStorage.getItem('userId');
+    let role = localStorage.getItem('role');
+    let token = localStorage.getItem('token')
+    
+    if (userId && role && token) {
+
+      switch (role) {
+        case 'Admin':
+          this.router.navigate(['/admin-view']);
+          break;
+        case 'Customer':
+          this.router.navigate(['/customer-view']);
+          break;
+        case 'Employee':
+          this.router.navigate(['/employee-view']);
+          break;
+        case 'Agent':
+          this.router.navigate(['/agent-view']);
+          break;
+        default:
+          alert('Login failed. Role not recognized.');
+          this.router.navigate(['/login-dashboard']);
+      }
+    } else {
+      return;
+    }
+
   }
 }
